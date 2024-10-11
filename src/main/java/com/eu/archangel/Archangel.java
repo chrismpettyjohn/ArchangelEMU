@@ -1,8 +1,7 @@
 package com.eu.archangel;
 
 import com.eu.archangel.core.DatabaseConfig;
-import com.eu.archangel.weapon.context.WeaponContext;
-import com.eu.archangel.weapon.repository.WeaponRepository;
+import com.eu.archangel.weapon.WeaponManager;
 import com.eu.habbo.core.ConfigurationManager;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
@@ -17,9 +16,7 @@ public class Archangel {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(Archangel.class);
 
-    private WeaponRepository weaponRepository;
-
-    private WeaponContext weaponContext;
+    private WeaponManager weaponManager;
 
     public void load(ConfigurationManager config) {
         long millis = System.currentTimeMillis();
@@ -35,9 +32,7 @@ public class Archangel {
             e.printStackTrace();
         }
 
-        this.weaponRepository = new WeaponRepository(sessionFactory);
-
-        this.weaponContext = WeaponContext.getInstance();
+        this.weaponManager = WeaponManager.getInstance(sessionFactory);
 
         DatabaseConfig.shutdown();
 

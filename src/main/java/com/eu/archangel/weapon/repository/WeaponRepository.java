@@ -9,9 +9,25 @@ import java.util.List;
 
 public class WeaponRepository {
 
+    private static WeaponRepository instance;
+
+    public static WeaponRepository getInstance(SessionFactory sessionFactory) {
+        if (instance == null) {
+            instance = new WeaponRepository(sessionFactory);
+        }
+        return instance;
+    }
+
+    public static WeaponRepository getInstance() {
+        if (instance == null) {
+            throw new RuntimeException("WeaponRepository has not been initialized");
+        }
+        return instance;
+    }
+
     private final SessionFactory sessionFactory;
 
-    public WeaponRepository(SessionFactory sessionFactory) {
+    private WeaponRepository(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
 
