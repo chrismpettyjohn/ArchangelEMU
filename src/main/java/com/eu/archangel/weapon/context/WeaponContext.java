@@ -1,9 +1,9 @@
 package com.eu.archangel.weapon.context;
 
 import com.eu.archangel.core.GenericContext;
-import com.eu.habbo.roleplay.weapons.Weapon;
+import com.eu.archangel.weapon.model.WeaponModel;
 
-public class WeaponContext extends GenericContext<Weapon> {
+public class WeaponContext extends GenericContext<WeaponModel> {
 
     private static WeaponContext instance;
 

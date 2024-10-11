@@ -1,11 +1,16 @@
 package com.eu.archangel.weapon;
 
 import com.eu.archangel.weapon.context.WeaponContext;
+import com.eu.archangel.weapon.entity.WeaponEntity;
+import com.eu.archangel.weapon.mapper.WeaponMapper;
+import com.eu.archangel.weapon.model.WeaponModel;
 import com.eu.archangel.weapon.repository.WeaponRepository;
 import lombok.Getter;
 import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.List;
 
 @Getter
 public class WeaponManager {
@@ -40,10 +45,20 @@ public class WeaponManager {
     public void load() {
         LOGGER.info("Weapon manager > starting");
 
-        LOGGER.info("Weapon manager > running");
+        List<WeaponEntity> weaponEntities = WeaponRepository.getInstance().getAll();
+
+        for (WeaponEntity weaponEntity : weaponEntities) {
+            this.weaponContext.add(weaponEntity.getId(), WeaponMapper.toModel(weaponEntity));
+        }
+
+        LOGGER.info("Weapon manager > loaded " + weaponEntities.size() + " weapons");
     }
 
     public void dispose() {
-
+        for (WeaponModel weaponModel : this.weaponContext.getAll().values()) {
+            this.weaponRepository.updateById(weaponModel.getId(), WeaponMapper.toEntity(weaponModel));
+            this.weaponContext.delete(weaponModel.getId());
+        }
+        LOGGER.info("Weapon manager > disposed");
     }
 }
