@@ -10,7 +10,7 @@ import com.eu.habbo.roleplay.messages.outgoing.user.UserRoleplayStatsChangeCompo
 import com.eu.habbo.roleplay.room.RoomType;
 import com.eu.habbo.roleplay.users.HabboWeapon;
 import com.eu.habbo.messages.incoming.MessageHandler;
-import com.eu.habbo.roleplay.weapons.WeaponType;
+import com.eu.archangel.weapon.enums.WeaponType;
 
 import java.util.Collection;
 import java.util.concurrent.Executors;

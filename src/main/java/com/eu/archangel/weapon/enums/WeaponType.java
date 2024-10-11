@@ -1,4 +1,4 @@
-package com.eu.habbo.roleplay.weapons;
+package com.eu.archangel.weapon.enums;
 
 import lombok.Getter;
 
