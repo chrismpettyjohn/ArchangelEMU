@@ -3,6 +3,7 @@ package com.eu.habbo;
 import ch.qos.logback.classic.Level;
 import ch.qos.logback.classic.spi.ILoggingEvent;
 import ch.qos.logback.core.ConsoleAppender;
+import com.eu.archangel.Archangel;
 import com.eu.habbo.core.*;
 import com.eu.habbo.core.consolecommands.ConsoleCommand;
 import com.eu.habbo.database.Database;
@@ -17,6 +18,7 @@ import com.eu.habbo.plugin.events.emulator.EmulatorStoppedEvent;
 import com.eu.habbo.threading.ThreadPooling;
 import com.eu.habbo.util.imager.badges.BadgeImager;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.math3.geometry.spherical.oned.Arc;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -56,6 +58,7 @@ public final class Emulator {
     private static GameEnvironment gameEnvironment;
     private static PluginManager pluginManager;
     private static BadgeImager badgeImager;
+    private static Archangel archangel;
 
     static {
         Thread hook = new Thread(new Runnable() {
@@ -118,6 +121,8 @@ public final class Emulator {
             Emulator.gameServer.initializePipeline();
             Emulator.gameServer.connect();
             Emulator.badgeImager = new BadgeImager();
+            Emulator.archangel = new Archangel();
+            Emulator.archangel.load(config);
 
             log.info("Arcturus Archangel has successfully loaded.");
             log.info("System launched in: {}ms. Using {} threads!", (System.nanoTime() - startTime) / 1e6, Runtime.getRuntime().availableProcessors() * 2);
@@ -202,6 +207,12 @@ public final class Emulator {
         Emulator.isReady = false;
 
         log.info("Stopping Arcturus Archangel {}", VERSION);
+
+        try {
+            if (Emulator.archangel != null)
+                Emulator.archangel.dispose();
+        } catch (Exception ignored) {
+        }
 
         try {
             if (Emulator.getPluginManager() != null)
@@ -309,6 +320,8 @@ public final class Emulator {
     public static BadgeImager getBadgeImager() {
         return badgeImager;
     }
+
+    public static Archangel getArchangel() { return archangel; }
 
     public static synchronized CameraClient getCameraClient() {
         return cameraClient;

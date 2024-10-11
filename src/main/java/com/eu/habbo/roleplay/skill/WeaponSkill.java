@@ -8,6 +8,6 @@ public class WeaponSkill extends Skill<String> {
 
     @Override
     public String getType() {
-        return "Weapon";
+        return "WeaponModel";
     }
 }

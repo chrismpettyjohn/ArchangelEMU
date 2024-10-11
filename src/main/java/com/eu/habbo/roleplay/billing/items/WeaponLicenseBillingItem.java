@@ -13,7 +13,7 @@ public record WeaponLicenseBillingItem(int userID, int chargedByUserID) implemen
 
     @Override
     public String getTitle() {
-        return "Weapon License";
+        return "WeaponModel License";
     }
 
     @Override
