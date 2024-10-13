@@ -1,6 +1,8 @@
 package com.eu.archangel;
 
 import com.eu.archangel.core.DatabaseConfig;
+import com.eu.archangel.corp.CorpManager;
+import com.eu.archangel.corp.mapper.CorpMapper;
 import com.eu.archangel.weapon.WeaponManager;
 import com.eu.habbo.core.ConfigurationManager;
 import lombok.Getter;
@@ -18,6 +20,8 @@ public class Archangel {
 
     private WeaponManager weaponManager;
 
+    private CorpManager corpManager;
+
     public void load(ConfigurationManager config) {
         long millis = System.currentTimeMillis();
 
@@ -33,6 +37,7 @@ public class Archangel {
         }
 
         this.weaponManager = WeaponManager.getInstance(sessionFactory);
+        this.corpManager = CorpManager.getInstance(sessionFactory);
 
         DatabaseConfig.shutdown();
 
