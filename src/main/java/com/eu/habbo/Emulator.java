@@ -3,7 +3,7 @@ package com.eu.habbo;
 import ch.qos.logback.classic.Level;
 import ch.qos.logback.classic.spi.ILoggingEvent;
 import ch.qos.logback.core.ConsoleAppender;
-import com.eu.archangel.Archangel;
+import com.us.archangel.Archangel;
 import com.eu.habbo.core.*;
 import com.eu.habbo.core.consolecommands.ConsoleCommand;
 import com.eu.habbo.database.Database;
@@ -18,7 +18,6 @@ import com.eu.habbo.plugin.events.emulator.EmulatorStoppedEvent;
 import com.eu.habbo.threading.ThreadPooling;
 import com.eu.habbo.util.imager.badges.BadgeImager;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.math3.geometry.spherical.oned.Arc;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

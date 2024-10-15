@@ -1,6 +1,6 @@
 package com.eu.habbo.roleplay.weapons;
 
-import com.eu.archangel.weapon.enums.WeaponType;
+import com.us.archangel.weapon.enums.WeaponType;
 import lombok.Getter;
 import lombok.Setter;
 
