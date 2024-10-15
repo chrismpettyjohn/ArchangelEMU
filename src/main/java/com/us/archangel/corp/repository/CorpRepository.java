@@ -72,7 +72,7 @@ public class CorpRepository {
     @SuppressWarnings("unchecked")
     public List<CorpEntity> getAll() {
         try (Session session = sessionFactory.openSession()) {
-            return session.createQuery("from CorpEntity").list();  // Query simplified
+            return session.createQuery("from CorpEntity", CorpEntity.class).list();  // Query simplified
         }
     }
 

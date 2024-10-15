@@ -17,10 +17,10 @@ public class DatabaseConfig {
                 configuration.setProperty("hibernate.connection.url", "jdbc:mariadb://" + config.getValue("db.hostname") + ":" + config.getValue("db.port") + "/" + config.getValue("db.database"));
                 configuration.setProperty("hibernate.connection.username", config.getValue("db.username"));
                 configuration.setProperty("hibernate.connection.password", config.getValue("db.password"));
-
+                
                 configuration.setProperty("hibernate.dialect", "org.hibernate.dialect.MariaDBDialect");
+                configuration.setProperty("hibernate.hbm2ddl.auto", "update");
 
-                configuration.setProperty("hibernate.hbm2ddl.auto", "validate");
 
                 configuration.addAnnotatedClass(WeaponEntity.class);
 

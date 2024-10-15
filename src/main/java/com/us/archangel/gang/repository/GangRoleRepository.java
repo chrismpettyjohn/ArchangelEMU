@@ -70,7 +70,7 @@ public class GangRoleRepository {
     @SuppressWarnings("unchecked")
     public List<GangRoleEntity> getAll() {
         try (Session session = sessionFactory.openSession()) {
-            return session.createQuery("from GangRoleEntity").list();
+            return session.createQuery("from GangRoleEntity", GangRoleEntity.class).list();
         }
     }
 

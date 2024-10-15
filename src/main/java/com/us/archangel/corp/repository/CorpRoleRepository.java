@@ -76,10 +76,9 @@ public class CorpRoleRepository {
         }
     }
 
-    @SuppressWarnings("unchecked")
     public List<CorpRoleEntity> getAll() {
         try (Session session = sessionFactory.openSession()) {
-            return session.createQuery("from CorpRoleEntity").list();
+            return session.createQuery("from CorpRoleEntity", CorpRoleEntity.class).list();
         }
     }
 

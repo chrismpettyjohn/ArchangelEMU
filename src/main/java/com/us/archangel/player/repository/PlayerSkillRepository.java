@@ -68,7 +68,7 @@ public class PlayerSkillRepository {
     @SuppressWarnings("unchecked")
     public List<PlayerSkillEntity> getAll() {
         try (Session session = sessionFactory.openSession()) {
-            return session.createQuery("from PlayerSkillEntity").list();  // Query simplified
+            return session.createQuery("from PlayerSkillEntity", PlayerSkillEntity.class).list();  // Query simplified
         }
     }
 
