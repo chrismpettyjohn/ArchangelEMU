@@ -1,16 +1,16 @@
-package com.us.archangel.penalty.mapper;
+package com.us.archangel.sanction.mapper;
 
 
-import com.us.archangel.penalty.entity.PenaltyEntity;
-import com.us.archangel.penalty.model.PenaltyModel;
+import com.us.archangel.sanction.entity.SanctionEntity;
+import com.us.archangel.sanction.model.SanctionModel;
 
-public class PenaltyMapper {
+public class SanctionMapper {
 
-    public static PenaltyModel toModel(PenaltyEntity entity) {
+    public static SanctionModel toModel(SanctionEntity entity) {
         if (entity == null) {
             return null;
         }
-        return new PenaltyModel(
+        return new SanctionModel(
                 entity.getId(),
                 entity.getDisplayName(),
                 entity.getDescription(),
@@ -21,11 +21,11 @@ public class PenaltyMapper {
         );
     }
 
-    public static PenaltyEntity toEntity(PenaltyModel model) {
+    public static SanctionEntity toEntity(SanctionModel model) {
         if (model == null) {
             return null;
         }
-        PenaltyEntity entity = new PenaltyEntity();
+        SanctionEntity entity = new SanctionEntity();
         entity.setId(model.getId());
         entity.setDisplayName(model.getDisplayName());
         entity.setDescription(model.getDescription());

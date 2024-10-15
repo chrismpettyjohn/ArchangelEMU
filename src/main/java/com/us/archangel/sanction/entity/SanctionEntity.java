@@ -1,4 +1,4 @@
-package com.us.archangel.penalty.entity;
+package com.us.archangel.sanction.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -8,7 +8,7 @@ import lombok.Setter;
 @Setter
 @Entity
 @Table(name = "archangel_penalties")
-public class PenaltyEntity {
+public class SanctionEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

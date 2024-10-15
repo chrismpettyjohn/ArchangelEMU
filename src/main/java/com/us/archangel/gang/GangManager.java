@@ -54,13 +54,13 @@ public class GangManager {
     public void load() {
         LOGGER.info("Gang manager > starting");
 
-        List<GangEntity> gangEntities = GangRepository.getInstance().getAll();
+        List<GangEntity> entities = GangRepository.getInstance().getAll();
 
-        for (GangEntity gangEntity : gangEntities) {
-            this.gangContext.add(gangEntity.getId(), GangMapper.toModel(gangEntity));
+        for (GangEntity entity : entities) {
+            this.gangContext.add(entity.getId(), GangMapper.toModel(entity));
         }
 
-        LOGGER.info("Gang manager > loaded " + gangEntities.size() + " gangs");
+        LOGGER.info("Gang manager > loaded " + entities.size() + " gangs");
     }
 
     public void dispose() {

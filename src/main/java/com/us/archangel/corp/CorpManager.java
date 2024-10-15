@@ -54,13 +54,13 @@ public class CorpManager {
     public void load() {
         LOGGER.info("Corp manager > starting");
 
-        List<CorpEntity> corpEntities = CorpRepository.getInstance().getAll();
+        List<CorpEntity> entities = CorpRepository.getInstance().getAll();
 
-        for (CorpEntity corpEntity : corpEntities) {
-            this.corpContext.add(corpEntity.getId(), CorpMapper.toModel(corpEntity));
+        for (CorpEntity entity : entities) {
+            this.corpContext.add(entity.getId(), CorpMapper.toModel(entity));
         }
 
-        LOGGER.info("Corp manager > loaded " + corpEntities.size() + " corps");
+        LOGGER.info("Corp manager > loaded " + entities.size() + " corps");
     }
 
     public void dispose() {

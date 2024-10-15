@@ -1,37 +1,37 @@
-package com.us.archangel.penalty.repository;
+package com.us.archangel.sanction.repository;
 
-import com.us.archangel.penalty.entity.PenaltyEntity;
+import com.us.archangel.sanction.entity.SanctionEntity;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
 import java.util.List;
 
-public class PenaltyRepository {
+public class SanctionRepository {
 
-    private static PenaltyRepository instance;
+    private static SanctionRepository instance;
 
-    public static PenaltyRepository getInstance(SessionFactory sessionFactory) {
+    public static SanctionRepository getInstance(SessionFactory sessionFactory) {
         if (instance == null) {
-            instance = new PenaltyRepository(sessionFactory);
+            instance = new SanctionRepository(sessionFactory);
         }
         return instance;
     }
 
-    public static PenaltyRepository getInstance() {
+    public static SanctionRepository getInstance() {
         if (instance == null) {
-            throw new RuntimeException("PenaltyRepository has not been initialized");
+            throw new RuntimeException("SanctionRepository has not been initialized");
         }
         return instance;
     }
 
     private final SessionFactory sessionFactory;
 
-    private PenaltyRepository(SessionFactory sessionFactory) {
+    private SanctionRepository(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
 
-    public void create(PenaltyEntity corp) {
+    public void create(SanctionEntity corp) {
         Transaction transaction = null;
         try (Session session = sessionFactory.openSession()) {
             transaction = session.beginTransaction();
@@ -43,11 +43,11 @@ public class PenaltyRepository {
         }
     }
 
-    public void updateById(int id, PenaltyEntity updatedPenalty) {
+    public void updateById(int id, SanctionEntity updatedPenalty) {
         Transaction transaction = null;
         try (Session session = sessionFactory.openSession()) {
             transaction = session.beginTransaction();
-            PenaltyEntity corp = session.get(PenaltyEntity.class, id);
+            SanctionEntity corp = session.get(SanctionEntity.class, id);
             if (corp != null) {
                 corp.setDisplayName(updatedPenalty.getDisplayName());
                 corp.setDescription(updatedPenalty.getDescription());
@@ -64,16 +64,16 @@ public class PenaltyRepository {
         }
     }
 
-    public PenaltyEntity getById(int id) {
+    public SanctionEntity getById(int id) {
         try (Session session = sessionFactory.openSession()) {
-            return session.get(PenaltyEntity.class, id);
+            return session.get(SanctionEntity.class, id);
         }
     }
 
     @SuppressWarnings("unchecked")
-    public List<PenaltyEntity> getAll() {
+    public List<SanctionEntity> getAll() {
         try (Session session = sessionFactory.openSession()) {
-            return session.createQuery("from PenaltyEntity", PenaltyEntity.class).list();  // Query simplified
+            return session.createQuery("from SanctionEntity", SanctionEntity.class).list();  // Query simplified
         }
     }
 
@@ -81,7 +81,7 @@ public class PenaltyRepository {
         Transaction transaction = null;
         try (Session session = sessionFactory.openSession()) {
             transaction = session.beginTransaction();
-            PenaltyEntity corp = session.get(PenaltyEntity.class, id);
+            SanctionEntity corp = session.get(SanctionEntity.class, id);
             if (corp != null) {
                 session.delete(corp);
             }

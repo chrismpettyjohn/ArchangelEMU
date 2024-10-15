@@ -45,13 +45,13 @@ public class BountyManager {
     public void load() {
         LOGGER.info("Bounty manager > starting");
 
-        List<BountyEntity> bountyEntities = BountyRepository.getInstance().getAll();
+        List<BountyEntity> entities = BountyRepository.getInstance().getAll();
 
-        for (BountyEntity bountyEntity : bountyEntities) {
-            this.bountyContext.add(bountyEntity.getId(), BountyMapper.toModel(bountyEntity));
+        for (BountyEntity entity : entities) {
+            this.bountyContext.add(entity.getId(), BountyMapper.toModel(entity));
         }
 
-        LOGGER.info("Bounty manager > loaded " + bountyEntities.size() + " bountys");
+        LOGGER.info("Bounty manager > loaded " + entities.size() + " bountys");
     }
 
     public void dispose() {

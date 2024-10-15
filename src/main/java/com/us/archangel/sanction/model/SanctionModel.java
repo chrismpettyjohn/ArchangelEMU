@@ -1,4 +1,4 @@
-package com.us.archangel.penalty.model;
+package com.us.archangel.sanction.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -7,7 +7,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @AllArgsConstructor
-public class PenaltyModel {
+public class SanctionModel {
 
     private int id;
     private String displayName;

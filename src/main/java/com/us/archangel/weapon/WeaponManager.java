@@ -45,13 +45,13 @@ public class WeaponManager {
     public void load() {
         LOGGER.info("Weapon manager > starting");
 
-        List<WeaponEntity> weaponEntities = WeaponRepository.getInstance().getAll();
+        List<WeaponEntity> entities = WeaponRepository.getInstance().getAll();
 
-        for (WeaponEntity weaponEntity : weaponEntities) {
-            this.weaponContext.add(weaponEntity.getId(), WeaponMapper.toModel(weaponEntity));
+        for (WeaponEntity entity : entities) {
+            this.weaponContext.add(entity.getId(), WeaponMapper.toModel(entity));
         }
 
-        LOGGER.info("Weapon manager > loaded " + weaponEntities.size() + " weapons");
+        LOGGER.info("Weapon manager > loaded " + entities.size() + " weapons");
     }
 
     public void dispose() {
