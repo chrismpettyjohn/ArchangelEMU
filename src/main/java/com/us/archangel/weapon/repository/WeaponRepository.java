@@ -81,7 +81,6 @@ public class WeaponRepository {
         }
     }
 
-    @SuppressWarnings("unchecked")
     public List<WeaponEntity> getAll() {
         try (Session session = sessionFactory.openSession()) {
             return session.createQuery("from WeaponEntity", WeaponEntity.class).list();

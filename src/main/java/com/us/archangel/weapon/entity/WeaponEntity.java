@@ -22,6 +22,7 @@ public class WeaponEntity {
     @Column(name = "unique_name", nullable = false)
     private String uniqueName;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "type")
     private WeaponType type;
 
