@@ -10,7 +10,7 @@ import java.sql.SQLException;
 @Getter
 public class HabboBankAccount {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(HabboTonic.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(HabboBankAccount.class);
 
     @Getter
     private final int id;
