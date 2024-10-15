@@ -1,5 +1,6 @@
 package com.us.archangel.weapon.entity;
 
+import com.us.archangel.weapon.enums.WeaponType;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -22,7 +23,7 @@ public class WeaponEntity {
     private String uniqueName;
 
     @Column(name = "type")
-    private String type;
+    private WeaponType type;
 
     @Column(name = "min_damage", nullable = false)
     private int minDamage;

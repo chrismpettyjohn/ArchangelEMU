@@ -4,9 +4,9 @@ import com.eu.habbo.Emulator;
 import com.eu.habbo.habbohotel.commands.Command;
 import com.eu.habbo.habbohotel.gameclients.GameClient;
 import com.us.archangel.feature.player.packets.outgoing.UserRoleplayStatsChangeComposer;
+import com.us.archangel.weapon.context.WeaponContext;
+import com.us.archangel.weapon.model.WeaponModel;
 import com.us.roleplay.users.HabboWeapon;
-import com.us.roleplay.weapons.Weapon;
-import com.us.roleplay.weapons.WeaponsManager;
 
 
 public class EquipCommand extends Command {
@@ -16,7 +16,7 @@ public class EquipCommand extends Command {
     @Override
     public boolean handle(GameClient gameClient, String[] params) {
         if (params.length < 2) {
-            Weapon prevEquippedWeapon = gameClient.getHabbo().getInventory().getWeaponsComponent().getEquippedWeapon().getWeapon();
+            WeaponModel prevEquippedWeapon = gameClient.getHabbo().getInventory().getWeaponsComponent().getEquippedWeapon().getWeapon();
             gameClient.getHabbo().getInventory().getWeaponsComponent().setEquippedWeapon(null);
             gameClient.getHabbo().getRoomUnit().giveEffect(0, -1);
             gameClient.getHabbo().getRoomUnit().getRoom().sendComposer(new UserRoleplayStatsChangeComposer(gameClient.getHabbo()).compose());
@@ -38,7 +38,7 @@ public class EquipCommand extends Command {
         }
 
         gameClient.getHabbo().getInventory().getWeaponsComponent().setEquippedWeapon(matchingWeapon);
-        gameClient.getHabbo().getRoomUnit().giveEffect(WeaponsManager.getInstance().getWeaponByID(matchingWeapon.getWeaponID()).getEquipEffect(), -1);
+        gameClient.getHabbo().getRoomUnit().giveEffect(WeaponContext.getInstance().get(matchingWeapon.getWeaponID()).getEquipEffect(), -1);
         gameClient.getHabbo().getRoomUnit().getRoom().sendComposer(new UserRoleplayStatsChangeComposer(gameClient.getHabbo()).compose());
         gameClient.getHabbo().shout(matchingWeapon.getWeapon().getEquipMessage().replace(":displayName", matchingWeapon.getWeapon().getDisplayName()));
 

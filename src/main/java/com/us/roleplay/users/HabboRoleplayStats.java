@@ -7,11 +7,11 @@ import com.eu.habbo.habbohotel.users.Habbo;
 import com.us.archangel.feature.paramedic.actions.HospitalRecoveryAction;
 import com.us.archangel.feature.paramedic.actions.TeleportHospitalAction;
 import com.us.archangel.skill.model.*;
+import com.us.archangel.weapon.model.WeaponModel;
 import com.us.roleplay.corp.Corp;
 import com.us.roleplay.corp.CorpManager;
 import com.us.roleplay.corp.CorpPosition;
 import com.us.archangel.feature.player.packets.outgoing.UserRoleplayStatsChangeComposer;
-import com.us.roleplay.weapons.Weapon;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -456,7 +456,7 @@ public class HabboRoleplayStats{
         Habbo habbo = Emulator.getGameEnvironment().getHabboManager().getHabbo(this.userID);
 
         if (habbo.getInventory().getWeaponsComponent().getEquippedWeapon() != null) {
-            Weapon equippedWeapon = habbo.getInventory().getWeaponsComponent().getEquippedWeapon().getWeapon();
+            WeaponModel equippedWeapon = habbo.getInventory().getWeaponsComponent().getEquippedWeapon().getWeapon();
             damageModifier += random.nextInt(equippedWeapon.getMaxDamage() - equippedWeapon.getMinDamage() + equippedWeapon.getMaxDamage());
         }
         return damageModifier;

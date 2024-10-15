@@ -1,5 +1,6 @@
 package com.us.archangel.weapon.model;
 
+import com.us.archangel.weapon.enums.WeaponType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -11,7 +12,7 @@ public class WeaponModel {
     private int id;
     private String displayName;
     private String uniqueName;
-    private String type;
+    private WeaponType type;
     private int minDamage;
     private int maxDamage;
     private int rangeInTiles;

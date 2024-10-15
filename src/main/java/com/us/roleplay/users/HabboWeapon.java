@@ -1,8 +1,8 @@
 package com.us.roleplay.users;
 
 import com.eu.habbo.Emulator;
-import com.us.roleplay.weapons.Weapon;
-import com.us.roleplay.weapons.WeaponsManager;
+import com.us.archangel.weapon.context.WeaponContext;
+import com.us.archangel.weapon.model.WeaponModel;
 import lombok.Getter;
 import lombok.Setter;
 import org.slf4j.Logger;
@@ -18,7 +18,7 @@ public class HabboWeapon {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(HabboWeapon.class);
 
-    private Weapon weapon;
+    private WeaponModel weapon;
 
     private int weaponID;
 
@@ -28,7 +28,7 @@ public class HabboWeapon {
     private int currentAmmo;
 
     public HabboWeapon(ResultSet set) throws SQLException {
-        this.weapon = WeaponsManager.getInstance().getWeaponByID(set.getInt("weapon_id"));
+        this.weapon = WeaponContext.getInstance().get(set.getInt("weapon_id"));
         this.weaponID = set.getInt("weapon_id");
         this.userID = set.getInt("user_id");
         this.currentAmmo = this.weapon.getAmmoCapacity();
