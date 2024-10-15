@@ -16,7 +16,7 @@ public class RoleplayFeatureManager {
 
     public static RoleplayFeatureManager getInstance() {
         if (instance == null) {
-            throw new RuntimeException("RoleplayFeatureManager has not been initialized");
+            return new RoleplayFeatureManager();
         }
         return instance;
     }
