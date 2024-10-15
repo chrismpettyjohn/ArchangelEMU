@@ -6,10 +6,10 @@ import com.eu.habbo.habbohotel.guilds.GuildMember;
 import com.eu.habbo.habbohotel.users.Habbo;
 import com.us.archangel.feature.paramedic.actions.HospitalRecoveryAction;
 import com.us.archangel.feature.paramedic.actions.TeleportHospitalAction;
+import com.us.archangel.skill.model.*;
 import com.us.roleplay.corp.Corp;
 import com.us.roleplay.corp.CorpManager;
 import com.us.roleplay.corp.CorpPosition;
-import com.us.roleplay.skill.*;
 import com.us.roleplay.messages.outgoing.user.UserRoleplayStatsChangeComposer;
 import com.us.roleplay.weapons.Weapon;
 import lombok.Getter;
@@ -81,8 +81,8 @@ public class HabboRoleplayStats{
             );
         }
     }
-    public PlayerSkill getPlayerLevel() {
-        return new PlayerSkill(this.playerXP, 1, 1);
+    public PlayerSkillModel getPlayerLevel() {
+        return new PlayerSkillModel(this.playerXP, 1, 1);
     }
 
     @Getter
@@ -105,8 +105,8 @@ public class HabboRoleplayStats{
             );
         }
     }
-    public StrengthSkill getStrengthLevel() {
-        return new StrengthSkill(this.strengthXP, 1, 1);
+    public StrengthSkillModel getStrengthLevel() {
+        return new StrengthSkillModel(this.strengthXP, 1, 1);
     }
 
     @Getter
@@ -129,8 +129,8 @@ public class HabboRoleplayStats{
             );
         }
     }
-    public AccuracySkill getAccuracyLevel() {
-        return new AccuracySkill(this.accuracyXP, 1, 1);
+    public AccuracySkillModel getAccuracyLevel() {
+        return new AccuracySkillModel(this.accuracyXP, 1, 1);
     }
 
     @Getter
@@ -153,8 +153,8 @@ public class HabboRoleplayStats{
             );
         }
     }
-    public StaminaSkill getStaminaLevel() {
-        return new StaminaSkill(this.staminaXP, 1, 1);
+    public StaminaSkillModel getStaminaLevel() {
+        return new StaminaSkillModel(this.staminaXP, 1, 1);
     }
     @Getter
     private int meleeXP;
@@ -176,8 +176,8 @@ public class HabboRoleplayStats{
             );
         }
     }
-    public MeleeSkill getMeleeLevel() {
-        return new MeleeSkill(this.meleeXP, 1, 1);
+    public MeleeSkillModel getMeleeLevel() {
+        return new MeleeSkillModel(this.meleeXP, 1, 1);
     }
 
     @Getter
@@ -200,8 +200,8 @@ public class HabboRoleplayStats{
             );
         }
     }
-    public FarmingSkill getFarmingLevel() {
-        return new FarmingSkill(this.farmingXP, 1, 1);
+    public FarmingSkillModel getFarmingLevel() {
+        return new FarmingSkillModel(this.farmingXP, 1, 1);
     }
 
     @Getter
@@ -224,8 +224,8 @@ public class HabboRoleplayStats{
             );
         }
     }
-    public FishingSkill getFishingLevel() {
-        return new FishingSkill(this.fishingXP, 1, 1);
+    public FishingSkillModel getFishingLevel() {
+        return new FishingSkillModel(this.fishingXP, 1, 1);
     }
 
     @Getter
@@ -248,8 +248,8 @@ public class HabboRoleplayStats{
             );
         }
     }
-    public MiningSkill getMiningLevel() {
-        return new MiningSkill(this.miningXP, 1, 1);
+    public MiningSkillModel getMiningLevel() {
+        return new MiningSkillModel(this.miningXP, 1, 1);
     }
 
     @Getter
@@ -272,8 +272,8 @@ public class HabboRoleplayStats{
             );
         }
     }
-    public LumberjackSkill getLumberjackLevel() {
-        return new LumberjackSkill(this.lumberjackXP, 1, 1);
+    public LumberjackSkillModel getLumberjackLevel() {
+        return new LumberjackSkillModel(this.lumberjackXP, 1, 1);
     }
 
     @Getter
@@ -296,8 +296,8 @@ public class HabboRoleplayStats{
             );
         }
     }
-    public WeaponSkill getWeaponLevel() {
-        return new WeaponSkill(this.weaponXP, 1, 1);
+    public WeaponSkillModel getWeaponLevel() {
+        return new WeaponSkillModel(this.weaponXP, 1, 1);
     }
 
     @Getter

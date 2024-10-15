@@ -1,12 +1,12 @@
-package com.us.roleplay.skill;
+package com.us.archangel.skill.model;
 
-public abstract class Skill<T> {
+public abstract class SkillModel<T> {
     private final int baseXP;
     private final int levelMultiplier;
     private final int linearIncrease;
 
     // Constructor to set the constants for the XP formula
-    public Skill(int baseXP, int levelMultiplier, int linearIncrease) {
+    public SkillModel(int baseXP, int levelMultiplier, int linearIncrease) {
         this.baseXP = baseXP;
         this.levelMultiplier = levelMultiplier;
         this.linearIncrease = linearIncrease;
