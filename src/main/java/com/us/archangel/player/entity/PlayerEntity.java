@@ -42,7 +42,7 @@ public class PlayerEntity {
     @Column(name = "energy_max")
     private int energyMax;
 
-    @Column(name = "energy_now")
+    @Column(name = "armor_now")
     private int armorNow;
 
     @Column(name = "armor_max")

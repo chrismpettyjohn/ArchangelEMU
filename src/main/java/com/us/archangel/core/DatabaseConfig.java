@@ -1,5 +1,11 @@
 package com.us.archangel.core;
 
+import com.us.archangel.corp.entity.CorpEntity;
+import com.us.archangel.corp.entity.CorpRoleEntity;
+import com.us.archangel.gang.entity.GangEntity;
+import com.us.archangel.gang.entity.GangRoleEntity;
+import com.us.archangel.player.entity.PlayerEntity;
+import com.us.archangel.player.entity.PlayerSkillEntity;
 import com.us.archangel.weapon.entity.WeaponEntity;
 import com.eu.habbo.core.ConfigurationManager;
 import org.hibernate.SessionFactory;
@@ -17,10 +23,18 @@ public class DatabaseConfig {
                 configuration.setProperty("hibernate.connection.url", "jdbc:mariadb://" + config.getValue("db.hostname") + ":" + config.getValue("db.port") + "/" + config.getValue("db.database"));
                 configuration.setProperty("hibernate.connection.username", config.getValue("db.username"));
                 configuration.setProperty("hibernate.connection.password", config.getValue("db.password"));
-                
+
                 configuration.setProperty("hibernate.dialect", "org.hibernate.dialect.MariaDBDialect");
                 configuration.setProperty("hibernate.hbm2ddl.auto", "update");
 
+                configuration.addAnnotatedClass(CorpEntity.class);
+                configuration.addAnnotatedClass(CorpRoleEntity.class);
+
+                configuration.addAnnotatedClass(GangEntity.class);
+                configuration.addAnnotatedClass(GangRoleEntity.class);
+
+                configuration.addAnnotatedClass(PlayerEntity.class);
+                configuration.addAnnotatedClass(PlayerSkillEntity.class);
 
                 configuration.addAnnotatedClass(WeaponEntity.class);
 
