@@ -68,4 +68,12 @@
         <appender-ref ref="FileErrors" />
         <appender-ref ref="FileErrorsSql" />
     </root>
+
+    <logger name="org.hibernate" level="ERROR"/>
+    <logger name="org.hibernate.SQL" level="OFF"/>
+    <logger name="org.hibernate.type.descriptor.sql.BasicBinder" level="OFF"/>
+
+    <root level="INFO">
+        <appender-ref ref="CONSOLE"/>
+    </root>
 </configuration>
