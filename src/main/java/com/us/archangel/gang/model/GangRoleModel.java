@@ -7,11 +7,10 @@ import lombok.Setter;
 @Getter
 @Setter
 @AllArgsConstructor
-public class GangModel {
+public class GangRoleModel {
 
     private int id;
-    private String displayName;
-    private int userId;
-    private int roomId;
-
+    private int gangId;
+    private int orderId;
+    private String name;
 }

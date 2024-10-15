@@ -1,41 +1,41 @@
 package com.us.archangel.gang.repository;
 
-import com.us.archangel.gang.entity.GangEntity;
+import com.us.archangel.gang.entity.GangRoleEntity;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
 import java.util.List;
 
-public class GangRepository {
+public class GangRoleRepository {
 
-    private static GangRepository instance;
+    private static GangRoleRepository instance;
 
-    public static GangRepository getInstance(SessionFactory sessionFactory) {
+    public static GangRoleRepository getInstance(SessionFactory sessionFactory) {
         if (instance == null) {
-            instance = new GangRepository(sessionFactory);
+            instance = new GangRoleRepository(sessionFactory);
         }
         return instance;
     }
 
-    public static GangRepository getInstance() {
+    public static GangRoleRepository getInstance() {
         if (instance == null) {
-            throw new RuntimeException("GangRepository has not been initialized");
+            throw new RuntimeException("GangRoleRepository has not been initialized");
         }
         return instance;
     }
 
     private final SessionFactory sessionFactory;
 
-    private GangRepository(SessionFactory sessionFactory) {
+    private GangRoleRepository(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
 
-    public void create(GangEntity gang) {
+    public void create(GangRoleEntity gangRole) {
         Transaction transaction = null;
         try (Session session = sessionFactory.openSession()) {
             transaction = session.beginTransaction();
-            session.save(gang);
+            session.save(gangRole);
             transaction.commit();
         } catch (Exception e) {
             if (transaction != null) transaction.rollback();
@@ -43,16 +43,16 @@ public class GangRepository {
         }
     }
 
-    public void updateById(int id, GangEntity updatedGang) {
+    public void updateById(int id, GangRoleEntity updatedGangRole) {
         Transaction transaction = null;
         try (Session session = sessionFactory.openSession()) {
             transaction = session.beginTransaction();
-            GangEntity gang = session.get(GangEntity.class, id);
-            if (gang != null) {
-                gang.setDisplayName(updatedGang.getDisplayName());
-                gang.setUserId(updatedGang.getUserId());
-                gang.setRoomId(updatedGang.getRoomId());
-                session.update(gang);
+            GangRoleEntity gangRole = session.get(GangRoleEntity.class, id);
+            if (gangRole != null) {
+                gangRole.setName(updatedGangRole.getName());
+                gangRole.setGangID(updatedGangRole.getGangID());
+                gangRole.setOrderID(updatedGangRole.getOrderID());
+                session.update(gangRole);
             }
             transaction.commit();
         } catch (Exception e) {
@@ -61,16 +61,16 @@ public class GangRepository {
         }
     }
 
-    public GangEntity getById(int id) {
+    public GangRoleEntity getById(int id) {
         try (Session session = sessionFactory.openSession()) {
-            return session.get(GangEntity.class, id);
+            return session.get(GangRoleEntity.class, id);
         }
     }
 
     @SuppressWarnings("unchecked")
-    public List<GangEntity> getAll() {
+    public List<GangRoleEntity> getAll() {
         try (Session session = sessionFactory.openSession()) {
-            return session.createQuery("from GangEntity").list();  // Query simplified
+            return session.createQuery("from GangRoleEntity").list();
         }
     }
 
@@ -78,9 +78,9 @@ public class GangRepository {
         Transaction transaction = null;
         try (Session session = sessionFactory.openSession()) {
             transaction = session.beginTransaction();
-            GangEntity gang = session.get(GangEntity.class, id);
-            if (gang != null) {
-                session.delete(gang);
+            GangRoleEntity gangRole = session.get(GangRoleEntity.class, id);
+            if (gangRole != null) {
+                session.delete(gangRole);
             }
             transaction.commit();
         } catch (Exception e) {
