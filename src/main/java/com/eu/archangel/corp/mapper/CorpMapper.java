@@ -13,7 +13,7 @@ public class CorpMapper {
                 entity.getId(),
                 entity.getDisplayName(),
                 entity.getSector(),
-                entity.getCorpIndustry(),
+                entity.getIndustry(),
                 entity.getUserId(),
                 entity.getRoomId()
         );
@@ -27,7 +27,7 @@ public class CorpMapper {
         entity.setId(model.getId());
         entity.setDisplayName(model.getDisplayName());
         entity.setSector(model.getSector());
-        entity.setCorpIndustry(model.getIndustry());
+        entity.setIndustry(model.getIndustry());
         entity.setUserId(model.getUserId());
         entity.setRoomId(model.getRoomId());
         return entity;

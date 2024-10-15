@@ -35,7 +35,7 @@ public class CorpRepository {
         Transaction transaction = null;
         try (Session session = sessionFactory.openSession()) {
             transaction = session.beginTransaction();
-            session.save(corp); // Persist the entity
+            session.save(corp);
             transaction.commit();
         } catch (Exception e) {
             if (transaction != null) transaction.rollback();
@@ -49,12 +49,12 @@ public class CorpRepository {
             transaction = session.beginTransaction();
             CorpEntity corp = session.get(CorpEntity.class, id);
             if (corp != null) {
-                corp.setDisplayName(updatedCorp.getDisplayName());
                 corp.setSector(updatedCorp.getSector());
-                corp.setCorpIndustry(updatedCorp.getCorpIndustry());
+                corp.setIndustry(updatedCorp.getIndustry());
+                corp.setDisplayName(updatedCorp.getDisplayName());
                 corp.setUserId(updatedCorp.getUserId());
                 corp.setRoomId(updatedCorp.getRoomId());
-                session.update(corp); // Update the entity
+                session.update(corp);
             }
             transaction.commit();
         } catch (Exception e) {
@@ -72,7 +72,7 @@ public class CorpRepository {
     @SuppressWarnings("unchecked")
     public List<CorpEntity> getAll() {
         try (Session session = sessionFactory.openSession()) {
-            return session.createQuery("from CorpEntity").list();
+            return session.createQuery("from CorpEntity").list();  // Query simplified
         }
     }
 

@@ -1,10 +1,12 @@
 package com.eu.archangel.corp;
 
 import com.eu.archangel.corp.context.CorpContext;
+import com.eu.archangel.corp.context.CorpRoleContext;
 import com.eu.archangel.corp.entity.CorpEntity;
 import com.eu.archangel.corp.mapper.CorpMapper;
 import com.eu.archangel.corp.model.CorpModel;
 import com.eu.archangel.corp.repository.CorpRepository;
+import com.eu.archangel.corp.repository.CorpRoleRepository;
 import lombok.Getter;
 import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
@@ -34,11 +36,18 @@ public class CorpManager {
 
     private final CorpRepository corpRepository;
 
+    private final CorpRoleRepository corpRoleRepository;
+
     private final CorpContext corpContext;
+
+    private final CorpRoleContext corpRoleContext;
 
     private CorpManager(SessionFactory sessionFactory) {
         this.corpContext = CorpContext.getInstance();
         this.corpRepository = CorpRepository.getInstance(sessionFactory);
+
+        this.corpRoleContext = CorpRoleContext.getInstance();
+        this.corpRoleRepository = CorpRoleRepository.getInstance(sessionFactory);
         this.load();
     }
 

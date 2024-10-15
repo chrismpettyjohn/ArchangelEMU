@@ -8,7 +8,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "rp_corporations")
+@Table(name = "archangel_corps")
 public class CorpEntity {
 
     @Id
@@ -23,7 +23,7 @@ public class CorpEntity {
     private CorpSector sector;
 
     @Column(name = "industry")
-    private CorpSector CorpIndustry;
+    private CorpSector industry;
 
     @Column(name = "user_id")
     private int userId;
