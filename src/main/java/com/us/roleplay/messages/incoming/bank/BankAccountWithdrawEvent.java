@@ -1,7 +1,7 @@
 package com.us.roleplay.messages.incoming.bank;
 
 import com.eu.habbo.messages.incoming.MessageHandler;
-import com.us.roleplay.commands.bank.BankAccountWithdrawCommand;
+import com.us.archangel.feature.bank.commands.BankAccountWithdrawCommand;
 
 public class BankAccountWithdrawEvent extends MessageHandler {
     @Override

@@ -1,7 +1,7 @@
 package com.us.roleplay.messages.incoming.bank;
 
 import com.eu.habbo.messages.incoming.MessageHandler;
-import com.us.roleplay.commands.bank.BankAccountCloseCommand;
+import com.us.archangel.feature.bank.commands.BankAccountCloseCommand;
 
 public class BankAccountCloseEvent extends MessageHandler {
     @Override

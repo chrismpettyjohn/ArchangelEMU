@@ -1,7 +1,7 @@
 package com.us.roleplay.messages.incoming.bank;
 
 import com.eu.habbo.messages.incoming.MessageHandler;
-import com.us.roleplay.commands.bank.BankConnectATMCommand;
+import com.us.archangel.feature.bank.commands.BankConnectATMCommand;
 
 public class BankConnectComputerEvent extends MessageHandler {
     @Override

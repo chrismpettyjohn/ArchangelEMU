@@ -34,7 +34,7 @@ import com.eu.habbo.habbohotel.rooms.constants.RoomRightLevels;
 import com.eu.habbo.messages.outgoing.rooms.users.UserTypingMessageComposer;
 import com.eu.habbo.plugin.events.users.UserCommandEvent;
 import com.eu.habbo.plugin.events.users.UserExecuteCommandEvent;
-import com.us.roleplay.commands.bank.*;
+import com.us.archangel.feature.bank.commands.*;
 import com.us.roleplay.commands.billing.PayBillCommand;
 import com.us.archangel.feature.combat.commands.EquipCommand;
 import com.us.archangel.feature.combat.commands.SetHealthCommand;

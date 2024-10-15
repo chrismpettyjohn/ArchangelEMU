@@ -1,4 +1,4 @@
-package com.us.roleplay.commands.bank;
+package com.us.archangel.feature.bank.commands;
 
 import com.eu.habbo.Emulator;
 import com.eu.habbo.habbohotel.commands.Command;
@@ -9,10 +9,10 @@ import com.us.roleplay.corp.CorpTag;
 import com.us.roleplay.database.HabboBankAccountRepository;
 import com.us.roleplay.users.HabboBankAccount;
 
-public class BankAccountCloseCommand extends Command  {
+public class BankAccountOpenCommand extends Command  {
 
-    public BankAccountCloseCommand() {
-        super("cmd_bank_close");
+    public BankAccountOpenCommand() {
+        super("cmd_bank_open");
     }
 
     @Override
@@ -57,7 +57,6 @@ public class BankAccountCloseCommand extends Command  {
             gameClient.getHabbo().whisper(Emulator.getTexts()
                     .getValue("generic.user_not_found")
                     .replace(":username", username)
-                    .replace(":corpName", bankCorp.getGuild().getName())
             );
             return true;
         }
@@ -72,23 +71,28 @@ public class BankAccountCloseCommand extends Command  {
 
         HabboBankAccount bankAccount = HabboBankAccountRepository.getInstance().getByUserAndCorpID(targetedUser.getHabboInfo().getId(), bankCorp.getGuild().getId());
 
-        if (bankAccount == null) {
-            gameClient.getHabbo().whisper(Emulator.getTexts().getValue("roleplay.bank.account_not_found"));
+        if (bankAccount != null) {
+            gameClient.getHabbo().whisper(Emulator.getTexts()
+                    .getValue("roleplay.bank.roleplay.bank.account_already_exists")
+                    .replace(":username", targetedUser.getHabboInfo().getUsername())
+            );
             return true;
         }
 
-        int bankTotalCredits = bankAccount.getCheckingBalance();
+        int currentTime = (int) (System.currentTimeMillis() / 1000);
+        HabboBankAccountRepository.getInstance().create(targetedUser.getHabboInfo().getId(), bankCorp.getGuild().getId(), 0, currentTime, currentTime);
 
-        targetedUser.getHabboInfo().setCredits(gameClient.getHabbo().getHabboInfo().getCredits() + bankTotalCredits);
-        HabboBankAccountRepository.getInstance().delete(bankAccount.getId());
-
-        targetedUser.shout(Emulator.getTexts().getValue("roleplay.bank.account_closed"));
         gameClient.getHabbo().shout(Emulator.getTexts()
-                .getValue("roleplay.bank.assisted_account_close")
+                .getValue("roleplay.bank.account_started")
+                .replace(":username", targetedUser.getHabboInfo().getUsername())
+                .replace(":corpName", bankCorp.getGuild().getName())
+        );
+
+        gameClient.getHabbo().shout(Emulator.getTexts()
+                .getValue("roleplay.bank.assisted_account_start")
                 .replace(":username", targetedUser.getHabboInfo().getUsername())
         );
 
         return true;
     }
-
 }

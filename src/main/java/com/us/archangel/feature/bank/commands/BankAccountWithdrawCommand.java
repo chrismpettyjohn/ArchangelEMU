@@ -1,4 +1,4 @@
-package com.us.roleplay.commands.bank;
+package com.us.archangel.feature.bank.commands;
 
 import com.eu.habbo.Emulator;
 import com.eu.habbo.habbohotel.commands.Command;
@@ -8,15 +8,14 @@ import com.us.roleplay.corp.CorpManager;
 import com.us.roleplay.database.HabboBankAccountRepository;
 import com.us.roleplay.users.HabboBankAccount;
 
-public class BankAccountDepositCommand extends Command  {
+public class BankAccountWithdrawCommand extends Command  {
 
-    public BankAccountDepositCommand() {
-        super("cmd_bank_deposit");
+    public BankAccountWithdrawCommand() {
+        super("cmd_bank_withdraw");
     }
 
     @Override
     public boolean handle(GameClient gameClient, String[] params) {
-
         if (params == null) {
             return true;
         }
@@ -29,7 +28,7 @@ public class BankAccountDepositCommand extends Command  {
         Corp bankCorp = CorpManager.getInstance().getCorpByID(corpID);
 
         if (bankCorp == null) {
-            gameClient.getHabbo().whisper(Emulator.getTexts().getValue("generic.corp_not_found"));
+            gameClient.getHabbo().whisper(Emulator.getTexts().getValue("generic.bank.corp_not_found"));
             return true;
         }
 
@@ -40,20 +39,19 @@ public class BankAccountDepositCommand extends Command  {
             return true;
         }
 
-        int depositAmount = Integer.parseInt(params[2]);
+        int withdrawAmount =Integer.parseInt(params[2]);
 
-        if (gameClient.getHabbo().getHabboInfo().getCredits() < depositAmount) {
+        if (bankAccount.getCheckingBalance() < withdrawAmount) {
             gameClient.getHabbo().whisper(Emulator.getTexts().getValue("generic.not_enough_credits"));
             return true;
         }
 
-        gameClient.getHabbo().getHabboInfo().setCredits(gameClient.getHabbo().getHabboInfo().getCredits() - depositAmount);
-        bankAccount.setCheckingBalance(bankAccount.getCheckingBalance() + depositAmount);
+        bankAccount.setCheckingBalance(bankAccount.getCheckingBalance() - withdrawAmount);
         HabboBankAccountRepository.getInstance().update(bankAccount);
 
         gameClient.getHabbo().shout(Emulator.getTexts()
-                .getValue("roleplay.bank.deposit_success")
-                .replace(":credits", String.valueOf(depositAmount))
+                .getValue("roleplay.bank.withdraw_success")
+                .replace(":credits", String.valueOf(withdrawAmount))
         );
 
         return true;

@@ -1,7 +1,7 @@
 package com.us.roleplay.messages.incoming.bank;
 
 import com.eu.habbo.messages.incoming.MessageHandler;
-import com.us.roleplay.commands.bank.BankAccountOpenCommand;
+import com.us.archangel.feature.bank.commands.BankAccountOpenCommand;
 
 public class BankAccountOpenEvent extends MessageHandler {
     @Override
