@@ -1,4 +1,4 @@
-package com.us.roleplay.commands.gang;
+package com.us.archangel.feature.gang.commands;
 
 import com.eu.habbo.Emulator;
 import com.eu.habbo.habbohotel.commands.Command;

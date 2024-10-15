@@ -1,7 +1,7 @@
 package com.us.roleplay.messages.incoming.gang;
 
 import com.eu.habbo.messages.incoming.MessageHandler;
-import com.us.roleplay.commands.gang.GangDisbandCommand;
+import com.us.archangel.feature.gang.commands.GangDisbandCommand;
 
 public class GangDisbandEvent extends MessageHandler {
     @Override

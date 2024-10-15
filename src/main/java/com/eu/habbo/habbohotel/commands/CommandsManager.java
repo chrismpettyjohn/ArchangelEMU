@@ -39,7 +39,7 @@ import com.us.roleplay.commands.billing.PayBillCommand;
 import com.us.roleplay.commands.combat.EquipCommand;
 import com.us.roleplay.commands.combat.SetHealthCommand;
 import com.us.archangel.feature.corp.commands.*;
-import com.us.roleplay.commands.gang.*;
+import com.us.archangel.feature.gang.commands.*;
 import com.us.roleplay.commands.license.LicenseConnectComputerCommand;
 import com.us.roleplay.commands.license.LicenseOfferCommand;
 import com.us.roleplay.commands.license.LicenseStatusCommand;
