@@ -1,7 +1,7 @@
 package com.us.roleplay.messages.incoming.license;
 
 import com.eu.habbo.messages.incoming.MessageHandler;
-import com.us.roleplay.commands.license.LicenseStatusCommand;
+import com.us.archangel.feature.license.commands.LicenseStatusCommand;
 
 public class LicenseStatusQueryEvent extends MessageHandler {
     @Override

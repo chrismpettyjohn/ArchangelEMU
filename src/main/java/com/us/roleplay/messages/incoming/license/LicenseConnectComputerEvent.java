@@ -1,7 +1,7 @@
 package com.us.roleplay.messages.incoming.license;
 
 import com.eu.habbo.messages.incoming.MessageHandler;
-import com.us.roleplay.commands.license.LicenseConnectComputerCommand;
+import com.us.archangel.feature.license.commands.LicenseConnectComputerCommand;
 
 public class LicenseConnectComputerEvent extends MessageHandler {
     @Override

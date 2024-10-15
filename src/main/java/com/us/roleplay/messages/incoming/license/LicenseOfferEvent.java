@@ -1,7 +1,7 @@
 package com.us.roleplay.messages.incoming.license;
 
 import com.eu.habbo.messages.incoming.MessageHandler;
-import com.us.roleplay.commands.license.LicenseOfferCommand;
+import com.us.archangel.feature.license.commands.LicenseOfferCommand;
 import com.us.roleplay.corp.LicenseType;
 
 public class LicenseOfferEvent extends MessageHandler {
