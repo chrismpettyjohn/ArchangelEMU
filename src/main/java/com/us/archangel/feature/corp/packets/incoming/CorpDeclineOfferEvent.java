@@ -1,8 +1,8 @@
 package com.us.archangel.feature.corp.packets.incoming;
 
 import com.eu.habbo.messages.incoming.MessageHandler;
-import com.us.roleplay.commands.corp.CorpDeclineJobCommand;
-import com.us.roleplay.commands.corp.CorpPromoteCommand;
+import com.us.archangel.feature.corp.commands.CorpDeclineJobCommand;
+import com.us.archangel.feature.corp.commands.CorpPromoteCommand;
 
 public class CorpDeclineOfferEvent  extends MessageHandler {
     @Override

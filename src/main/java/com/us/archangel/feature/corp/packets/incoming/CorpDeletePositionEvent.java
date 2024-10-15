@@ -2,7 +2,7 @@ package com.us.archangel.feature.corp.packets.incoming;
 
 import com.eu.habbo.Emulator;
 import com.eu.habbo.messages.incoming.MessageHandler;
-import com.us.roleplay.commands.corp.CorpFireUserCommand;
+import com.us.archangel.feature.corp.commands.CorpFireUserCommand;
 import com.us.roleplay.corp.Corp;
 import com.us.roleplay.corp.CorpManager;
 import com.us.roleplay.corp.CorpPosition;

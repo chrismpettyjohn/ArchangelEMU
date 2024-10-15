@@ -1,4 +1,4 @@
-package com.us.roleplay.commands.corp;
+package com.us.archangel.feature.corp.commands;
 
 import com.eu.habbo.Emulator;
 import com.eu.habbo.habbohotel.commands.Command;
@@ -6,9 +6,9 @@ import com.eu.habbo.habbohotel.gameclients.GameClient;
 import com.us.roleplay.corp.Corp;
 import com.us.roleplay.corp.CorpManager;
 
-public class CorpAcceptJobCommand extends Command {
-    public CorpAcceptJobCommand() {
-        super("cmd_corp_acceptjob");
+public class CorpDeclineJobCommand extends Command {
+    public CorpDeclineJobCommand() {
+        super("cmd_corp_declinejob");
     }
     @Override
     public boolean handle(GameClient gameClient, String[] params) {
@@ -35,12 +35,9 @@ public class CorpAcceptJobCommand extends Command {
             return true;
         }
 
+        targetedCorp.removeInvitedUser(gameClient.getHabbo());
 
-        gameClient.getHabbo().getHabboRoleplayStats().setCorp(targetedCorp.getGuild().getId(), targetedCorp.getPositionByOrderID(1).getId());
-
-        gameClient.getHabbo().getHabboRoleplayStats().getCorp().removeInvitedUser(gameClient.getHabbo());
-
-        gameClient.getHabbo().shout(Emulator.getTexts().getValue("commands.roleplay.cmd_corp_invite_accepted").replace(":corp", targetedCorp.getGuild().getName()));
+        gameClient.getHabbo().shout(Emulator.getTexts().getValue("commands.roleplay.cmd_corp_invite_rejected").replace(":corp", targetedCorp.getGuild().getName()));
 
         return true;
     }
