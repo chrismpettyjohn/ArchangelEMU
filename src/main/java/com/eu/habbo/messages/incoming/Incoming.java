@@ -61,6 +61,7 @@ import com.eu.habbo.messages.incoming.wired.ApplySnapshotEvent;
 import com.eu.habbo.messages.incoming.wired.UpdateActionEvent;
 import com.eu.habbo.messages.incoming.wired.UpdateConditionEvent;
 import com.eu.habbo.messages.incoming.wired.UpdateTriggerEvent;
+import com.us.archangel.feature.corp.packets.incoming.*;
 import com.us.roleplay.messages.incoming.bank.*;
 import com.us.roleplay.messages.incoming.billing.PayBillEvent;
 import com.us.roleplay.messages.incoming.combat.EquipWeaponEvent;
@@ -68,7 +69,6 @@ import com.us.roleplay.messages.incoming.combat.ListMyWeaponsEvent;
 import com.us.roleplay.messages.incoming.combat.UserAttackEvent;
 import com.us.roleplay.messages.incoming.combat.WeaponReloadEvent;
 import com.us.roleplay.messages.incoming.controls.UserMovementEvent;
-import com.us.roleplay.messages.incoming.corp.*;
 import com.us.roleplay.messages.incoming.device.DeviceCloseEvent;
 import com.us.roleplay.messages.incoming.device.DeviceOpenEvent;
 import com.us.roleplay.messages.incoming.device.InfoScreenSaveEvent;
@@ -954,15 +954,15 @@ public enum Incoming {
 
     corpDemoteUserEvent(8004, CorpDemoteUserEvent.class),
 
-    corpFireUserEvent(8005, CorpFireUserEvent.class),
+    corpFireUserEvent(8005, CorpDeletePositionEvent.CorpFireUserEvent.class),
 
     corpAcceptJobEvent(8006, CorpOfferUserJobEvent.class),
 
-    corpPromoteUserEvent(8006, CorpPromoteUserEvent.class),
+    corpPromoteUserEvent(8006, CorpDeclineOfferEvent.CorpPromoteUserEvent.class),
 
-    corpStartWorkEvent(8011, CorpStartWorkEvent.class),
+    corpStartWorkEvent(8011, CorpEditPositionEvent.CorpStartWorkEvent.class),
 
-    corpStopWorkEvent(8012, CorpStopWorkEvent.class),
+    corpStopWorkEvent(8012, CorpListEvent.CorpStopWorkEvent.class),
 
     gangDeclineInviteEvent(8008, GangDeclineInviteEvent.class),
 
@@ -980,7 +980,7 @@ public enum Incoming {
 
     gangInfoQueryEvent(8017, GangInfoQueryEvent.class),
 
-    corpPositionInfoQueryEvent(8018, CorpPositionInfoQueryEvent.class),
+    corpPositionInfoQueryEvent(8018, CorpDeletePositionEvent.CorpPositionInfoQueryEvent.class),
 
     timeOfDayQueryEvent(8019, TimeOfDayQueryEvent.class),
 
@@ -1032,7 +1032,7 @@ public enum Incoming {
 
     corpPositionListEvent(8044, CorpPositionListEvent.class),
 
-    corpEmployeeListEvent(8045, CorpEmployeeListEvent.class),
+    corpEmployeeListEvent(8045, CorpEditPositionEvent.CorpEmployeeListEvent.class),
 
     corpEditPositionEvent(8046, CorpEditPositionEvent.class),
 
@@ -1040,7 +1040,7 @@ public enum Incoming {
 
     corpCreatePositionEvent(8048, CorpCreatePositionEvent.class),
 
-    corpSuperhireEvent(8049, CorpSuperHireEvent.class),
+    corpSuperhireEvent(8049, CorpInfoQueryEvent.CorpSuperHireEvent.class),
 
     corpListEvent(8050, CorpListEvent.class),
 

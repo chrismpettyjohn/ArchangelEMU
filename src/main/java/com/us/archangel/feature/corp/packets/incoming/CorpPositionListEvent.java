@@ -1,11 +1,11 @@
-package com.us.roleplay.messages.incoming.corp;
+package com.us.archangel.feature.corp.packets.incoming;
 
 import com.eu.habbo.messages.incoming.MessageHandler;
 import com.us.roleplay.corp.Corp;
 import com.us.roleplay.corp.CorpManager;
-import com.us.roleplay.messages.outgoing.corp.CorpEmployeeListComposer;
+import com.us.archangel.feature.corp.packets.outgoing.CorpPositionListComposer;
 
-public class CorpEmployeeListEvent extends MessageHandler {
+public class CorpPositionListEvent extends MessageHandler {
 
     @Override
     public void handle() {
@@ -17,6 +17,6 @@ public class CorpEmployeeListEvent extends MessageHandler {
             return;
         }
 
-        this.client.sendResponse(new CorpEmployeeListComposer(corp.getGuild().getId()));
+        this.client.sendResponse(new CorpPositionListComposer(corp));
     }
 }

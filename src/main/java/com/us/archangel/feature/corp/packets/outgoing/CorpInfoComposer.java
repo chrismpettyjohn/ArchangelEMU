@@ -1,4 +1,4 @@
-package com.us.roleplay.messages.outgoing.corp;
+package com.us.archangel.feature.corp.packets.outgoing;
 
 import com.eu.habbo.messages.ServerMessage;
 import com.eu.habbo.messages.outgoing.MessageComposer;

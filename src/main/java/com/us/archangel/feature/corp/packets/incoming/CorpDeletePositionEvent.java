@@ -1,14 +1,16 @@
-package com.us.roleplay.messages.incoming.corp;
+package com.us.archangel.feature.corp.packets.incoming;
 
 import com.eu.habbo.Emulator;
 import com.eu.habbo.messages.incoming.MessageHandler;
+import com.us.roleplay.commands.corp.CorpFireUserCommand;
 import com.us.roleplay.corp.Corp;
 import com.us.roleplay.corp.CorpManager;
 import com.us.roleplay.corp.CorpPosition;
 import com.us.roleplay.corp.CorpTag;
 import com.us.roleplay.database.CorpPositionRepository;
 import com.us.roleplay.database.HabboRoleplayStatsRepository;
-import com.us.roleplay.messages.outgoing.corp.CorpPositionListComposer;
+import com.us.archangel.feature.corp.packets.outgoing.CorpPositionInfoComposer;
+import com.us.archangel.feature.corp.packets.outgoing.CorpPositionListComposer;
 import com.us.roleplay.users.HabboRoleplayStats;
 
 import java.util.List;
@@ -71,5 +73,32 @@ public class CorpDeletePositionEvent extends MessageHandler {
         );
 
         this.client.sendResponse(new CorpPositionListComposer(corp));
+    }
+
+    public static class CorpPositionInfoQueryEvent  extends MessageHandler {
+        @Override
+        public void handle() {
+            Integer corpID = this.packet.readInt();
+            Integer corpPositionID = this.packet.readInt();
+
+            if (corpID == 0 || corpPositionID == null) {
+                return;
+            }
+
+            this.client.sendResponse(new CorpPositionInfoComposer(corpID, corpPositionID));
+        }
+    }
+
+    public static class CorpFireUserEvent extends MessageHandler {
+        @Override
+        public void handle() {
+            String targetedUsername = this.packet.readString();
+
+            if (targetedUsername == null) {
+                return;
+            }
+
+            new CorpFireUserCommand().handle(this.client, new String[] {null, targetedUsername});
+        }
     }
 }

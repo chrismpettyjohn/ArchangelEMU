@@ -1,4 +1,4 @@
-package com.us.roleplay.messages.incoming.corp;
+package com.us.archangel.feature.corp.packets.incoming;
 
 import com.eu.habbo.Emulator;
 import com.eu.habbo.messages.incoming.MessageHandler;
@@ -6,7 +6,7 @@ import com.us.roleplay.corp.Corp;
 import com.us.roleplay.corp.CorpManager;
 import com.us.roleplay.corp.CorpPosition;
 import com.us.roleplay.database.CorpPositionRepository;
-import com.us.roleplay.messages.outgoing.corp.CorpPositionListComposer;
+import com.us.archangel.feature.corp.packets.outgoing.CorpPositionListComposer;
 
 public class CorpCreatePositionEvent extends MessageHandler {
 

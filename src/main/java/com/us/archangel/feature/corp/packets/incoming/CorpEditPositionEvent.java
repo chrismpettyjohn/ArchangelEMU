@@ -1,12 +1,14 @@
-package com.us.roleplay.messages.incoming.corp;
+package com.us.archangel.feature.corp.packets.incoming;
 
 import com.eu.habbo.Emulator;
 import com.eu.habbo.messages.incoming.MessageHandler;
+import com.us.roleplay.commands.corp.CorpStartWorkCommand;
 import com.us.roleplay.corp.Corp;
 import com.us.roleplay.corp.CorpManager;
 import com.us.roleplay.corp.CorpPosition;
 import com.us.roleplay.database.CorpPositionRepository;
-import com.us.roleplay.messages.outgoing.corp.CorpPositionListComposer;
+import com.us.archangel.feature.corp.packets.outgoing.CorpEmployeeListComposer;
+import com.us.archangel.feature.corp.packets.outgoing.CorpPositionListComposer;
 
 public class CorpEditPositionEvent extends MessageHandler {
 
@@ -52,5 +54,28 @@ public class CorpEditPositionEvent extends MessageHandler {
         );
 
         this.client.sendResponse(new CorpPositionListComposer(corp));
+    }
+
+    public static class CorpEmployeeListEvent extends MessageHandler {
+
+        @Override
+        public void handle() {
+            int corpID = this.packet.readInt();
+
+            Corp corp = CorpManager.getInstance().getCorpByID(corpID);
+
+            if (corp == null) {
+                return;
+            }
+
+            this.client.sendResponse(new CorpEmployeeListComposer(corp.getGuild().getId()));
+        }
+    }
+
+    public static class CorpStartWorkEvent extends MessageHandler {
+        @Override
+        public void handle() {
+            new CorpStartWorkCommand().handle(this.client, new String[] {});
+        }
     }
 }

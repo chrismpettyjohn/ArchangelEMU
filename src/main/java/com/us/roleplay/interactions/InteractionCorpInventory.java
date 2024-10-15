@@ -7,7 +7,7 @@ import com.eu.habbo.habbohotel.items.interactions.InteractionDefault;
 import com.eu.habbo.habbohotel.rooms.Room;
 import com.eu.habbo.habbohotel.users.HabboInfo;
 import com.us.roleplay.corp.Corp;
-import com.us.roleplay.messages.outgoing.corp.CorpOpenInventoryComposer;
+import com.us.archangel.feature.corp.packets.outgoing.CorpOpenInventoryComposer;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
