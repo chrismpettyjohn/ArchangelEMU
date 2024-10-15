@@ -37,7 +37,7 @@ public class PlayerSkillEntity {
     private int fishingXp;
 
     @ManyToOne
-    @JoinColumn(name = "users_id", nullable = false)
+    @JoinColumn(name = "users_id", nullable = false, insertable=false, updatable=false)
     private PlayerEntity player;
 
 

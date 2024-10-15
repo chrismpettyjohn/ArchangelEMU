@@ -24,6 +24,6 @@ public class GangRoleEntity {
     private String name;
 
     @ManyToOne
-    @JoinColumn(name = "gangs_id", nullable = false)
+    @JoinColumn(name = "gangs_id", nullable = false, insertable=false, updatable=false)
     private GangEntity gang;
 }

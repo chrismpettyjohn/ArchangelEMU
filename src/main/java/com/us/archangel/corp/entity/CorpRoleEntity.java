@@ -1,6 +1,5 @@
 package com.us.archangel.corp.entity;
 
-import com.us.archangel.gang.entity.GangEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -52,6 +51,6 @@ public class CorpRoleEntity {
     private boolean canWorkAnywhere;
 
     @ManyToOne
-    @JoinColumn(name = "corps_id", nullable = false)
+    @JoinColumn(name = "corps_id", nullable = false, insertable=false, updatable=false)
     private CorpEntity corp;
 }
