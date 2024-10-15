@@ -23,7 +23,7 @@ import com.eu.habbo.messages.outgoing.rooms.users.UserUpdateComposer;
 import com.eu.habbo.plugin.Event;
 import com.eu.habbo.plugin.events.roomunit.RoomUnitLookAtPointEvent;
 import com.eu.habbo.plugin.events.roomunit.RoomUnitSetGoalEvent;
-import com.eu.habbo.roleplay.messages.incoming.controls.MovementDirection;
+import com.us.roleplay.messages.incoming.controls.MovementDirection;
 import com.eu.habbo.util.pathfinding.Rotation;
 import gnu.trove.map.hash.THashMap;
 import gnu.trove.set.hash.THashSet;
@@ -31,7 +31,6 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.math3.stat.regression.ModelSpecificationException;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;

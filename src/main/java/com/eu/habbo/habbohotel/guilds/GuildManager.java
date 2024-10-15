@@ -8,7 +8,7 @@ import com.eu.habbo.habbohotel.items.interactions.InteractionGuildFurni;
 import com.eu.habbo.habbohotel.rooms.Room;
 import com.eu.habbo.habbohotel.users.Habbo;
 import com.eu.habbo.messages.outgoing.guild.HabboGroupJoinFailedMessageComposer;
-import com.eu.habbo.roleplay.corp.CorpManager;
+import com.us.roleplay.corp.CorpManager;
 import gnu.trove.TCollections;
 import gnu.trove.iterator.TIntObjectIterator;
 import gnu.trove.map.TIntObjectMap;

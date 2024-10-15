@@ -7,8 +7,8 @@ import com.eu.habbo.habbohotel.users.Habbo;
 import com.eu.habbo.habbohotel.users.HabboInfo;
 import com.eu.habbo.messages.outgoing.inventory.BotAddedToInventoryComposer;
 import com.eu.habbo.plugin.events.bots.BotPickUpEvent;
-import com.eu.habbo.roleplay.bots.AggressiveBot;
-import com.eu.habbo.roleplay.bots.GangBot;
+import com.us.roleplay.bots.AggressiveBot;
+import com.us.roleplay.bots.GangBot;
 import gnu.trove.map.hash.THashMap;
 import lombok.extern.slf4j.Slf4j;
 

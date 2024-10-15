@@ -2,12 +2,11 @@ package com.eu.habbo.messages.outgoing.inventory;
 
 import com.eu.habbo.habbohotel.items.FurnitureType;
 import com.eu.habbo.habbohotel.items.interactions.InteractionGift;
-import com.eu.habbo.habbohotel.items.interactions.InteractionTeleport;
 import com.eu.habbo.habbohotel.rooms.items.entities.RoomItem;
 import com.eu.habbo.messages.ServerMessage;
 import com.eu.habbo.messages.outgoing.MessageComposer;
 import com.eu.habbo.messages.outgoing.Outgoing;
-import com.eu.habbo.roleplay.interactions.InteractionUsable;
+import com.us.roleplay.interactions.InteractionUsable;
 import gnu.trove.map.TIntObjectMap;
 import gnu.trove.procedure.TIntObjectProcedure;
 import lombok.AllArgsConstructor;

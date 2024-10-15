@@ -39,9 +39,9 @@ import com.eu.habbo.messages.outgoing.unknown.BuildersClubSubscriptionStatusMess
 import com.eu.habbo.messages.outgoing.users.*;
 import com.eu.habbo.plugin.events.emulator.SSOAuthenticationEvent;
 import com.eu.habbo.plugin.events.users.UserLoginEvent;
-import com.eu.habbo.roleplay.messages.outgoing.user.UserOnlineCountComposer;
-import com.eu.habbo.roleplay.room.RoomType;
-import com.eu.habbo.roleplay.users.HabboRoleplayStats;
+import com.us.roleplay.messages.outgoing.user.UserOnlineCountComposer;
+import com.us.roleplay.room.RoomType;
+import com.us.roleplay.users.HabboRoleplayStats;
 import gnu.trove.map.hash.THashMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

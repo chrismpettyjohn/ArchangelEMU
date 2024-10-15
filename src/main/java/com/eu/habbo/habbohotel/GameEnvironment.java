@@ -26,10 +26,10 @@ import com.eu.habbo.habbohotel.rooms.RoomManager;
 import com.eu.habbo.habbohotel.users.HabboManager;
 import com.eu.habbo.habbohotel.users.subscriptions.SubscriptionManager;
 import com.eu.habbo.habbohotel.users.subscriptions.SubscriptionScheduler;
-import com.eu.habbo.roleplay.game.TimeOfDayManager;
-import com.eu.habbo.roleplay.corp.CorpManager;
-import com.eu.habbo.roleplay.tonics.TonicsManager;
-import com.eu.habbo.roleplay.weapons.WeaponsManager;
+import com.us.roleplay.game.TimeOfDayManager;
+import com.us.roleplay.corp.CorpManager;
+import com.us.roleplay.tonics.TonicsManager;
+import com.us.roleplay.weapons.WeaponsManager;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
