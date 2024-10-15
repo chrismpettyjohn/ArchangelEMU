@@ -6,7 +6,7 @@ import com.eu.habbo.habbohotel.items.Item;
 import com.eu.habbo.habbohotel.items.interactions.InteractionDefault;
 import com.eu.habbo.habbohotel.rooms.Room;
 import com.eu.habbo.habbohotel.users.HabboInfo;
-import com.us.roleplay.actions.TreeChoppingAction;
+import com.us.archangel.feature.activities.actions.TreeChoppingAction;
 import com.us.roleplay.database.HabboLicenseRepository;
 import com.us.roleplay.corp.LicenseType;
 import com.us.roleplay.users.HabboLicense;

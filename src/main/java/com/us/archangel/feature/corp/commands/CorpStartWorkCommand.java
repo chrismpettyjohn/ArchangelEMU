@@ -3,7 +3,7 @@ package com.us.archangel.feature.corp.commands;
 import com.eu.habbo.Emulator;
 import com.eu.habbo.habbohotel.commands.Command;
 import com.eu.habbo.habbohotel.gameclients.GameClient;
-import com.us.roleplay.actions.WorkShiftAction;
+import com.us.archangel.feature.corp.actions.WorkShiftAction;
 import com.us.roleplay.corp.Corp;
 import com.us.roleplay.corp.CorpPosition;
 

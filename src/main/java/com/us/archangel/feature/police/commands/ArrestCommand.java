@@ -5,7 +5,7 @@ import com.eu.habbo.habbohotel.commands.Command;
 import com.eu.habbo.habbohotel.gameclients.GameClient;
 import com.eu.habbo.habbohotel.users.Habbo;
 import com.us.roleplay.RoleplayHelper;
-import com.us.roleplay.actions.ServeJailTimeAction;
+import com.us.archangel.feature.police.actions.ServeJailTimeAction;
 import com.us.roleplay.corp.Corp;
 import com.us.roleplay.corp.CorpTag;
 import com.us.roleplay.messages.outgoing.police.UserArrestedComposer;

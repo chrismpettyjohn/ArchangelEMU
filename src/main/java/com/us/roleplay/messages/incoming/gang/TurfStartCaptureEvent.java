@@ -2,7 +2,7 @@ package com.us.roleplay.messages.incoming.gang;
 
 import com.eu.habbo.Emulator;
 import com.eu.habbo.messages.incoming.MessageHandler;
-import com.us.roleplay.actions.CaptureTurfAction;
+import com.us.archangel.feature.gang.action.CaptureTurfAction;
 
 public class TurfStartCaptureEvent  extends MessageHandler {
     @Override

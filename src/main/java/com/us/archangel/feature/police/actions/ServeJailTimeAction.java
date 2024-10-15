@@ -1,4 +1,4 @@
-package com.us.roleplay.actions;
+package com.us.archangel.feature.police.actions;
 
 import com.eu.habbo.Emulator;
 import com.eu.habbo.habbohotel.rooms.Room;

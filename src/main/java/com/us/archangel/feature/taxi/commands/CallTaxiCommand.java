@@ -4,7 +4,7 @@ import com.eu.habbo.Emulator;
 import com.eu.habbo.habbohotel.commands.Command;
 import com.eu.habbo.habbohotel.gameclients.GameClient;
 import com.eu.habbo.habbohotel.rooms.Room;
-import com.us.roleplay.actions.CallTaxiAction;
+import com.us.archangel.feature.taxi.actions.CallTaxiAction;
 
 public class CallTaxiCommand extends Command {
     public CallTaxiCommand() {

@@ -7,7 +7,7 @@ import com.eu.habbo.habbohotel.rooms.Room;
 import com.eu.habbo.habbohotel.rooms.entities.units.RoomUnit;
 import com.eu.habbo.habbohotel.users.Habbo;
 import com.eu.habbo.habbohotel.users.HabboInfo;
-import com.us.roleplay.actions.HospitalRecoveryAction;
+import com.us.archangel.feature.paramedic.actions.HospitalRecoveryAction;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

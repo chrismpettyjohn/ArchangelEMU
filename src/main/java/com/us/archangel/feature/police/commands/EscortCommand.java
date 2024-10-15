@@ -5,7 +5,7 @@ import com.eu.habbo.habbohotel.commands.Command;
 import com.eu.habbo.habbohotel.gameclients.GameClient;
 import com.eu.habbo.habbohotel.users.Habbo;
 import com.us.roleplay.RoleplayHelper;
-import com.us.roleplay.actions.EscortUserAction;
+import com.us.archangel.feature.police.actions.EscortUserAction;
 import com.us.roleplay.corp.Corp;
 import com.us.roleplay.corp.CorpTag;
 

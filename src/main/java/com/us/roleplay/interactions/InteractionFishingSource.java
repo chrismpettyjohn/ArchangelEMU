@@ -7,7 +7,7 @@ import com.eu.habbo.habbohotel.items.interactions.InteractionWater;
 import com.eu.habbo.habbohotel.rooms.Room;
 import com.eu.habbo.habbohotel.rooms.entities.units.RoomUnit;
 import com.eu.habbo.habbohotel.users.HabboInfo;
-import com.us.roleplay.actions.FishingAction;
+import com.us.archangel.feature.activities.actions.FishingAction;
 import com.us.roleplay.database.HabboLicenseRepository;
 import com.us.roleplay.corp.LicenseType;
 import com.us.roleplay.users.HabboLicense;

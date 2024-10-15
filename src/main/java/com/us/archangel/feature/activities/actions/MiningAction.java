@@ -1,4 +1,4 @@
-package com.us.roleplay.actions;
+package com.us.archangel.feature.activities.actions;
 
 import com.eu.habbo.Emulator;
 import com.eu.habbo.habbohotel.rooms.RoomTile;
@@ -6,6 +6,7 @@ import com.eu.habbo.habbohotel.rooms.items.entities.RoomItem;
 import com.eu.habbo.habbohotel.users.Habbo;
 import com.eu.habbo.messages.outgoing.inventory.FurniListInvalidateComposer;
 import com.eu.habbo.messages.outgoing.inventory.UnseenItemsComposer;
+import com.us.archangel.feature.paramedic.actions.RespawnItemAction;
 import com.us.roleplay.interactions.InteractionToolPickaxe;
 import gnu.trove.set.hash.THashSet;
 import lombok.RequiredArgsConstructor;
