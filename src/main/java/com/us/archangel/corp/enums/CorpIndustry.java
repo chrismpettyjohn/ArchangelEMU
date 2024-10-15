@@ -6,6 +6,7 @@ import lombok.Getter;
 public enum CorpIndustry {
     Retail("retail"),
     Hospital("hospital"),
+    Paramedic("paramedic"),
     Police("police");
 
     // Getter to retrieve the string value of the enum
