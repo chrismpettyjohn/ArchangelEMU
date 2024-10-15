@@ -40,7 +40,7 @@ import com.eu.habbo.messages.outgoing.users.*;
 import com.eu.habbo.plugin.events.emulator.SSOAuthenticationEvent;
 import com.eu.habbo.plugin.events.users.UserLoginEvent;
 import com.us.archangel.feature.player.packets.outgoing.UserOnlineCountComposer;
-import com.us.roleplay.room.RoomType;
+import com.us.archangel.room.enums.RoomType;
 import com.us.roleplay.users.HabboRoleplayStats;
 import gnu.trove.map.hash.THashMap;
 import org.slf4j.Logger;

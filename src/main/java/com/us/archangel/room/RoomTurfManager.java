@@ -1,4 +1,4 @@
-package com.us.roleplay.room;
+package com.us.archangel.room;
 
 import com.eu.habbo.habbohotel.users.Habbo;
 import lombok.Getter;

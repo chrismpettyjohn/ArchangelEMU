@@ -3,7 +3,7 @@ package com.us.archangel.feature.time.packets.outgoing;
 import com.eu.habbo.messages.ServerMessage;
 import com.eu.habbo.messages.outgoing.MessageComposer;
 import com.eu.habbo.messages.outgoing.Outgoing;
-import com.us.roleplay.game.TimeOfDayManager;
+import com.us.archangel.feature.time.TimeOfDayManager;
 import lombok.AllArgsConstructor;
 
 import java.text.SimpleDateFormat;

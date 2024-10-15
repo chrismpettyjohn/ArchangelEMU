@@ -7,7 +7,7 @@ import com.us.archangel.feature.combat.packets.outgoing.CombatDelayComposer;
 import com.us.archangel.feature.combat.packets.outgoing.WeaponActionComposer;
 import com.us.archangel.feature.combat.packets.outgoing.UserDiedComposer;
 import com.us.archangel.feature.player.packets.outgoing.UserRoleplayStatsChangeComposer;
-import com.us.roleplay.room.RoomType;
+import com.us.archangel.room.enums.RoomType;
 import com.us.roleplay.users.HabboWeapon;
 import com.eu.habbo.messages.incoming.MessageHandler;
 import com.us.archangel.weapon.enums.WeaponType;

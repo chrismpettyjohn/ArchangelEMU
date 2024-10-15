@@ -3,7 +3,7 @@ package com.us.archangel.feature.paramedic.actions;
 import com.eu.habbo.Emulator;
 import com.eu.habbo.habbohotel.users.Habbo;
 import com.us.archangel.feature.hospital.interactions.InteractionHospitalBed;
-import com.us.roleplay.room.RoomType;
+import com.us.archangel.room.enums.RoomType;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor

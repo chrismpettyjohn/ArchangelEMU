@@ -7,7 +7,7 @@ import com.eu.habbo.habbohotel.users.Habbo;
 import com.eu.habbo.messages.outgoing.users.CreditBalanceComposer;
 import com.us.archangel.feature.taxi.packets.outgoing.TaxiDispatchedComposer;
 import com.us.archangel.feature.player.packets.outgoing.UserRoleplayStatsChangeComposer;
-import com.us.roleplay.room.RoomType;
+import com.us.archangel.room.enums.RoomType;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 

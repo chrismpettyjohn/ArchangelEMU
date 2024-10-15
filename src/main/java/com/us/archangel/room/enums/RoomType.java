@@ -1,4 +1,4 @@
-package com.us.roleplay.room;
+package com.us.archangel.room.enums;
 
 public class RoomType {
 

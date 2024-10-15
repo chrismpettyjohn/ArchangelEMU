@@ -40,7 +40,7 @@ import com.eu.habbo.plugin.events.furniture.FurnitureStackHeightEvent;
 import com.eu.habbo.plugin.events.rooms.RoomLoadedEvent;
 import com.eu.habbo.plugin.events.rooms.RoomUnloadedEvent;
 import com.eu.habbo.plugin.events.rooms.RoomUnloadingEvent;
-import com.us.roleplay.room.RoomTurfManager;
+import com.us.archangel.room.RoomTurfManager;
 import gnu.trove.TCollections;
 import gnu.trove.map.TIntIntMap;
 import gnu.trove.map.TIntObjectMap;

@@ -1,5 +1,6 @@
 package com.us.archangel;
 
+import com.us.archangel.bounty.BountyManager;
 import com.us.archangel.core.DatabaseConfig;
 import com.us.archangel.corp.CorpManager;
 import com.us.archangel.feature.RoleplayFeatureManager;
@@ -20,15 +21,12 @@ public class Archangel {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(Archangel.class);
 
-    private WeaponManager weaponManager;
-
-    private CorpManager corpManager;
-
+    private BountyManager bountyManager;
     private GangManager gangManager;
-
+    private CorpManager corpManager;
     private PlayerManager playerManager;
-
     private RoleplayFeatureManager roleplayFeatureManager;
+    private WeaponManager weaponManager;
 
     public void load(ConfigurationManager config) {
         long millis = System.currentTimeMillis();
@@ -44,11 +42,12 @@ public class Archangel {
             e.printStackTrace();
         }
 
-        this.weaponManager = WeaponManager.getInstance(sessionFactory);
+        this.bountyManager = BountyManager.getInstance(sessionFactory);
         this.corpManager = CorpManager.getInstance(sessionFactory);
         this.gangManager = GangManager.getInstance(sessionFactory);
         this.playerManager = PlayerManager.getInstance(sessionFactory);
         this.roleplayFeatureManager = RoleplayFeatureManager.getInstance();
+        this.weaponManager = WeaponManager.getInstance(sessionFactory);
 
         DatabaseConfig.shutdown();
 

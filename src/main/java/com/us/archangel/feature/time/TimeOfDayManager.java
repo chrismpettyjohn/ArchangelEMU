@@ -1,4 +1,4 @@
-package com.us.roleplay.game;
+package com.us.archangel.feature.time;
 
 import com.eu.habbo.Emulator;
 import com.us.archangel.feature.time.packets.outgoing.TimeOfDayComposer;
