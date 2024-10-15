@@ -3,8 +3,8 @@ package com.us.roleplay.messages.incoming.device;
 import com.eu.habbo.Emulator;
 import com.eu.habbo.habbohotel.rooms.items.entities.RoomItem;
 import com.eu.habbo.messages.incoming.MessageHandler;
-import com.us.roleplay.interactions.InteractionPhone;
-import com.us.roleplay.interactions.InteractionUsable;
+import com.us.archangel.feature.device.interactions.InteractionPhone;
+import com.us.archangel.feature.device.interactions.InteractionUsable;
 
 public class DeviceCloseEvent extends MessageHandler {
     @Override

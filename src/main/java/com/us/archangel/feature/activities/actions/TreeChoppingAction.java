@@ -8,8 +8,8 @@ import com.eu.habbo.habbohotel.users.Habbo;
 import com.eu.habbo.messages.outgoing.inventory.FurniListInvalidateComposer;
 import com.eu.habbo.messages.outgoing.inventory.UnseenItemsComposer;
 import com.us.archangel.feature.paramedic.actions.RespawnItemAction;
-import com.us.roleplay.interactions.InteractionLumber;
-import com.us.roleplay.interactions.InteractionToolAxe;
+import com.us.archangel.feature.mining.interactions.InteractionLumber;
+import com.us.archangel.feature.trees.interactions.InteractionToolAxe;
 import gnu.trove.set.hash.THashSet;
 import lombok.RequiredArgsConstructor;
 

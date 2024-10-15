@@ -8,7 +8,7 @@ import com.eu.habbo.habbohotel.users.Habbo;
 import com.eu.habbo.habbohotel.users.HabboGender;
 import com.eu.habbo.messages.outgoing.rooms.users.UserChangeMessageComposer;
 import com.eu.habbo.messages.outgoing.users.FigureUpdateComposer;
-import com.us.roleplay.interactions.InteractionPrisonBench;
+import com.us.archangel.feature.police.interactions.InteractionPrisonBench;
 import com.us.roleplay.room.RoomType;
 
 import java.time.Duration;

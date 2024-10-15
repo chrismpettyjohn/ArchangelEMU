@@ -6,7 +6,7 @@ import com.eu.habbo.habbohotel.rooms.items.entities.RoomItem;
 import com.eu.habbo.messages.ServerMessage;
 import com.eu.habbo.messages.outgoing.MessageComposer;
 import com.eu.habbo.messages.outgoing.Outgoing;
-import com.us.roleplay.interactions.InteractionUsable;
+import com.us.archangel.feature.device.interactions.InteractionUsable;
 import gnu.trove.map.TIntObjectMap;
 import gnu.trove.procedure.TIntObjectProcedure;
 import lombok.AllArgsConstructor;

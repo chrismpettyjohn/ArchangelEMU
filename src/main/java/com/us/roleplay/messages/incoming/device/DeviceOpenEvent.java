@@ -5,9 +5,9 @@ import com.eu.habbo.habbohotel.rooms.items.entities.RoomItem;
 import com.eu.habbo.messages.incoming.MessageHandler;
 import com.us.roleplay.corp.Corp;
 import com.us.roleplay.corp.CorpTag;
-import com.us.roleplay.interactions.InteractionPhone;
-import com.us.roleplay.interactions.InteractionPoliceLaptop;
-import com.us.roleplay.interactions.InteractionUsable;
+import com.us.archangel.feature.device.interactions.InteractionPhone;
+import com.us.archangel.feature.police.interactions.InteractionPoliceLaptop;
+import com.us.archangel.feature.device.interactions.InteractionUsable;
 import com.us.roleplay.messages.outgoing.device.DeviceOpenComposer;
 
 public class DeviceOpenEvent extends MessageHandler {

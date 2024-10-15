@@ -6,7 +6,7 @@ import com.eu.habbo.habbohotel.rooms.Room;
 import com.eu.habbo.habbohotel.rooms.RoomTile;
 import com.eu.habbo.habbohotel.rooms.items.entities.RoomItem;
 import com.eu.habbo.habbohotel.users.Habbo;
-import com.us.roleplay.interactions.InteractionHospitalBed;
+import com.us.archangel.feature.hospital.interactions.InteractionHospitalBed;
 import com.us.roleplay.room.RoomType;
 import lombok.RequiredArgsConstructor;
 
