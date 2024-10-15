@@ -1,4 +1,4 @@
-package com.us.roleplay.commands.billing;
+package com.us.archangel.feature.bill.commands;
 
 import com.eu.habbo.Emulator;
 import com.eu.habbo.habbohotel.commands.Command;

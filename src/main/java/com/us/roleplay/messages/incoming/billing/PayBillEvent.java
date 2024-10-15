@@ -1,7 +1,7 @@
 package com.us.roleplay.messages.incoming.billing;
 
 import com.eu.habbo.messages.incoming.MessageHandler;
-import com.us.roleplay.commands.billing.PayBillCommand;
+import com.us.archangel.feature.bill.commands.PayBillCommand;
 
 public class PayBillEvent extends MessageHandler {
     @Override
