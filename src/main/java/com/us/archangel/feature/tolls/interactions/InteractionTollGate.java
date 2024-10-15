@@ -7,7 +7,7 @@ import com.eu.habbo.habbohotel.items.interactions.InteractionOneWayGate;
 import com.eu.habbo.habbohotel.rooms.Room;
 import com.eu.habbo.habbohotel.users.HabboInfo;
 import com.eu.habbo.messages.outgoing.users.CreditBalanceComposer;
-import com.us.roleplay.messages.outgoing.user.UserRoleplayStatsChangeComposer;
+import com.us.archangel.feature.player.packets.outgoing.UserRoleplayStatsChangeComposer;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

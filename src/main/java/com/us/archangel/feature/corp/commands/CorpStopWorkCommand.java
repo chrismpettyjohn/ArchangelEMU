@@ -3,7 +3,7 @@ package com.us.archangel.feature.corp.commands;
 import com.eu.habbo.Emulator;
 import com.eu.habbo.habbohotel.commands.Command;
 import com.eu.habbo.habbohotel.gameclients.GameClient;
-import com.us.roleplay.messages.outgoing.user.UserRoleplayStatsChangeComposer;
+import com.us.archangel.feature.player.packets.outgoing.UserRoleplayStatsChangeComposer;
 
 public class CorpStopWorkCommand extends Command {
     public CorpStopWorkCommand() {

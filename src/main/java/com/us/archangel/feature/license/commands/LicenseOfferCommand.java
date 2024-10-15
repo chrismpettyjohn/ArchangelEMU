@@ -10,7 +10,7 @@ import com.us.roleplay.corp.CorpTag;
 import com.us.roleplay.corp.LicenseMapper;
 import com.us.roleplay.database.HabboBillRepository;
 import com.us.roleplay.corp.LicenseType;
-import com.us.roleplay.messages.outgoing.billing.InvoiceReceivedComposer;
+import com.us.archangel.feature.bill.packets.outgoing.InvoiceReceivedComposer;
 
 public class LicenseOfferCommand extends Command {
 

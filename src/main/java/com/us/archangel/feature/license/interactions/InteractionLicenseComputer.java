@@ -10,7 +10,7 @@ import com.us.roleplay.corp.Corp;
 import com.us.roleplay.corp.CorpManager;
 import com.us.roleplay.corp.LicenseType;
 import com.us.roleplay.corp.LicenseMapper;
-import com.us.roleplay.messages.outgoing.license.LicenseOpenComputerComposer;
+import com.us.archangel.feature.license.packets.outgoing.LicenseOpenComputerComposer;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

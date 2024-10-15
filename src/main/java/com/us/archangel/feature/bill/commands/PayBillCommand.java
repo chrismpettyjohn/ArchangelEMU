@@ -6,7 +6,7 @@ import com.eu.habbo.habbohotel.gameclients.GameClient;
 import com.eu.habbo.messages.outgoing.users.CreditBalanceComposer;
 import com.us.roleplay.billing.BillingManager;
 import com.us.roleplay.billing.UserBill;
-import com.us.roleplay.messages.outgoing.user.UserRoleplayStatsChangeComposer;
+import com.us.archangel.feature.player.packets.outgoing.UserRoleplayStatsChangeComposer;
 
 public class PayBillCommand extends Command {
     public PayBillCommand() {

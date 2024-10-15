@@ -1,7 +1,7 @@
 package com.us.roleplay.game;
 
 import com.eu.habbo.Emulator;
-import com.us.roleplay.messages.outgoing.game.TimeOfDayComposer;
+import com.us.archangel.feature.time.packets.outgoing.TimeOfDayComposer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

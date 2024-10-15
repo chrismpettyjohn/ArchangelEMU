@@ -5,7 +5,7 @@ import com.eu.habbo.habbohotel.commands.Command;
 import com.eu.habbo.habbohotel.gameclients.GameClient;
 import com.eu.habbo.habbohotel.users.Habbo;
 import com.us.roleplay.corp.CorpTag;
-import com.us.roleplay.messages.outgoing.police.WantedListComposer;
+import com.us.archangel.feature.police.packets.outgoing.WantedListComposer;
 import com.us.roleplay.police.Bounty;
 import com.us.roleplay.police.WantedListManager;
 import com.us.roleplay.users.HabboRoleplayHelper;

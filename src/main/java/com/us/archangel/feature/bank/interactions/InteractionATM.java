@@ -9,7 +9,7 @@ import com.eu.habbo.habbohotel.users.HabboInfo;
 import com.us.roleplay.corp.Corp;
 import com.us.roleplay.corp.CorpManager;
 import com.us.roleplay.corp.CorpTag;
-import com.us.roleplay.messages.outgoing.bank.BankOpenATMComposer;
+import com.us.archangel.feature.bank.packets.outgoing.BankOpenATMComposer;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

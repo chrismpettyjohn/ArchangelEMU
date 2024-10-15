@@ -23,7 +23,7 @@ import com.eu.habbo.messages.outgoing.rooms.users.UserUpdateComposer;
 import com.eu.habbo.plugin.Event;
 import com.eu.habbo.plugin.events.roomunit.RoomUnitLookAtPointEvent;
 import com.eu.habbo.plugin.events.roomunit.RoomUnitSetGoalEvent;
-import com.us.roleplay.messages.incoming.controls.MovementDirection;
+import com.us.archangel.feature.controls.packets.incoming.MovementDirection;
 import com.eu.habbo.util.pathfinding.Rotation;
 import gnu.trove.map.hash.THashMap;
 import gnu.trove.set.hash.THashSet;

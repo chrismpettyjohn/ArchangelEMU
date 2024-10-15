@@ -8,7 +8,7 @@ import com.us.roleplay.RoleplayHelper;
 import com.us.archangel.feature.police.actions.ServeJailTimeAction;
 import com.us.roleplay.corp.Corp;
 import com.us.roleplay.corp.CorpTag;
-import com.us.roleplay.messages.outgoing.police.UserArrestedComposer;
+import com.us.archangel.feature.police.packets.outgoing.UserArrestedComposer;
 import com.us.roleplay.police.Bounty;
 import com.us.roleplay.police.WantedListManager;
 

@@ -5,7 +5,7 @@ import com.eu.habbo.habbohotel.commands.Command;
 import com.eu.habbo.habbohotel.gameclients.GameClient;
 import com.eu.habbo.habbohotel.users.Habbo;
 import com.us.roleplay.corp.CorpTag;
-import com.us.roleplay.messages.outgoing.police.PoliceCallInfoComposer;
+import com.us.archangel.feature.police.packets.outgoing.PoliceCallInfoComposer;
 import com.us.roleplay.police.PoliceReport;
 import com.us.roleplay.police.PoliceReportManager;
 import com.us.roleplay.users.HabboRoleplayHelper;

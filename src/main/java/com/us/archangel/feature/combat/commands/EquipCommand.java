@@ -3,7 +3,7 @@ package com.us.archangel.feature.combat.commands;
 import com.eu.habbo.Emulator;
 import com.eu.habbo.habbohotel.commands.Command;
 import com.eu.habbo.habbohotel.gameclients.GameClient;
-import com.us.roleplay.messages.outgoing.user.UserRoleplayStatsChangeComposer;
+import com.us.archangel.feature.player.packets.outgoing.UserRoleplayStatsChangeComposer;
 import com.us.roleplay.users.HabboWeapon;
 import com.us.roleplay.weapons.Weapon;
 import com.us.roleplay.weapons.WeaponsManager;

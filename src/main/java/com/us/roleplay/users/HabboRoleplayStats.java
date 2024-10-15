@@ -10,7 +10,7 @@ import com.us.archangel.skill.model.*;
 import com.us.roleplay.corp.Corp;
 import com.us.roleplay.corp.CorpManager;
 import com.us.roleplay.corp.CorpPosition;
-import com.us.roleplay.messages.outgoing.user.UserRoleplayStatsChangeComposer;
+import com.us.archangel.feature.player.packets.outgoing.UserRoleplayStatsChangeComposer;
 import com.us.roleplay.weapons.Weapon;
 import lombok.Getter;
 import lombok.Setter;

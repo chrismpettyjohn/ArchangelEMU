@@ -9,7 +9,7 @@ import com.us.roleplay.corp.CorpManager;
 import com.us.roleplay.database.HabboLicenseRepository;
 import com.us.roleplay.corp.LicenseType;
 import com.us.roleplay.corp.LicenseMapper;
-import com.us.roleplay.messages.outgoing.license.LicenseStatusComposer;
+import com.us.archangel.feature.license.packets.outgoing.LicenseStatusComposer;
 import com.us.roleplay.users.HabboLicense;
 
 public class LicenseStatusCommand extends Command  {

@@ -6,7 +6,7 @@ import com.eu.habbo.habbohotel.items.Item;
 import com.eu.habbo.habbohotel.items.interactions.InteractionDefault;
 import com.eu.habbo.habbohotel.rooms.Room;
 import com.eu.habbo.habbohotel.users.HabboInfo;
-import com.us.roleplay.messages.outgoing.device.InfoScreenViewComposer;
+import com.us.archangel.feature.device.interactions.packets.outgoing.InfoScreenViewComposer;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

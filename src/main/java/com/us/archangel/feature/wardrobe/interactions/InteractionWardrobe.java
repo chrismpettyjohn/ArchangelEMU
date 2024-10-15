@@ -6,7 +6,7 @@ import com.eu.habbo.habbohotel.rooms.Room;
 import com.eu.habbo.habbohotel.rooms.entities.units.RoomUnit;
 import com.eu.habbo.habbohotel.users.Habbo;
 import com.eu.habbo.habbohotel.users.HabboInfo;
-import com.us.roleplay.messages.outgoing.user.UserWardrobeOpenComposer;
+import com.us.archangel.feature.player.packets.outgoing.UserWardrobeOpenComposer;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

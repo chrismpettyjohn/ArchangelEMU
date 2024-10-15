@@ -6,7 +6,7 @@ import com.eu.habbo.habbohotel.rooms.Room;
 import com.eu.habbo.habbohotel.rooms.RoomTile;
 import com.eu.habbo.habbohotel.rooms.items.entities.RoomItem;
 import com.eu.habbo.habbohotel.users.Habbo;
-import com.us.roleplay.messages.outgoing.gang.TurfCaptureTimeLeftComposer;
+import com.us.archangel.feature.gang.packets.outgoing.TurfCaptureTimeLeftComposer;
 import lombok.AllArgsConstructor;
 
 import java.util.Collection;

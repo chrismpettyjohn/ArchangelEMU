@@ -30,7 +30,7 @@ import com.eu.habbo.plugin.events.users.UserDisconnectEvent;
 import com.eu.habbo.plugin.events.users.UserGetIPAddressEvent;
 import com.eu.habbo.plugin.events.users.UserPointsEvent;
 import com.us.roleplay.database.HabboRoleplayStatsRepository;
-import com.us.roleplay.messages.outgoing.user.UserRoleplayStatsChangeComposer;
+import com.us.archangel.feature.player.packets.outgoing.UserRoleplayStatsChangeComposer;
 import com.us.roleplay.users.HabboRoleplayStats;
 import gnu.trove.TIntCollection;
 import gnu.trove.map.hash.THashMap;

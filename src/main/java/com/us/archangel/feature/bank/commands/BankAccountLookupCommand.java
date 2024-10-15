@@ -7,7 +7,7 @@ import com.eu.habbo.habbohotel.users.Habbo;
 import com.us.roleplay.corp.Corp;
 import com.us.roleplay.corp.CorpManager;
 import com.us.roleplay.database.HabboBankAccountRepository;
-import com.us.roleplay.messages.outgoing.bank.BankAccountInfoComposer;
+import com.us.archangel.feature.bank.packets.outgoing.BankAccountInfoComposer;
 import com.us.roleplay.users.HabboBankAccount;
 
 public class BankAccountLookupCommand extends Command  {
