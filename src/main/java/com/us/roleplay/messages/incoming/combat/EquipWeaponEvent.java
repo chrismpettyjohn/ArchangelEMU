@@ -1,7 +1,7 @@
 package com.us.roleplay.messages.incoming.combat;
 
 import com.eu.habbo.messages.incoming.MessageHandler;
-import com.us.roleplay.commands.combat.EquipCommand;
+import com.us.archangel.feature.combat.commands.EquipCommand;
 
 public class EquipWeaponEvent extends MessageHandler {
     @Override
