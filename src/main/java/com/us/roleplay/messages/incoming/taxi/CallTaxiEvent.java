@@ -1,7 +1,7 @@
 package com.us.roleplay.messages.incoming.taxi;
 
 import com.eu.habbo.messages.incoming.MessageHandler;
-import com.us.roleplay.commands.taxi.CallTaxiCommand;
+import com.us.archangel.feature.taxi.commands.CallTaxiCommand;
 
 public class CallTaxiEvent extends MessageHandler {
     @Override

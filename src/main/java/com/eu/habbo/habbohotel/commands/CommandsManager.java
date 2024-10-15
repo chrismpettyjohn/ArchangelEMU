@@ -44,7 +44,7 @@ import com.us.roleplay.commands.license.LicenseConnectComputerCommand;
 import com.us.roleplay.commands.license.LicenseOfferCommand;
 import com.us.roleplay.commands.license.LicenseStatusCommand;
 import com.us.archangel.feature.police.commands.*;
-import com.us.roleplay.commands.taxi.CallTaxiCommand;
+import com.us.archangel.feature.taxi.commands.CallTaxiCommand;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
