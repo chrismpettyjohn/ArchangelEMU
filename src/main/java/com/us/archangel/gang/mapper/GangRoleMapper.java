@@ -11,8 +11,8 @@ public class GangRoleMapper {
         }
         return new GangRoleModel(
                 entity.getId(),
-                entity.getGangID(),
-                entity.getOrderID(),
+                entity.getGangId(),
+                entity.getOrderId(),
                 entity.getName()
         );
     }
@@ -23,8 +23,8 @@ public class GangRoleMapper {
         }
         GangRoleEntity entity = new GangRoleEntity();
         entity.setId(model.getId());
-        entity.setGangID(model.getGangId());
-        entity.setOrderID(model.getOrderId());
+        entity.setGangId(model.getGangId());
+        entity.setOrderId(model.getOrderId());
         entity.setName(model.getName());
         return entity;
     }

@@ -1,5 +1,6 @@
 package com.us.archangel.corp.entity;
 
+import com.us.archangel.gang.entity.GangEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -14,11 +15,11 @@ public class CorpRoleEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(name = "corp_id", nullable = false)
-    private int corpID;
+    @Column(name = "corps_id", nullable = false)
+    private int corpId;
 
     @Column(name = "order_id", nullable = false)
-    private int orderID;
+    private int orderId;
 
     @Column(name = "name", nullable = false)
     private String name;
@@ -49,4 +50,8 @@ public class CorpRoleEntity {
 
     @Column(name = "can_work_anywhere", nullable = false)
     private boolean canWorkAnywhere;
+
+    @ManyToOne
+    @JoinColumn(name = "corps_id", nullable = false)
+    private CorpEntity corp;
 }

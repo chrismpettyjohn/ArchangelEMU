@@ -15,11 +15,15 @@ public class GangRoleEntity {
     private int id;
 
     @Column(name = "gangs_id", nullable = false)
-    private int gangID;
+    private int gangId;
 
     @Column(name = "order_id", nullable = false)
-    private int orderID;
+    private int orderId;
 
     @Column(name = "name", nullable = false)
     private String name;
+
+    @ManyToOne
+    @JoinColumn(name = "gangs_id", nullable = false)
+    private GangEntity gang;
 }

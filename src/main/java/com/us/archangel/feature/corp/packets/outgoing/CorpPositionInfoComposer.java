@@ -23,7 +23,7 @@ public class CorpPositionInfoComposer extends MessageComposer {
         this.response.appendString(matchingPosition.getName());
         this.response.appendString(matchingPosition.getMotto());
         this.response.appendInt(matchingPosition.getSalary());
-        this.response.appendInt(matchingPosition.getOrderID());
+        this.response.appendInt(matchingPosition.getOrderId());
         this.response.appendString(matchingPosition.getMaleFigure());
         this.response.appendString(matchingPosition.getFemaleFigure());
         this.response.appendBoolean(matchingPosition.isCanHire());

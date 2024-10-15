@@ -50,8 +50,8 @@ public class GangRoleRepository {
             GangRoleEntity gangRole = session.get(GangRoleEntity.class, id);
             if (gangRole != null) {
                 gangRole.setName(updatedGangRole.getName());
-                gangRole.setGangID(updatedGangRole.getGangID());
-                gangRole.setOrderID(updatedGangRole.getOrderID());
+                gangRole.setGangId(updatedGangRole.getGangId());
+                gangRole.setOrderId(updatedGangRole.getOrderId());
                 session.update(gangRole);
             }
             transaction.commit();

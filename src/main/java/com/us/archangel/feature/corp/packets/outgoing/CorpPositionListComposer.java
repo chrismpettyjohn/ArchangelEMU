@@ -34,7 +34,7 @@ public class CorpPositionListComposer extends MessageComposer {
         }
 
         // Sort the list by order ID
-        Collections.sort(positionsList, Comparator.comparingInt(CorpPosition::getOrderID));
+        Collections.sort(positionsList, Comparator.comparingInt(CorpPosition::getOrderId));
 
         // Append the sorted positions to the response
         for (CorpPosition corpPosition : positionsList) {

@@ -13,7 +13,7 @@ public class CorpPosition implements Runnable {
     private int corporationID;
     @Getter
     @Setter
-    private int orderID;
+    private int orderId;
     @Setter
     private String name;
     @Setter
@@ -47,7 +47,7 @@ public class CorpPosition implements Runnable {
     public void load(ResultSet set) throws SQLException {
         this.id = set.getInt("id");
         this.corporationID = set.getInt("guild_id");
-        this.orderID = set.getInt("order_id");
+        this.orderId = set.getInt("order_id");
         this.name = set.getString("name");
         this.motto = set.getString("motto");
         this.salary = set.getInt("salary");

@@ -51,7 +51,7 @@ public class CorpDeletePositionEvent extends MessageHandler {
         }
 
         Corp welfareCorp = welfareCorps.get(0);
-        CorpPosition welfarePosition = welfareCorp.getPositionByOrderID(1);
+        CorpPosition welfarePosition = welfareCorp.getPositionByOrderId(1);
 
         if (welfarePosition == null) {
             throw new RuntimeException("no welfare position");
@@ -63,7 +63,7 @@ public class CorpDeletePositionEvent extends MessageHandler {
             habboStats.setCorp(welfareCorp.getGuild().getId(), welfarePosition.getId());
         }
 
-        CorpPositionRepository.getInstance().deleteCorpPositionByCorpAndOrder(corpPosition.getCorporationID(), corpPosition.getOrderID());
+        CorpPositionRepository.getInstance().deleteCorpPositionByCorpAndOrder(corpPosition.getCorporationID(), corpPosition.getOrderId());
 
         corp.removePositionByID(corpPositionID);
 

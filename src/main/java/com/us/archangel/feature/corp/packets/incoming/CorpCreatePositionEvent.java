@@ -13,7 +13,7 @@ public class CorpCreatePositionEvent extends MessageHandler {
     @Override
     public void handle() {
         int corpID = this.packet.readInt();
-        int orderID = this.packet.readInt();
+        int orderId = this.packet.readInt();
         String name = this.packet.readString();
         String motto = this.packet.readString();
         int salary = this.packet.readInt();
@@ -38,7 +38,7 @@ public class CorpCreatePositionEvent extends MessageHandler {
 
         CorpPositionRepository.getInstance().upsertCorpPosition(
                 corpID,
-                orderID,
+                orderId,
                 name,
                 motto,
                 salary,
@@ -51,7 +51,7 @@ public class CorpCreatePositionEvent extends MessageHandler {
                 canWorkAnywhere
         );
 
-        CorpPosition newCorpPosition = CorpPositionRepository.getInstance().getCorpPosition(corpID, orderID);
+        CorpPosition newCorpPosition = CorpPositionRepository.getInstance().getCorpPosition(corpID, orderId);
 
         corp.addPosition(newCorpPosition);
 

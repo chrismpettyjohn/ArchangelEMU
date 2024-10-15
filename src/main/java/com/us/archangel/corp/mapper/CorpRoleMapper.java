@@ -11,8 +11,8 @@ public class CorpRoleMapper {
         }
         return new CorpRoleModel(
                 entity.getId(),
-                entity.getCorpID(),
-                entity.getOrderID(),
+                entity.getCorpId(),
+                entity.getOrderId(),
                 entity.getName(),
                 entity.getMotto(),
                 entity.getSalary(),
@@ -32,8 +32,8 @@ public class CorpRoleMapper {
         }
         CorpRoleEntity entity = new CorpRoleEntity();
         entity.setId(model.getId());
-        entity.setCorpID(model.getCorpId());
-        entity.setOrderID(model.getOrderId());
+        entity.setCorpId(model.getCorpId());
+        entity.setOrderId(model.getOrderId());
         entity.setName(model.getName());
         entity.setMotto(model.getMotto());
         entity.setSalary(model.getSalary());

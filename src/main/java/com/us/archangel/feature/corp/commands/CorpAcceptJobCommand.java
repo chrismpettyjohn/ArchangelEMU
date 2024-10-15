@@ -36,7 +36,7 @@ public class CorpAcceptJobCommand extends Command {
         }
 
 
-        gameClient.getHabbo().getHabboRoleplayStats().setCorp(targetedCorp.getGuild().getId(), targetedCorp.getPositionByOrderID(1).getId());
+        gameClient.getHabbo().getHabboRoleplayStats().setCorp(targetedCorp.getGuild().getId(), targetedCorp.getPositionByOrderId(1).getId());
 
         gameClient.getHabbo().getHabboRoleplayStats().getCorp().removeInvitedUser(gameClient.getHabbo());
 

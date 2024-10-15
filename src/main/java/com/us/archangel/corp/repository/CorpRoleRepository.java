@@ -50,8 +50,8 @@ public class CorpRoleRepository {
             CorpRoleEntity corpRole = session.get(CorpRoleEntity.class, id);
             if (corpRole != null) {
                 corpRole.setName(updatedCorpRole.getName());
-                corpRole.setCorpID(updatedCorpRole.getCorpID());
-                corpRole.setOrderID(updatedCorpRole.getOrderID());
+                corpRole.setCorpId(updatedCorpRole.getCorpId());
+                corpRole.setOrderId(updatedCorpRole.getOrderId());
                 corpRole.setMotto(updatedCorpRole.getMotto());
                 corpRole.setSalary(updatedCorpRole.getSalary());
                 corpRole.setMaleFigure(updatedCorpRole.getMaleFigure());

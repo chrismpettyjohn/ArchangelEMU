@@ -35,11 +35,11 @@ public class Corp implements Runnable {
         this.positions.remove(positionID);
     }
 
-    public CorpPosition getPositionByOrderID(int orderID) {
+    public CorpPosition getPositionByOrderId(int orderId) {
         int[] keys = positions.keys();
         for (int key : keys) {
             CorpPosition position = positions.get(key);
-            if (position.getOrderID() == orderID) {
+            if (position.getOrderId() == orderId) {
                 return position;
             }
         }

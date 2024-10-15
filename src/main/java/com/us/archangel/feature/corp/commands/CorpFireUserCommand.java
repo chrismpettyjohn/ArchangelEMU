@@ -45,7 +45,7 @@ public class CorpFireUserCommand extends Command {
             return true;
         }
 
-        if (gameClient.getHabbo().getHabboRoleplayStats().getCorpPosition().getOrderID() <= targetedHabbo.getHabboRoleplayStats().getCorpPosition().getOrderID()) {
+        if (gameClient.getHabbo().getHabboRoleplayStats().getCorpPosition().getOrderId() <= targetedHabbo.getHabboRoleplayStats().getCorpPosition().getOrderId()) {
             gameClient.getHabbo().whisper(Emulator.getTexts().getValue("commands.roleplay.cmd_fire_not_allowed"));
             return true;
         }
@@ -58,7 +58,7 @@ public class CorpFireUserCommand extends Command {
 
         Corp welfareCorp = welfareCorps.get(0);
 
-        gameClient.getHabbo().getHabboRoleplayStats().setCorp(welfareCorp.getGuild().getId(), welfareCorp.getPositionByOrderID(1).getId());
+        gameClient.getHabbo().getHabboRoleplayStats().setCorp(welfareCorp.getGuild().getId(), welfareCorp.getPositionByOrderId(1).getId());
 
         gameClient.getHabbo().shout(Emulator.getTexts().getValue("commands.roleplay.cmd_fire_success").replace(":username", targetedHabbo.getHabboInfo().getUsername()));
         targetedHabbo.shout(Emulator.getTexts().getValue("commands.roleplay.cmd_fire_impacted"));

@@ -40,11 +40,11 @@ public class CorpPositionRepository {
         }
     }
 
-    public CorpPosition getCorpPosition(int guildID, int orderID) {
+    public CorpPosition getCorpPosition(int guildID, int orderId) {
         try (Connection connection = Emulator.getDatabase().getDataSource().getConnection();
              PreparedStatement statement = connection.prepareStatement("SELECT * FROM rp_corporations_positions WHERE guild_id = ? AND order_id = ? ORDER BY guild_id ASC LIMIT 1")) {
             statement.setInt(1, guildID);
-            statement.setInt(2, orderID);
+            statement.setInt(2, orderId);
 
             try (ResultSet set = statement.executeQuery()) {
                 if (set.next()) {
@@ -60,7 +60,7 @@ public class CorpPositionRepository {
     public void upsertCorpPosition(CorpPosition position) {
         this.upsertCorpPosition(
                 position.getCorporationID(),
-                position.getOrderID(),
+                position.getOrderId(),
                 position.getName(),
                 position.getMotto(),
                 position.getSalary(),
@@ -74,11 +74,11 @@ public class CorpPositionRepository {
         );
     }
 
-    public void upsertCorpPosition(int corpID, int orderID, String name, String motto, int salary, String maleFigure, String femaleFigure, boolean canHire, boolean canFire, boolean canPromote, boolean canDemote, boolean canWorkAnywhere) {
+    public void upsertCorpPosition(int corpID, int orderId, String name, String motto, int salary, String maleFigure, String femaleFigure, boolean canHire, boolean canFire, boolean canPromote, boolean canDemote, boolean canWorkAnywhere) {
         try (Connection connection = Emulator.getDatabase().getDataSource().getConnection()) {
             try (PreparedStatement statement = connection.prepareStatement("INSERT INTO rp_corporations_positions (guild_id, order_id, name, motto, salary, male_figure, female_figure, can_hire, can_fire, can_promote, can_demote, can_work_anywhere) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE guild_id = VALUES(guild_id), order_id = VALUES(order_id), name = VALUES(name), motto = VALUES(motto), salary = VALUES(salary), male_figure = VALUES(male_figure), female_figure = VALUES(female_figure), can_hire = VALUES(can_hire), can_fire = VALUES(can_fire), can_promote = VALUES(can_promote), can_demote = VALUES(can_demote), can_work_anywhere = VALUES(can_work_anywhere)")) {
                 statement.setInt(1,corpID);
-                statement.setInt(2, orderID);
+                statement.setInt(2, orderId);
                 statement.setString(3, name);
                 statement.setString(4, motto);
                 statement.setInt(5, salary);
@@ -96,11 +96,11 @@ public class CorpPositionRepository {
         }
     }
 
-    public void deleteCorpPositionByCorpAndOrder(int corpID, int orderID) {
+    public void deleteCorpPositionByCorpAndOrder(int corpID, int orderId) {
         try (Connection connection = Emulator.getDatabase().getDataSource().getConnection()) {
             try (PreparedStatement statement = connection.prepareStatement("DELETE FROM rp_corporations_positions WHERE guild_id = ? AND order_id = ?")) {
                 statement.setInt(1,corpID);
-                statement.setInt(2, orderID);
+                statement.setInt(2, orderId);
                 statement.executeUpdate();
             }
         } catch (SQLException e) {
