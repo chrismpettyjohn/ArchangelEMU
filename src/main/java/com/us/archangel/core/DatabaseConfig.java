@@ -26,6 +26,8 @@ public class DatabaseConfig {
 
                 configuration.setProperty("hibernate.dialect", "org.hibernate.dialect.MariaDBDialect");
                 configuration.setProperty("hibernate.hbm2ddl.auto", "update");
+                configuration.setProperty("jakarta.persistence.lock.timeout", "5000");
+                configuration.setProperty("hibernate.transaction.jta.platform", "org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform");
 
                 configuration.addAnnotatedClass(CorpEntity.class);
                 configuration.addAnnotatedClass(CorpRoleEntity.class);
