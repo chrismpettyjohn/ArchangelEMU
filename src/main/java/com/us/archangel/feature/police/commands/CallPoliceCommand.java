@@ -1,4 +1,4 @@
-package com.us.roleplay.commands.police;
+package com.us.archangel.feature.police.commands;
 
 import com.eu.habbo.Emulator;
 import com.eu.habbo.habbohotel.commands.Command;

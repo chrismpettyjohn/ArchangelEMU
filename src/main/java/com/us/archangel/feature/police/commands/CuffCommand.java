@@ -1,22 +1,16 @@
-package com.us.roleplay.commands.police;
+package com.us.archangel.feature.police.commands;
 
 import com.eu.habbo.Emulator;
 import com.eu.habbo.habbohotel.commands.Command;
 import com.eu.habbo.habbohotel.gameclients.GameClient;
 import com.eu.habbo.habbohotel.users.Habbo;
 import com.us.roleplay.RoleplayHelper;
-import com.us.roleplay.actions.ServeJailTimeAction;
 import com.us.roleplay.corp.Corp;
 import com.us.roleplay.corp.CorpTag;
-import com.us.roleplay.messages.outgoing.police.UserArrestedComposer;
-import com.us.roleplay.police.Bounty;
-import com.us.roleplay.police.WantedListManager;
 
-import java.util.Collection;
-
-public class ArrestCommand extends Command {
-    public ArrestCommand() {
-        super("cmd_police_arrest");
+public class CuffCommand extends Command {
+    public CuffCommand() {
+        super("cmd_police_cuff");
     }
 
     @Override
@@ -24,13 +18,6 @@ public class ArrestCommand extends Command {
         Habbo targetedHabbo = RoleplayHelper.getInstance().getTarget(gameClient, params);
 
         if (targetedHabbo == null) {
-            return true;
-        }
-
-        String crime = params[2];
-        int prisonTime = Integer.parseInt(params[3]);
-
-        if (crime == null || prisonTime <= 0) {
             return true;
         }
 
@@ -51,13 +38,14 @@ public class ArrestCommand extends Command {
             return true;
         }
 
-        if (!targetedHabbo.getHabboRoleplayStats().isCuffed()) {
-            gameClient.getHabbo().whisper(Emulator.getTexts().getValue("commands.roleplay.cmd_arrest_must_be_cuffed").replace(":username", targetedHabbo.getHabboInfo().getUsername()));
+        if (targetedHabbo.getHabboRoleplayStats().isCuffed()) {
+            targetedHabbo.getHabboRoleplayStats().setIsCuffed(false);
+            gameClient.getHabbo().whisper(Emulator.getTexts().getValue("commands.roleplay_cmd_uncuff_success").replace(":username", targetedHabbo.getHabboInfo().getUsername()));
             return true;
         }
 
-        if (gameClient.getHabbo().getRoomUnit().getRoom().getRoomInfo().getId() != corp.getGuild().getRoomId()) {
-            gameClient.getHabbo().whisper(Emulator.getTexts().getValue("commands.roleplay.cmd_arrest_must_be_in_station"));
+        if (!targetedHabbo.getHabboRoleplayStats().isStunned()) {
+            gameClient.getHabbo().whisper(Emulator.getTexts().getValue("commands.roleplay.cmd_cuff_must_be_stunned").replace(":username", targetedHabbo.getHabboInfo().getUsername()));
             return true;
         }
 
@@ -73,23 +61,9 @@ public class ArrestCommand extends Command {
             return true;
         }
 
-        gameClient.getHabbo().getHabboRoleplayStats().setIsEscorting(null);
-        targetedHabbo.getHabboRoleplayStats().setIsCuffed(false);
-        targetedHabbo.getHabboRoleplayStats().setIsStunned(false);
+        targetedHabbo.getHabboRoleplayStats().setIsCuffed(true);
 
-        Bounty bounty = WantedListManager.getInstance().getBountyByUser(targetedHabbo.getHabboInfo().getId());
-
-        if (bounty != null) {
-            WantedListManager.getInstance().removeBounty(bounty);
-        }
-
-        Collection<Habbo> onlineHabbos = Emulator.getGameEnvironment().getHabboManager().getOnlineHabbos().values();
-
-        for (Habbo onlineHabbo : onlineHabbos) {
-            onlineHabbo.getClient().sendResponse(new UserArrestedComposer(targetedHabbo, gameClient.getHabbo()));
-        }
-
-        Emulator.getThreading().run(new ServeJailTimeAction(targetedHabbo, crime, prisonTime));
+        gameClient.getHabbo().shout(Emulator.getTexts().getValue("commands.roleplay_cmd_cuff_success").replace(":username", targetedHabbo.getHabboInfo().getUsername()));
 
         return true;
     }

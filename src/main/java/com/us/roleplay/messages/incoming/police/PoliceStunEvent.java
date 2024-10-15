@@ -1,7 +1,7 @@
 package com.us.roleplay.messages.incoming.police;
 
 import com.eu.habbo.messages.incoming.MessageHandler;
-import com.us.roleplay.commands.police.StunCommand;
+import com.us.archangel.feature.police.commands.StunCommand;
 
 public class PoliceStunEvent extends MessageHandler {
     @Override

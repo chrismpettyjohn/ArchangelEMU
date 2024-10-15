@@ -1,17 +1,16 @@
-package com.us.roleplay.commands.police;
+package com.us.archangel.feature.police.commands;
 
 import com.eu.habbo.Emulator;
 import com.eu.habbo.habbohotel.commands.Command;
 import com.eu.habbo.habbohotel.gameclients.GameClient;
 import com.eu.habbo.habbohotel.users.Habbo;
 import com.us.roleplay.RoleplayHelper;
-import com.us.roleplay.actions.EscortUserAction;
 import com.us.roleplay.corp.Corp;
 import com.us.roleplay.corp.CorpTag;
 
-public class EscortCommand extends Command {
-    public EscortCommand() {
-        super("cmd_police_escort");
+public class StunCommand extends Command {
+    public StunCommand() {
+        super("cmd_police_stun");
     }
 
     @Override
@@ -39,18 +38,9 @@ public class EscortCommand extends Command {
             return true;
         }
 
-        if (!targetedHabbo.getHabboRoleplayStats().isCuffed()) {
-            gameClient.getHabbo().whisper(Emulator.getTexts().getValue("commands.roleplay.cmd_escort_must_be_cuffed").replace(":username", targetedHabbo.getHabboInfo().getUsername()));
-            return true;
-        }
-
-        if (gameClient.getHabbo().getHabboRoleplayStats().getIsEscorting() != null && gameClient.getHabbo().getHabboRoleplayStats().getIsEscorting().getHabboInfo().getId() == targetedHabbo.getHabboInfo().getId()) {
-            gameClient.getHabbo().getHabboRoleplayStats().setIsEscorting(null);
-            return true;
-        }
-
-        if (targetedHabbo.getHabboRoleplayStats().getEscortedBy() != null) {
-            gameClient.getHabbo().whisper(Emulator.getTexts().getValue("commands.roleplay.cmd_escort_in_progress").replace(":username", targetedHabbo.getHabboInfo().getUsername()));
+        if (targetedHabbo.getHabboRoleplayStats().isStunned()) {
+            targetedHabbo.getHabboRoleplayStats().setIsStunned(false);
+            gameClient.getHabbo().whisper(Emulator.getTexts().getValue("commands.roleplay.cmd_stun_unstunned_user").replace(":username", targetedHabbo.getHabboInfo().getUsername()));
             return true;
         }
 
@@ -66,9 +56,9 @@ public class EscortCommand extends Command {
             return true;
         }
 
-        gameClient.getHabbo().getHabboRoleplayStats().setIsEscorting(targetedHabbo.getClient().getHabbo());
-        targetedHabbo.getHabboRoleplayStats().setEscortedBy(gameClient.getHabbo());
-        Emulator.getThreading().run(new EscortUserAction(gameClient.getHabbo(), targetedHabbo, 0));
+        targetedHabbo.getHabboRoleplayStats().setIsStunned(true);
+
+        gameClient.getHabbo().shout(Emulator.getTexts().getValue("commands.roleplay_cmd_stun_success").replace(":username", targetedHabbo.getHabboInfo().getUsername()));
 
         return true;
     }

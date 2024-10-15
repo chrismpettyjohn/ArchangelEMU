@@ -1,4 +1,4 @@
-package com.us.roleplay.commands.police;
+package com.us.archangel.feature.police.commands;
 
 import com.eu.habbo.Emulator;
 import com.eu.habbo.habbohotel.commands.Command;
@@ -12,14 +12,14 @@ import com.us.roleplay.users.HabboRoleplayHelper;
 
 import java.util.List;
 
-public class WantedListAddUserCommand extends Command {
-    public WantedListAddUserCommand() {
-        super("cmd_police_add_wanted");
+public class WantedListRemoveUserCommand extends Command {
+    public WantedListRemoveUserCommand() {
+        super("cmd_police_remove_wanted");
     }
 
     @Override
     public boolean handle(GameClient gameClient, String[] params) {
-        if (params.length != 3) {
+        if (params.length != 2) {
             return true;
         }
 
@@ -27,12 +27,6 @@ public class WantedListAddUserCommand extends Command {
         Habbo targetedHabbo = Emulator.getGameEnvironment().getHabboManager().getHabbo(username);
 
         if (targetedHabbo == null) {
-            return true;
-        }
-
-        String crime = params[2];
-
-        if (crime == null) {
             return true;
         }
 
@@ -51,8 +45,13 @@ public class WantedListAddUserCommand extends Command {
             return true;
         }
 
-        Bounty bounty = new Bounty(targetedHabbo, crime);
-        WantedListManager.getInstance().addBounty(bounty);
+        Bounty bounty = WantedListManager.getInstance().getBountyByUser(targetedHabbo.getHabboInfo().getId());
+
+        if (bounty == null) {
+            return true;
+        }
+
+        WantedListManager.getInstance().removeBounty(bounty);
 
         List<Habbo> policeOnline = HabboRoleplayHelper.getUsersByCorpTag(CorpTag.POLICE);
         List<Habbo> policeWorking = HabboRoleplayHelper.getUsersWorking(policeOnline);
