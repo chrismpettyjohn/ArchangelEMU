@@ -1,10 +1,12 @@
 package com.us.archangel.player;
 
 import com.us.archangel.player.context.PlayerContext;
+import com.us.archangel.player.context.PlayerSkillContext;
 import com.us.archangel.player.entity.PlayerEntity;
 import com.us.archangel.player.mapper.PlayerMapper;
 import com.us.archangel.player.model.PlayerModel;
 import com.us.archangel.player.repository.PlayerRepository;
+import com.us.archangel.player.repository.PlayerSkillRepository;
 import lombok.Getter;
 import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
@@ -34,12 +36,19 @@ public class PlayerManager {
 
     private final PlayerRepository playerRepository;
 
+    private final PlayerSkillRepository playerSkillRepository;
+
     private final PlayerContext playerContext;
+
+    private final PlayerSkillContext playerSkillContext;
 
 
     private PlayerManager(SessionFactory sessionFactory) {
         this.playerContext = PlayerContext.getInstance();
         this.playerRepository = PlayerRepository.getInstance(sessionFactory);
+
+        this.playerSkillContext = PlayerSkillContext.getInstance();
+        this.playerSkillRepository = PlayerSkillRepository.getInstance(sessionFactory);
         this.load();
     }
 
