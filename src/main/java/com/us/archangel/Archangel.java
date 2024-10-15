@@ -5,6 +5,7 @@ import com.us.archangel.core.DatabaseConfig;
 import com.us.archangel.corp.CorpManager;
 import com.us.archangel.feature.RoleplayFeatureManager;
 import com.us.archangel.gang.GangManager;
+import com.us.archangel.penalty.PenaltyManager;
 import com.us.archangel.player.PlayerManager;
 import com.us.archangel.weapon.WeaponManager;
 import com.eu.habbo.core.ConfigurationManager;
@@ -24,6 +25,7 @@ public class Archangel {
     private BountyManager bountyManager;
     private GangManager gangManager;
     private CorpManager corpManager;
+    private PenaltyManager penaltyManager;
     private PlayerManager playerManager;
     private RoleplayFeatureManager roleplayFeatureManager;
     private WeaponManager weaponManager;
@@ -45,6 +47,7 @@ public class Archangel {
         this.bountyManager = BountyManager.getInstance(sessionFactory);
         this.corpManager = CorpManager.getInstance(sessionFactory);
         this.gangManager = GangManager.getInstance(sessionFactory);
+        this.penaltyManager = PenaltyManager.getInstance(sessionFactory);
         this.playerManager = PlayerManager.getInstance(sessionFactory);
         this.roleplayFeatureManager = RoleplayFeatureManager.getInstance();
         this.weaponManager = WeaponManager.getInstance(sessionFactory);
