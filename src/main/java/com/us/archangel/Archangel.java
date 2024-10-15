@@ -2,6 +2,7 @@ package com.us.archangel;
 
 import com.us.archangel.core.DatabaseConfig;
 import com.us.archangel.corp.CorpManager;
+import com.us.archangel.feature.RoleplayFeatureManager;
 import com.us.archangel.gang.GangManager;
 import com.us.archangel.weapon.WeaponManager;
 import com.eu.habbo.core.ConfigurationManager;
@@ -24,6 +25,8 @@ public class Archangel {
 
     private GangManager gangManager;
 
+    private RoleplayFeatureManager roleplayFeatureManager;
+
     public void load(ConfigurationManager config) {
         long millis = System.currentTimeMillis();
 
@@ -41,6 +44,7 @@ public class Archangel {
         this.weaponManager = WeaponManager.getInstance(sessionFactory);
         this.corpManager = CorpManager.getInstance(sessionFactory);
         this.gangManager = GangManager.getInstance(sessionFactory);
+        this.roleplayFeatureManager = RoleplayFeatureManager.getInstance();
 
         DatabaseConfig.shutdown();
 
