@@ -3,8 +3,8 @@ package com.us.archangel.feature.bank.commands;
 import com.eu.habbo.Emulator;
 import com.eu.habbo.habbohotel.commands.Command;
 import com.eu.habbo.habbohotel.gameclients.GameClient;
-import com.us.roleplay.corp.Corp;
-import com.us.roleplay.corp.CorpManager;
+import com.us.archangel.corp.model.CorpModel;
+import com.us.archangel.corp.service.CorpService;
 import com.us.roleplay.database.HabboBankAccountRepository;
 import com.us.roleplay.users.HabboBankAccount;
 
@@ -26,7 +26,7 @@ public class BankAccountDepositCommand extends Command  {
         }
 
         int corpID = Integer.parseInt(params[1]);
-        Corp bankCorp = CorpManager.getInstance().getCorpByID(corpID);
+        CorpModel bankCorp = CorpService.getInstance().getById(corpID);
 
         if (bankCorp == null) {
             gameClient.getHabbo().whisper(Emulator.getTexts().getValue("generic.corp_not_found"));

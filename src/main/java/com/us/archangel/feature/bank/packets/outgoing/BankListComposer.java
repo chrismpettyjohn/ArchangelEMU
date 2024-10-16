@@ -3,9 +3,9 @@ package com.us.archangel.feature.bank.packets.outgoing;
 import com.eu.habbo.messages.ServerMessage;
 import com.eu.habbo.messages.outgoing.MessageComposer;
 import com.eu.habbo.messages.outgoing.Outgoing;
-import com.us.roleplay.corp.Corp;
-import com.us.roleplay.corp.CorpManager;
-import com.us.roleplay.corp.CorpTag;
+import com.us.archangel.corp.CorpManager;
+import com.us.archangel.corp.enums.CorpIndustry;
+import com.us.archangel.corp.model.CorpModel;
 import lombok.AllArgsConstructor;
 
 import java.util.List;
@@ -14,11 +14,11 @@ import java.util.List;
 public class BankListComposer extends MessageComposer {
     @Override
     protected ServerMessage composeInternal() {
-        List<Corp> bankCorps = CorpManager.getInstance().getCorpsByTag(CorpTag.BANK);
+        List<CorpModel> bankCorps = CorpManager.getInstance().getCorpService().findManyByIndustry(CorpIndustry.Bank);
         this.response.init(Outgoing.bankListComposer);
         this.response.appendInt(bankCorps.size());
-        for (Corp bankCorp : bankCorps) {
-            this.response.appendString(bankCorp.getGuild().getId() + ";" + bankCorp.getGuild().getName());
+        for (CorpModel bankCorp : bankCorps) {
+            this.response.appendString(bankCorp.getId() + ";" + bankCorp.getDisplayName());
         }
         return this.response;
     }

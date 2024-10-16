@@ -1,6 +1,7 @@
 package com.us.archangel.corp.repository;
 
 import com.us.archangel.corp.entity.CorpEntity;
+import com.us.archangel.corp.enums.CorpIndustry;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -69,10 +70,25 @@ public class CorpRepository {
         }
     }
 
-    @SuppressWarnings("unchecked")
     public List<CorpEntity> getAll() {
         try (Session session = sessionFactory.openSession()) {
             return session.createQuery("from CorpEntity", CorpEntity.class).list();  // Query simplified
+        }
+    }
+
+    public List<CorpEntity> findManyByDisplayName(String displayName) {
+        try (Session session = sessionFactory.openSession()) {
+            return session.createQuery("from CorpEntity where displayName ILIKE :displayName", CorpEntity.class)
+                    .setParameter("displayName", "%" + displayName + "%")
+                    .list();
+        }
+    }
+
+    public List<CorpEntity> findManyByIndustry(CorpIndustry industry) {
+        try (Session session = sessionFactory.openSession()) {
+            return session.createQuery("from CorpEntity where industry = :industry", CorpEntity.class)
+                    .setParameter("industry", industry)
+                    .list();
         }
     }
 

@@ -12,6 +12,8 @@ public class CorpMapper {
         return new CorpModel(
                 entity.getId(),
                 entity.getDisplayName(),
+                entity.getDescription(),
+                entity.getBadge(),
                 entity.getSector(),
                 entity.getIndustry(),
                 entity.getUserId(),
@@ -26,6 +28,8 @@ public class CorpMapper {
         CorpEntity entity = new CorpEntity();
         entity.setId(model.getId());
         entity.setDisplayName(model.getDisplayName());
+        entity.setDescription(model.getDescription());
+        entity.setBadge(model.getBadge());
         entity.setSector(model.getSector());
         entity.setIndustry(model.getIndustry());
         entity.setUserId(model.getUserId());

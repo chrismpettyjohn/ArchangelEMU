@@ -4,9 +4,10 @@ import com.eu.habbo.Emulator;
 import com.eu.habbo.habbohotel.commands.Command;
 import com.eu.habbo.habbohotel.gameclients.GameClient;
 import com.eu.habbo.habbohotel.users.Habbo;
-import com.us.roleplay.corp.Corp;
-import com.us.roleplay.corp.CorpPosition;
-import com.us.roleplay.corp.CorpManager;
+import com.us.archangel.corp.model.CorpModel;
+import com.us.archangel.corp.model.CorpRoleModel;
+import com.us.archangel.corp.service.CorpRoleService;
+import com.us.archangel.corp.service.CorpService;
 
 public class CorpSuperHireCommand extends Command {
     public CorpSuperHireCommand() {
@@ -40,7 +41,7 @@ public class CorpSuperHireCommand extends Command {
             return true;
         }
 
-        Corp matchingCorp = CorpManager.getInstance().getCorpByID(corporationId);
+        CorpModel matchingCorp = CorpService.getInstance().getById(corporationId);
 
         if (matchingCorp == null) {
             gameClient.getHabbo().whisper(Emulator.getTexts().getValue("commands.roleplay.cmd_superhire_invalid_corp"));
@@ -55,7 +56,7 @@ public class CorpSuperHireCommand extends Command {
             return true;
         }
 
-        CorpPosition matchingPosition = matchingCorp.getPositionByID(positionId);
+        CorpRoleModel matchingPosition = CorpRoleService.getInstance().getById(positionId);
 
         if (matchingPosition == null) {
             gameClient.getHabbo().whisper(Emulator.getTexts().getValue("commands.roleplay.cmd_superhire_invalid_position"));
@@ -66,11 +67,11 @@ public class CorpSuperHireCommand extends Command {
 
         gameClient.getHabbo().shout(Emulator.getTexts().getValue("commands.roleplay.cmd_superhire_success")
                 .replace(":username", targetedHabbo.getHabboInfo().getUsername())
-                .replace(":corp", matchingCorp.getGuild().getName())
+                .replace(":corp", matchingCorp.getDisplayName())
                 .replace(":position", matchingPosition.getName()));
 
         targetedHabbo.shout(Emulator.getTexts().getValue("generic.roleplay.started_new_job").
-                replace(":corp", matchingCorp.getGuild().getName())
+                replace(":corp", matchingCorp.getDisplayName())
                 .replace(":position", matchingPosition.getName()));
 
         return true;

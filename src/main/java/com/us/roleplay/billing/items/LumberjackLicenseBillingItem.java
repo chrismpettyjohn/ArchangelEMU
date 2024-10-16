@@ -33,7 +33,7 @@ public record LumberjackLicenseBillingItem(int userID, int chargedByUserID) impl
 
     @Override
     public int getChargedByCorpID() {
-        return Emulator.getGameEnvironment().getHabboManager().getHabbo(this.chargedByUserID).getHabboRoleplayStats().getCorp().getGuild().getId();
+        return Emulator.getGameEnvironment().getHabboManager().getHabbo(this.chargedByUserID).getHabboRoleplayStats().getCorp().getId();
     }
 
     @Override

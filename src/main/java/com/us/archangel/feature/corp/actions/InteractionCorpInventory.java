@@ -6,7 +6,7 @@ import com.eu.habbo.habbohotel.items.Item;
 import com.eu.habbo.habbohotel.items.interactions.InteractionDefault;
 import com.eu.habbo.habbohotel.rooms.Room;
 import com.eu.habbo.habbohotel.users.HabboInfo;
-import com.us.roleplay.corp.Corp;
+import com.us.archangel.corp.model.CorpModel;
 import com.us.archangel.feature.corp.packets.outgoing.CorpOpenInventoryComposer;
 
 import java.sql.ResultSet;
@@ -26,7 +26,7 @@ public class InteractionCorpInventory extends InteractionDefault {
 
     @Override
     public void onClick(GameClient client, Room room, Object[] objects) throws Exception {
-        Corp corp = client.getHabbo().getHabboRoleplayStats().getCorp();
+        CorpModel corp = client.getHabbo().getHabboRoleplayStats().getCorp();
 
         if (corp == null) {
             client.getHabbo().whisper(Emulator.getTexts().getValue("roleplay.generic.corp_not_found"));

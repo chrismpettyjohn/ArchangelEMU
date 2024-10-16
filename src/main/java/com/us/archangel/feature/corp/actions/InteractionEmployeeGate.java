@@ -28,7 +28,7 @@ public class InteractionEmployeeGate extends InteractionOneWayGate {
             return;
         }
 
-        if (client.getHabbo().getHabboRoleplayStats().getCorp().getGuild().getRoomId() != room.getRoomInfo().getId()) {
+        if (client.getHabbo().getHabboRoleplayStats().getCorp().getRoomId() != room.getRoomInfo().getId()) {
             client.getHabbo().whisper(Emulator.getTexts().getValue("roleplay.employee_one_way_gate.not_allowed"));
             return;
         }

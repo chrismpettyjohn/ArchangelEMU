@@ -8,7 +8,7 @@ import com.eu.habbo.habbohotel.items.interactions.InteractionGuildFurni;
 import com.eu.habbo.habbohotel.rooms.Room;
 import com.eu.habbo.habbohotel.users.Habbo;
 import com.eu.habbo.messages.outgoing.guild.HabboGroupJoinFailedMessageComposer;
-import com.us.roleplay.corp.CorpManager;
+import com.us.archangel.corp.CorpManager;
 import gnu.trove.TCollections;
 import gnu.trove.iterator.TIntObjectIterator;
 import gnu.trove.map.TIntObjectMap;
@@ -110,15 +110,6 @@ public class GuildManager {
                         //guild.addMember(new GuildMember(habbo.getHabboInfo().getId(), habbo.getHabboInfo().getUsername(), habbo.getHabboInfo().getLook(), Emulator.getIntUnixTimestamp(), 2));
                     }
                 }
-            }
-
-            if (type == GuildType.Corp) {
-                CorpManager.getInstance().createCorp(guild, "");
-            }
-
-            if (type == GuildType.Gang) {
-                habbo.getHabboRoleplayStats().setGang(guild.getId());
-                habbo.shout(Emulator.getTexts().getValue("commands.roleplay.cmd_gang_create_success").replace("%gang%", guild.getName()));
             }
 
         } catch (SQLException e) {

@@ -5,16 +5,21 @@ import com.us.archangel.gang.model.GangRoleModel;
 
 public class GangRoleContext extends GenericContext<GangRoleModel> {
 
-    private static GangRoleContext instance;
-
-    private GangRoleContext() {
-        super();
-    }
+    private static volatile GangRoleContext instance;
 
     public static GangRoleContext getInstance() {
         if (instance == null) {
-            instance = new GangRoleContext();
+            synchronized (GangRoleContext.class) {
+                if (instance == null) {
+                    instance = new GangRoleContext();
+                }
+            }
         }
         return instance;
     }
+
+    protected GangRoleContext() {
+        super();
+    }
+
 }

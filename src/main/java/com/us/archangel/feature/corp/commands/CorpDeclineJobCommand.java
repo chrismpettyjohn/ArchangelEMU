@@ -3,8 +3,10 @@ package com.us.archangel.feature.corp.commands;
 import com.eu.habbo.Emulator;
 import com.eu.habbo.habbohotel.commands.Command;
 import com.eu.habbo.habbohotel.gameclients.GameClient;
-import com.us.roleplay.corp.Corp;
-import com.us.roleplay.corp.CorpManager;
+import com.us.archangel.corp.model.CorpInviteModel;
+import com.us.archangel.corp.model.CorpModel;
+import com.us.archangel.corp.service.CorpInviteService;
+import com.us.archangel.corp.service.CorpService;
 
 public class CorpDeclineJobCommand extends Command {
     public CorpDeclineJobCommand() {
@@ -16,28 +18,25 @@ public class CorpDeclineJobCommand extends Command {
             return true;
         }
 
-        String corpName = params[1];
+        int corpId = Integer.parseInt(params[1]);
 
-        if (corpName == null) {
-            gameClient.getHabbo().whisper(Emulator.getTexts().getValue("generic.corp_not_found"));
-            return true;
-        }
-
-        Corp targetedCorp = CorpManager.getInstance().getCorpsByName(corpName);
+        CorpModel targetedCorp = CorpService.getInstance().getById(corpId);
 
         if (targetedCorp == null) {
             gameClient.getHabbo().whisper(Emulator.getTexts().getValue("generic.corp_not_found"));
             return true;
         }
 
-        if (targetedCorp.getInvitedUser(gameClient.getHabbo()) == null) {
+        CorpInviteModel corpInvite = CorpInviteService.getInstance().getByCorpAndUserId(targetedCorp.getId(), gameClient.getHabbo().getHabboInfo().getId());
+
+        if (corpInvite == null) {
             gameClient.getHabbo().whisper(Emulator.getTexts().getValue("commands.roleplay.cmd_corp_invite_missing"));
             return true;
         }
 
-        targetedCorp.removeInvitedUser(gameClient.getHabbo());
+        CorpInviteService.getInstance().deleteById(corpInvite.getId());
 
-        gameClient.getHabbo().shout(Emulator.getTexts().getValue("commands.roleplay.cmd_corp_invite_rejected").replace(":corp", targetedCorp.getGuild().getName()));
+        gameClient.getHabbo().shout(Emulator.getTexts().getValue("commands.roleplay.cmd_corp_invite_rejected").replace(":corp", targetedCorp.getDisplayName()));
 
         return true;
     }

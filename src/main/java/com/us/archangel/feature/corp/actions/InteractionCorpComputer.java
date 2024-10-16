@@ -6,7 +6,7 @@ import com.eu.habbo.habbohotel.items.Item;
 import com.eu.habbo.habbohotel.items.interactions.InteractionDefault;
 import com.eu.habbo.habbohotel.rooms.Room;
 import com.eu.habbo.habbohotel.users.HabboInfo;
-import com.us.roleplay.corp.Corp;
+import com.us.archangel.corp.model.CorpModel;
 import com.us.archangel.feature.corp.packets.outgoing.CorpOpenComputerComposer;
 
 import java.sql.ResultSet;
@@ -26,9 +26,9 @@ public class InteractionCorpComputer extends InteractionDefault {
 
     @Override
     public void onClick(GameClient client, Room room, Object[] objects) throws Exception {
-        Corp corp = client.getHabbo().getHabboRoleplayStats().getCorp();
+        CorpModel corp = client.getHabbo().getHabboRoleplayStats().getCorp();
 
-        if (corp.getGuild().getOwnerId() != client.getHabbo().getHabboInfo().getId()) {
+        if (corp.getUserId() != client.getHabbo().getHabboInfo().getId()) {
             client.getHabbo().whisper(Emulator.getTexts().getValue("roleplay.cor.not_the_owner"));
             return;
         }
@@ -40,9 +40,9 @@ public class InteractionCorpComputer extends InteractionDefault {
 
         client.getHabbo().shout(Emulator.getTexts()
                 .getValue("roleplay.computer.logged_in")
-                .replace(":corpName", corp.getGuild().getName())
+                .replace(":corpName", corp.getDisplayName())
         );
 
-        client.sendResponse(new CorpOpenComputerComposer(this.getId(), corp.getGuild().getId()));
+        client.sendResponse(new CorpOpenComputerComposer(this.getId(), corp.getId()));
     }
 }

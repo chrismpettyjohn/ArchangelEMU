@@ -76,9 +76,26 @@ public class CorpRoleRepository {
         }
     }
 
+    public CorpRoleEntity getByCorpAndOrderId(int corpId, int orderId) {
+        try (Session session = sessionFactory.openSession()) {
+            return session.createQuery("from CorpRoleEntity where corpId = :corpId AND orderId = :orderId", CorpRoleEntity.class)
+                    .setParameter("corpId", corpId)
+                    .setParameter("orderId", orderId)
+                    .getSingleResult();
+        }
+    }
+
     public List<CorpRoleEntity> getAll() {
         try (Session session = sessionFactory.openSession()) {
             return session.createQuery("from CorpRoleEntity", CorpRoleEntity.class).list();
+        }
+    }
+
+    public List<CorpRoleEntity> findManyByCorpId(int corpId) {
+        try (Session session = sessionFactory.openSession()) {
+            return session.createQuery("from CorpRoleEntity where corpId = :corpId", CorpRoleEntity.class)
+                    .setParameter("corpId", corpId)
+                    .list();
         }
     }
 

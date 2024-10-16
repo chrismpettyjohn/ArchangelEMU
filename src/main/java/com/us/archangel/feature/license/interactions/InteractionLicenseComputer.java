@@ -6,8 +6,9 @@ import com.eu.habbo.habbohotel.items.Item;
 import com.eu.habbo.habbohotel.items.interactions.InteractionDefault;
 import com.eu.habbo.habbohotel.rooms.Room;
 import com.eu.habbo.habbohotel.users.HabboInfo;
-import com.us.roleplay.corp.Corp;
-import com.us.roleplay.corp.CorpManager;
+import com.us.archangel.corp.CorpManager;
+import com.us.archangel.corp.model.CorpModel;
+import com.us.archangel.corp.service.CorpService;
 import com.us.roleplay.corp.LicenseType;
 import com.us.roleplay.corp.LicenseMapper;
 import com.us.archangel.feature.license.packets.outgoing.LicenseOpenComputerComposer;
@@ -30,8 +31,8 @@ public class InteractionLicenseComputer extends InteractionDefault {
     @Override
     public void onClick(GameClient client, Room room, Object[] objects) throws Exception {
         int corpID = Integer.parseInt(this.getExtraData());
-        Corp licenseAgency = CorpManager.getInstance().getCorpByID(corpID);
-        LicenseType licenseType = licenseAgency != null ? LicenseMapper.corpToLicenseType(licenseAgency) : null;
+        CorpModel licenseAgency = CorpService.getInstance().getById(corpID);
+        LicenseType licenseType = licenseAgency != null ? LicenseMapper.corpIndustryToLicenseType(licenseAgency.getIndustry()) : null;
         if (licenseAgency == null) {
             if (!client.getHabbo().getHabboRoleplayStats().isWorking()) {
                 client.getHabbo().whisper(Emulator.getTexts().getValue("generic.roleplay.must_be_working"));
@@ -51,7 +52,7 @@ public class InteractionLicenseComputer extends InteractionDefault {
 
         client.getHabbo().shout(Emulator.getTexts()
                 .getValue("roleplay.computer.logged_in")
-                .replace(":corpName", licenseAgency.getGuild().getName())
+                .replace(":corpName", licenseAgency.getDisplayName())
         );
 
         client.sendResponse(new LicenseOpenComputerComposer(this.getId(), corpID, licenseType));

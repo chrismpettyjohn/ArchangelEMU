@@ -4,10 +4,18 @@ import lombok.Getter;
 
 @Getter
 public enum CorpIndustry {
+    Bank("bank"),
+    DriversEd("drivers-ed"),
+    Farm("fish"),
+    Fish("fish"),
+    Mine("mine"),
+    Lumber("lumber"),
+    GunStore("gun-store"),
     Retail("retail"),
     Hospital("hospital"),
     Paramedic("paramedic"),
-    Police("police");
+    Police("police"),
+    PublicAid("public-aid");
 
     // Getter to retrieve the string value of the enum
     private final String typeName;

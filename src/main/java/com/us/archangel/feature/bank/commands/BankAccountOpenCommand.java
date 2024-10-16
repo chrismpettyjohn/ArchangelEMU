@@ -4,8 +4,8 @@ import com.eu.habbo.Emulator;
 import com.eu.habbo.habbohotel.commands.Command;
 import com.eu.habbo.habbohotel.gameclients.GameClient;
 import com.eu.habbo.habbohotel.users.Habbo;
-import com.us.roleplay.corp.Corp;
-import com.us.roleplay.corp.CorpTag;
+import com.us.archangel.corp.enums.CorpIndustry;
+import com.us.archangel.corp.model.CorpModel;
 import com.us.roleplay.database.HabboBankAccountRepository;
 import com.us.roleplay.users.HabboBankAccount;
 
@@ -30,22 +30,22 @@ public class BankAccountOpenCommand extends Command  {
             return true;
         }
 
-        Corp bankCorp = gameClient.getHabbo().getHabboRoleplayStats().getCorp();
+        CorpModel bankCorp = gameClient.getHabbo().getHabboRoleplayStats().getCorp();
 
         if (bankCorp == null) {
             gameClient.getHabbo().whisper(Emulator.getTexts().getValue("generic.corp_not_found"));
             return true;
         }
 
-        if (!bankCorp.getTags().contains(CorpTag.BANK)) {
+        if (bankCorp.getIndustry() != CorpIndustry.Bank) {
             gameClient.getHabbo().whisper(Emulator.getTexts()
                     .getValue("roleplay.bank.corp_not_a_bank")
-                    .replace(":corpName", bankCorp.getGuild().getName())
+                    .replace(":corpName", bankCorp.getDisplayName())
             );
             return true;
         }
 
-        if (gameClient.getHabbo().getRoomUnit().getRoom().getRoomInfo().getId() !=  bankCorp.getGuild().getRoomId()) {
+        if (gameClient.getHabbo().getRoomUnit().getRoom().getRoomInfo().getId() !=  bankCorp.getRoomId()) {
             gameClient.getHabbo().whisper(Emulator.getTexts().getValue("roleplay.generic.not_at_work"));
             return true;
         }
@@ -69,7 +69,7 @@ public class BankAccountOpenCommand extends Command  {
             return true;
         }
 
-        HabboBankAccount bankAccount = HabboBankAccountRepository.getInstance().getByUserAndCorpID(targetedUser.getHabboInfo().getId(), bankCorp.getGuild().getId());
+        HabboBankAccount bankAccount = HabboBankAccountRepository.getInstance().getByUserAndCorpID(targetedUser.getHabboInfo().getId(), bankCorp.getId());
 
         if (bankAccount != null) {
             gameClient.getHabbo().whisper(Emulator.getTexts()
@@ -80,12 +80,12 @@ public class BankAccountOpenCommand extends Command  {
         }
 
         int currentTime = (int) (System.currentTimeMillis() / 1000);
-        HabboBankAccountRepository.getInstance().create(targetedUser.getHabboInfo().getId(), bankCorp.getGuild().getId(), 0, currentTime, currentTime);
+        HabboBankAccountRepository.getInstance().create(targetedUser.getHabboInfo().getId(), bankCorp.getId(), 0, currentTime, currentTime);
 
         gameClient.getHabbo().shout(Emulator.getTexts()
                 .getValue("roleplay.bank.account_started")
                 .replace(":username", targetedUser.getHabboInfo().getUsername())
-                .replace(":corpName", bankCorp.getGuild().getName())
+                .replace(":corpName", bankCorp.getDisplayName())
         );
 
         gameClient.getHabbo().shout(Emulator.getTexts()

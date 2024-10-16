@@ -27,7 +27,6 @@ import com.eu.habbo.habbohotel.users.HabboManager;
 import com.eu.habbo.habbohotel.users.subscriptions.SubscriptionManager;
 import com.eu.habbo.habbohotel.users.subscriptions.SubscriptionScheduler;
 import com.us.archangel.feature.time.TimeOfDayManager;
-import com.us.roleplay.corp.CorpManager;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
@@ -59,7 +58,6 @@ public class GameEnvironment {
     private PollManager pollManager;
     private SubscriptionManager subscriptionManager;
     private CalendarManager calendarManager;
-    private CorpManager corpManager;
     private TimeOfDayManager timeOfDayManager;
 
 
@@ -87,7 +85,6 @@ public class GameEnvironment {
         this.craftingManager = new CraftingManager();
         this.pollManager = new PollManager();
         this.calendarManager = new CalendarManager();
-        this.corpManager = CorpManager.getInstance();
         this.timeOfDayManager = TimeOfDayManager.getInstance();
 
         this.roomManager.loadAllRooms();
@@ -126,7 +123,6 @@ public class GameEnvironment {
         this.hotelViewManager.dispose();
         this.subscriptionManager.dispose();
         this.calendarManager.dispose();
-        this.corpManager.dispose();
         log.info("GameEnvironment -> Disposed!");
     }
 

@@ -4,7 +4,8 @@ import com.eu.habbo.Emulator;
 import com.eu.habbo.habbohotel.commands.Command;
 import com.eu.habbo.habbohotel.gameclients.GameClient;
 import com.eu.habbo.habbohotel.users.Habbo;
-import com.us.roleplay.corp.CorpPosition;
+import com.us.archangel.corp.model.CorpRoleModel;
+import com.us.archangel.corp.service.CorpRoleService;
 
 public class CorpDemoteCommand extends Command {
     public CorpDemoteCommand() {
@@ -36,7 +37,7 @@ public class CorpDemoteCommand extends Command {
             return true;
         }
 
-        if (gameClient.getHabbo().getHabboRoleplayStats().getCorp().getGuild().getId() != targetedHabbo.getHabboRoleplayStats().getCorp().getGuild().getId()) {
+        if (gameClient.getHabbo().getHabboRoleplayStats().getCorp().getId() != targetedHabbo.getHabboRoleplayStats().getCorp().getId()) {
             gameClient.getHabbo().whisper(Emulator.getTexts().getValue("commands.roleplay.cmd_demote_not_allowed"));
             return true;
         }
@@ -56,7 +57,7 @@ public class CorpDemoteCommand extends Command {
             return true;
         }
 
-        CorpPosition newPosition = targetedHabbo.getHabboRoleplayStats().getCorp().getPositionByOrderId(targetedHabbo.getHabboRoleplayStats().getCorpPosition().getOrderId() - 1);
+        CorpRoleModel newPosition = CorpRoleService.getInstance().getByCorpAndOrderId(targetedHabbo.getHabboRoleplayStats().getCorp().getId(), targetedHabbo.getHabboRoleplayStats().getCorpPosition().getOrderId() - 1);
 
         if (newPosition == null) {
             gameClient.getHabbo().whisper(Emulator.getTexts().getValue("commands.roleplay.cmd_demote_not_allowed_too_low"));
@@ -68,15 +69,15 @@ public class CorpDemoteCommand extends Command {
             return true;
         }
 
-        gameClient.getHabbo().getHabboRoleplayStats().setCorp(targetedHabbo.getHabboRoleplayStats().getCorp().getGuild().getId(), newPosition.getId());
+        gameClient.getHabbo().getHabboRoleplayStats().setCorp(targetedHabbo.getHabboRoleplayStats().getCorp().getId(), newPosition.getId());
 
         gameClient.getHabbo().shout(Emulator.getTexts().getValue("commands.roleplay.cmd_demote_success")
                 .replace(":username", targetedHabbo.getHabboInfo().getUsername())
-                .replace(":corp", targetedHabbo.getHabboRoleplayStats().getCorp().getGuild().getName())
+                .replace(":corp", targetedHabbo.getHabboRoleplayStats().getCorp().getDisplayName())
                 .replace(":position", targetedHabbo.getHabboRoleplayStats().getCorpPosition().getName()));
 
         targetedHabbo.shout(Emulator.getTexts().getValue("generic.roleplay.started_new_job").
-                replace(":corp", targetedHabbo.getHabboRoleplayStats().getCorp().getGuild().getName())
+                replace(":corp", targetedHabbo.getHabboRoleplayStats().getCorp().getDisplayName())
                 .replace(":position", newPosition.getName()));
 
         return true;

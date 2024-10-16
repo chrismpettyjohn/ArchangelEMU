@@ -2,12 +2,12 @@ package com.us.archangel.feature.corp.packets.incoming;
 
 import com.eu.habbo.Emulator;
 import com.eu.habbo.messages.incoming.MessageHandler;
+import com.us.archangel.corp.enums.CorpIndustry;
+import com.us.archangel.corp.model.CorpModel;
+import com.us.archangel.corp.model.CorpRoleModel;
+import com.us.archangel.corp.service.CorpRoleService;
+import com.us.archangel.corp.service.CorpService;
 import com.us.archangel.feature.corp.commands.CorpFireUserCommand;
-import com.us.roleplay.corp.Corp;
-import com.us.roleplay.corp.CorpManager;
-import com.us.roleplay.corp.CorpPosition;
-import com.us.roleplay.corp.CorpTag;
-import com.us.roleplay.database.CorpPositionRepository;
 import com.us.roleplay.database.HabboRoleplayStatsRepository;
 import com.us.archangel.feature.corp.packets.outgoing.CorpPositionInfoComposer;
 import com.us.archangel.feature.corp.packets.outgoing.CorpPositionListComposer;
@@ -22,13 +22,13 @@ public class CorpDeletePositionEvent extends MessageHandler {
         int corpID = this.packet.readInt();
         int corpPositionID = this.packet.readInt();
 
-        Corp corp = CorpManager.getInstance().getCorpByID(corpID);
+        CorpModel corp = CorpService.getInstance().getById(corpID);
 
         if (corp == null) {
             return;
         }
 
-        CorpPosition corpPosition = corp.getPositionByID(corpPositionID);
+        CorpRoleModel corpPosition = CorpRoleService.getInstance().getById(corpPositionID);
 
         if (corpPosition == null) {
             return;
@@ -39,19 +39,19 @@ public class CorpDeletePositionEvent extends MessageHandler {
             return;
         }
 
-        if (corp.getGuild().getOwnerId() != this.client.getHabbo().getHabboInfo().getId()) {
+        if (corp.getUserId() != this.client.getHabbo().getHabboInfo().getId()) {
             this.client.getHabbo().whisper(Emulator.getTexts().getValue("roleplay.cor.not_the_owner"));
             return;
         }
 
-        List<Corp> welfareCorps = CorpManager.getInstance().getCorpsByTag(CorpTag.WELFARE);
+        List<CorpModel> welfareCorps = CorpService.getInstance().findManyByIndustry(CorpIndustry.PublicAid);
 
         if (welfareCorps.isEmpty()) {
             throw new RuntimeException("no welfare corp");
         }
 
-        Corp welfareCorp = welfareCorps.get(0);
-        CorpPosition welfarePosition = welfareCorp.getPositionByOrderId(1);
+        CorpModel welfareCorp = welfareCorps.get(0);
+        CorpRoleModel welfarePosition = CorpRoleService.getInstance().getByCorpAndOrderId(welfareCorp.getId(), 1);
 
         if (welfarePosition == null) {
             throw new RuntimeException("no welfare position");
@@ -60,12 +60,10 @@ public class CorpDeletePositionEvent extends MessageHandler {
         List<HabboRoleplayStats> habbosInPosition = HabboRoleplayStatsRepository.getInstance().getByCorpAndPositionID(corpID, corpPositionID);
 
         for (HabboRoleplayStats habboStats : habbosInPosition) {
-            habboStats.setCorp(welfareCorp.getGuild().getId(), welfarePosition.getId());
+            habboStats.setCorp(welfareCorp.getId(), welfarePosition.getId());
         }
 
-        CorpPositionRepository.getInstance().deleteCorpPositionByCorpAndOrder(corpPosition.getCorporationID(), corpPosition.getOrderId());
-
-        corp.removePositionByID(corpPositionID);
+        CorpRoleService.getInstance().deleteById(corpPositionID);
 
         this.client.getHabbo().shout(Emulator.getTexts()
                 .getValue("roleplay.corp_position.delete_success")

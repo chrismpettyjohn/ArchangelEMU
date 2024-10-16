@@ -4,8 +4,8 @@ import com.eu.habbo.Emulator;
 import com.eu.habbo.habbohotel.commands.Command;
 import com.eu.habbo.habbohotel.gameclients.GameClient;
 import com.eu.habbo.habbohotel.users.Habbo;
-import com.us.roleplay.corp.Corp;
-import com.us.roleplay.corp.CorpManager;
+import com.us.archangel.corp.model.CorpModel;
+import com.us.archangel.corp.service.CorpService;
 import com.us.roleplay.database.HabboLicenseRepository;
 import com.us.roleplay.corp.LicenseType;
 import com.us.roleplay.corp.LicenseMapper;
@@ -29,14 +29,14 @@ public class LicenseStatusCommand extends Command  {
         }
 
         int corpID = Integer.parseInt(params[1]);
-        Corp licenseCorp = CorpManager.getInstance().getCorpByID(corpID);
+        CorpModel licenseCorp = CorpService.getInstance().getById(corpID);
 
         if (licenseCorp == null) {
             gameClient.getHabbo().whisper(Emulator.getTexts().getValue("generic.corp_not_found"));
             return true;
         }
 
-        LicenseType licenseType = LicenseMapper.corpToLicenseType(licenseCorp);
+        LicenseType licenseType = LicenseMapper.corpIndustryToLicenseType(licenseCorp.getIndustry());
 
         if (licenseType == null) {
             gameClient.getHabbo().whisper(Emulator.getTexts().getValue("generic.license.corp_not_allowed"));

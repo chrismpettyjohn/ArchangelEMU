@@ -6,9 +6,9 @@ import com.eu.habbo.habbohotel.items.Item;
 import com.eu.habbo.habbohotel.items.interactions.InteractionDefault;
 import com.eu.habbo.habbohotel.rooms.Room;
 import com.eu.habbo.habbohotel.users.HabboInfo;
-import com.us.roleplay.corp.Corp;
-import com.us.roleplay.corp.CorpManager;
-import com.us.roleplay.corp.CorpTag;
+import com.us.archangel.corp.enums.CorpIndustry;
+import com.us.archangel.corp.model.CorpModel;
+import com.us.archangel.corp.service.CorpService;
 import com.us.archangel.feature.bank.packets.outgoing.BankOpenComputerComposer;
 
 import java.sql.ResultSet;
@@ -29,7 +29,7 @@ public class InteractionBankComputer extends InteractionDefault {
     @Override
     public void onClick(GameClient client, Room room, Object[] objects) throws Exception {
         int corpID = Integer.parseInt(this.getExtraData());
-        Corp bankCorp = CorpManager.getInstance().getCorpByID(corpID);
+        CorpModel bankCorp = CorpService.getInstance().getById(corpID);
 
         if (bankCorp == null) {
             if (!client.getHabbo().getHabboRoleplayStats().isWorking()) {
@@ -47,14 +47,14 @@ public class InteractionBankComputer extends InteractionDefault {
             return;
         }
 
-        if (!bankCorp.getTags().contains(CorpTag.BANK)) {
+        if (bankCorp.getIndustry() != CorpIndustry.Bank) {
             client.getHabbo().whisper(Emulator.getTexts().getValue("roleplay.bank.corp_not_a_bank"));
             return;
         }
 
         client.getHabbo().shout(Emulator.getTexts()
                 .getValue("roleplay.computer.logged_in")
-                .replace(":corpName", bankCorp.getGuild().getName())
+                .replace(":corpName", bankCorp.getDisplayName())
         );
 
         client.sendResponse(new BankOpenComputerComposer(this.getId(), corpID));

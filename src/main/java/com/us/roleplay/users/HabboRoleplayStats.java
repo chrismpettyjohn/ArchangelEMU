@@ -4,13 +4,14 @@ import com.eu.habbo.Emulator;
 import com.eu.habbo.habbohotel.guilds.Guild;
 import com.eu.habbo.habbohotel.guilds.GuildMember;
 import com.eu.habbo.habbohotel.users.Habbo;
+import com.us.archangel.corp.model.CorpModel;
+import com.us.archangel.corp.model.CorpRoleModel;
+import com.us.archangel.corp.service.CorpRoleService;
+import com.us.archangel.corp.service.CorpService;
 import com.us.archangel.feature.paramedic.actions.HospitalRecoveryAction;
 import com.us.archangel.feature.paramedic.actions.TeleportHospitalAction;
 import com.us.archangel.skill.model.*;
 import com.us.archangel.weapon.model.WeaponModel;
-import com.us.roleplay.corp.Corp;
-import com.us.roleplay.corp.CorpManager;
-import com.us.roleplay.corp.CorpPosition;
 import com.us.archangel.feature.player.packets.outgoing.UserRoleplayStatsChangeComposer;
 import lombok.Getter;
 import lombok.Setter;
@@ -361,8 +362,8 @@ public class HabboRoleplayStats{
         this.getHabbo().getRoomUnit().getRoom().sendComposer(new UserRoleplayStatsChangeComposer(this.getHabbo()).compose());
     }
 
-    public Corp getCorp() {
-        return CorpManager.getInstance().getCorpByID(this.corporationID);
+    public CorpModel getCorp() {
+        return CorpService.getInstance().getById(this.corporationID);
     }
 
     public void setCorp(int corporationID, int corporationPositionID) {
@@ -371,8 +372,8 @@ public class HabboRoleplayStats{
         this.getHabbo().getRoomUnit().getRoom().sendComposer(new UserRoleplayStatsChangeComposer(this.getHabbo()).compose());
     }
 
-    public CorpPosition getCorpPosition() {
-        return this.getCorp().getPositionByID(this.corporationPositionID);
+    public CorpRoleModel getCorpPosition() {
+        return CorpRoleService.getInstance().getById(this.corporationPositionID);
     }
 
     public Guild getGang() {

@@ -4,7 +4,7 @@ import com.eu.habbo.Emulator;
 import com.eu.habbo.habbohotel.commands.Command;
 import com.eu.habbo.habbohotel.gameclients.GameClient;
 import com.eu.habbo.habbohotel.users.Habbo;
-import com.us.roleplay.corp.CorpTag;
+import com.us.archangel.corp.enums.CorpIndustry;
 import com.us.archangel.feature.police.packets.outgoing.WantedListComposer;
 import com.us.roleplay.police.Bounty;
 import com.us.roleplay.police.WantedListManager;
@@ -41,7 +41,7 @@ public class WantedListAddUserCommand extends Command {
             return true;
         }
 
-        if (!gameClient.getHabbo().getHabboRoleplayStats().getCorp().getTags().contains(CorpTag.POLICE)) {
+        if (gameClient.getHabbo().getHabboRoleplayStats().getCorp().getIndustry() != CorpIndustry.Police) {
             gameClient.getHabbo().whisper(Emulator.getTexts().getValue("generic.roleplay.police_only"));
             return true;
         }
@@ -54,7 +54,7 @@ public class WantedListAddUserCommand extends Command {
         Bounty bounty = new Bounty(targetedHabbo, crime);
         WantedListManager.getInstance().addBounty(bounty);
 
-        List<Habbo> policeOnline = HabboRoleplayHelper.getUsersByCorpTag(CorpTag.POLICE);
+        List<Habbo> policeOnline = HabboRoleplayHelper.getUsersByCorpIndustry(CorpIndustry.Police);
         List<Habbo> policeWorking = HabboRoleplayHelper.getUsersWorking(policeOnline);
 
         for (Habbo policeOfficer : policeWorking) {

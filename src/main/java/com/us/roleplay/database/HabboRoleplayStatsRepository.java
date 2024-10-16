@@ -88,7 +88,7 @@ public class HabboRoleplayStatsRepository {
                 habboRoleplayStats.getEnergyMax(),
                 habboRoleplayStats.getHungerNow(),
                 habboRoleplayStats.getHungerMax(),
-                habboRoleplayStats.getCorp().getGuild().getId(),
+                habboRoleplayStats.getCorp().getId(),
                 habboRoleplayStats.getCorpPosition().getId(),
                 habboRoleplayStats.getGang() != null ? habboRoleplayStats.getGang().getId() : null,
                 habboRoleplayStats.getLastPosX(),
@@ -161,7 +161,7 @@ public class HabboRoleplayStatsRepository {
             statement.setInt(6, habboRoleplayStats.getArmorMax());
             statement.setInt(7, habboRoleplayStats.getHungerNow());
             statement.setInt(8, habboRoleplayStats.getHungerMax());
-            statement.setInt(9, habboRoleplayStats.getCorp().getGuild().getId());
+            statement.setInt(9, habboRoleplayStats.getCorp().getId());
             statement.setInt(10, habboRoleplayStats.getCorpPosition().getId());
             if (habboRoleplayStats.getGang() != null) {
                 statement.setInt(11,habboRoleplayStats.getGang().getId());

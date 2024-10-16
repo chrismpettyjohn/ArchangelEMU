@@ -4,9 +4,9 @@ import com.eu.habbo.Emulator;
 import com.eu.habbo.habbohotel.commands.Command;
 import com.eu.habbo.habbohotel.gameclients.GameClient;
 import com.eu.habbo.habbohotel.users.Habbo;
+import com.us.archangel.corp.enums.CorpIndustry;
+import com.us.archangel.corp.model.CorpModel;
 import com.us.roleplay.RoleplayHelper;
-import com.us.roleplay.corp.Corp;
-import com.us.roleplay.corp.CorpTag;
 
 public class StunCommand extends Command {
     public StunCommand() {
@@ -21,14 +21,14 @@ public class StunCommand extends Command {
             return true;
         }
 
-        Corp corp = gameClient.getHabbo().getHabboRoleplayStats().getCorp();
+        CorpModel corp = gameClient.getHabbo().getHabboRoleplayStats().getCorp();
 
         if (corp == null) {
             gameClient.getHabbo().whisper(Emulator.getTexts().getValue("generic.roleplay.unemployed"));
             return true;
         }
 
-        if (!corp.getTags().contains(CorpTag.POLICE)) {
+        if (corp.getIndustry() != CorpIndustry.Police) {
             gameClient.getHabbo().whisper(Emulator.getTexts().getValue("generic.roleplay.police_only"));
             return true;
         }

@@ -3,8 +3,8 @@ package com.us.archangel.feature.device.interactions.packets.incoming;
 import com.eu.habbo.Emulator;
 import com.eu.habbo.habbohotel.rooms.items.entities.RoomItem;
 import com.eu.habbo.messages.incoming.MessageHandler;
-import com.us.roleplay.corp.Corp;
-import com.us.roleplay.corp.CorpTag;
+import com.us.archangel.corp.enums.CorpIndustry;
+import com.us.archangel.corp.model.CorpModel;
 import com.us.archangel.feature.device.interactions.InteractionPhone;
 import com.us.archangel.feature.police.interactions.InteractionPoliceLaptop;
 import com.us.archangel.feature.device.interactions.InteractionUsable;
@@ -35,14 +35,14 @@ public class DeviceOpenEvent extends MessageHandler {
         }
 
         if (item.getBaseItem().getInteractionType().getType() == InteractionPoliceLaptop.class) {
-            Corp corp = this.client.getHabbo().getHabboRoleplayStats().getCorp();
+            CorpModel corp = this.client.getHabbo().getHabboRoleplayStats().getCorp();
 
             if (corp == null) {
                 this.client.getHabbo().whisper(Emulator.getTexts().getValue("generic.roleplay.unemployed"));
                 return;
             }
 
-            if (!corp.getTags().contains(CorpTag.POLICE)) {
+            if (corp.getIndustry() != CorpIndustry.Police) {
                 this.client.getHabbo().whisper(Emulator.getTexts().getValue("generic.roleplay.police_only"));
                 return;
             }

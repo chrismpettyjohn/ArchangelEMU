@@ -4,6 +4,10 @@ import com.eu.habbo.Emulator;
 import com.eu.habbo.habbohotel.commands.Command;
 import com.eu.habbo.habbohotel.gameclients.GameClient;
 import com.eu.habbo.habbohotel.users.Habbo;
+import com.us.archangel.corp.entity.CorpInviteEntity;
+import com.us.archangel.corp.model.CorpRoleModel;
+import com.us.archangel.corp.service.CorpInviteService;
+import com.us.archangel.corp.service.CorpRoleService;
 
 public class CorpOfferUserJobCommand extends Command {
     public CorpOfferUserJobCommand() {
@@ -34,17 +38,22 @@ public class CorpOfferUserJobCommand extends Command {
             return true;
         }
 
-        if (gameClient.getHabbo().getHabboRoleplayStats().getCorp().getGuild().getId() == targetedHabbo.getHabboRoleplayStats().getCorp().getGuild().getId()) {
+        if (gameClient.getHabbo().getHabboRoleplayStats().getCorp().getId() == targetedHabbo.getHabboRoleplayStats().getCorp().getId()) {
             gameClient.getHabbo().whisper(Emulator.getTexts().getValue("commands.roleplay.cmd_hire_user_has_same_employer"));
             return true;
         }
 
+        CorpInviteEntity corpInvite = new CorpInviteEntity();
+        corpInvite.setCorpId(gameClient.getHabbo().getHabboRoleplayStats().getCorp().getId());
 
-        gameClient.getHabbo().getHabboRoleplayStats().getCorp().addInvitedUser(targetedHabbo);
+        CorpRoleModel corpRole = CorpRoleService.getInstance().getByCorpAndOrderId(gameClient.getHabbo().getHabboRoleplayStats().getCorp().getId(), 1);
+        corpInvite.setCorpRoleId(corpRole.getId());
+
+        CorpInviteService.getInstance().create(corpInvite);
 
         gameClient.getHabbo().shout(Emulator.getTexts().getValue("commands.roleplay.cmd_corp_invite_sent").replace(":username", targetedHabbo.getHabboInfo().getUsername()));
 
-        targetedHabbo.whisper(Emulator.getTexts().getValue("commands.roleplay.cmd_corp_invite_received").replace(":corp",gameClient.getHabbo().getHabboRoleplayStats().getCorp().getGuild().getName()));
+        targetedHabbo.whisper(Emulator.getTexts().getValue("commands.roleplay.cmd_corp_invite_received").replace(":corp",gameClient.getHabbo().getHabboRoleplayStats().getCorp().getDisplayName()));
 
         return true;
     }

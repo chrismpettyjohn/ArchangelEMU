@@ -5,16 +5,20 @@ import com.us.archangel.player.model.PlayerModel;
 
 public class PlayerContext extends GenericContext<PlayerModel> {
 
-    private static PlayerContext instance;
-
-    private PlayerContext() {
-        super();
-    }
+    private static volatile PlayerContext instance;
 
     public static PlayerContext getInstance() {
         if (instance == null) {
-            instance = new PlayerContext();
+            synchronized (PlayerContext.class) {
+                if (instance == null) {
+                    instance = new PlayerContext();
+                }
+            }
         }
         return instance;
+    }
+
+    protected PlayerContext() {
+        super();
     }
 }

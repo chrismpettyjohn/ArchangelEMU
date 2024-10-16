@@ -2,10 +2,10 @@ package com.us.archangel.feature.corp.packets.incoming;
 
 import com.eu.habbo.Emulator;
 import com.eu.habbo.messages.incoming.MessageHandler;
-import com.us.roleplay.corp.Corp;
-import com.us.roleplay.corp.CorpManager;
-import com.us.roleplay.corp.CorpPosition;
-import com.us.roleplay.database.CorpPositionRepository;
+import com.us.archangel.corp.entity.CorpRoleEntity;
+import com.us.archangel.corp.model.CorpModel;
+import com.us.archangel.corp.service.CorpRoleService;
+import com.us.archangel.corp.service.CorpService;
 import com.us.archangel.feature.corp.packets.outgoing.CorpPositionListComposer;
 
 public class CorpCreatePositionEvent extends MessageHandler {
@@ -25,35 +25,32 @@ public class CorpCreatePositionEvent extends MessageHandler {
         boolean canDemote = this.packet.readBoolean();
         boolean canWorkAnywhere = this.packet.readBoolean();
 
-        Corp corp = CorpManager.getInstance().getCorpByID(corpID);
+        CorpModel corp = CorpService.getInstance().getById(corpID);
 
         if (corp == null) {
             return;
         }
 
-        if (corp.getGuild().getOwnerId() != this.client.getHabbo().getHabboInfo().getId()) {
-            this.client.getHabbo().whisper(Emulator.getTexts().getValue("roleplay.cor.not_the_owner"));
+        if (corp.getUserId() != this.client.getHabbo().getHabboInfo().getId()) {
+            this.client.getHabbo().whisper(Emulator.getTexts().getValue("roleplay.corp.not_the_owner"));
             return;
         }
 
-        CorpPositionRepository.getInstance().upsertCorpPosition(
-                corpID,
-                orderId,
-                name,
-                motto,
-                salary,
-                maleFigure,
-                femaleFigure,
-                canHire,
-                canFire,
-                canPromote,
-                canDemote,
-                canWorkAnywhere
-        );
+        CorpRoleEntity corpRoleEntity = new CorpRoleEntity();
+        corpRoleEntity.setCorpId(corpID);
+        corpRoleEntity.setOrderId(orderId);
+        corpRoleEntity.setName(name);
+        corpRoleEntity.setMotto(motto);
+        corpRoleEntity.setSalary(salary);
+        corpRoleEntity.setMaleFigure(maleFigure);
+        corpRoleEntity.setFemaleFigure(femaleFigure);
+        corpRoleEntity.setCanHire(canHire);
+        corpRoleEntity.setCanFire(canFire);
+        corpRoleEntity.setCanPromote(canPromote);
+        corpRoleEntity.setCanDemote(canDemote);
+        corpRoleEntity.setCanWorkAnywhere(canWorkAnywhere);
 
-        CorpPosition newCorpPosition = CorpPositionRepository.getInstance().getCorpPosition(corpID, orderId);
-
-        corp.addPosition(newCorpPosition);
+        CorpRoleService.getInstance().create(corpRoleEntity);
 
         this.client.getHabbo().whisper(Emulator.getTexts()
                 .getValue("roleplay.corp_position.create_success")
@@ -61,6 +58,5 @@ public class CorpCreatePositionEvent extends MessageHandler {
         );
 
         this.client.sendResponse(new CorpPositionListComposer(corp));
-
     }
 }

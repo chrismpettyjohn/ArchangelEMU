@@ -6,16 +6,21 @@ import com.us.archangel.core.GenericContext;
 
 public class BountyContext extends GenericContext<BountyModel> {
 
-    private static BountyContext instance;
-
-    private BountyContext() {
-        super();
-    }
+    private static volatile BountyContext instance;
 
     public static BountyContext getInstance() {
         if (instance == null) {
-            instance = new BountyContext();
+            synchronized (BountyContext.class) {
+                if (instance == null) {
+                    instance = new BountyContext();
+                }
+            }
         }
         return instance;
     }
+
+    protected BountyContext() {
+        super();
+    }
+
 }

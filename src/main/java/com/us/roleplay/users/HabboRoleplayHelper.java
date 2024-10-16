@@ -2,7 +2,7 @@ package com.us.roleplay.users;
 
 import com.eu.habbo.Emulator;
 import com.eu.habbo.habbohotel.users.Habbo;
-import com.us.roleplay.corp.CorpTag;
+import com.us.archangel.corp.enums.CorpIndustry;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,12 +10,12 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class HabboRoleplayHelper {
 
-    public static List<Habbo> getUsersByCorpTag(CorpTag corpTag) {
+    public static List<Habbo> getUsersByCorpIndustry(CorpIndustry corpIndustry) {
         List<Habbo> habbosInCorp = new ArrayList<>();
         ConcurrentHashMap<Integer, Habbo> habbosOnline = Emulator.getGameEnvironment().getHabboManager().getOnlineHabbos();
 
         for (Habbo habbo : habbosOnline.values()) {
-            if (habbo.getHabboRoleplayStats().getCorp().getTags().contains(corpTag)) {
+            if (habbo.getHabboRoleplayStats().getCorp().getIndustry() == corpIndustry) {
                 habbosInCorp.add(habbo);
             }
         }

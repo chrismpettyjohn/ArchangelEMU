@@ -5,16 +5,20 @@ import com.us.archangel.weapon.model.WeaponModel;
 
 public class WeaponContext extends GenericContext<WeaponModel> {
 
-    private static WeaponContext instance;
-
-    private WeaponContext() {
-        super();
-    }
+    private static volatile WeaponContext instance;
 
     public static WeaponContext getInstance() {
         if (instance == null) {
-            instance = new WeaponContext();
+            synchronized (WeaponContext.class) {
+                if (instance == null) {
+                    instance = new WeaponContext();
+                }
+            }
         }
         return instance;
+    }
+
+    protected WeaponContext() {
+        super();
     }
 }

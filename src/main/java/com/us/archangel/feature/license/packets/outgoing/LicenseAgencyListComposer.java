@@ -3,9 +3,10 @@ package com.us.archangel.feature.license.packets.outgoing;
 import com.eu.habbo.messages.ServerMessage;
 import com.eu.habbo.messages.outgoing.MessageComposer;
 import com.eu.habbo.messages.outgoing.Outgoing;
-import com.us.roleplay.corp.Corp;
-import com.us.roleplay.corp.CorpManager;
-import com.us.roleplay.corp.CorpTag;
+import com.us.archangel.corp.CorpManager;
+import com.us.archangel.corp.enums.CorpIndustry;
+import com.us.archangel.corp.model.CorpModel;
+import com.us.archangel.corp.service.CorpService;
 import com.us.roleplay.corp.LicenseType;
 import com.us.roleplay.corp.LicenseMapper;
 import lombok.AllArgsConstructor;
@@ -19,16 +20,16 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class LicenseAgencyListComposer extends MessageComposer {
 
-    private List<Corp> getLicenseAgencies() {
+    private List<CorpModel> getLicenseAgencies() {
         LicenseType[] licenseTypes = LicenseType.values();
 
-        List<CompletableFuture<List<Corp>>> futures = Arrays.stream(licenseTypes)
+        List<CompletableFuture<List<CorpModel>>> futures = Arrays.stream(licenseTypes)
                 .map(licenseType -> CompletableFuture.supplyAsync(() -> {
-                    CorpTag corpTag = LicenseMapper.licenseTypeToCorpTag(licenseType);
-                    if (corpTag == null) {
+                    CorpIndustry corpIndustry = LicenseMapper.licenseTypeToCorpTag(licenseType);
+                    if (corpIndustry == null) {
                         return null;
                     }
-                    return CorpManager.getInstance().getCorpsByTag(corpTag);
+                    return CorpService.getInstance().findManyByIndustry(corpIndustry);
                 }))
                 .toList();
 
@@ -45,11 +46,11 @@ public class LicenseAgencyListComposer extends MessageComposer {
 
     @Override
     protected ServerMessage composeInternal() {
-        List<Corp> licenseAgencyCorps = this.getLicenseAgencies();
+        List<CorpModel> licenseAgencyCorps = this.getLicenseAgencies();
         this.response.init(Outgoing.licenseAgencyListComposer);
         this.response.appendInt(licenseAgencyCorps.size());
-        for (Corp licenseAgency : licenseAgencyCorps) {
-            this.response.appendString(licenseAgency.getGuild().getId() + ";" + licenseAgency.getGuild().getName() + ";" + LicenseMapper.corpToLicenseType(licenseAgency));
+        for (CorpModel licenseAgency : licenseAgencyCorps) {
+            this.response.appendString(licenseAgency.getId() + ";" + licenseAgency.getDisplayName() + ";" + LicenseMapper.corpIndustryToLicenseType(licenseAgency.getIndustry()));
         }
         return this.response;
     }

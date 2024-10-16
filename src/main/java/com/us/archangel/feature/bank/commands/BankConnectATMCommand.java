@@ -4,7 +4,8 @@ import com.eu.habbo.Emulator;
 import com.eu.habbo.habbohotel.commands.Command;
 import com.eu.habbo.habbohotel.gameclients.GameClient;
 import com.eu.habbo.habbohotel.rooms.items.entities.RoomItem;
-import com.us.roleplay.corp.Corp;
+import com.us.archangel.corp.model.CorpModel;
+import com.us.archangel.corp.service.CorpService;
 
 public class BankConnectATMCommand extends Command  {
 
@@ -32,7 +33,7 @@ public class BankConnectATMCommand extends Command  {
         }
 
         int corpID = Integer.parseInt(params[2]);
-        Corp corp = Emulator.getGameEnvironment().getCorpManager().getCorpByID(corpID);
+        CorpModel corp = CorpService.getInstance().getById(corpID);
 
         if (corp == null) {
             gameClient.getHabbo().whisper(Emulator.getTexts().getValue("generic.corp_not_found.not_found"));
@@ -49,7 +50,7 @@ public class BankConnectATMCommand extends Command  {
 
         gameClient.getHabbo().shout(Emulator.getTexts()
                 .getValue("roleplay.device.new_connection")
-                .replace(":corpName", corp.getGuild().getName())
+                .replace(":corpName", corp.getDisplayName())
         );
 
         return true;

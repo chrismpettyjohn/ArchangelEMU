@@ -5,8 +5,8 @@ import com.eu.habbo.habbohotel.users.Habbo;
 import com.eu.habbo.habbohotel.users.HabboGender;
 import com.eu.habbo.messages.outgoing.rooms.users.UserChangeMessageComposer;
 import com.eu.habbo.messages.outgoing.users.FigureUpdateComposer;
-import com.us.roleplay.corp.Corp;
-import com.us.roleplay.corp.CorpPosition;
+import com.us.archangel.corp.model.CorpModel;
+import com.us.archangel.corp.model.CorpRoleModel;
 
 import java.time.Duration;
 import java.time.Instant;
@@ -32,22 +32,21 @@ public class WorkShiftAction implements Runnable {
     public void run() {
         this.oldMotto = habbo.getHabboInfo().getMotto();
         this.oldFigure = habbo.getHabboInfo().getLook();
-        Corp corp = habbo.getHabboRoleplayStats().getCorp();
-        CorpPosition corpPosition = habbo.getHabboRoleplayStats().getCorpPosition();
+        CorpRoleModel corpRole = habbo.getHabboRoleplayStats().getCorpPosition();
         long endsAt = Instant.now().getEpochSecond() + Duration.ofMinutes(10).getSeconds();
 
-        cycleUserShift = scheduler.scheduleAtFixedRate(() -> cycleUserShift(habbo, corpPosition, endsAt), 0, 60, TimeUnit.SECONDS);
-        checkWorkingState = scheduler.scheduleAtFixedRate(() -> checkWorkingState(habbo, corpPosition), 0, 1, TimeUnit.SECONDS);
+        cycleUserShift = scheduler.scheduleAtFixedRate(() -> cycleUserShift(habbo, corpRole, endsAt), 0, 60, TimeUnit.SECONDS);
+        checkWorkingState = scheduler.scheduleAtFixedRate(() -> checkWorkingState(habbo), 0, 1, TimeUnit.SECONDS);
 
-        habbo.shout(Emulator.getTexts().getValue("roleplay.shift.start").replace(":position", corpPosition.getName()));
+        habbo.shout(Emulator.getTexts().getValue("roleplay.shift.start").replace(":position", corpRole.getName()));
         habbo.getHabboRoleplayStats().setWorking(true);
-        habbo.getHabboInfo().setMotto(corpPosition.getMotto());
-        habbo.getHabboInfo().changeClothes(habbo.getHabboInfo().getGender() == HabboGender.M ? corpPosition.getMaleFigure() : corpPosition.getFemaleFigure());
+        habbo.getHabboInfo().setMotto(corpRole.getMotto());
+        habbo.getHabboInfo().changeClothes(habbo.getHabboInfo().getGender() == HabboGender.M ? corpRole.getMaleFigure() : corpRole.getFemaleFigure());
         habbo.getClient().sendResponse(new FigureUpdateComposer(habbo));
         habbo.getRoomUnit().getRoom().sendComposer(new UserChangeMessageComposer(habbo.getClient().getHabbo()).compose());
     }
 
-    private void checkWorkingState(Habbo habbo, CorpPosition corpPosition) {
+    private void checkWorkingState(Habbo habbo) {
         if (!habbo.getHabboRoleplayStats().isWorking()) {
             habbo.shout(Emulator.getTexts().getValue("roleplay.shift.cancel"));
             cycleUserShift.cancel(true);
@@ -55,20 +54,20 @@ public class WorkShiftAction implements Runnable {
         }
     }
 
-    private void cycleUserShift(Habbo habbo, CorpPosition corpPosition, long endsAt) {
+    private void cycleUserShift(Habbo habbo, CorpRoleModel corpRole, long endsAt) {
         if (habbo.getRoomUnit().getRoom() == null) {
             return;
         }
 
-        Corp corp = habbo.getHabboRoleplayStats().getCorp();
+        CorpModel corp = habbo.getHabboRoleplayStats().getCorp();
 
-        if (habbo.getRoomUnit().getRoom().getRoomInfo().getId() != corp.getGuild().getRoomId() && !corpPosition.isCanWorkAnywhere()) {
+        if (habbo.getRoomUnit().getRoom().getRoomInfo().getId() != corp.getRoomId() && !corpRole.isCanWorkAnywhere()) {
             habbo.shout(Emulator.getTexts().getValue("roleplay.shift.cancel"));
             return;
         }
 
         if ((System.currentTimeMillis() / 1000) >= endsAt) {
-            onShiftFinish(habbo, corpPosition);
+            onShiftFinish(habbo, corpRole);
             return;
         }
 
@@ -81,11 +80,11 @@ public class WorkShiftAction implements Runnable {
                 .replace(":unit", minutesLeft > 0 ? "minutes" : "seconds"));
     }
 
-    private void onShiftFinish(Habbo habbo, CorpPosition corpPosition) {
+    private void onShiftFinish(Habbo habbo, CorpRoleModel corpRole) {
         habbo.shout(Emulator.getTexts().getValue("roleplay.shift.success")
-                .replace(":credits", String.valueOf(corpPosition.getSalary())));
+                .replace(":credits", String.valueOf(corpRole.getSalary())));
         habbo.getHabboRoleplayStats().setWorking(false);
-        habbo.getHabboInfo().setCredits(habbo.getHabboInfo().getCredits() + corpPosition.getSalary());
+        habbo.getHabboInfo().setCredits(habbo.getHabboInfo().getCredits() + corpRole.getSalary());
         habbo.getHabboInfo().setMotto(this.oldMotto);
         habbo.getHabboInfo().changeClothes(this.oldFigure);
         habbo.getClient().sendResponse(new FigureUpdateComposer(habbo));

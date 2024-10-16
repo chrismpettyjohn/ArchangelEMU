@@ -4,9 +4,9 @@ import com.eu.habbo.Emulator;
 import com.eu.habbo.habbohotel.commands.Command;
 import com.eu.habbo.habbohotel.gameclients.GameClient;
 import com.eu.habbo.habbohotel.users.Habbo;
+import com.us.archangel.corp.enums.CorpIndustry;
 import com.us.roleplay.billing.UserBill;
 import com.us.roleplay.billing.items.*;
-import com.us.roleplay.corp.CorpTag;
 import com.us.roleplay.corp.LicenseMapper;
 import com.us.roleplay.database.HabboBillRepository;
 import com.us.roleplay.corp.LicenseType;
@@ -61,9 +61,9 @@ public class LicenseOfferCommand extends Command {
             return true;
         }
 
-        CorpTag corpTag = LicenseMapper.licenseTypeToCorpTag(licenseType);
+        CorpIndustry corpIndustry = LicenseMapper.licenseTypeToCorpTag(licenseType);
 
-        if (!gameClient.getHabbo().getHabboRoleplayStats().getCorp().getTags().contains(corpTag)) {
+        if (gameClient.getHabbo().getHabboRoleplayStats().getCorp().getIndustry() != corpIndustry) {
             gameClient.getHabbo().whisper(Emulator.getTexts().getValue("roleplay.license_sell_not_allowed"));
             return true;
         }

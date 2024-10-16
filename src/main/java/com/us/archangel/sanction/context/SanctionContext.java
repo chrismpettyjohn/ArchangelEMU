@@ -5,16 +5,20 @@ import com.us.archangel.sanction.model.SanctionModel;
 
 public class SanctionContext extends GenericContext<SanctionModel> {
 
-    private static SanctionContext instance;
-
-    private SanctionContext() {
-        super();
-    }
+    private static volatile SanctionContext instance;
 
     public static SanctionContext getInstance() {
         if (instance == null) {
-            instance = new SanctionContext();
+            synchronized (SanctionContext.class) {
+                if (instance == null) {
+                    instance = new SanctionContext();
+                }
+            }
         }
         return instance;
+    }
+
+    private SanctionContext() {
+        super();
     }
 }

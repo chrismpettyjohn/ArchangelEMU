@@ -18,8 +18,6 @@ import java.util.concurrent.*;
 
 @Slf4j
 public class RoomLayout {
-    protected static final int BASICMOVEMENTCOST = 10;
-    protected static final int DIAGONALMOVEMENTCOST = 14;
     public static double MAXIMUM_STEP_HEIGHT = 1.1;
     public static boolean ALLOW_FALLING = true;
     public boolean CANMOVEDIAGONALY = true;

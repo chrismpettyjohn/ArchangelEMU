@@ -5,16 +5,20 @@ import com.us.archangel.corp.model.CorpModel;
 
 public class CorpContext extends GenericContext<CorpModel> {
 
-    private static CorpContext instance;
-
-    private CorpContext() {
-        super();
-    }
+    private static volatile CorpContext instance;
 
     public static CorpContext getInstance() {
         if (instance == null) {
-            instance = new CorpContext();
+            synchronized (CorpContext.class) {
+                if (instance == null) {
+                    instance = new CorpContext();
+                }
+            }
         }
         return instance;
+    }
+
+    protected CorpContext() {
+        super();
     }
 }

@@ -3,9 +3,11 @@ package com.us.archangel.feature.corp.commands;
 import com.eu.habbo.Emulator;
 import com.eu.habbo.habbohotel.commands.Command;
 import com.eu.habbo.habbohotel.gameclients.GameClient;
+import com.us.archangel.corp.model.CorpModel;
+import com.us.archangel.corp.model.CorpRoleModel;
+import com.us.archangel.corp.service.CorpRoleService;
+import com.us.archangel.corp.service.CorpService;
 import com.us.archangel.feature.corp.actions.WorkShiftAction;
-import com.us.roleplay.corp.Corp;
-import com.us.roleplay.corp.CorpPosition;
 
 public class CorpStartWorkCommand extends Command {
     public CorpStartWorkCommand() {
@@ -19,21 +21,21 @@ public class CorpStartWorkCommand extends Command {
             return true;
         }
 
-        Corp userEmployer = Emulator.getGameEnvironment().getCorpManager().getCorpByID(gameClient.getHabbo().getHabboRoleplayStats().getCorp().getGuild().getId());
+        CorpModel userEmployer = CorpService.getInstance().getById(gameClient.getHabbo().getHabboRoleplayStats().getCorp().getId());
 
         if (userEmployer == null) {
             gameClient.getHabbo().whisper(Emulator.getTexts().getValue("commands.roleplay.cmd_start_work_company_does_not_exist"));
             return true;
         }
 
-        CorpPosition userPosition = userEmployer.getPositionByID(gameClient.getHabbo().getHabboRoleplayStats().getCorpPosition().getId());
+        CorpRoleModel userRole = CorpRoleService.getInstance().getById(gameClient.getHabbo().getHabboRoleplayStats().getCorpPosition().getId());
 
-        if (userPosition == null) {
+        if (userRole == null) {
             gameClient.getHabbo().whisper(Emulator.getTexts().getValue("commands.roleplay.cmd_start_work_position_does_not_exist"));
             return true;
         }
 
-        if (gameClient.getHabbo().getRoomUnit().getRoom().getRoomInfo().getId() != userEmployer.getGuild().getRoomId()) {
+        if (gameClient.getHabbo().getRoomUnit().getRoom().getRoomInfo().getId() != userEmployer.getRoomId()) {
             gameClient.getHabbo().whisper(Emulator.getTexts().getValue("commands.roleplay.cmd_start_work_not_in_boundaries"));
             return true;
         }

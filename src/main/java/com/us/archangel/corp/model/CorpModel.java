@@ -1,5 +1,6 @@
 package com.us.archangel.corp.model;
 
+import com.us.archangel.corp.enums.CorpIndustry;
 import com.us.archangel.corp.enums.CorpSector;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -12,8 +13,10 @@ public class CorpModel {
 
     private int id;
     private String displayName;
+    private String description;
+    private String badge;
     private CorpSector sector;
-    private CorpSector industry;
+    private CorpIndustry industry;
     private int userId;
     private int roomId;
 

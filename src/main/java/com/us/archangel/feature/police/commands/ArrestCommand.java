@@ -4,10 +4,10 @@ import com.eu.habbo.Emulator;
 import com.eu.habbo.habbohotel.commands.Command;
 import com.eu.habbo.habbohotel.gameclients.GameClient;
 import com.eu.habbo.habbohotel.users.Habbo;
+import com.us.archangel.corp.enums.CorpIndustry;
+import com.us.archangel.corp.model.CorpModel;
 import com.us.roleplay.RoleplayHelper;
 import com.us.archangel.feature.police.actions.ServeJailTimeAction;
-import com.us.roleplay.corp.Corp;
-import com.us.roleplay.corp.CorpTag;
 import com.us.archangel.feature.police.packets.outgoing.UserArrestedComposer;
 import com.us.roleplay.police.Bounty;
 import com.us.roleplay.police.WantedListManager;
@@ -34,14 +34,14 @@ public class ArrestCommand extends Command {
             return true;
         }
 
-        Corp corp = gameClient.getHabbo().getHabboRoleplayStats().getCorp();
+        CorpModel corp = gameClient.getHabbo().getHabboRoleplayStats().getCorp();
 
         if (corp == null) {
             gameClient.getHabbo().whisper(Emulator.getTexts().getValue("generic.roleplay.unemployed"));
             return true;
         }
 
-        if (!corp.getTags().contains(CorpTag.POLICE)) {
+        if (corp.getIndustry() != CorpIndustry.Police) {
             gameClient.getHabbo().whisper(Emulator.getTexts().getValue("generic.roleplay.police_only"));
             return true;
         }
@@ -56,7 +56,7 @@ public class ArrestCommand extends Command {
             return true;
         }
 
-        if (gameClient.getHabbo().getRoomUnit().getRoom().getRoomInfo().getId() != corp.getGuild().getRoomId()) {
+        if (gameClient.getHabbo().getRoomUnit().getRoom().getRoomInfo().getId() != corp.getRoomId()) {
             gameClient.getHabbo().whisper(Emulator.getTexts().getValue("commands.roleplay.cmd_arrest_must_be_in_station"));
             return true;
         }

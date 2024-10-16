@@ -5,16 +5,20 @@ import com.us.archangel.player.model.PlayerSkillModel;
 
 public class PlayerSkillContext extends GenericContext<PlayerSkillModel> {
 
-    private static PlayerSkillContext instance;
-
-    private PlayerSkillContext() {
-        super();
-    }
+    private static volatile PlayerSkillContext instance;
 
     public static PlayerSkillContext getInstance() {
         if (instance == null) {
-            instance = new PlayerSkillContext();
+            synchronized (PlayerSkillContext.class) {
+                if (instance == null) {
+                    instance = new PlayerSkillContext();
+                }
+            }
         }
         return instance;
+    }
+
+    protected PlayerSkillContext() {
+        super();
     }
 }

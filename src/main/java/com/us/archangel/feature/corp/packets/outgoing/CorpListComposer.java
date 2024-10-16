@@ -3,8 +3,8 @@ package com.us.archangel.feature.corp.packets.outgoing;
 import com.eu.habbo.messages.ServerMessage;
 import com.eu.habbo.messages.outgoing.MessageComposer;
 import com.eu.habbo.messages.outgoing.Outgoing;
-import com.us.roleplay.corp.Corp;
-import com.us.roleplay.corp.CorpManager;
+import com.us.archangel.corp.model.CorpModel;
+import com.us.archangel.corp.service.CorpService;
 import lombok.AllArgsConstructor;
 import java.util.List;
 
@@ -13,16 +13,16 @@ public class CorpListComposer extends MessageComposer {
 
     @Override
     protected ServerMessage composeInternal() {
-        List<Corp> corps = CorpManager.getInstance().getCorps();
+        List<CorpModel> corps = CorpService.getInstance().getAll();
 
         this.response.init(Outgoing.corpListComposer);
         this.response.appendInt(corps.size());
 
         // Append the sorted positions to the response
-        for (Corp corp : corps) {
+        for (CorpModel corp : corps) {
             this.response.appendString(
-                    corp.getGuild().getId()
-                            + ";" + corp.getGuild().getName()
+                    corp.getId()
+                            + ";" + corp.getDisplayName()
             );
         }
 

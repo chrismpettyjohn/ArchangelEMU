@@ -4,7 +4,7 @@ import com.eu.habbo.Emulator;
 import com.eu.habbo.habbohotel.commands.Command;
 import com.eu.habbo.habbohotel.gameclients.GameClient;
 import com.eu.habbo.habbohotel.users.Habbo;
-import com.us.roleplay.corp.CorpTag;
+import com.us.archangel.corp.enums.CorpIndustry;
 import com.us.archangel.feature.police.packets.outgoing.PoliceCallInfoComposer;
 import com.us.roleplay.police.PoliceReport;
 import com.us.roleplay.police.PoliceReportManager;
@@ -42,7 +42,7 @@ public class CallPoliceCommand extends Command {
         PoliceReport policeReport = new PoliceReport(gameClient.getHabbo(), gameClient.getHabbo().getRoomUnit().getRoom(), message, null, false, false);
         PoliceReportManager.getInstance().addPoliceReport(policeReport);
 
-        List<Habbo> policeOnline = HabboRoleplayHelper.getUsersByCorpTag(CorpTag.POLICE);
+        List<Habbo> policeOnline = HabboRoleplayHelper.getUsersByCorpIndustry(CorpIndustry.Police);
         List<Habbo> policeWorking = HabboRoleplayHelper.getUsersWorking(policeOnline);
 
         for (Habbo policeOfficer : policeWorking) {
