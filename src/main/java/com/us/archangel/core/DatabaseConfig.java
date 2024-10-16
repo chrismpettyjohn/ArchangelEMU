@@ -1,11 +1,14 @@
 package com.us.archangel.core;
 
+import com.us.archangel.bounty.entity.BountyEntity;
 import com.us.archangel.corp.entity.CorpEntity;
+import com.us.archangel.corp.entity.CorpInviteEntity;
 import com.us.archangel.corp.entity.CorpRoleEntity;
 import com.us.archangel.gang.entity.GangEntity;
 import com.us.archangel.gang.entity.GangRoleEntity;
 import com.us.archangel.player.entity.PlayerEntity;
 import com.us.archangel.player.entity.PlayerSkillEntity;
+import com.us.archangel.sanction.entity.SanctionEntity;
 import com.us.archangel.weapon.entity.WeaponEntity;
 import com.eu.habbo.core.ConfigurationManager;
 import org.hibernate.SessionFactory;
@@ -29,14 +32,19 @@ public class DatabaseConfig {
                 configuration.setProperty("jakarta.persistence.lock.timeout", "5000");
                 configuration.setProperty("hibernate.transaction.jta.platform", "org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform");
 
+                configuration.addAnnotatedClass(BountyEntity.class);
+
                 configuration.addAnnotatedClass(CorpEntity.class);
                 configuration.addAnnotatedClass(CorpRoleEntity.class);
+                configuration.addAnnotatedClass(CorpInviteEntity.class);
 
                 configuration.addAnnotatedClass(GangEntity.class);
                 configuration.addAnnotatedClass(GangRoleEntity.class);
 
                 configuration.addAnnotatedClass(PlayerEntity.class);
                 configuration.addAnnotatedClass(PlayerSkillEntity.class);
+
+                configuration.addAnnotatedClass(SanctionEntity.class);
 
                 configuration.addAnnotatedClass(WeaponEntity.class);
 

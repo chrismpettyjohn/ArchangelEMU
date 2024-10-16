@@ -51,7 +51,7 @@ public class BountyManager {
             this.bountyContext.add(entity.getId(), BountyMapper.toModel(entity));
         }
 
-        LOGGER.info("Bounty manager > loaded " + entities.size() + " bountys");
+        LOGGER.info("Bounty manager > loaded " + entities.size() + " bounties");
     }
 
     public void dispose() {
