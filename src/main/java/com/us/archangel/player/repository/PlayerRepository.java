@@ -59,9 +59,9 @@ public class PlayerRepository {
         }
     }
 
-    public PlayerEntity getById(int id) {
+    public PlayerEntity getByUserId(int userId) {
         try (Session session = sessionFactory.openSession()) {
-            return session.get(PlayerEntity.class, id);
+            return session.get(PlayerEntity.class, userId);
         }
     }
 

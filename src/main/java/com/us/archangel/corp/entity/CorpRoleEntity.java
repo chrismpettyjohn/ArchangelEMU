@@ -27,16 +27,16 @@ public class CorpRoleEntity {
     @Column(name = "display_name", nullable = false)
     private String name;
 
-    @Column(name = "motto")
+    @Column(name = "motto", nullable = false)
     private String motto;
 
     @Column(name = "salary", nullable = false)
     private int salary;
 
-    @Column(name = "male_figure")
+    @Column(name = "male_figure", nullable = false)
     private String maleFigure;
 
-    @Column(name = "female_figure")
+    @Column(name = "female_figure", nullable = false)
     private String femaleFigure;
 
     @Column(name = "can_hire", nullable = false)

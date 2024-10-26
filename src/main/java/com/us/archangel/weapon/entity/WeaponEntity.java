@@ -1,6 +1,8 @@
 package com.us.archangel.weapon.entity;
 
+import com.us.archangel.corp.enums.converter.CorpSectorConverter;
 import com.us.archangel.weapon.enums.WeaponType;
+import com.us.archangel.weapon.enums.converter.WeaponTypeConverter;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -22,8 +24,8 @@ public class WeaponEntity {
     @Column(name = "unique_name", nullable = false)
     private String uniqueName;
 
-    @Enumerated(EnumType.STRING)
     @Column(name = "type")
+    @Convert(converter = WeaponTypeConverter.class)
     private WeaponType type;
 
     @Column(name = "min_damage", nullable = false)

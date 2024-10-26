@@ -15,43 +15,43 @@ public class PlayerEntity {
     @Column(name = "id")
     private int id;
 
-    @Column(name = "users_id")
+    @Column(name = "users_id", nullable = false)
     private int userId;
 
     @Column(name = "gangs_id")
-    private int gangId;;
+    private Integer gangId;;
 
     @Column(name = "gangs_roles_id")
-    private int gangRoleId;
+    private Integer gangRoleId;
 
-    @Column(name = "corps_id")
+    @Column(name = "corps_id", nullable = false)
     private int corpId;
 
-    @Column(name = "corps_roles_id")
+    @Column(name = "corps_roles_id", nullable = false)
     private int corpRoleId;
 
-    @Column(name = "health_now")
+    @Column(name = "health_now", nullable = false)
     private int healthNow;
 
-    @Column(name = "health_max")
+    @Column(name = "health_max", nullable = false)
     private int healthMax;
 
-    @Column(name = "energy_now")
+    @Column(name = "energy_now", nullable = false)
     private int energyNow;
 
-    @Column(name = "energy_max")
+    @Column(name = "energy_max", nullable = false)
     private int energyMax;
 
-    @Column(name = "armor_now")
+    @Column(name = "armor_now", nullable = false)
     private int armorNow;
 
-    @Column(name = "armor_max")
+    @Column(name = "armor_max", nullable = false)
     private int armorMax;
 
-    @Column(name = "last_pos_x")
+    @Column(name = "last_pos_x", nullable = false)
     private int lastPosX;
 
-    @Column(name = "last_pos_y")
+    @Column(name = "last_pos_y", nullable = false)
     private int lastPosY;
 
 
