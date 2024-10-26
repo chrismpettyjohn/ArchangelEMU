@@ -33,8 +33,8 @@ import java.util.regex.Pattern;
 @Slf4j
 public final class Emulator {
 
-    public static final int MAJOR = 0;
-    public static final int MINOR = 3;
+    public static final int MAJOR = 2;
+    public static final int MINOR = 1;
     public static final String VERSION = "ArchangelRP" + " " + MAJOR + "." + MINOR;
     public static String build = "";
     public static boolean isReady = false;

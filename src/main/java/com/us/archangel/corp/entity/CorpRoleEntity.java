@@ -7,7 +7,11 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "archangel_corps_roles")
+@Table(name = "archangel_corps_roles", indexes = {
+        @Index(name = "idx_corp_id", columnList = "corps_id"),
+        @Index(name = "idx_order_id", columnList = "order_id"),
+        @Index(name = "idx_display_name", columnList = "display_name")
+})
 public class CorpRoleEntity {
 
     @Id
@@ -20,7 +24,7 @@ public class CorpRoleEntity {
     @Column(name = "order_id", nullable = false)
     private int orderId;
 
-    @Column(name = "name", nullable = false)
+    @Column(name = "display_name", nullable = false)
     private String name;
 
     @Column(name = "motto")

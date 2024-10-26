@@ -52,13 +52,15 @@ public class Archangel {
         this.roleplayFeatureManager = RoleplayFeatureManager.getInstance();
         this.weaponManager = WeaponManager.getInstance(sessionFactory);
 
-        DatabaseConfig.shutdown();
 
 
         LOGGER.info("Archangel -> Loaded! (" + (System.currentTimeMillis() - millis) + " MS)");
     }
 
     public void dispose() {
+
+        DatabaseConfig.shutdown();
+
         log.info("Archangel -> Disposed!");
     }
 }
