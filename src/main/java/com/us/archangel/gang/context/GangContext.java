@@ -21,5 +21,4 @@ public class GangContext extends GenericContext<GangModel> {
     protected GangContext() {
         super();
     }
-
 }

@@ -4,6 +4,7 @@ import com.eu.habbo.habbohotel.users.Habbo;
 import com.eu.habbo.messages.ServerMessage;
 import com.eu.habbo.messages.outgoing.MessageComposer;
 import com.eu.habbo.messages.outgoing.Outgoing;
+import com.us.archangel.player.enums.PlayerAction;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
@@ -18,23 +19,23 @@ public class UserRoleplayStatsChangeComposer extends MessageComposer {
         this.response.appendString(this.habbo.getHabboInfo().getLook());
         this.response.appendInt(this.habbo.getHabboInfo().getCredits());
         this.response.appendInt(0); // TODO: Bank
-        this.response.appendBoolean(this.habbo.getHabboRoleplayStats().isDead());
-        this.response.appendBoolean(this.habbo.getHabboRoleplayStats().isStunned());
-        this.response.appendBoolean(this.habbo.getHabboRoleplayStats().isCuffed());
-        this.response.appendBoolean(this.habbo.getHabboRoleplayStats().isWorking());
-        this.response.appendInt(this.habbo.getHabboRoleplayStats().getEscortedBy() != null ? this.habbo.getHabboRoleplayStats().getEscortedBy().getHabboInfo().getId() : 0);
-        this.response.appendInt(this.habbo.getHabboRoleplayStats().getHealthNow());
-        this.response.appendInt(this.habbo.getHabboRoleplayStats().getHealthMax());
-        this.response.appendInt(this.habbo.getHabboRoleplayStats().getEnergyNow());
-        this.response.appendInt(this.habbo.getHabboRoleplayStats().getEnergyMax());
-        this.response.appendInt(this.habbo.getHabboRoleplayStats().getHungerNow());
-        this.response.appendInt(this.habbo.getHabboRoleplayStats().getHungerMax());
-        this.response.appendInt(this.habbo.getInventory().getWeaponsComponent().getEquippedWeapon() != null ? this.habbo.getInventory().getWeaponsComponent().getEquippedWeapon().getWeaponID() : -1);
-        this.response.appendInt(this.habbo.getInventory().getWeaponsComponent().getEquippedWeapon() != null ? this.habbo.getInventory().getWeaponsComponent().getEquippedWeapon().getCurrentAmmo() : 0);
-        this.response.appendInt(this.habbo.getHabboRoleplayStats().getCorp().getId());
-        this.response.appendInt(this.habbo.getHabboRoleplayStats().getCorpPosition().getId());
-        if (this.habbo.getHabboRoleplayStats().getGang() != null) {
-            this.response.appendInt(this.habbo.getHabboRoleplayStats().getGang().getId());
+        this.response.appendBoolean(this.habbo.getPlayer().isDead());
+        this.response.appendBoolean(this.habbo.getPlayer().getCurrentAction() == PlayerAction.Stunned);
+        this.response.appendBoolean(this.habbo.getPlayer().getCurrentAction() == PlayerAction.Cuffed);
+        this.response.appendBoolean(this.habbo.getPlayer().isWorking());
+        this.response.appendInt(0);
+        this.response.appendInt(this.habbo.getPlayer().getHealthNow());
+        this.response.appendInt(this.habbo.getPlayer().getHealthMax());
+        this.response.appendInt(this.habbo.getPlayer().getEnergyNow());
+        this.response.appendInt(this.habbo.getPlayer().getEnergyMax());
+        this.response.appendInt(this.habbo.getPlayer().getHungerNow());
+        this.response.appendInt(this.habbo.getPlayer().getHungerMax());
+        this.response.appendInt(this.habbo.getInventory().getWeaponsComponent().getEquippedWeapon() != null ? this.habbo.getInventory().getWeaponsComponent().getEquippedWeapon().getWeaponId() : -1);
+        this.response.appendInt(this.habbo.getInventory().getWeaponsComponent().getEquippedWeapon() != null ? this.habbo.getInventory().getWeaponsComponent().getEquippedWeapon().getAmmoRemaining() : 0);
+        this.response.appendInt(this.habbo.getPlayer().getCorpId());
+        this.response.appendInt(this.habbo.getPlayer().getCorpRoleId());
+        if (this.habbo.getPlayer().getGang() != null) {
+            this.response.appendInt(this.habbo.getPlayer().getGang().getId());
         } else {
             this.response.appendInt(0);
         }

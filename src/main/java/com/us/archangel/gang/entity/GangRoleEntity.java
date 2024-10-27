@@ -23,6 +23,12 @@ public class GangRoleEntity {
     @Column(name = "name", nullable = false)
     private String name;
 
+    @Column(name = "can_invite", nullable = false)
+    private Boolean canInvite;
+
+    @Column(name = "can_kick", nullable = false)
+    private Boolean canKick;
+
     @ManyToOne
     @JoinColumn(name = "gangs_id", nullable = false, insertable=false, updatable=false)
     private GangEntity gang;

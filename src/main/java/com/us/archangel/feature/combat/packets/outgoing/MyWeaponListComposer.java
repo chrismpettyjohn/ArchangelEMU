@@ -4,9 +4,11 @@ import com.eu.habbo.habbohotel.users.Habbo;
 import com.eu.habbo.messages.ServerMessage;
 import com.eu.habbo.messages.outgoing.MessageComposer;
 import com.eu.habbo.messages.outgoing.Outgoing;
-import com.us.roleplay.users.HabboWeapon;
-import gnu.trove.map.hash.THashMap;
+import com.us.archangel.player.model.PlayerWeaponModel;
+import com.us.archangel.player.service.PlayerWeaponService;
 import lombok.AllArgsConstructor;
+
+import java.util.List;
 
 @AllArgsConstructor
 public class MyWeaponListComposer extends MessageComposer {
@@ -14,9 +16,9 @@ public class MyWeaponListComposer extends MessageComposer {
 
     @Override
     protected ServerMessage composeInternal() {
-        THashMap<Integer, HabboWeapon> habboWeapons = this.habbo.getInventory().getWeaponsComponent().getWeapons();
+        List<PlayerWeaponModel> habboWeapons = PlayerWeaponService.getInstance().getByUserID(this.habbo.getPlayer().getUserId());
         this.response.init(Outgoing.myWeaponListComposer);
-        for (HabboWeapon weapon : habboWeapons.values()) {
+        for (PlayerWeaponModel weapon : habboWeapons) {
             this.response.appendString(
                     weapon.getWeapon().getId()
                             + ";" +  weapon.getWeapon().getUniqueName()

@@ -3,6 +3,7 @@ package com.us.roleplay;
 import com.eu.habbo.Emulator;
 import com.eu.habbo.habbohotel.gameclients.GameClient;
 import com.eu.habbo.habbohotel.users.Habbo;
+import com.us.archangel.player.enums.PlayerAction;
 
 public class RoleplayHelper {
 
@@ -22,7 +23,7 @@ public class RoleplayHelper {
 
         String targetedUsername = params[1];
 
-        if (gameClient.getHabbo().getHabboRoleplayStats().isStunned() || gameClient.getHabbo().getHabboRoleplayStats().isCuffed() || gameClient.getHabbo().getHabboRoleplayStats().getEscortedBy() != null || gameClient.getHabbo().getHabboRoleplayStats().isDead()) {
+        if (gameClient.getHabbo().getPlayer().getCurrentAction() == PlayerAction.Cuffed || gameClient.getHabbo().getPlayer().getCurrentAction() == PlayerAction.Stunned || gameClient.getHabbo().getPlayer().getCurrentAction() == PlayerAction.Escorted || gameClient.getHabbo().getPlayer().isDead()) {
             gameClient.getHabbo().whisper(Emulator.getTexts().getValue("roleplay.generic.not_allowed"));
             return null;
         }
@@ -44,7 +45,7 @@ public class RoleplayHelper {
             return null;
         }
 
-        if (targetedHabbo.getHabboRoleplayStats().isDead()) {
+        if (targetedHabbo.getPlayer().isDead()) {
             gameClient.getHabbo().whisper(Emulator.getTexts().getValue("generic.roleplay.target_dead").replace(":username", targetedUsername));
             return null;
         }

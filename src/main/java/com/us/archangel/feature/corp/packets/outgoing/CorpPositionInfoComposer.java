@@ -18,7 +18,7 @@ public class CorpPositionInfoComposer extends MessageComposer {
         this.response.init(Outgoing.corpPositionInfoComposer);
         this.response.appendInt(matchingPosition.getId());
         this.response.appendInt(matchingPosition.getCorpId());
-        this.response.appendString(matchingPosition.getName());
+        this.response.appendString(matchingPosition.getDisplayName());
         this.response.appendString(matchingPosition.getMotto());
         this.response.appendInt(matchingPosition.getSalary());
         this.response.appendInt(matchingPosition.getOrderId());

@@ -7,7 +7,9 @@ import com.us.archangel.feature.combat.packets.outgoing.CombatDelayComposer;
 import com.us.archangel.feature.combat.packets.outgoing.WeaponActionComposer;
 import com.us.archangel.feature.combat.packets.outgoing.UserDiedComposer;
 import com.us.archangel.feature.player.packets.outgoing.UserRoleplayStatsChangeComposer;
+import com.us.archangel.player.model.PlayerWeaponModel;
 import com.us.archangel.room.enums.RoomType;
+import com.us.archangel.weapon.model.WeaponModel;
 import com.us.roleplay.users.HabboWeapon;
 import com.eu.habbo.messages.incoming.MessageHandler;
 import com.us.archangel.weapon.enums.WeaponType;
@@ -32,13 +34,13 @@ public class UserAttackEvent extends MessageHandler {
             return;
         }
 
-        if (this.client.getHabbo().getHabboRoleplayStats().getCombatBlocked()) {
+        if (this.client.getHabbo().getPlayer().isCombatBlocked()) {
             this.client.getHabbo().whisper("You need to wait a bit before attacking again.");
             ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
 
             Runnable task = () -> {
                 this.client.sendResponse(new CombatDelayComposer(this.client.getHabbo()));
-                if (!this.client.getHabbo().getHabboRoleplayStats().getCombatBlocked()) {
+                if (!this.client.getHabbo().getPlayer().isCombatBlocked()) {
                     executor.shutdown();
                 }
             };
@@ -54,16 +56,16 @@ public class UserAttackEvent extends MessageHandler {
         int distanceX = x - this.client.getHabbo().getRoomUnit().getCurrentPosition().getX();
         int distanceY = y- this.client.getHabbo().getRoomUnit().getCurrentPosition().getY();
 
-        HabboWeapon equippedWeapon = this.client.getHabbo().getInventory().getWeaponsComponent().getEquippedWeapon();
+        PlayerWeaponModel equippedWeapon = this.client.getHabbo().getInventory().getWeaponsComponent().getEquippedWeapon();
 
 
         if (equippedWeapon != null && equippedWeapon.getWeapon().getType() == WeaponType.GUN) {
-            if (equippedWeapon.getCurrentAmmo() == 0) {
+            if (equippedWeapon.getAmmoRemaining() == 0) {
                 this.client.getHabbo().whisper(Emulator.getTexts().getValue("roleplay.combat_out_of_ammo"));
-                this.client.getHabbo().getHabboRoleplayStats().setAttackTimeoutSeconds((int) equippedWeapon.getWeapon().getReloadTime());
+                this.client.getHabbo().getPlayer().setCombatDelayRemainingSecs(equippedWeapon.getWeapon().getReloadTime());
                 return;
             }
-            equippedWeapon.setCurrentAmmo(equippedWeapon.getCurrentAmmo() - 1);
+            equippedWeapon.depleteAmmo(1);
             this.client.sendResponse(new UserRoleplayStatsChangeComposer(this.client.getHabbo()));
         }
 
@@ -73,7 +75,7 @@ public class UserAttackEvent extends MessageHandler {
 
         int combatTimeout = equippedWeapon != null ? equippedWeapon.getWeapon().getCooldownSeconds() : Emulator.getConfig().getInt("roleplay.attack.delay_secs", 1);
 
-        this.client.getHabbo().getHabboRoleplayStats().setAttackTimeoutSeconds(combatTimeout);
+        this.client.getHabbo().getPlayer().setCombatDelayRemainingSecs(combatTimeout);
 
         Collection<Habbo> usersAtPosition = this.client.getHabbo().getRoomUnit().getRoom().getRoomUnitManager().getHabbosAt(roomTile);
         Habbo targetedHabbo = usersAtPosition.stream().findFirst().orElse(null);
@@ -99,7 +101,7 @@ public class UserAttackEvent extends MessageHandler {
 
         int totalEnergy = Emulator.getConfig().getInt("roleplay.attack.energy", 8);
 
-        if (totalEnergy > this.client.getHabbo().getHabboRoleplayStats().getEnergyNow()) {
+        if (totalEnergy > this.client.getHabbo().getPlayer().getEnergyNow()) {
             this.client.getHabbo().whisper(Emulator.getTexts()
                     .getValue("commands.roleplay.out_of_energy")
                     .replace(":username", targetedHabbo.getHabboInfo().getUsername())
@@ -107,7 +109,7 @@ public class UserAttackEvent extends MessageHandler {
             return;
         }
 
-        int totalDamage = targetedHabbo.getHabboRoleplayStats().getDamageModifier(equippedWeapon);
+        int totalDamage = targetedHabbo.getPlayerSkills().getDamageModifier(equippedWeapon.getWeapon());
 
         if (equippedWeapon != null) {
             String hitSuccessMessage = equippedWeapon.getWeapon().getAttackMessage()
@@ -115,32 +117,32 @@ public class UserAttackEvent extends MessageHandler {
                     .replace(":damage", Integer.toString(totalDamage))
                     .replace(":displayName", equippedWeapon.getWeapon().getDisplayName());
             this.client.getHabbo().shout(hitSuccessMessage);
-            this.client.getHabbo().getHabboRoleplayStats().addWeaponXP(totalDamage);
+            this.client.getHabbo().getPlayerSkills().addWeaponXp(totalDamage);
         } else {
             String hitSuccessMessage = Emulator.getTexts()
                     .getValue("commands.roleplay.cmd_hit_success")
                     .replace(":username", targetedHabbo.getHabboInfo().getUsername())
                     .replace(":damage", Integer.toString(totalDamage));
             this.client.getHabbo().shout(hitSuccessMessage);
-            this.client.getHabbo().getHabboRoleplayStats().addMeleeXP(totalDamage);
+            this.client.getHabbo().getPlayerSkills().addMeleeXp(totalDamage);
         }
 
-        targetedHabbo.getHabboRoleplayStats().setHealth(targetedHabbo.getHabboRoleplayStats().getHealthNow() - totalDamage);
+        targetedHabbo.getPlayer().depleteHealth(totalDamage);
 
         targetedHabbo.shout(Emulator.getTexts()
                 .getValue("commands.roleplay.user_health_remaining")
-                .replace(":currentHealth", Integer.toString(targetedHabbo.getHabboRoleplayStats().getHealthNow()))
-                .replace(":maximumHealth", Integer.toString(targetedHabbo.getHabboRoleplayStats().getHealthMax()))
+                .replace(":currentHealth", Integer.toString(targetedHabbo.getPlayer().getHealthNow()))
+                .replace(":maximumHealth", Integer.toString(targetedHabbo.getPlayer().getHealthMax()))
         );
 
-        this.client.getHabbo().getHabboRoleplayStats().depleteEnergy(totalEnergy);
+        this.client.getHabbo().getPlayer().depleteEnergy(totalEnergy);
         targetedHabbo.shout(Emulator.getTexts()
                 .getValue("commands.roleplay.user_energy_remaining")
-                .replace(":energyNow", Integer.toString(this.client.getHabbo().getHabboRoleplayStats().getEnergyNow()))
-                .replace(":energyMax", Integer.toString(this.client.getHabbo().getHabboRoleplayStats().getEnergyMax()))
+                .replace(":energyNow", Integer.toString(this.client.getHabbo().getPlayer().getEnergyNow()))
+                .replace(":energyMax", Integer.toString(this.client.getHabbo().getPlayer().getEnergyMax()))
         );
 
-        if (targetedHabbo.getHabboRoleplayStats().isDead()) {
+        if (targetedHabbo.getPlayer().isDead()) {
             Collection<Habbo> onlineHabbos = Emulator.getGameEnvironment().getHabboManager().getOnlineHabbos().values();
 
             for (Habbo onlineHabbo : onlineHabbos) {

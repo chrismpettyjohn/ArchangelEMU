@@ -3,8 +3,8 @@ package com.us.archangel.feature.corp.packets.outgoing;
 import com.eu.habbo.messages.ServerMessage;
 import com.eu.habbo.messages.outgoing.MessageComposer;
 import com.eu.habbo.messages.outgoing.Outgoing;
-import com.us.roleplay.database.HabboRoleplayStatsRepository;
-import com.us.roleplay.users.HabboRoleplayStats;
+import com.us.archangel.player.model.PlayerModel;
+import com.us.archangel.player.service.PlayerService;
 import lombok.AllArgsConstructor;
 
 import java.util.List;
@@ -15,19 +15,19 @@ public class CorpEmployeeListComposer extends MessageComposer {
 
     @Override
     protected ServerMessage composeInternal() {
-        List<HabboRoleplayStats> habboRoleplayStatsList = HabboRoleplayStatsRepository.getInstance().getByCorpID(corpID);
+        List<PlayerModel> habboRoleplayStatsList = PlayerService.getInstance().getByCorpId(corpID);
 
         this.response.init(Outgoing.corpEmployeeListComposer);
         this.response.appendInt(this.corpID);
         this.response.appendInt(habboRoleplayStatsList.size());
 
-        for (HabboRoleplayStats habboRoleplayStats : habboRoleplayStatsList) {
+        for (PlayerModel habboRoleplayStats : habboRoleplayStatsList) {
             this.response.appendString(
-                    habboRoleplayStats.getUserID()
+                    habboRoleplayStats.getUserId()
                             + ";" + habboRoleplayStats.getHabbo().getHabboInfo().getUsername()
                             + ";" + habboRoleplayStats.getHabbo().getHabboInfo().getLook()
-                            + ";" + habboRoleplayStats.getCorpPosition().getId()
-                            + ";" + habboRoleplayStats.getCorpPosition().getName());
+                            + ";" + habboRoleplayStats.getCorpRoleId()
+                            + ";" + habboRoleplayStats.getCorpRole().getDisplayName());
         }
 
         return this.response;

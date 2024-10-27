@@ -33,7 +33,7 @@ public record DriverLicenseBillingItem(int userID, int chargedByUserID) implemen
 
     @Override
     public int getChargedByCorpID() {
-        return Emulator.getGameEnvironment().getHabboManager().getHabbo(this.chargedByUserID).getHabboRoleplayStats().getCorp().getId();
+        return Emulator.getGameEnvironment().getHabboManager().getHabbo(this.chargedByUserID).getPlayer().getCorp().getId();
     }
 
     @Override

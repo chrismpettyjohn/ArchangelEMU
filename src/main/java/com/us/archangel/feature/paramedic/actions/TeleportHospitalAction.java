@@ -7,6 +7,7 @@ import com.eu.habbo.habbohotel.rooms.RoomTile;
 import com.eu.habbo.habbohotel.rooms.items.entities.RoomItem;
 import com.eu.habbo.habbohotel.users.Habbo;
 import com.us.archangel.feature.hospital.interactions.InteractionHospitalBed;
+import com.us.archangel.player.enums.PlayerAction;
 import com.us.archangel.room.enums.RoomType;
 import lombok.RequiredArgsConstructor;
 
@@ -28,8 +29,9 @@ public class TeleportHospitalAction implements Runnable {
             return;
         }
 
-        if (this.habbo.getHabboRoleplayStats().getIsEscorting() != null) {
-            this.habbo.getHabboRoleplayStats().setIsEscorting(null);
+        if (this.habbo.getPlayer().getEscortingPlayerId() != null) {
+            this.habbo.getPlayer().setCurrentAction(PlayerAction.None);
+            this.habbo.getPlayer().setEscortingPlayerId(null);
         }
 
         this.habbo.shout(Emulator.getTexts().getValue("roleplay.user_is_dead"));

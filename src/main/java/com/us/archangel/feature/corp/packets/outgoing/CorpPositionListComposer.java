@@ -28,7 +28,7 @@ public class CorpPositionListComposer extends MessageComposer {
         for (CorpRoleModel corpPosition : corpPositions) {
             this.response.appendString(
                     corpPosition.getId() + ";"
-                            + corpPosition.getName() + ";"
+                            + corpPosition.getDisplayName() + ";"
                             + corpPosition.getSalary() + ";"
                             + corpPosition.getMaleFigure() + ";"
                             + corpPosition.getFemaleFigure()

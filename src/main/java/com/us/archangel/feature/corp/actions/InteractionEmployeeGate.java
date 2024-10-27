@@ -23,12 +23,12 @@ public class InteractionEmployeeGate extends InteractionOneWayGate {
 
     @Override
     public void onClick(final GameClient client, final Room room, Object[] objects) throws Exception {
-        if (!client.getHabbo().getHabboRoleplayStats().isWorking()) {
+        if (!client.getHabbo().getPlayer().isWorking()) {
             client.getHabbo().whisper(Emulator.getTexts().getValue("roleplay.employee_one_way_gate.must_be_working"));
             return;
         }
 
-        if (client.getHabbo().getHabboRoleplayStats().getCorp().getRoomId() != room.getRoomInfo().getId()) {
+        if (client.getHabbo().getPlayer().getCorp().getRoomId() != room.getRoomInfo().getId()) {
             client.getHabbo().whisper(Emulator.getTexts().getValue("roleplay.employee_one_way_gate.not_allowed"));
             return;
         }

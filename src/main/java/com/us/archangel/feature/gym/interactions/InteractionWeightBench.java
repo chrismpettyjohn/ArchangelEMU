@@ -47,7 +47,7 @@ public class InteractionWeightBench extends InteractionEffectTile {
 
         scheduledFuture = scheduler.scheduleAtFixedRate(() -> {
             if (userOnItem) {
-                this.habbo.getHabboRoleplayStats().addStrengthXP(Emulator.getConfig().getInt("roleplay.weightbench.boost", 5));
+                this.habbo.getPlayerSkills().addStrengthXp(Emulator.getConfig().getInt("roleplay.weightbench.boost", 5));
             }
         }, weightBenchTime, weightBenchTime, TimeUnit.SECONDS);
     }

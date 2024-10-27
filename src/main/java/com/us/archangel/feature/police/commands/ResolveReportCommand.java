@@ -22,7 +22,7 @@ public class ResolveReportCommand extends Command {
         int policeReportIndex = Integer.parseInt(params[1]);
         boolean flagged = Boolean.parseBoolean(params[2]);
 
-        CorpModel corp = gameClient.getHabbo().getHabboRoleplayStats().getCorp();
+        CorpModel corp = gameClient.getHabbo().getPlayer().getCorp();
 
         if (corp == null) {
             gameClient.getHabbo().whisper(Emulator.getTexts().getValue("generic.roleplay.unemployed"));
@@ -34,7 +34,7 @@ public class ResolveReportCommand extends Command {
             return true;
         }
 
-        if (!gameClient.getHabbo().getHabboRoleplayStats().isWorking()) {
+        if (!gameClient.getHabbo().getPlayer().isWorking()) {
             gameClient.getHabbo().whisper(Emulator.getTexts().getValue("generic.roleplay.must_be_working"));
             return true;
         }

@@ -34,7 +34,7 @@ public class CorpEditPositionEvent extends MessageHandler {
             return;
         }
 
-        corpPosition.setName(this.packet.readString());
+        corpPosition.setDisplayName(this.packet.readString());
         corpPosition.setMotto(this.packet.readString());
         corpPosition.setSalary(this.packet.readInt());
         corpPosition.setMaleFigure(this.packet.readString());
@@ -49,7 +49,7 @@ public class CorpEditPositionEvent extends MessageHandler {
 
         this.client.getHabbo().whisper(Emulator.getTexts()
                 .getValue("roleplay.corp_position.edit_success")
-                .replace(":position", corpPosition.getName())
+                .replace(":position", corpPosition.getDisplayName())
         );
 
         this.client.sendResponse(new CorpPositionListComposer(corp));

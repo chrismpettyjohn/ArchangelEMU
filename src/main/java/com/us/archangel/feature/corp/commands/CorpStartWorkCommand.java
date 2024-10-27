@@ -16,19 +16,19 @@ public class CorpStartWorkCommand extends Command {
 
     @Override
     public boolean handle(GameClient gameClient, String[] params) {
-        if (gameClient.getHabbo().getHabboRoleplayStats().isWorking()) {
+        if (gameClient.getHabbo().getPlayer().isWorking()) {
             gameClient.getHabbo().whisper(Emulator.getTexts().getValue("commands.roleplay.cmd_start_work_user_is_already_working"));
             return true;
         }
 
-        CorpModel userEmployer = CorpService.getInstance().getById(gameClient.getHabbo().getHabboRoleplayStats().getCorp().getId());
+        CorpModel userEmployer = CorpService.getInstance().getById(gameClient.getHabbo().getPlayer().getCorp().getId());
 
         if (userEmployer == null) {
             gameClient.getHabbo().whisper(Emulator.getTexts().getValue("commands.roleplay.cmd_start_work_company_does_not_exist"));
             return true;
         }
 
-        CorpRoleModel userRole = CorpRoleService.getInstance().getById(gameClient.getHabbo().getHabboRoleplayStats().getCorpPosition().getId());
+        CorpRoleModel userRole = CorpRoleService.getInstance().getById(gameClient.getHabbo().getPlayer().getCorpRole().getId());
 
         if (userRole == null) {
             gameClient.getHabbo().whisper(Emulator.getTexts().getValue("commands.roleplay.cmd_start_work_position_does_not_exist"));

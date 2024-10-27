@@ -32,7 +32,7 @@ public class InteractionBankComputer extends InteractionDefault {
         CorpModel bankCorp = CorpService.getInstance().getById(corpID);
 
         if (bankCorp == null) {
-            if (!client.getHabbo().getHabboRoleplayStats().isWorking()) {
+            if (!client.getHabbo().getPlayer().isWorking()) {
                 client.getHabbo().whisper(Emulator.getTexts().getValue("generic.roleplay.must_be_working"));
                 return;
             }

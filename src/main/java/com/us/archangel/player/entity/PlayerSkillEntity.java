@@ -30,11 +30,18 @@ public class PlayerSkillEntity {
     @Column(name = "farming_xp", nullable = false)
     private int farmingXp;
 
+    @Column(name = "lumberjack_xp", nullable = false)
+    private int lumberjackXp;
+
     @Column(name = "mining_xp", nullable = false)
     private int miningXp;
 
     @Column(name = "fishing_xp", nullable = false)
     private int fishingXp;
+
+    @Column(name = "stamina_xp", nullable = false)
+    private int staminaXp;
+
 
     @ManyToOne
     @JoinColumn(name = "users_id", nullable = false, insertable=false, updatable=false)

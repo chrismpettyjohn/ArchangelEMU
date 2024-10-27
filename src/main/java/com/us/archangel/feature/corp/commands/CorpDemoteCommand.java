@@ -37,48 +37,49 @@ public class CorpDemoteCommand extends Command {
             return true;
         }
 
-        if (gameClient.getHabbo().getHabboRoleplayStats().getCorp().getId() != targetedHabbo.getHabboRoleplayStats().getCorp().getId()) {
+        if (gameClient.getHabbo().getPlayer().getCorp().getId() != targetedHabbo.getPlayer().getCorp().getId()) {
             gameClient.getHabbo().whisper(Emulator.getTexts().getValue("commands.roleplay.cmd_demote_not_allowed"));
             return true;
         }
 
-        if (!gameClient.getHabbo().getHabboRoleplayStats().getCorpPosition().isCanDemote()) {
+        if (!gameClient.getHabbo().getPlayer().getCorpRole().isCanDemote()) {
             gameClient.getHabbo().whisper(Emulator.getTexts().getValue("commands.roleplay.cmd_demote_not_allowed"));
             return true;
         }
 
-        if (gameClient.getHabbo().getHabboRoleplayStats().getCorpPosition().getOrderId() <= targetedHabbo.getHabboRoleplayStats().getCorpPosition().getOrderId()) {
+        if (gameClient.getHabbo().getPlayer().getCorpRole().getOrderId() <= targetedHabbo.getPlayer().getCorpRole().getOrderId()) {
             gameClient.getHabbo().whisper(Emulator.getTexts().getValue("commands.roleplay.cmd_demote_not_allowed"));
             return true;
         }
 
-        if (targetedHabbo.getHabboRoleplayStats().getCorpPosition().getOrderId() == 1) {
+        if (targetedHabbo.getPlayer().getCorpRole().getOrderId() == 1) {
             gameClient.getHabbo().whisper(Emulator.getTexts().getValue("commands.roleplay.cmd_demote_not_allowed_too_low"));
             return true;
         }
 
-        CorpRoleModel newPosition = CorpRoleService.getInstance().getByCorpAndOrderId(targetedHabbo.getHabboRoleplayStats().getCorp().getId(), targetedHabbo.getHabboRoleplayStats().getCorpPosition().getOrderId() - 1);
+        CorpRoleModel newPosition = CorpRoleService.getInstance().getByCorpAndOrderId(targetedHabbo.getPlayer().getCorp().getId(), targetedHabbo.getPlayer().getCorpRole().getOrderId() - 1);
 
         if (newPosition == null) {
             gameClient.getHabbo().whisper(Emulator.getTexts().getValue("commands.roleplay.cmd_demote_not_allowed_too_low"));
             return true;
         }
 
-        if (gameClient.getHabbo().getHabboRoleplayStats().getCorpPosition().getOrderId() < newPosition.getOrderId()) {
+        if (gameClient.getHabbo().getPlayer().getCorpRole().getOrderId() < newPosition.getOrderId()) {
             gameClient.getHabbo().whisper(Emulator.getTexts().getValue("commands.roleplay.cmd_demote_not_allowed"));
             return true;
         }
 
-        gameClient.getHabbo().getHabboRoleplayStats().setCorp(targetedHabbo.getHabboRoleplayStats().getCorp().getId(), newPosition.getId());
+        gameClient.getHabbo().getPlayer().setCorpId(newPosition.getCorpId());
+        gameClient.getHabbo().getPlayer().setCorpRoleId(newPosition.getId());
 
         gameClient.getHabbo().shout(Emulator.getTexts().getValue("commands.roleplay.cmd_demote_success")
                 .replace(":username", targetedHabbo.getHabboInfo().getUsername())
-                .replace(":corp", targetedHabbo.getHabboRoleplayStats().getCorp().getDisplayName())
-                .replace(":position", targetedHabbo.getHabboRoleplayStats().getCorpPosition().getName()));
+                .replace(":corp", targetedHabbo.getPlayer().getCorp().getDisplayName())
+                .replace(":position", targetedHabbo.getPlayer().getCorpRole().getDisplayName()));
 
         targetedHabbo.shout(Emulator.getTexts().getValue("generic.roleplay.started_new_job").
-                replace(":corp", targetedHabbo.getHabboRoleplayStats().getCorp().getDisplayName())
-                .replace(":position", newPosition.getName()));
+                replace(":corp", targetedHabbo.getPlayer().getCorp().getDisplayName())
+                .replace(":position", newPosition.getDisplayName()));
 
         return true;
     }

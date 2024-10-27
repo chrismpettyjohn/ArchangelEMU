@@ -30,17 +30,17 @@ public class WantedListRemoveUserCommand extends Command {
             return true;
         }
 
-        if (gameClient.getHabbo().getHabboRoleplayStats().getCorp() == null) {
+        if (gameClient.getHabbo().getPlayer().getCorp() == null) {
             gameClient.getHabbo().whisper(Emulator.getTexts().getValue("generic.roleplay.unemployed"));
             return true;
         }
 
-        if (gameClient.getHabbo().getHabboRoleplayStats().getCorp().getIndustry() != CorpIndustry.Police) {
+        if (gameClient.getHabbo().getPlayer().getCorp().getIndustry() != CorpIndustry.Police) {
             gameClient.getHabbo().whisper(Emulator.getTexts().getValue("generic.roleplay.police_only"));
             return true;
         }
 
-        if (!gameClient.getHabbo().getHabboRoleplayStats().isWorking()) {
+        if (!gameClient.getHabbo().getPlayer().isWorking()) {
             gameClient.getHabbo().whisper(Emulator.getTexts().getValue("generic.roleplay.must_be_working"));
             return true;
         }

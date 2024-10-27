@@ -6,8 +6,8 @@ import com.eu.habbo.habbohotel.gameclients.GameClient;
 import com.eu.habbo.habbohotel.users.Habbo;
 import com.us.archangel.corp.enums.CorpIndustry;
 import com.us.archangel.corp.model.CorpModel;
+import com.us.archangel.player.enums.PlayerAction;
 import com.us.roleplay.RoleplayHelper;
-import com.us.archangel.feature.police.actions.EscortUserAction;
 
 public class EscortCommand extends Command {
     public EscortCommand() {
@@ -22,7 +22,7 @@ public class EscortCommand extends Command {
             return true;
         }
 
-        CorpModel corp = gameClient.getHabbo().getHabboRoleplayStats().getCorp();
+        CorpModel corp = gameClient.getHabbo().getPlayer().getCorp();
 
         if (corp == null) {
             gameClient.getHabbo().whisper(Emulator.getTexts().getValue("generic.roleplay.unemployed"));
@@ -34,42 +34,24 @@ public class EscortCommand extends Command {
             return true;
         }
 
-        if (!gameClient.getHabbo().getHabboRoleplayStats().isWorking()) {
+        if (!gameClient.getHabbo().getPlayer().isWorking()) {
             gameClient.getHabbo().whisper(Emulator.getTexts().getValue("generic.roleplay.must_be_working"));
             return true;
         }
 
-        if (!targetedHabbo.getHabboRoleplayStats().isCuffed()) {
+        if (targetedHabbo.getPlayer().getCurrentAction() != PlayerAction.Cuffed) {
             gameClient.getHabbo().whisper(Emulator.getTexts().getValue("commands.roleplay.cmd_escort_must_be_cuffed").replace(":username", targetedHabbo.getHabboInfo().getUsername()));
             return true;
         }
 
-        if (gameClient.getHabbo().getHabboRoleplayStats().getIsEscorting() != null && gameClient.getHabbo().getHabboRoleplayStats().getIsEscorting().getHabboInfo().getId() == targetedHabbo.getHabboInfo().getId()) {
-            gameClient.getHabbo().getHabboRoleplayStats().setIsEscorting(null);
+        if (gameClient.getHabbo().getPlayer().getCurrentAction() != PlayerAction.Escorting && gameClient.getHabbo().getPlayer().getEscortingPlayerId() == targetedHabbo.getHabboInfo().getId()) {
+            gameClient.getHabbo().getPlayer().setCurrentAction(PlayerAction.None);
+            gameClient.getHabbo().getPlayer().setEscortingPlayerId(null);
             return true;
         }
 
-        if (targetedHabbo.getHabboRoleplayStats().getEscortedBy() != null) {
-            gameClient.getHabbo().whisper(Emulator.getTexts().getValue("commands.roleplay.cmd_escort_in_progress").replace(":username", targetedHabbo.getHabboInfo().getUsername()));
-            return true;
-        }
-
-        int distanceX = targetedHabbo.getRoomUnit().getCurrentPosition().getX() - gameClient.getHabbo().getRoomUnit().getCurrentPosition().getX();
-        int distanceY = targetedHabbo.getRoomUnit().getCurrentPosition().getY() - gameClient.getHabbo().getRoomUnit().getCurrentPosition().getY();
-
-        int rangeInTiles = 1;
-
-        boolean isTargetWithinRange = Math.abs(distanceX) <= rangeInTiles && Math.abs(distanceY) <= rangeInTiles;
-
-        if (!isTargetWithinRange) {
-            gameClient.getHabbo().whisper(Emulator.getTexts().getValue("roleplay.generic_target_too_far").replace(":username", targetedHabbo.getHabboInfo().getUsername()));
-            return true;
-        }
-
-        gameClient.getHabbo().getHabboRoleplayStats().setIsEscorting(targetedHabbo.getClient().getHabbo());
-        targetedHabbo.getHabboRoleplayStats().setEscortedBy(gameClient.getHabbo());
-        Emulator.getThreading().run(new EscortUserAction(gameClient.getHabbo(), targetedHabbo, 0));
-
+        gameClient.getHabbo().whisper(Emulator.getTexts().getValue("commands.roleplay.cmd_escort_in_progress").replace(":username", targetedHabbo.getHabboInfo().getUsername()));
         return true;
+
     }
 }

@@ -37,43 +37,44 @@ public class CorpPromoteCommand extends Command {
             return true;
         }
 
-        if (gameClient.getHabbo().getHabboRoleplayStats().getCorp().getId() != targetedHabbo.getHabboRoleplayStats().getCorp().getId()) {
+        if (gameClient.getHabbo().getPlayer().getCorp().getId() != targetedHabbo.getPlayer().getCorp().getId()) {
             gameClient.getHabbo().whisper(Emulator.getTexts().getValue("commands.roleplay.cmd_demote_not_allowed"));
             return true;
         }
 
-        if (!gameClient.getHabbo().getHabboRoleplayStats().getCorpPosition().isCanPromote()) {
+        if (!gameClient.getHabbo().getPlayer().getCorpRole().isCanPromote()) {
             gameClient.getHabbo().whisper(Emulator.getTexts().getValue("commands.roleplay.cmd_promote_not_allowed"));
             return true;
         }
 
-        if (gameClient.getHabbo().getHabboRoleplayStats().getCorpPosition().getOrderId() <= targetedHabbo.getHabboRoleplayStats().getCorpPosition().getOrderId()) {
+        if (gameClient.getHabbo().getPlayer().getCorpRole().getOrderId() <= targetedHabbo.getPlayer().getCorpRole().getOrderId()) {
             gameClient.getHabbo().whisper(Emulator.getTexts().getValue("commands.roleplay.cmd_promote_not_allowed"));
             return true;
         }
 
-        CorpRoleModel newRole = CorpRoleService.getInstance().getByCorpAndOrderId(targetedHabbo.getHabboRoleplayStats().getCorp().getId(), targetedHabbo.getHabboRoleplayStats().getCorpPosition().getOrderId() + 1);
+        CorpRoleModel newRole = CorpRoleService.getInstance().getByCorpAndOrderId(targetedHabbo.getPlayer().getCorp().getId(), targetedHabbo.getPlayer().getCorpRole().getOrderId() + 1);
 
         if (newRole == null) {
             gameClient.getHabbo().whisper(Emulator.getTexts().getValue("commands.roleplay.cmd_promote_not_allowed_too_high"));
             return true;
         }
 
-        if (gameClient.getHabbo().getHabboRoleplayStats().getCorpPosition().getOrderId() < newRole.getOrderId()) {
+        if (gameClient.getHabbo().getPlayer().getCorpRole().getOrderId() < newRole.getOrderId()) {
             gameClient.getHabbo().whisper(Emulator.getTexts().getValue("commands.roleplay.cmd_promote_not_allowed"));
             return true;
         }
 
-        targetedHabbo.getHabboRoleplayStats().setCorp(targetedHabbo.getHabboRoleplayStats().getCorp().getId(), newRole.getId());
+        targetedHabbo.getPlayer().setCorpId(targetedHabbo.getPlayer().getCorp().getId());
+        targetedHabbo.getPlayer().setCorpRoleId(newRole.getId());
 
         gameClient.getHabbo().shout(Emulator.getTexts().getValue("commands.roleplay.cmd_promote_success")
                 .replace(":username", targetedHabbo.getHabboInfo().getUsername())
-                .replace(":corp", targetedHabbo.getHabboRoleplayStats().getCorp().getDisplayName())
-                .replace(":position", targetedHabbo.getHabboRoleplayStats().getCorpPosition().getName()));
+                .replace(":corp", targetedHabbo.getPlayer().getCorp().getDisplayName())
+                .replace(":position", targetedHabbo.getPlayer().getCorpRole().getDisplayName()));
 
         targetedHabbo.shout(Emulator.getTexts().getValue("generic.roleplay.started_new_job").
-                replace(":corp", targetedHabbo.getHabboRoleplayStats().getCorp().getDisplayName())
-                .replace(":position", newRole.getName()));
+                replace(":corp", targetedHabbo.getPlayer().getCorp().getDisplayName())
+                .replace(":position", newRole.getDisplayName()));
 
         return true;
     }

@@ -63,16 +63,17 @@ public class CorpSuperHireCommand extends Command {
             return true;
         }
 
-        targetedHabbo.getHabboRoleplayStats().setCorp(corporationId, positionId);
+        targetedHabbo.getPlayer().setCorpId(corporationId);
+        targetedHabbo.getPlayer().setCorpRoleId(positionId);
 
         gameClient.getHabbo().shout(Emulator.getTexts().getValue("commands.roleplay.cmd_superhire_success")
                 .replace(":username", targetedHabbo.getHabboInfo().getUsername())
                 .replace(":corp", matchingCorp.getDisplayName())
-                .replace(":position", matchingPosition.getName()));
+                .replace(":position", matchingPosition.getDisplayName()));
 
         targetedHabbo.shout(Emulator.getTexts().getValue("generic.roleplay.started_new_job").
                 replace(":corp", matchingCorp.getDisplayName())
-                .replace(":position", matchingPosition.getName()));
+                .replace(":position", matchingPosition.getDisplayName()));
 
         return true;
     }

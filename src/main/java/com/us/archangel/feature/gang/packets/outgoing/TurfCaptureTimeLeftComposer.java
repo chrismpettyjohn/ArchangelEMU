@@ -35,8 +35,8 @@ public class TurfCaptureTimeLeftComposer extends MessageComposer {
         HashMap<Integer, Integer> gangsInRoom = new HashMap<>();
 
         for (Habbo user : usersInRoom) {
-            Integer gangID = user.getHabboRoleplayStats().getGang() != null
-                    ? user.getHabboRoleplayStats().getGang().getId()
+            Integer gangID = user.getPlayer().getGang() != null
+                    ? user.getPlayer().getGang().getId()
                     : 0;
 
             if (gangsInRoom.containsKey(gangID)) {

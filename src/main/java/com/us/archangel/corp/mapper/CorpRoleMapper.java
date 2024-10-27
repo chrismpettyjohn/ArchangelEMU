@@ -34,7 +34,7 @@ public class CorpRoleMapper {
         entity.setId(model.getId());
         entity.setCorpId(model.getCorpId());
         entity.setOrderId(model.getOrderId());
-        entity.setName(model.getName());
+        entity.setName(model.getDisplayName());
         entity.setMotto(model.getMotto());
         entity.setSalary(model.getSalary());
         entity.setMaleFigure(model.getMaleFigure());

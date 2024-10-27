@@ -40,7 +40,7 @@ public class BankConnectComputerCommand extends Command  {
             return true;
         }
 
-        if (!gameClient.getHabbo().getHabboRoleplayStats().isWorking()) {
+        if (!gameClient.getHabbo().getPlayer().isWorking()) {
             gameClient.getHabbo().whisper(Emulator.getTexts().getValue("roleplay.generic.not_at_work"));
             return true;
         }

@@ -65,6 +65,14 @@ public class PlayerSkillRepository {
         }
     }
 
+    public PlayerSkillEntity getByUserId(int userId) {
+        try (Session session = sessionFactory.openSession()) {
+            return session.createQuery("from PlayerSkillEntity where userId = :userId", PlayerSkillEntity.class)
+                    .setParameter("userId", userId)
+                    .uniqueResult();
+        }
+    }
+
     @SuppressWarnings("unchecked")
     public List<PlayerSkillEntity> getAll() {
         try (Session session = sessionFactory.openSession()) {

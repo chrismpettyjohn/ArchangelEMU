@@ -8,10 +8,10 @@ import com.us.archangel.corp.model.CorpRoleModel;
 import com.us.archangel.corp.service.CorpRoleService;
 import com.us.archangel.corp.service.CorpService;
 import com.us.archangel.feature.corp.commands.CorpFireUserCommand;
-import com.us.roleplay.database.HabboRoleplayStatsRepository;
+import com.us.archangel.player.model.PlayerModel;
+import com.us.archangel.player.service.PlayerService;
 import com.us.archangel.feature.corp.packets.outgoing.CorpPositionInfoComposer;
 import com.us.archangel.feature.corp.packets.outgoing.CorpPositionListComposer;
-import com.us.roleplay.users.HabboRoleplayStats;
 
 import java.util.List;
 
@@ -34,7 +34,7 @@ public class CorpDeletePositionEvent extends MessageHandler {
             return;
         }
 
-        if (corpPosition.getId() == this.client.getHabbo().getHabboRoleplayStats().getCorpPosition().getId()) {
+        if (corpPosition.getId() == this.client.getHabbo().getPlayer().getCorpRoleId()) {
             this.client.getHabbo().whisper(Emulator.getTexts().getValue("roleplay.corp_position.cant_delete_your_job"));
             return;
         }
@@ -57,17 +57,18 @@ public class CorpDeletePositionEvent extends MessageHandler {
             throw new RuntimeException("no welfare position");
         }
 
-        List<HabboRoleplayStats> habbosInPosition = HabboRoleplayStatsRepository.getInstance().getByCorpAndPositionID(corpID, corpPositionID);
+        List<PlayerModel> habbosInPosition = PlayerService.getInstance().getByCorpRoleID(corpPositionID);
 
-        for (HabboRoleplayStats habboStats : habbosInPosition) {
-            habboStats.setCorp(welfareCorp.getId(), welfarePosition.getId());
+        for (PlayerModel habboStats : habbosInPosition) {
+            habboStats.setCorpId(welfareCorp.getId());
+            habboStats.setCorpRoleId(welfarePosition.getId());
         }
 
         CorpRoleService.getInstance().deleteById(corpPositionID);
 
         this.client.getHabbo().shout(Emulator.getTexts()
                 .getValue("roleplay.corp_position.delete_success")
-                .replace(":position", corpPosition.getName())
+                .replace(":position", corpPosition.getDisplayName())
         );
 
         this.client.sendResponse(new CorpPositionListComposer(corp));

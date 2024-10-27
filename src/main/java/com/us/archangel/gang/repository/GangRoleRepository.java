@@ -67,7 +67,23 @@ public class GangRoleRepository {
         }
     }
 
-    @SuppressWarnings("unchecked")
+    public GangRoleEntity getByGangIdAndOrderId(int gangId, int orderId) {
+        try (Session session = sessionFactory.openSession()) {
+            return session.createQuery("from GangRoleEntity where gangId = :gangId and orderId = :orderId", GangRoleEntity.class)
+                    .setParameter("gangId", gangId)
+                    .setParameter("orderId", orderId)
+                    .uniqueResult();
+        }
+    }
+
+    public List<GangRoleEntity> getByGangId(int gangId) {
+        try (Session session = sessionFactory.openSession()) {
+            return session.createQuery("from GangRoleEntity where gangId = :gangId", GangRoleEntity.class)
+                    .setParameter("gangId", gangId)
+                    .list();
+        }
+    }
+
     public List<GangRoleEntity> getAll() {
         try (Session session = sessionFactory.openSession()) {
             return session.createQuery("from GangRoleEntity", GangRoleEntity.class).list();

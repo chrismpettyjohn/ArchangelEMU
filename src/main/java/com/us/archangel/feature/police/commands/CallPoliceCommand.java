@@ -29,12 +29,12 @@ public class CallPoliceCommand extends Command {
             return true;
         }
 
-        if (gameClient.getHabbo().getHabboRoleplayStats().isDead()) {
+        if (gameClient.getHabbo().getPlayer().isDead()) {
             gameClient.getHabbo().whisper(Emulator.getTexts().getValue("roleplay.generic.not_allowed"));
             return true;
         }
 
-        if (gameClient.getHabbo().getHabboRoleplayStats().isJailed()) {
+        if (gameClient.getHabbo().getPlayer().getJailTimeRemainingSecs() > 0) {
             gameClient.getHabbo().whisper(Emulator.getTexts().getValue("roleplay.generic.not_allowed"));
             return true;
         }

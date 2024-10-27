@@ -13,4 +13,6 @@ public class GangRoleModel {
     private int gangId;
     private int orderId;
     private String name;
+    private boolean canInvite;
+    private boolean canKick;
 }

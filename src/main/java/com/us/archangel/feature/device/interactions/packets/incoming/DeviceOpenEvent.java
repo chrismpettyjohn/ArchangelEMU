@@ -35,7 +35,7 @@ public class DeviceOpenEvent extends MessageHandler {
         }
 
         if (item.getBaseItem().getInteractionType().getType() == InteractionPoliceLaptop.class) {
-            CorpModel corp = this.client.getHabbo().getHabboRoleplayStats().getCorp();
+            CorpModel corp = this.client.getHabbo().getPlayer().getCorp();
 
             if (corp == null) {
                 this.client.getHabbo().whisper(Emulator.getTexts().getValue("generic.roleplay.unemployed"));
@@ -47,7 +47,7 @@ public class DeviceOpenEvent extends MessageHandler {
                 return;
             }
 
-            if (!this.client.getHabbo().getHabboRoleplayStats().isWorking()) {
+            if (!this.client.getHabbo().getPlayer().isWorking()) {
                 this.client.getHabbo().whisper(Emulator.getTexts().getValue("generic.roleplay.must_be_working"));
                 return;
             }

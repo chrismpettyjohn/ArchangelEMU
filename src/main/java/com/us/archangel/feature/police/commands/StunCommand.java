@@ -6,6 +6,7 @@ import com.eu.habbo.habbohotel.gameclients.GameClient;
 import com.eu.habbo.habbohotel.users.Habbo;
 import com.us.archangel.corp.enums.CorpIndustry;
 import com.us.archangel.corp.model.CorpModel;
+import com.us.archangel.player.enums.PlayerAction;
 import com.us.roleplay.RoleplayHelper;
 
 public class StunCommand extends Command {
@@ -21,7 +22,7 @@ public class StunCommand extends Command {
             return true;
         }
 
-        CorpModel corp = gameClient.getHabbo().getHabboRoleplayStats().getCorp();
+        CorpModel corp = gameClient.getHabbo().getPlayer().getCorp();
 
         if (corp == null) {
             gameClient.getHabbo().whisper(Emulator.getTexts().getValue("generic.roleplay.unemployed"));
@@ -33,13 +34,13 @@ public class StunCommand extends Command {
             return true;
         }
 
-        if (!gameClient.getHabbo().getHabboRoleplayStats().isWorking()) {
+        if (!gameClient.getHabbo().getPlayer().isWorking()) {
             gameClient.getHabbo().whisper(Emulator.getTexts().getValue("generic.roleplay.must_be_working"));
             return true;
         }
 
-        if (targetedHabbo.getHabboRoleplayStats().isStunned()) {
-            targetedHabbo.getHabboRoleplayStats().setIsStunned(false);
+        if (targetedHabbo.getPlayer().getCurrentAction() == PlayerAction.Cuffed) {
+            targetedHabbo.getPlayer().setCurrentAction(PlayerAction.None);
             gameClient.getHabbo().whisper(Emulator.getTexts().getValue("commands.roleplay.cmd_stun_unstunned_user").replace(":username", targetedHabbo.getHabboInfo().getUsername()));
             return true;
         }
@@ -56,7 +57,7 @@ public class StunCommand extends Command {
             return true;
         }
 
-        targetedHabbo.getHabboRoleplayStats().setIsStunned(true);
+        targetedHabbo.getPlayer().setCurrentAction(PlayerAction.Stunned);
 
         gameClient.getHabbo().shout(Emulator.getTexts().getValue("commands.roleplay_cmd_stun_success").replace(":username", targetedHabbo.getHabboInfo().getUsername()));
 

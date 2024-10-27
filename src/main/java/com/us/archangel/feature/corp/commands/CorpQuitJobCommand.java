@@ -26,14 +26,15 @@ public class CorpQuitJobCommand extends Command {
 
         CorpModel welfareCorp = welfareCorps.get(0);
 
-        if (gameClient.getHabbo().getHabboRoleplayStats().getCorp().getId() == welfareCorp.getId()) {
+        if (gameClient.getHabbo().getPlayer().getCorp().getId() == welfareCorp.getId()) {
             gameClient.getHabbo().whisper(Emulator.getTexts().getValue("commands.roleplay.cmd_quitjob_unemployed"));
             return true;
         }
 
         CorpRoleModel welfareRole = CorpRoleService.getInstance().getByCorpAndOrderId(welfareCorp.getId(), 1);
 
-        gameClient.getHabbo().getHabboRoleplayStats().setCorp(welfareCorp.getId(), welfareRole.getId());
+        gameClient.getHabbo().getPlayer().setCorpId(welfareCorp.getId());
+        gameClient.getHabbo().getPlayer().setCorpRoleId(welfareRole.getId());
 
         gameClient.getHabbo().shout(Emulator.getTexts().getValue("commands.roleplay.cmd_quitjob_success"));
 

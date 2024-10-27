@@ -3,6 +3,7 @@ package com.us.archangel.feature.police.actions;
 import com.eu.habbo.Emulator;
 import com.eu.habbo.habbohotel.rooms.RoomTile;
 import com.eu.habbo.habbohotel.users.Habbo;
+import com.us.archangel.player.enums.PlayerAction;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
@@ -15,8 +16,9 @@ public class EscortUserAction implements Runnable {
     public void run() {
         if (this.user != null && this.user.getRoomUnit() != null && this.userBeingEscorted != null && this.userBeingEscorted.getRoomUnit() != null) {
 
-            if (this.user.getHabboRoleplayStats().getIsEscorting() == null || this.userBeingEscorted.getHabboRoleplayStats().getEscortedBy() == null) {
-                this.user.getHabboRoleplayStats().setIsEscorting(null);
+            if (this.user.getPlayer().getCurrentAction() == PlayerAction.None) {
+                this.user.getPlayer().setCurrentAction(PlayerAction.Escorting);
+                this.user.getPlayer().setEscortingPlayerId(this.userBeingEscorted.getPlayer().getId());
                 return;
             }
 

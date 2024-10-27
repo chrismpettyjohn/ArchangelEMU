@@ -30,17 +30,17 @@ public class HospitalRecoveryAction implements Runnable {
             return;
         }
 
-        if (this.habbo.getHabboRoleplayStats().getHealthNow() >= this.habbo.getHabboRoleplayStats().getHealthMax()) {
+        if (this.habbo.getPlayer().getHealthNow() >= this.habbo.getPlayer().getHealthMax()) {
             this.onHealingComplete();
             return;
         }
 
-        this.habbo.getHabboRoleplayStats().setHealth(this.habbo.getHabboRoleplayStats().getHealthNow() + HospitalRecoveryAction.HEALTH_PER_CYCLE);
+        this.habbo.getPlayer().addHealth(HospitalRecoveryAction.HEALTH_PER_CYCLE);
 
         this.habbo.shout(Emulator.getTexts()
                 .getValue("roleplay.hospital.progress_recovery")
-                .replace(":healthNow", String.valueOf(this.habbo.getHabboRoleplayStats().getHealthNow()))
-                .replace(":healthMax", String.valueOf(this.habbo.getHabboRoleplayStats().getHealthMax()))
+                .replace(":healthNow", String.valueOf(this.habbo.getPlayer().getHealthNow()))
+                .replace(":healthMax", String.valueOf(this.habbo.getPlayer().getHealthMax()))
         );
         Emulator.getThreading().run(this, 2500);
     }

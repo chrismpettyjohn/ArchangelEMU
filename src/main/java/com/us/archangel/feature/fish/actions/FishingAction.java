@@ -71,7 +71,7 @@ public class FishingAction implements Runnable {
 
         if (this.fishingCycles > 1) {
             double baseRatio = Emulator.getConfig().getDouble("roleplay.fishing.catch_ratio", 0.3);
-            double catchRatio = baseRatio + (this.habbo.getHabboRoleplayStats().getFishingLevel().getCurrentLevel() * baseRatio);
+            double catchRatio = baseRatio + (this.habbo.getPlayerSkills().getFishing().getCurrentLevel() * baseRatio);
             boolean didCatchFish = random.nextDouble() < catchRatio;
             if (didCatchFish) {
                 this.onFishingComplete();
@@ -81,7 +81,7 @@ public class FishingAction implements Runnable {
         this.fishingCycles += 1;
 
 
-        this.habbo.getHabboRoleplayStats().addFishingXP(FishingAction.XP_PER_CYCLE);
+        this.habbo.getPlayerSkills().addFishingXp(FishingAction.XP_PER_CYCLE);
 
         Emulator.getThreading().run(this, 1000);
     }

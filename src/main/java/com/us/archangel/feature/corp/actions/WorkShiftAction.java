@@ -32,14 +32,14 @@ public class WorkShiftAction implements Runnable {
     public void run() {
         this.oldMotto = habbo.getHabboInfo().getMotto();
         this.oldFigure = habbo.getHabboInfo().getLook();
-        CorpRoleModel corpRole = habbo.getHabboRoleplayStats().getCorpPosition();
+        CorpRoleModel corpRole = habbo.getPlayer().getCorpRole();
         long endsAt = Instant.now().getEpochSecond() + Duration.ofMinutes(10).getSeconds();
 
         cycleUserShift = scheduler.scheduleAtFixedRate(() -> cycleUserShift(habbo, corpRole, endsAt), 0, 60, TimeUnit.SECONDS);
         checkWorkingState = scheduler.scheduleAtFixedRate(() -> checkWorkingState(habbo), 0, 1, TimeUnit.SECONDS);
 
-        habbo.shout(Emulator.getTexts().getValue("roleplay.shift.start").replace(":position", corpRole.getName()));
-        habbo.getHabboRoleplayStats().setWorking(true);
+        habbo.shout(Emulator.getTexts().getValue("roleplay.shift.start").replace(":position", corpRole.getDisplayName()));
+        habbo.getPlayer().setWorkTimeRemainingSecs(Duration.ofMinutes(10).getSeconds());
         habbo.getHabboInfo().setMotto(corpRole.getMotto());
         habbo.getHabboInfo().changeClothes(habbo.getHabboInfo().getGender() == HabboGender.M ? corpRole.getMaleFigure() : corpRole.getFemaleFigure());
         habbo.getClient().sendResponse(new FigureUpdateComposer(habbo));
@@ -47,7 +47,7 @@ public class WorkShiftAction implements Runnable {
     }
 
     private void checkWorkingState(Habbo habbo) {
-        if (!habbo.getHabboRoleplayStats().isWorking()) {
+        if (!habbo.getPlayer().isWorking()) {
             habbo.shout(Emulator.getTexts().getValue("roleplay.shift.cancel"));
             cycleUserShift.cancel(true);
             checkWorkingState.cancel(true);
@@ -59,7 +59,7 @@ public class WorkShiftAction implements Runnable {
             return;
         }
 
-        CorpModel corp = habbo.getHabboRoleplayStats().getCorp();
+        CorpModel corp = habbo.getPlayer().getCorp();
 
         if (habbo.getRoomUnit().getRoom().getRoomInfo().getId() != corp.getRoomId() && !corpRole.isCanWorkAnywhere()) {
             habbo.shout(Emulator.getTexts().getValue("roleplay.shift.cancel"));
@@ -83,7 +83,7 @@ public class WorkShiftAction implements Runnable {
     private void onShiftFinish(Habbo habbo, CorpRoleModel corpRole) {
         habbo.shout(Emulator.getTexts().getValue("roleplay.shift.success")
                 .replace(":credits", String.valueOf(corpRole.getSalary())));
-        habbo.getHabboRoleplayStats().setWorking(false);
+        habbo.getPlayer().setWorkTimeRemainingSecs(0);
         habbo.getHabboInfo().setCredits(habbo.getHabboInfo().getCredits() + corpRole.getSalary());
         habbo.getHabboInfo().setMotto(this.oldMotto);
         habbo.getHabboInfo().changeClothes(this.oldFigure);

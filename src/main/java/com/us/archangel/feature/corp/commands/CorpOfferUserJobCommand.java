@@ -33,27 +33,27 @@ public class CorpOfferUserJobCommand extends Command {
             return true;
         }
 
-        if (!gameClient.getHabbo().getHabboRoleplayStats().getCorpPosition().isCanHire()) {
+        if (!gameClient.getHabbo().getPlayer().getCorpRole().isCanHire()) {
             gameClient.getHabbo().whisper(Emulator.getTexts().getValue("commands.roleplay.cmd_hire_not_allowed"));
             return true;
         }
 
-        if (gameClient.getHabbo().getHabboRoleplayStats().getCorp().getId() == targetedHabbo.getHabboRoleplayStats().getCorp().getId()) {
+        if (gameClient.getHabbo().getPlayer().getCorp().getId() == targetedHabbo.getPlayer().getCorp().getId()) {
             gameClient.getHabbo().whisper(Emulator.getTexts().getValue("commands.roleplay.cmd_hire_user_has_same_employer"));
             return true;
         }
 
         CorpInviteEntity corpInvite = new CorpInviteEntity();
-        corpInvite.setCorpId(gameClient.getHabbo().getHabboRoleplayStats().getCorp().getId());
+        corpInvite.setCorpId(gameClient.getHabbo().getPlayer().getCorp().getId());
 
-        CorpRoleModel corpRole = CorpRoleService.getInstance().getByCorpAndOrderId(gameClient.getHabbo().getHabboRoleplayStats().getCorp().getId(), 1);
+        CorpRoleModel corpRole = CorpRoleService.getInstance().getByCorpAndOrderId(gameClient.getHabbo().getPlayer().getCorp().getId(), 1);
         corpInvite.setCorpRoleId(corpRole.getId());
 
         CorpInviteService.getInstance().create(corpInvite);
 
         gameClient.getHabbo().shout(Emulator.getTexts().getValue("commands.roleplay.cmd_corp_invite_sent").replace(":username", targetedHabbo.getHabboInfo().getUsername()));
 
-        targetedHabbo.whisper(Emulator.getTexts().getValue("commands.roleplay.cmd_corp_invite_received").replace(":corp",gameClient.getHabbo().getHabboRoleplayStats().getCorp().getDisplayName()));
+        targetedHabbo.whisper(Emulator.getTexts().getValue("commands.roleplay.cmd_corp_invite_received").replace(":corp",gameClient.getHabbo().getPlayer().getCorp().getDisplayName()));
 
         return true;
     }

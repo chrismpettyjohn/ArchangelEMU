@@ -33,7 +33,7 @@ public record FarmingLicenseBillingItem(int userID, int chargedByUserID) impleme
 
     @Override
     public int getChargedByCorpID() {
-        return Emulator.getGameEnvironment().getHabboManager().getHabbo(this.chargedByUserID).getHabboRoleplayStats().getCorp().getId();
+        return Emulator.getGameEnvironment().getHabboManager().getHabbo(this.chargedByUserID).getPlayer().getCorp().getId();
     }
 
     @Override

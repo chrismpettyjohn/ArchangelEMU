@@ -62,7 +62,7 @@ public class MiningAction implements Runnable {
             this.habbo.getRoomUnit().giveEffect(MiningAction.MINING_EFFECT_ID, -1);
         }
 
-        int damageMade = MiningAction.DAMAGE_PER_STRIKE + this.habbo.getHabboRoleplayStats().getMiningLevel().getCurrentLevel() + this.habbo.getHabboRoleplayStats().getStrengthLevel().getCurrentLevel();
+        int damageMade = MiningAction.DAMAGE_PER_STRIKE + this.habbo.getPlayerSkills().getMining().getCurrentLevel() + this.habbo.getPlayerSkills().getStrength().getCurrentLevel();
         this.totalDamage += damageMade;
 
         if (this.totalDamage >= MiningAction.HEALTH_PER_BLOCK) {
@@ -70,8 +70,8 @@ public class MiningAction implements Runnable {
             return;
         }
 
-        this.habbo.getHabboRoleplayStats().addStrengthXP(damageMade);
-        this.habbo.getHabboRoleplayStats().addMiningXP(damageMade);
+        this.habbo.getPlayerSkills().addStrengthXp(damageMade);
+        this.habbo.getPlayerSkills().addMiningXp(damageMade);
 
         this.habbo.shout(Emulator.getTexts()
                 .getValue("roleplay.mining.progress")

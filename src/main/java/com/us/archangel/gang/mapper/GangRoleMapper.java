@@ -13,7 +13,9 @@ public class GangRoleMapper {
                 entity.getId(),
                 entity.getGangId(),
                 entity.getOrderId(),
-                entity.getName()
+                entity.getName(),
+                entity.getCanInvite(),
+                entity.getCanKick()
         );
     }
 

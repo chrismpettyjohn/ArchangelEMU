@@ -5,6 +5,7 @@ import com.us.archangel.weapon.entity.WeaponEntity;
 import com.us.archangel.weapon.mapper.WeaponMapper;
 import com.us.archangel.weapon.model.WeaponModel;
 import com.us.archangel.weapon.repository.WeaponRepository;
+import com.us.archangel.weapon.service.WeaponService;
 import lombok.Getter;
 import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
@@ -33,12 +34,13 @@ public class WeaponManager {
     }
 
     private final WeaponRepository weaponRepository;
-
     private final WeaponContext weaponContext;
+    private final WeaponService weaponService;
 
     private WeaponManager(SessionFactory sessionFactory) {
         this.weaponContext = WeaponContext.getInstance();
         this.weaponRepository = WeaponRepository.getInstance(sessionFactory);
+        this.weaponService = WeaponService.getInstance();
         this.load();
     }
 

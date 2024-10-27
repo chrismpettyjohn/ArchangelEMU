@@ -12,7 +12,7 @@ public class CorpRoleModel {
     private int id;
     private int corpId;
     private int orderId;
-    private String name;
+    private String displayName;
     private String motto;
     private int salary;
     private String maleFigure;

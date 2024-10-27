@@ -11,7 +11,26 @@ public class PlayerMapper {
         }
         return new PlayerModel(
                 entity.getId(),
-                entity.getUserId()
+                entity.getUserId(),
+                entity.getGangId(),
+                entity.getGangRoleId(),
+                entity.getCorpId(),
+                entity.getCorpRoleId(),
+                entity.getHealthNow(),
+                entity.getHealthMax(),
+                entity.getEnergyNow(),
+                entity.getEnergyMax(),
+                entity.getArmorNow(),
+                entity.getArmorMax(),
+                entity.getHungerNow(),
+                entity.getHungerMax(),
+                entity.getLastPosX(),
+                entity.getLastPosY(),
+                entity.getWorkTimeRemainingSecs(),
+                entity.getCombatDelayRemainingSecs(),
+                entity.getJailTimeRemainingSecs(),
+                entity.getCurrentAction(),
+                entity.getEscortingPlayerId()
         );
     }
 

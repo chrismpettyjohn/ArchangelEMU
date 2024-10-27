@@ -2,11 +2,16 @@ package com.us.archangel.player;
 
 import com.us.archangel.player.context.PlayerContext;
 import com.us.archangel.player.context.PlayerSkillContext;
+import com.us.archangel.player.context.PlayerWeaponContext;
 import com.us.archangel.player.entity.PlayerEntity;
 import com.us.archangel.player.mapper.PlayerMapper;
 import com.us.archangel.player.model.PlayerModel;
 import com.us.archangel.player.repository.PlayerRepository;
 import com.us.archangel.player.repository.PlayerSkillRepository;
+import com.us.archangel.player.repository.PlayerWeaponRepository;
+import com.us.archangel.player.service.PlayerService;
+import com.us.archangel.player.service.PlayerSkillService;
+import com.us.archangel.player.service.PlayerWeaponService;
 import lombok.Getter;
 import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
@@ -34,21 +39,32 @@ public class PlayerManager {
         return instance;
     }
 
-    private final PlayerRepository playerRepository;
-
-    private final PlayerSkillRepository playerSkillRepository;
-
     private final PlayerContext playerContext;
+    private final PlayerRepository playerRepository;
+    private final PlayerService playerService;
 
     private final PlayerSkillContext playerSkillContext;
+    private final PlayerSkillRepository playerSkillRepository;
+    private final PlayerSkillService playerSkillService;
+
+    private final PlayerWeaponContext playerWeaponContext;
+    private final PlayerWeaponRepository playerWeaponRepository;
+    private final PlayerWeaponService playerWeaponService;
 
 
     private PlayerManager(SessionFactory sessionFactory) {
         this.playerContext = PlayerContext.getInstance();
         this.playerRepository = PlayerRepository.getInstance(sessionFactory);
+        this.playerService = PlayerService.getInstance();
 
         this.playerSkillContext = PlayerSkillContext.getInstance();
         this.playerSkillRepository = PlayerSkillRepository.getInstance(sessionFactory);
+        this.playerSkillService = PlayerSkillService.getInstance();
+
+        this.playerWeaponContext = PlayerWeaponContext.getInstance();
+        this.playerWeaponRepository = PlayerWeaponRepository.getInstance(sessionFactory);
+        this.playerWeaponService = PlayerWeaponService.getInstance();
+
         this.load();
     }
 

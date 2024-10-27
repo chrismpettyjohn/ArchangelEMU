@@ -62,7 +62,7 @@ public class CaptureTurfAction implements Runnable {
             return false;
         }
 
-        if (this.capturingHabbo.getHabboRoleplayStats().isDead()) {
+        if (this.capturingHabbo.getPlayer().isDead()) {
             this.room.getRoomTurfManager().stopCapturing();
             return false;
         }
@@ -71,7 +71,7 @@ public class CaptureTurfAction implements Runnable {
     }
 
     private boolean initializeCapture() {
-        if (this.capturingHabbo.getHabboRoleplayStats().getGang() == null) {
+        if (this.capturingHabbo.getPlayer().getGang() == null) {
             this.capturingHabbo.whisper(Emulator.getTexts().getValue("roleplay.turf_capture.no_gang"));
             return false;
         }
@@ -91,8 +91,8 @@ public class CaptureTurfAction implements Runnable {
             if (user == this.capturingHabbo) {
                 continue;
             }
-            if (user.getHabboRoleplayStats().getGang() == null ||
-                    user.getHabboRoleplayStats().getGang() != this.capturingHabbo.getHabboRoleplayStats().getGang()) {
+            if (user.getPlayer().getGang() == null ||
+                    user.getPlayer().getGang() != this.capturingHabbo.getPlayer().getGang()) {
                 return true;
             }
         }
@@ -119,21 +119,22 @@ public class CaptureTurfAction implements Runnable {
         }
 
         for (Habbo user : usersInRoom) {
-            if (user.getHabboRoleplayStats().getGang() == this.room.getRoomInfo().getGuild()) {
+            // TODO remove guild and use gang directly
+            if (user.getPlayer().getGang().getId() == this.room.getRoomInfo().getGuild().getId()) {
                 this.room.getRoomTurfManager().regainTime();
                 break;
             }
         }
     }
     private void captureSuccessful() {
-        this.room.getRoomInfo().setGuild(this.capturingHabbo.getHabboRoleplayStats().getGang());
+        // TODO remove guild and use gang directly
         this.room.setNeedsUpdate(true);
 
         Collection<RoomItem> roomItems = this.room.getRoomItemManager().getCurrentItems().values();
 
         for (RoomItem item : roomItems) {
             if (item.getBaseItem().getInteractionType().getClass().isAssignableFrom(InteractionGuildFurni.class)) {
-                ((InteractionGuildFurni) item).setGuildId(this.capturingHabbo.getHabboRoleplayStats().getGang().getId());
+                ((InteractionGuildFurni) item).setGuildId(this.capturingHabbo.getPlayer().getGang().getId());
             }
         }
 

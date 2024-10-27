@@ -22,4 +22,11 @@ public class GangRoleContext extends GenericContext<GangRoleModel> {
         super();
     }
 
+    public GangRoleModel getByGangIdAndOrderId(int gangId, int orderId) {
+        return getAll().values().stream()
+                .filter(model -> model.getGangId() == gangId && model.getOrderId() == orderId)
+                .findFirst()
+                .orElse(null);
+    }
+
 }

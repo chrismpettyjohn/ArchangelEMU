@@ -25,12 +25,12 @@ public class BankAccountCloseCommand extends Command  {
             return true;
         }
 
-        if (!gameClient.getHabbo().getHabboRoleplayStats().isWorking()) {
+        if (!gameClient.getHabbo().getPlayer().isWorking()) {
             gameClient.getHabbo().whisper(Emulator.getTexts().getValue("generic.roleplay.must_be_working"));
             return true;
         }
 
-        CorpModel bankCorp = gameClient.getHabbo().getHabboRoleplayStats().getCorp();
+        CorpModel bankCorp = gameClient.getHabbo().getPlayer().getCorp();
 
         if (bankCorp == null) {
             gameClient.getHabbo().whisper(Emulator.getTexts().getValue("generic.corp_not_found"));

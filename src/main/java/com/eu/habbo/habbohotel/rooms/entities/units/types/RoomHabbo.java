@@ -62,9 +62,9 @@ public class RoomHabbo extends RoomAvatar {
             if (this.ticksSinceLastReplenish >= energyReplenishIdleTime) {
                 this.ticksSinceLastReplenish = 0;
 
-                if (this.unit.getHabboRoleplayStats().getEnergyNow() < this.unit.getHabboRoleplayStats().getEnergyMax()) {
+                if (this.unit.getPlayer().getEnergyNow() < this.unit.getPlayer().getEnergyMax()) {
                     int baseEnergyGained = Emulator.getConfig().getInt("roleplay.energy.replenish_amount", 5);
-                    this.unit.getHabboRoleplayStats().addEnergy(baseEnergyGained + this.unit.getHabboRoleplayStats().getStaminaLevel().getCurrentLevel(), "resting");
+                    this.unit.getPlayer().addEnergy(baseEnergyGained + this.unit.getPlayerSkills().getStamina().getCurrentLevel());
                 }
             }
         } else {

@@ -15,7 +15,7 @@ public class HabboRoleplayHelper {
         ConcurrentHashMap<Integer, Habbo> habbosOnline = Emulator.getGameEnvironment().getHabboManager().getOnlineHabbos();
 
         for (Habbo habbo : habbosOnline.values()) {
-            if (habbo.getHabboRoleplayStats().getCorp().getIndustry() == corpIndustry) {
+            if (habbo.getPlayer().getCorp().getIndustry() == corpIndustry) {
                 habbosInCorp.add(habbo);
             }
         }
@@ -26,7 +26,7 @@ public class HabboRoleplayHelper {
     public static List<Habbo> getUsersWorking(List<Habbo> habbos) {
         List<Habbo> habbosWorking = new ArrayList<>();
         for (Habbo habbo : habbos) {
-            if (habbo.getHabboRoleplayStats().isWorking()) {
+            if (habbo.getPlayer().isWorking()) {
                 habbosWorking.add(habbo);
             }
         }

@@ -6,6 +6,7 @@ import com.eu.habbo.habbohotel.gameclients.GameClient;
 import com.eu.habbo.habbohotel.users.Habbo;
 import com.us.archangel.corp.enums.CorpIndustry;
 import com.us.archangel.corp.model.CorpModel;
+import com.us.archangel.player.enums.PlayerAction;
 import com.us.roleplay.RoleplayHelper;
 
 public class CuffCommand extends Command {
@@ -21,7 +22,7 @@ public class CuffCommand extends Command {
             return true;
         }
 
-        CorpModel corp = gameClient.getHabbo().getHabboRoleplayStats().getCorp();
+        CorpModel corp = gameClient.getHabbo().getPlayer().getCorp();
 
         if (corp == null) {
             gameClient.getHabbo().whisper(Emulator.getTexts().getValue("generic.roleplay.unemployed"));
@@ -33,18 +34,18 @@ public class CuffCommand extends Command {
             return true;
         }
 
-        if (!gameClient.getHabbo().getHabboRoleplayStats().isWorking()) {
+        if (!gameClient.getHabbo().getPlayer().isWorking()) {
             gameClient.getHabbo().whisper(Emulator.getTexts().getValue("generic.roleplay.must_be_working"));
             return true;
         }
 
-        if (targetedHabbo.getHabboRoleplayStats().isCuffed()) {
-            targetedHabbo.getHabboRoleplayStats().setIsCuffed(false);
+        if (targetedHabbo.getPlayer().getCurrentAction() == PlayerAction.Cuffed) {
+            targetedHabbo.getPlayer().setCurrentAction(PlayerAction.None);
             gameClient.getHabbo().whisper(Emulator.getTexts().getValue("commands.roleplay_cmd_uncuff_success").replace(":username", targetedHabbo.getHabboInfo().getUsername()));
             return true;
         }
 
-        if (!targetedHabbo.getHabboRoleplayStats().isStunned()) {
+        if (targetedHabbo.getPlayer().getCurrentAction() != PlayerAction.Stunned) {
             gameClient.getHabbo().whisper(Emulator.getTexts().getValue("commands.roleplay.cmd_cuff_must_be_stunned").replace(":username", targetedHabbo.getHabboInfo().getUsername()));
             return true;
         }
@@ -61,7 +62,7 @@ public class CuffCommand extends Command {
             return true;
         }
 
-        targetedHabbo.getHabboRoleplayStats().setIsCuffed(true);
+        targetedHabbo.getPlayer().setCurrentAction(PlayerAction.Cuffed);
 
         gameClient.getHabbo().shout(Emulator.getTexts().getValue("commands.roleplay_cmd_cuff_success").replace(":username", targetedHabbo.getHabboInfo().getUsername()));
 

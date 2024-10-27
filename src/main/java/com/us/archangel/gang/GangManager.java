@@ -1,12 +1,17 @@
 package com.us.archangel.gang;
 
 import com.us.archangel.gang.context.GangContext;
+import com.us.archangel.gang.context.GangInviteContext;
 import com.us.archangel.gang.context.GangRoleContext;
 import com.us.archangel.gang.entity.GangEntity;
 import com.us.archangel.gang.mapper.GangMapper;
 import com.us.archangel.gang.model.GangModel;
+import com.us.archangel.gang.repository.GangInviteRepository;
 import com.us.archangel.gang.repository.GangRepository;
 import com.us.archangel.gang.repository.GangRoleRepository;
+import com.us.archangel.gang.service.GangInviteService;
+import com.us.archangel.gang.service.GangRoleService;
+import com.us.archangel.gang.service.GangService;
 import lombok.Getter;
 import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
@@ -35,19 +40,29 @@ public class GangManager {
     }
 
     private final GangRepository gangRepository;
+    private final GangContext gangContext;
+    private final GangService gangService;
 
     private final GangRoleRepository gangRoleRepository;
-
-    private final GangContext gangContext;
-
     private final GangRoleContext gangRoleContext;
+    private final GangRoleService gangRoleService;
+
+    private final GangInviteRepository gangInviteRepository;
+    private final GangInviteContext gangInviteContext;
+    private final GangInviteService gangInviteService;
 
     private GangManager(SessionFactory sessionFactory) {
         this.gangContext = GangContext.getInstance();
         this.gangRepository = GangRepository.getInstance(sessionFactory);
+        this.gangService = GangService.getInstance();
 
         this.gangRoleContext = GangRoleContext.getInstance();
         this.gangRoleRepository = GangRoleRepository.getInstance(sessionFactory);
+        this.gangRoleService = GangRoleService.getInstance();
+
+        this.gangInviteContext = GangInviteContext.getInstance();
+        this.gangInviteRepository = GangInviteRepository.getInstance(sessionFactory);
+        this.gangInviteService = GangInviteService.getInstance();
         this.load();
     }
 

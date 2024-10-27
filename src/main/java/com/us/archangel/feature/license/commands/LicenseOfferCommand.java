@@ -5,6 +5,7 @@ import com.eu.habbo.habbohotel.commands.Command;
 import com.eu.habbo.habbohotel.gameclients.GameClient;
 import com.eu.habbo.habbohotel.users.Habbo;
 import com.us.archangel.corp.enums.CorpIndustry;
+import com.us.archangel.player.enums.PlayerAction;
 import com.us.roleplay.billing.UserBill;
 import com.us.roleplay.billing.items.*;
 import com.us.roleplay.corp.LicenseMapper;
@@ -26,7 +27,7 @@ public class LicenseOfferCommand extends Command {
 
         String targetedUsername = params[1];
 
-        if (gameClient.getHabbo().getHabboRoleplayStats().isStunned() || gameClient.getHabbo().getHabboRoleplayStats().isCuffed() || gameClient.getHabbo().getHabboRoleplayStats().getEscortedBy() != null || gameClient.getHabbo().getHabboRoleplayStats().isDead()) {
+        if (gameClient.getHabbo().getPlayer().getCurrentAction() == PlayerAction.Stunned || gameClient.getHabbo().getPlayer().getCurrentAction() == PlayerAction.Cuffed|| gameClient.getHabbo().getPlayer().isDead()) {
             gameClient.getHabbo().whisper(Emulator.getTexts().getValue("roleplay.generic.not_allowed"));
             return true;
         }
@@ -43,7 +44,7 @@ public class LicenseOfferCommand extends Command {
             return true;
         }
 
-        if (targetedHabbo.getHabboRoleplayStats().isDead()) {
+        if (targetedHabbo.getPlayer().isDead()) {
             gameClient.getHabbo().whisper(Emulator.getTexts().getValue("generic.roleplay.target_dead").replace(":username", targetedUsername));
             return true;
         }
@@ -63,7 +64,7 @@ public class LicenseOfferCommand extends Command {
 
         CorpIndustry corpIndustry = LicenseMapper.licenseTypeToCorpTag(licenseType);
 
-        if (gameClient.getHabbo().getHabboRoleplayStats().getCorp().getIndustry() != corpIndustry) {
+        if (gameClient.getHabbo().getPlayer().getCorp().getIndustry() != corpIndustry) {
             gameClient.getHabbo().whisper(Emulator.getTexts().getValue("roleplay.license_sell_not_allowed"));
             return true;
         }

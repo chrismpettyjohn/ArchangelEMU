@@ -23,7 +23,7 @@ public class InteractionNonPrisonerGate extends InteractionOneWayGate {
 
     @Override
     public void onClick(final GameClient client, final Room room, Object[] objects) throws Exception {
-        if (client.getHabbo().getHabboRoleplayStats().isJailed()) {
+        if (client.getHabbo().getPlayer().getJailTimeRemainingSecs() > 0) {
             client.getHabbo().whisper(Emulator.getTexts().getValue("roleplay.rp_non_prisoner_gate.not_allowed"));
             return;
         }

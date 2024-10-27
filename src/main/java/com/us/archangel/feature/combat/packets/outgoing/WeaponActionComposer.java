@@ -6,18 +6,18 @@ import com.eu.habbo.habbohotel.users.Habbo;
 import com.eu.habbo.messages.ServerMessage;
 import com.eu.habbo.messages.outgoing.MessageComposer;
 import com.eu.habbo.messages.outgoing.Outgoing;
-import com.us.roleplay.users.HabboWeapon;
+import com.us.archangel.player.model.PlayerWeaponModel;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 public class WeaponActionComposer extends MessageComposer {
 
-    private final HabboWeapon weapon;
+    private final PlayerWeaponModel weapon;
     private final Habbo currentUser;
 
     @Override
     protected ServerMessage composeInternal() {
-        Habbo weaponUser = Emulator.getGameEnvironment().getHabboManager().getHabbo(this.weapon.getUserID());
+        Habbo weaponUser = Emulator.getGameEnvironment().getHabboManager().getHabbo(this.weapon.getPlayerId());
 
         if (weaponUser.getRoomUnit().getRoom().getRoomInfo().getId() != this.currentUser.getRoomUnit().getRoom().getRoomInfo().getId()) {
             return null;

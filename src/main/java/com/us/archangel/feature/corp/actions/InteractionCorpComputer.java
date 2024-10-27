@@ -26,14 +26,14 @@ public class InteractionCorpComputer extends InteractionDefault {
 
     @Override
     public void onClick(GameClient client, Room room, Object[] objects) throws Exception {
-        CorpModel corp = client.getHabbo().getHabboRoleplayStats().getCorp();
+        CorpModel corp = client.getHabbo().getPlayer().getCorp();
 
         if (corp.getUserId() != client.getHabbo().getHabboInfo().getId()) {
             client.getHabbo().whisper(Emulator.getTexts().getValue("roleplay.cor.not_the_owner"));
             return;
         }
 
-        if (!client.getHabbo().getHabboRoleplayStats().isWorking()) {
+        if (!client.getHabbo().getPlayer().isWorking()) {
             client.getHabbo().whisper(Emulator.getTexts().getValue("generic.roleplay.must_be_working"));
             return;
         }

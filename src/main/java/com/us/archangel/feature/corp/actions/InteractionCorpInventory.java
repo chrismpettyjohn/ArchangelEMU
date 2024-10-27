@@ -26,7 +26,7 @@ public class InteractionCorpInventory extends InteractionDefault {
 
     @Override
     public void onClick(GameClient client, Room room, Object[] objects) throws Exception {
-        CorpModel corp = client.getHabbo().getHabboRoleplayStats().getCorp();
+        CorpModel corp = client.getHabbo().getPlayer().getCorp();
 
         if (corp == null) {
             client.getHabbo().whisper(Emulator.getTexts().getValue("roleplay.generic.corp_not_found"));

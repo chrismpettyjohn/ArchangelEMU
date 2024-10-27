@@ -31,7 +31,7 @@ public class InteractionHospitalBed extends InteractionDefault {
         if (habbo == null) {
             return;
         }
-        if (habbo.getHabboRoleplayStats().getHealthNow() >= habbo.getHabboRoleplayStats().getHealthMax()) {
+        if (habbo.getPlayer().getHealthNow() >= habbo.getPlayer().getHealthMax()) {
             return;
         }
         Emulator.getThreading().run(new HospitalRecoveryAction(habbo));

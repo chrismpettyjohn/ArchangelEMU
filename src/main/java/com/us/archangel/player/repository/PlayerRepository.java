@@ -72,6 +72,29 @@ public class PlayerRepository {
         }
     }
 
+    public List<PlayerEntity> getByCorpId(int corpId) {
+        try (Session session = sessionFactory.openSession()) {
+            return session.createQuery("from PlayerEntity where corpId = :corpId", PlayerEntity.class)
+                    .setParameter("corpId", corpId)
+                    .list();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public List<PlayerEntity> getByCorpRoleId(int corpRoleID) {
+        try (Session session = sessionFactory.openSession()) {
+            return session.createQuery("from PlayerEntity where corpRoleId = :corpRoleID", PlayerEntity.class)
+                    .setParameter("corpRoleID", corpRoleID)
+                    .list();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+
     public void deleteById(int id) {
         Transaction transaction = null;
         try (Session session = sessionFactory.openSession()) {

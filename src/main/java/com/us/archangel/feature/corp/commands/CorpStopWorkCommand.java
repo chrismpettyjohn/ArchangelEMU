@@ -12,13 +12,13 @@ public class CorpStopWorkCommand extends Command {
 
     @Override
     public boolean handle(GameClient gameClient, String[] params) {
-        if (!gameClient.getHabbo().getHabboRoleplayStats().isWorking()) {
+        if (!gameClient.getHabbo().getPlayer().isWorking()) {
             gameClient.getHabbo().whisper(Emulator.getTexts().getValue("commands.roleplay.cmd_stop_work_no_shift"));
             return true;
         }
 
 
-        gameClient.getHabbo().getHabboRoleplayStats().setWorking(false);
+        gameClient.getHabbo().getPlayer().setWorkTimeRemainingSecs(0);
         gameClient.getHabbo().getRoomUnit().getRoom().sendComposer(new UserRoleplayStatsChangeComposer(gameClient.getHabbo()).compose());
         return true;
     }

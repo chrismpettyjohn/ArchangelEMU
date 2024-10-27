@@ -6,7 +6,6 @@ import com.eu.habbo.habbohotel.items.Item;
 import com.eu.habbo.habbohotel.items.interactions.InteractionDefault;
 import com.eu.habbo.habbohotel.rooms.Room;
 import com.eu.habbo.habbohotel.users.HabboInfo;
-import com.us.archangel.corp.CorpManager;
 import com.us.archangel.corp.model.CorpModel;
 import com.us.archangel.corp.service.CorpService;
 import com.us.roleplay.corp.LicenseType;
@@ -34,7 +33,7 @@ public class InteractionLicenseComputer extends InteractionDefault {
         CorpModel licenseAgency = CorpService.getInstance().getById(corpID);
         LicenseType licenseType = licenseAgency != null ? LicenseMapper.corpIndustryToLicenseType(licenseAgency.getIndustry()) : null;
         if (licenseAgency == null) {
-            if (!client.getHabbo().getHabboRoleplayStats().isWorking()) {
+            if (!client.getHabbo().getPlayer().isWorking()) {
                 client.getHabbo().whisper(Emulator.getTexts().getValue("generic.roleplay.must_be_working"));
                 return;
             }

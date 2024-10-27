@@ -29,9 +29,12 @@ import com.eu.habbo.plugin.events.users.UserCreditsEvent;
 import com.eu.habbo.plugin.events.users.UserDisconnectEvent;
 import com.eu.habbo.plugin.events.users.UserGetIPAddressEvent;
 import com.eu.habbo.plugin.events.users.UserPointsEvent;
-import com.us.roleplay.database.HabboRoleplayStatsRepository;
+import com.us.archangel.player.mapper.PlayerMapper;
+import com.us.archangel.player.model.PlayerModel;
+import com.us.archangel.player.model.PlayerSkillModel;
+import com.us.archangel.player.service.PlayerService;
 import com.us.archangel.feature.player.packets.outgoing.UserRoleplayStatsChangeComposer;
-import com.us.roleplay.users.HabboRoleplayStats;
+import com.us.archangel.player.service.PlayerSkillService;
 import gnu.trove.TIntCollection;
 import gnu.trove.map.hash.THashMap;
 import lombok.Getter;
@@ -64,7 +67,11 @@ public class Habbo extends Avatar implements Runnable {
 
     @Setter
     @Getter
-    private final HabboRoleplayStats habboRoleplayStats;
+    private final PlayerModel player;
+
+    @Setter
+    @Getter
+    private final PlayerSkillModel playerSkills;
 
     private volatile boolean update;
     private volatile boolean disconnected = false;
@@ -74,7 +81,8 @@ public class Habbo extends Avatar implements Runnable {
         this.client = null;
         this.habboInfo = new HabboInfo(set);
         this.habboStats = HabboStats.load(this.habboInfo);
-        this.habboRoleplayStats = HabboRoleplayStatsRepository.getInstance().getByUserID(this.getHabboInfo().getId());
+        this.player = PlayerService.getInstance().getByUserID(this.getHabboInfo().getId());
+        this.playerSkills = PlayerSkillService.getInstance().getByUserID(this.getHabboInfo().getId());
         this.inventory = new HabboInventory(this);
 
         this.messenger = new Messenger();
@@ -172,7 +180,7 @@ public class Habbo extends Avatar implements Runnable {
                 if (this.getRoomUnit().getRoom() != null) {
                     RoomTile currPos = this.getRoomUnit().getCurrentPosition();
                     this.habboInfo.setHomeRoom(this.getRoomUnit().getRoom().getRoomInfo().getId());
-                    this.habboRoleplayStats.setLastPos(currPos.getX(), currPos.getY());
+                    this.player.setLastPos(currPos.getX(), currPos.getY());
                     Emulator.getGameEnvironment().getRoomManager().leaveRoom(this, this.getRoomUnit().getRoom());
                 }
                 if (this.getHabboInfo().getRoomQueueId() > 0) {
@@ -197,8 +205,7 @@ public class Habbo extends Avatar implements Runnable {
                 this.disconnected = true;
                 AchievementManager.saveAchievements(this);
 
-
-                HabboRoleplayStatsRepository.getInstance().update(this.habboRoleplayStats);
+                PlayerService.getInstance().update(this.player.getId(), PlayerMapper.toEntity(this.getPlayer()));
                 this.habboStats.dispose();
             } catch (Exception e) {
                 log.error("Caught exception", e);
@@ -215,7 +222,7 @@ public class Habbo extends Avatar implements Runnable {
     public void run() {
         if (this.needsUpdate()) {
             this.habboInfo.run();
-            HabboRoleplayStatsRepository.getInstance().update(this.habboRoleplayStats);
+            PlayerService.getInstance().update(this.player.getId(), PlayerMapper.toEntity(this.getPlayer()));
             this.needsUpdate(false);
         }
     }

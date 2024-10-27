@@ -13,8 +13,8 @@ public class CombatDelayComposer extends MessageComposer {
     @Override
     protected ServerMessage composeInternal() {
         this.response.init(Outgoing.combatDelayComposer);
-        this.response.appendBoolean(this.habbo.getHabboRoleplayStats().getCombatBlocked());
-        this.response.appendInt(this.habbo.getHabboRoleplayStats().getCombatDelayRemaining());
+        this.response.appendBoolean(this.habbo.getPlayer().isCombatBlocked());
+        this.response.appendInt((int) this.habbo.getPlayer().getCombatDelayRemainingSecs());
         return this.response;
     }
 }

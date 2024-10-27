@@ -67,10 +67,17 @@ public class GangRepository {
         }
     }
 
-    @SuppressWarnings("unchecked")
     public List<GangEntity> getAll() {
         try (Session session = sessionFactory.openSession()) {
             return session.createQuery("from GangEntity", GangEntity.class).list();  // Query simplified
+        }
+    }
+
+    public List<GangEntity> findManyByDisplayName(String displayName) {
+        try (Session session = sessionFactory.openSession()) {
+            return session.createQuery("from GangEntity where displayName ILIKE :displayName", GangEntity.class)
+                    .setParameter("displayName", "%" + displayName + "%")
+                    .list();
         }
     }
 

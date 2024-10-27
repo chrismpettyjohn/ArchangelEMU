@@ -40,8 +40,8 @@ import com.eu.habbo.messages.outgoing.users.*;
 import com.eu.habbo.plugin.events.emulator.SSOAuthenticationEvent;
 import com.eu.habbo.plugin.events.users.UserLoginEvent;
 import com.us.archangel.feature.player.packets.outgoing.UserOnlineCountComposer;
+import com.us.archangel.player.model.PlayerModel;
 import com.us.archangel.room.enums.RoomType;
-import com.us.roleplay.users.HabboRoleplayStats;
 import gnu.trove.map.hash.THashMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -139,7 +139,7 @@ public class SSOTicketEvent extends MessageHandler {
                 else if (!this.client.getHabbo().getHabboStats().isNux() || Emulator.getConfig().getBoolean("retro.style.homeroom") && RoomManager.HOME_ROOM_ID > 0)
                     roomIdToEnter = RoomManager.HOME_ROOM_ID;
 
-                if (this.client.getHabbo().getHabboRoleplayStats().isDead()) {
+                if (this.client.getHabbo().getPlayer().isDead()) {
                     List<Room> hospitalRooms = Emulator.getGameEnvironment().getRoomManager().getRoomsByTag(RoomType.HOSPITAL);
                     if (!hospitalRooms.isEmpty()) {
                         roomIdToEnter = hospitalRooms.get(0).getRoomInfo().getId();
@@ -308,7 +308,7 @@ public class SSOTicketEvent extends MessageHandler {
                         }
                     }
 
-                    HabboRoleplayStats rpStats = this.client.getHabbo().getHabboRoleplayStats();
+                    PlayerModel rpStats = this.client.getHabbo().getPlayer();
                     RoomTile lastUserPos = this.client.getHabbo().getRoomUnit().getRoom().getLayout().getClosestWalkableTile(rpStats.getLastPosX(),rpStats.getLastPosY());
                     this.client.getHabbo().getRoomUnit().setLocation(lastUserPos);
                 }, 25);

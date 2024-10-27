@@ -5,6 +5,7 @@ import com.eu.habbo.habbohotel.commands.Command;
 import com.eu.habbo.habbohotel.gameclients.GameClient;
 import com.eu.habbo.habbohotel.users.Habbo;
 import com.us.archangel.corp.enums.CorpIndustry;
+import com.us.archangel.player.enums.PlayerAction;
 
 public class ReleaseCommand extends Command {
     public ReleaseCommand() {
@@ -19,7 +20,7 @@ public class ReleaseCommand extends Command {
 
         String targetedUsername = params[1];
 
-        if (gameClient.getHabbo().getHabboRoleplayStats().isStunned() || gameClient.getHabbo().getHabboRoleplayStats().isCuffed() || gameClient.getHabbo().getHabboRoleplayStats().getEscortedBy() != null || gameClient.getHabbo().getHabboRoleplayStats().isDead()) {
+        if (gameClient.getHabbo().getPlayer().getCurrentAction() == PlayerAction.Stunned || gameClient.getHabbo().getPlayer().getCurrentAction() == PlayerAction.Cuffed || gameClient.getHabbo().getPlayer().isDead()) {
             gameClient.getHabbo().whisper(Emulator.getTexts().getValue("roleplay.generic.not_allowed"));
             return true;
         }
@@ -36,17 +37,17 @@ public class ReleaseCommand extends Command {
             return true;
         }
 
-        if (gameClient.getHabbo().getHabboRoleplayStats().getCorp().getIndustry() != CorpIndustry.Police) {
+        if (gameClient.getHabbo().getPlayer().getCorp().getIndustry() != CorpIndustry.Police) {
             gameClient.getHabbo().whisper(Emulator.getTexts().getValue("generic.roleplay.police_only"));
             return true;
         }
 
-        if (!gameClient.getHabbo().getHabboRoleplayStats().isWorking()) {
+        if (!gameClient.getHabbo().getPlayer().isWorking()) {
             gameClient.getHabbo().whisper(Emulator.getTexts().getValue("generic.roleplay.must_be_working"));
             return true;
         }
 
-        targetedHabbo.getHabboRoleplayStats().setJailed(false);
+        targetedHabbo.getPlayer().setJailTimeRemainingSecs(0);
 
         gameClient.getHabbo().shout(Emulator.getTexts().getValue("commands.roleplay_cmd_release_success").replace(":username", targetedHabbo.getHabboInfo().getUsername()));
 

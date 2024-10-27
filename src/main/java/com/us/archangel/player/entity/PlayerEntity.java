@@ -1,5 +1,7 @@
 package com.us.archangel.player.entity;
 
+import com.us.archangel.corp.enums.converter.CorpIndustryConverter;
+import com.us.archangel.player.enums.PlayerAction;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -48,11 +50,31 @@ public class PlayerEntity {
     @Column(name = "armor_max", nullable = false)
     private int armorMax;
 
+    @Column(name = "hunger_now", nullable = false)
+    private int hungerNow;
+
+    @Column(name = "hunger_max", nullable = false)
+    private int hungerMax;
+
     @Column(name = "last_pos_x", nullable = false)
-    private int lastPosX;
+    private short lastPosX;
 
     @Column(name = "last_pos_y", nullable = false)
-    private int lastPosY;
+    private short lastPosY;
 
+    @Column(name = "work_time_remaining_secs", nullable = false)
+    private long workTimeRemainingSecs;
 
+    @Column(name = "combat_delay_remaining_secs", nullable = false)
+    private long combatDelayRemainingSecs;
+
+    @Column(name = "jail_time_remaining_secs", nullable = false)
+    private long jailTimeRemainingSecs;
+
+    @Column(name = "current_action", nullable = false)
+    @Convert(converter = PlayerAction.class)
+    private PlayerAction currentAction;
+
+    @Column(name = "escorting_player_id")
+    private Integer escortingPlayerId;
 }

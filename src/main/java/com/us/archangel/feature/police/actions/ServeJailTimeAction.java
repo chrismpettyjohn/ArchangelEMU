@@ -37,7 +37,7 @@ public class ServeJailTimeAction implements Runnable {
         this.habbo = habbo;
         this.crime = crime;
         this.endsAt = Instant.now().getEpochSecond() + Duration.ofMinutes(minutesLeft).getSeconds();
-        this.habbo.getHabboRoleplayStats().setJailed(true);
+        this.habbo.getPlayer().setJailTimeRemainingSecs(Duration.ofMinutes(minutesLeft).getSeconds());
     }
 
     @Override
@@ -90,7 +90,7 @@ public class ServeJailTimeAction implements Runnable {
     }
 
     private void checkState() {
-        if (!habbo.getHabboRoleplayStats().isJailed()) {
+        if (habbo.getPlayer().getJailTimeRemainingSecs() > 0) {
             habbo.shout(Emulator.getTexts().getValue("roleplay.jail.bail"));
             cycle.cancel(true);
             checkState.cancel(true);
@@ -123,9 +123,8 @@ public class ServeJailTimeAction implements Runnable {
     }
 
     private void onFinishSentence() {
-        this.habbo.getHabboRoleplayStats().setJailed(true);
+        this.habbo.getPlayer().setJailTimeRemainingSecs(0);
         habbo.shout(Emulator.getTexts().getValue("roleplay.jail.sentence_finish"));
-        habbo.getHabboRoleplayStats().setJailed(false);
         habbo.getHabboInfo().setMotto(this.oldMotto);
         habbo.getHabboInfo().changeClothes(this.oldFigure);
         habbo.getClient().sendResponse(new FigureUpdateComposer(habbo));
