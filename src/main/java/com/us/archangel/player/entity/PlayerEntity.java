@@ -1,6 +1,5 @@
 package com.us.archangel.player.entity;
 
-import com.us.archangel.corp.enums.converter.CorpIndustryConverter;
 import com.us.archangel.player.enums.PlayerAction;
 import com.us.archangel.player.enums.converter.PlayerActionConverter;
 import jakarta.persistence.*;

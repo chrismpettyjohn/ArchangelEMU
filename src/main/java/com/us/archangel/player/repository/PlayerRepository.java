@@ -61,7 +61,9 @@ public class PlayerRepository {
 
     public PlayerEntity getByUserId(int userId) {
         try (Session session = sessionFactory.openSession()) {
-            return session.get(PlayerEntity.class, userId);
+            return session.createQuery("from PlayerEntity where userId = :userId", PlayerEntity.class)
+                    .setParameter("userId", userId)
+                    .uniqueResult();
         }
     }
 

@@ -81,8 +81,8 @@ public class Habbo extends Avatar implements Runnable {
         this.client = null;
         this.habboInfo = new HabboInfo(set);
         this.habboStats = HabboStats.load(this.habboInfo);
-        this.player = PlayerService.getInstance().getByUserID(this.getHabboInfo().getId());
-        this.playerSkills = PlayerSkillService.getInstance().getByUserID(this.getHabboInfo().getId());
+        this.player = PlayerService.getInstance().getByUserID(set.getInt("id"));
+        this.playerSkills = PlayerSkillService.getInstance().getByUserID(set.getInt("id"));
         this.inventory = new HabboInventory(this);
 
         this.messenger = new Messenger();
@@ -222,7 +222,7 @@ public class Habbo extends Avatar implements Runnable {
     public void run() {
         if (this.needsUpdate()) {
             this.habboInfo.run();
-            PlayerService.getInstance().update(this.player.getId(), PlayerMapper.toEntity(this.getPlayer()));
+            PlayerService.getInstance().update(this.getHabboInfo().getId(), PlayerMapper.toEntity(this.getPlayer()));
             this.needsUpdate(false);
         }
     }

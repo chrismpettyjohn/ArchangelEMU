@@ -13,13 +13,13 @@ import java.util.stream.Collectors;
 
 public class PlayerWeaponService {
 
-    private static com.us.archangel.player.service.PlayerWeaponService instance;
+    private static PlayerWeaponService instance;
 
     private final GenericContext<PlayerWeaponModel> playerContext = new GenericContext<>();
 
-    public static com.us.archangel.player.service.PlayerWeaponService getInstance() {
+    public static PlayerWeaponService getInstance() {
         if (instance == null) {
-            instance = new com.us.archangel.player.service.PlayerWeaponService();
+            instance = new PlayerWeaponService();
         }
         return instance;
     }
@@ -35,7 +35,6 @@ public class PlayerWeaponService {
     }
 
     public List<PlayerWeaponModel> getByUserID(int userID) {
-        // Check if there are any weapons in the context with the specified userID
         Map<Integer, PlayerWeaponModel> allWeapons = playerContext.getAll();
         List<PlayerWeaponModel> models = allWeapons.values().stream()
                 .filter(weapon -> weapon.getPlayerId() == userID)
@@ -45,40 +44,33 @@ public class PlayerWeaponService {
             return models;
         }
 
-        // Fallback to repository if no weapons found in context for the user
         List<PlayerWeaponEntity> entities = PlayerWeaponRepository.getInstance().getByPlayerId(userID);
         List<PlayerWeaponModel> modelList = entities.stream()
                 .map(PlayerWeaponMapper::toModel)
                 .collect(Collectors.toList());
 
-        // Add to context for caching
         modelList.forEach(model -> playerContext.add(model.getId(), model));
         return modelList;
     }
 
 
     public List<PlayerWeaponModel> getAll() {
-        // Fetch all models from context
         Map<Integer, PlayerWeaponModel> models = playerContext.getAll();
         if (!models.isEmpty()) {
             return new ArrayList<>(models.values());
         }
 
-        // Fallback to repository if context is empty
         List<PlayerWeaponEntity> entities = PlayerWeaponRepository.getInstance().getAll();
         List<PlayerWeaponModel> modelList = entities.stream()
                 .map(PlayerWeaponMapper::toModel)
                 .collect(Collectors.toList());
 
-        // Add to context
         modelList.forEach(model -> playerContext.add(model.getId(), model));
         return modelList;
     }
 
     public void deleteById(int id) {
-        // Remove from context first
         playerContext.delete(id);
-        // Then delete from repository as secondary
         PlayerWeaponRepository.getInstance().deleteById(id);
     }
 }

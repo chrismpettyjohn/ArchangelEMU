@@ -42,37 +42,31 @@ public class PlayerSkillService {
 
         PlayerSkillEntity entity = PlayerSkillRepository.getInstance().getByUserId(userID);
         if (entity == null) {
-            return null; // Handle case when entity doesn't exist
+            return null;
         }
 
-        // Map entity to model and add to context
         PlayerSkillModel model = PlayerSkillMapper.toModel(entity);
         playerSkillContext.add(entity.getId(), model);
         return model;
     }
 
     public List<PlayerSkillModel> getAll() {
-        // Fetch all models from context
         Map<Integer, PlayerSkillModel> models = playerSkillContext.getAll();
         if (!models.isEmpty()) {
             return new ArrayList<>(models.values());
         }
 
-        // Fallback to repository if context is empty
         List<PlayerSkillEntity> entities = PlayerSkillRepository.getInstance().getAll();
         List<PlayerSkillModel> modelList = entities.stream()
                 .map(PlayerSkillMapper::toModel)
                 .collect(Collectors.toList());
 
-        // Add to context
         modelList.forEach(model -> playerSkillContext.add(model.getId(), model));
         return modelList;
     }
-    
+
     public void deleteById(int id) {
-        // Remove from context first
         playerSkillContext.delete(id);
-        // Then delete from repository as secondary
         PlayerSkillRepository.getInstance().deleteById(id);
     }
 }

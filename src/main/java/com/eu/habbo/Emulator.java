@@ -113,14 +113,17 @@ public final class Emulator {
             Emulator.getPluginManager().fireEvent(new EmulatorConfigUpdatedEvent());
             Emulator.texts = new TextsManager();
             new CleanerThread();
+
+
+            Emulator.archangel = new Archangel();
+            Emulator.archangel.load(config);
+
             Emulator.gameServer = new GameServer(getConfig().getValue("game.host", "127.0.0.1"), getConfig().getInt("game.port", 30000));
             Emulator.gameEnvironment = new GameEnvironment();
             Emulator.gameEnvironment.load();
             Emulator.gameServer.initializePipeline();
             Emulator.gameServer.connect();
             Emulator.badgeImager = new BadgeImager();
-            Emulator.archangel = new Archangel();
-            Emulator.archangel.load(config);
 
             log.info("Arcturus Archangel has successfully loaded.");
             log.info("System launched in: {}ms. Using {} threads!", (System.nanoTime() - startTime) / 1e6, Runtime.getRuntime().availableProcessors() * 2);

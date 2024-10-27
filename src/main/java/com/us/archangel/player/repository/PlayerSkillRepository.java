@@ -1,5 +1,6 @@
 package com.us.archangel.player.repository;
 
+import com.us.archangel.player.entity.PlayerEntity;
 import com.us.archangel.player.entity.PlayerSkillEntity;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
