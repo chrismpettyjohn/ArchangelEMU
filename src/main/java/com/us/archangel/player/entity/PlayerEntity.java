@@ -2,6 +2,7 @@ package com.us.archangel.player.entity;
 
 import com.us.archangel.corp.enums.converter.CorpIndustryConverter;
 import com.us.archangel.player.enums.PlayerAction;
+import com.us.archangel.player.enums.converter.PlayerActionConverter;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -72,7 +73,7 @@ public class PlayerEntity {
     private long jailTimeRemainingSecs;
 
     @Column(name = "current_action", nullable = false)
-    @Convert(converter = PlayerAction.class)
+    @Convert(converter = PlayerActionConverter.class)
     private PlayerAction currentAction;
 
     @Column(name = "escorting_player_id")
