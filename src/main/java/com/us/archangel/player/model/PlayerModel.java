@@ -98,10 +98,16 @@ public class PlayerModel {
     }
 
     public GangModel getGang() {
+        if (this.gangId == null) {
+            return null;
+        }
         return GangService.getInstance().getById(this.gangId);
     }
 
     public GangRoleModel getGangRole() {
+        if (this.gangRoleId == null) {
+            return null;
+        }
         return GangRoleService.getInstance().getById(this.gangRoleId);
     }
 
