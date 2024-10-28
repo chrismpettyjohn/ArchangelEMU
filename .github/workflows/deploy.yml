@@ -10,6 +10,9 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
 
+    env:
+      OVH_VPS_IP: 15.204.232.142  # Define the IP directly as an environment variable
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -23,12 +26,10 @@ jobs:
         run: docker build --build-arg GIT_TOKEN=${{ secrets.GIT_TOKEN }} -t myapp:latest .
 
       - name: Deploy Docker image to OVH VPS
-        env:
-          DOCKER_HOST: ssh://root@${{ secrets.OVH_VPS_IP }}
         run: |
           # Stop and remove any existing container
-          ssh -o StrictHostKeyChecking=no root@${{ secrets.OVH_VPS_IP }} "docker stop myapp || true && docker rm myapp || true"
+          ssh -o StrictHostKeyChecking=no root@$OVH_VPS_IP "docker stop myapp || true && docker rm myapp || true"
           # Copy Dockerfile or push image to a registry (optional)
-          scp -o StrictHostKeyChecking=no ./Dockerfile root@${{ secrets.OVH_VPS_IP }}:/root
+          scp -o StrictHostKeyChecking=no ./Dockerfile root@$OVH_VPS_IP:/root
           # Rebuild and run the container
-          ssh -o StrictHostKeyChecking=no root@${{ secrets.OVH_VPS_IP }} "docker build -t myapp:latest /root && docker run -d --name myapp -p 80:80 myapp:latest"
+          ssh -o StrictHostKeyChecking=no root@$OVH_VPS_IP "docker build -t myapp:latest /root && docker run -d --name myapp -p 80:80 myapp:latest"
