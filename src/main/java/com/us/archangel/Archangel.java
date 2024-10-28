@@ -59,6 +59,13 @@ public class Archangel {
     }
 
     public void dispose() {
+        this.bountyManager.dispose();
+        this.corpManager.dispose();;
+        this.crimeManager.dispose();
+        this.sanctionManager.dispose();
+        this.playerManager.dispose();
+        this.roleplayFeatureManager.disposeFeatures();
+        this.weaponManager.dispose();;
 
         DatabaseConfig.shutdown();
 

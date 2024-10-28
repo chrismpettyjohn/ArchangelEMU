@@ -17,6 +17,7 @@ import com.eu.habbo.plugin.events.emulator.EmulatorStartShutdownEvent;
 import com.eu.habbo.plugin.events.emulator.EmulatorStoppedEvent;
 import com.eu.habbo.threading.ThreadPooling;
 import com.eu.habbo.util.imager.badges.BadgeImager;
+import com.us.nova.Nova;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -58,6 +59,7 @@ public final class Emulator {
     private static PluginManager pluginManager;
     private static BadgeImager badgeImager;
     private static Archangel archangel;
+    private static Nova nova;
 
     static {
         Thread hook = new Thread(new Runnable() {
@@ -114,6 +116,8 @@ public final class Emulator {
             Emulator.texts = new TextsManager();
             new CleanerThread();
 
+            Emulator.nova = new Nova();
+            Emulator.nova.load(config);
 
             Emulator.archangel = new Archangel();
             Emulator.archangel.load(config);
@@ -208,6 +212,13 @@ public final class Emulator {
         Emulator.isReady = false;
 
         log.info("Stopping Arcturus Archangel {}", VERSION);
+
+
+        try {
+            if (Emulator.nova != null)
+                Emulator.nova.dispose();
+        } catch (Exception ignored) {
+        }
 
         try {
             if (Emulator.archangel != null)
@@ -323,6 +334,8 @@ public final class Emulator {
     }
 
     public static Archangel getArchangel() { return archangel; }
+
+    public static Nova getNova() { return nova; }
 
     public static synchronized CameraClient getCameraClient() {
         return cameraClient;
