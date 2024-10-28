@@ -3,7 +3,6 @@ package com.eu.habbo.habbohotel.guilds;
 import com.eu.habbo.Emulator;
 import com.eu.habbo.database.DatabaseConstants;
 import com.eu.habbo.habbohotel.users.Habbo;
-import com.us.roleplay.guilds.GuildInventory;
 import gnu.trove.map.hash.TIntObjectHashMap;
 import lombok.Getter;
 import lombok.Setter;
@@ -69,8 +68,6 @@ public class Guild implements Runnable {
     @Setter
     private SettingsState postThreads = SettingsState.ADMINS;
     private SettingsState modForum = SettingsState.ADMINS;
-    @Getter
-    private final GuildInventory inventory;
 
     public Guild(ResultSet set) throws SQLException {
         this.id = set.getInt("id");
@@ -92,7 +89,6 @@ public class Guild implements Runnable {
         this.postMessages = SettingsState.valueOf(set.getString("post_messages"));
         this.postThreads = SettingsState.valueOf(set.getString("post_threads"));
         this.modForum = SettingsState.valueOf(set.getString("mod_forum"));
-        this.inventory = new GuildInventory(this);
         this.memberCount = 0;
         this.requestCount = 0;
     }
@@ -113,7 +109,6 @@ public class Guild implements Runnable {
         this.badge = badge;
         this.memberCount = 0;
         this.dateCreated = Emulator.getIntUnixTimestamp();
-        this.inventory = new GuildInventory(this);
     }
 
 
