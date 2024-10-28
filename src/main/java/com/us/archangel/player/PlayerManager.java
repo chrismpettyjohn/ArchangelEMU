@@ -1,14 +1,17 @@
 package com.us.archangel.player;
 
+import com.us.archangel.player.context.PlayerBankAccountContext;
 import com.us.archangel.player.context.PlayerContext;
 import com.us.archangel.player.context.PlayerSkillContext;
 import com.us.archangel.player.context.PlayerWeaponContext;
 import com.us.archangel.player.entity.PlayerEntity;
 import com.us.archangel.player.mapper.PlayerMapper;
 import com.us.archangel.player.model.PlayerModel;
+import com.us.archangel.player.repository.PlayerBankAccountRepository;
 import com.us.archangel.player.repository.PlayerRepository;
 import com.us.archangel.player.repository.PlayerSkillRepository;
 import com.us.archangel.player.repository.PlayerWeaponRepository;
+import com.us.archangel.player.service.PlayerBankAccountService;
 import com.us.archangel.player.service.PlayerService;
 import com.us.archangel.player.service.PlayerSkillService;
 import com.us.archangel.player.service.PlayerWeaponService;
@@ -51,6 +54,9 @@ public class PlayerManager {
     private final PlayerWeaponRepository playerWeaponRepository;
     private final PlayerWeaponService playerWeaponService;
 
+    private final PlayerBankAccountContext playerBankAccountContext;
+    private final PlayerBankAccountRepository playerBankAccountRepository;
+    private final PlayerBankAccountService playerBankAccountService;
 
     private PlayerManager(SessionFactory sessionFactory) {
         this.playerContext = PlayerContext.getInstance();
@@ -64,6 +70,10 @@ public class PlayerManager {
         this.playerWeaponContext = PlayerWeaponContext.getInstance();
         this.playerWeaponRepository = PlayerWeaponRepository.getInstance(sessionFactory);
         this.playerWeaponService = PlayerWeaponService.getInstance();
+
+        this.playerBankAccountContext = PlayerBankAccountContext.getInstance();
+        this.playerBankAccountRepository = PlayerBankAccountRepository.getInstance(sessionFactory);
+        this.playerBankAccountService = PlayerBankAccountService.getInstance();
 
         this.load();
     }

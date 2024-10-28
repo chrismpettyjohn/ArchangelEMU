@@ -10,7 +10,7 @@ import lombok.Setter;
 @Entity
 @Table(name = "archangel_players_weapons", indexes = {
         @Index(name = "idx_players_id", columnList = "players_id"),
-        @Index(name = "idx_weapon_id", columnList = "weapon_id")
+        @Index(name = "idx_weapon_id", columnList = "weapons_id")
 })
 public class PlayerWeaponEntity {
 
