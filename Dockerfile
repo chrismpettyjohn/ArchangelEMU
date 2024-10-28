@@ -1,14 +1,10 @@
 FROM amazoncorretto:19
 
-RUN yum update -y && yum install -y git maven
+RUN yum update -y && yum install -y maven
 
 WORKDIR /app
 
-ARG GIT_TOKEN
-
-RUN git clone https://${GIT_TOKEN}@github.com/habrpg-com/Archangel-EMU.git .
-
-COPY pom.xml .
+COPY pom.xml ./
 
 RUN mvn dependency:go-offline -B
 
