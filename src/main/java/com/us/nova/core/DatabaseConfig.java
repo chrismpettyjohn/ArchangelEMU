@@ -13,6 +13,7 @@ import com.us.archangel.player.entity.PlayerWeaponEntity;
 import com.us.archangel.sanction.entity.SanctionEntity;
 import com.us.archangel.weapon.entity.WeaponEntity;
 import com.eu.habbo.core.ConfigurationManager;
+import com.us.nova.user.entity.UserEntity;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
@@ -39,25 +40,21 @@ public class DatabaseConfig {
                 configuration.setProperty("hibernate.use_sql_comments", "false");
                 configuration.setProperty("hibernate.generate_statistics", "false");
 
+                // Nova
+                configuration.addAnnotatedClass(UserEntity.class);
 
+                // Archangel
                 configuration.addAnnotatedClass(BountyEntity.class);
-
                 configuration.addAnnotatedClass(CorpEntity.class);
                 configuration.addAnnotatedClass(CorpRoleEntity.class);
                 configuration.addAnnotatedClass(CorpInviteEntity.class);
-
-
                 configuration.addAnnotatedClass(CrimeEntity.class);
-
                 configuration.addAnnotatedClass(GangEntity.class);
                 configuration.addAnnotatedClass(GangRoleEntity.class);
-
                 configuration.addAnnotatedClass(PlayerEntity.class);
                 configuration.addAnnotatedClass(PlayerSkillEntity.class);
                 configuration.addAnnotatedClass(PlayerWeaponEntity.class);
-
                 configuration.addAnnotatedClass(SanctionEntity.class);
-
                 configuration.addAnnotatedClass(WeaponEntity.class);
 
                 sessionFactory = configuration.buildSessionFactory();
