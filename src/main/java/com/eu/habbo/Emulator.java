@@ -97,7 +97,7 @@ public final class Emulator {
             long startTime = System.nanoTime();
 
             Emulator.runtime = Runtime.getRuntime();
-            Emulator.config = new ConfigurationManager("config.ini");
+            Emulator.config = new ConfigurationManager();
             Emulator.crypto = new CryptoConfig(
                     Emulator.getConfig().getBoolean("enc.enabled", false),
                     Emulator.getConfig().getValue("enc.e"),

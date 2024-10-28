@@ -3,6 +3,7 @@ package com.eu.habbo.core;
 import com.eu.habbo.Emulator;
 import com.eu.habbo.plugin.events.emulator.EmulatorConfigUpdatedEvent;
 import gnu.trove.map.hash.THashMap;
+import io.github.cdimascio.dotenv.Dotenv;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.File;
@@ -16,13 +17,13 @@ import java.util.Properties;
 @Slf4j
 public class ConfigurationManager {
     private final Properties properties;
-    private final String configurationPath;
+    private final Dotenv dotenv;
     public boolean loaded = false;
     public boolean isLoading = false;
 
-    public ConfigurationManager(String configurationPath) {
+    public ConfigurationManager() {
         this.properties = new Properties();
-        this.configurationPath = configurationPath;
+        this.dotenv = Dotenv.load();
         this.reload();
     }
 
@@ -30,61 +31,31 @@ public class ConfigurationManager {
         this.isLoading = true;
         this.properties.clear();
 
-        InputStream input = null;
-
-        String envDbHostname = System.getenv("DB_HOSTNAME");
-
-        boolean useEnvVarsForDbConnection = false;
-
-        if(envDbHostname != null)
-        {
-            useEnvVarsForDbConnection = envDbHostname.length() > 1;
-        }
+        boolean useEnvVarsForDbConnection = dotenv.get("DB_HOSTNAME") != null;
 
         if (!useEnvVarsForDbConnection) {
-            try {
-                File f = new File(this.configurationPath);
-                input = Files.newInputStream(f.toPath());
+            try (InputStream input = Files.newInputStream(new File(".env").toPath())) {
                 this.properties.load(input);
-
             } catch (IOException ex) {
                 log.error("Failed to load config file.", ex);
-                ex.printStackTrace();
-            } finally {
-                if (input != null) {
-                    try {
-                        input.close();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
             }
-
         } else {
-
             Map<String, String> envMapping = new THashMap<>();
-
-            // Database section
-            envMapping.put("db.hostname", "DB_HOSTNAME");
-            envMapping.put("db.port", "DB_PORT");
-            envMapping.put("db.database", "DB_DATABASE");
-            envMapping.put("db.username", "DB_USERNAME");
-            envMapping.put("db.password", "DB_PASSWORD");
-            envMapping.put("db.params", "DB_PARAMS");
-
-            // Game Configuration
-            envMapping.put("game.host", "EMU_HOST");
-            envMapping.put("game.port", "EMU_PORT");
-
-            // Runtime
-            envMapping.put("runtime.threads", "RT_THREADS");
-            envMapping.put("logging.errors.runtime", "RT_LOG_ERRORS");
+            envMapping.put("db.hostname", dotenv.get("DB_HOSTNAME"));
+            envMapping.put("db.port", dotenv.get("DB_PORT"));
+            envMapping.put("db.database", dotenv.get("DB_DATABASE"));
+            envMapping.put("db.username", dotenv.get("DB_USERNAME"));
+            envMapping.put("db.password", dotenv.get("DB_PASSWORD"));
+            envMapping.put("db.params", dotenv.get("DB_PARAMS"));
+            envMapping.put("game.host", dotenv.get("EMU_HOST"));
+            envMapping.put("game.port", dotenv.get("EMU_PORT"));
+            envMapping.put("runtime.threads", dotenv.get("RT_THREADS"));
+            envMapping.put("logging.errors.runtime", dotenv.get("RT_LOG_ERRORS"));
 
             for (Map.Entry<String, String> entry : envMapping.entrySet()) {
-                String envValue = System.getenv(entry.getValue());
-
-                if (envValue == null || envValue.length() == 0) {
-                    log.info("Cannot find environment-value for variable `" + entry.getValue() + "`");
+                String envValue = entry.getValue();
+                if (envValue == null || envValue.isEmpty()) {
+                    log.info("Cannot find environment value for variable `{}`", entry.getKey());
                 } else {
                     this.properties.setProperty(entry.getKey(), envValue);
                 }
@@ -105,9 +76,9 @@ public class ConfigurationManager {
 
     public void loadFromDatabase() {
         log.info("Loading configuration from database...");
-
         long millis = System.currentTimeMillis();
-        try (Connection connection = Emulator.getDatabase().getDataSource().getConnection(); Statement statement = connection.createStatement()) {
+        try (Connection connection = Emulator.getDatabase().getDataSource().getConnection();
+             Statement statement = connection.createStatement()) {
             if (statement.execute("SELECT * FROM emulator_settings")) {
                 try (ResultSet set = statement.getResultSet()) {
                     while (set.next()) {
@@ -123,7 +94,8 @@ public class ConfigurationManager {
     }
 
     public void saveToDatabase() {
-        try (Connection connection = Emulator.getDatabase().getDataSource().getConnection(); PreparedStatement statement = connection.prepareStatement("UPDATE emulator_settings SET `value` = ? WHERE `key` = ? LIMIT 1")) {
+        try (Connection connection = Emulator.getDatabase().getDataSource().getConnection();
+             PreparedStatement statement = connection.prepareStatement("UPDATE emulator_settings SET `value` = ? WHERE `key` = ? LIMIT 1")) {
             for (Map.Entry<Object, Object> entry : this.properties.entrySet()) {
                 statement.setString(1, entry.getValue().toString());
                 statement.setString(2, entry.getKey().toString());
@@ -134,11 +106,9 @@ public class ConfigurationManager {
         }
     }
 
-
     public String getValue(String key) {
         return this.getValue(key, "");
     }
-
 
     public String getValue(String key, String defaultValue) {
         if (this.isLoading)
@@ -159,7 +129,7 @@ public class ConfigurationManager {
             return defaultValue;
 
         try {
-            return (this.getValue(key, "0").equals("1")) || (this.getValue(key, "false").equals("true"));
+            return this.getValue(key, "0").equals("1") || this.getValue(key, "false").equals("true");
         } catch (Exception e) {
             log.error("Failed to parse key {} with value '{}' to type boolean.", key, this.getValue(key));
         }
@@ -203,7 +173,8 @@ public class ConfigurationManager {
         if (this.properties.getProperty(key, null) != null)
             return;
 
-        try (Connection connection = Emulator.getDatabase().getDataSource().getConnection(); PreparedStatement statement = connection.prepareStatement("INSERT INTO emulator_settings VALUES (?, ?)")) {
+        try (Connection connection = Emulator.getDatabase().getDataSource().getConnection();
+             PreparedStatement statement = connection.prepareStatement("INSERT INTO emulator_settings VALUES (?, ?)")) {
             statement.setString(1, key);
             statement.setString(2, value);
             statement.execute();

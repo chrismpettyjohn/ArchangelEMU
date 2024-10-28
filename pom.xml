@@ -97,6 +97,7 @@
             <version>4.1.86.Final</version>
         </dependency>
 
+
         <!-- GSON -->
         <dependency>
             <groupId>com.google.code.gson</groupId>
@@ -263,6 +264,12 @@
             <groupId>org.mariadb.jdbc</groupId>
             <artifactId>mariadb-java-client</artifactId>
             <version>3.1.2</version> <!-- Use the latest stable version -->
+        </dependency>
+
+        <dependency>
+            <groupId>io.github.cdimascio</groupId>
+            <artifactId>java-dotenv</artifactId>
+            <version>5.2.2</version>
         </dependency>
 
 
