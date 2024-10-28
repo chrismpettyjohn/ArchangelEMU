@@ -24,11 +24,11 @@ jobs:
 
       - name: Deploy Docker image to OVH VPS
         env:
-          DOCKER_HOST: ssh://root@vps-708d491e.vps.ovh.us
+          DOCKER_HOST: ssh://root@15.204.232.142
         run: |
           # Stop and remove any existing container
-          ssh -o StrictHostKeyChecking=no root@vps-708d491e.vps.ovh.us "docker stop myapp || true && docker rm myapp || true"
+          ssh -o StrictHostKeyChecking=no root@15.204.232.142 "docker stop myapp || true && docker rm myapp || true"
           # Copy Dockerfile or push image to a registry (optional)
-          scp -o StrictHostKeyChecking=no ./Dockerfile root@vps-708d491e.vps.ovh.us:/root
+          scp -o StrictHostKeyChecking=no ./Dockerfile root@15.204.232.142:/root
           # Rebuild and run the container
-          ssh -o StrictHostKeyChecking=no root@vps-708d491e.vps.ovh.us "docker build -t myapp:latest /root && docker run -d --name myapp -p 80:80 myapp:latest"
+          ssh -o StrictHostKeyChecking=no root@15.204.232.142 "docker build -t myapp:latest /root && docker run -d --name myapp -p 80:80 myapp:latest"
