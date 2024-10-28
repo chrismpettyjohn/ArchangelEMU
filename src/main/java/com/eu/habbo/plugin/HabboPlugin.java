@@ -15,7 +15,7 @@ public abstract class HabboPlugin {
     public URLClassLoader classLoader;
     public InputStream stream;
 
-    public abstract void onEnable();
+    public abstract void onEnable() throws InterruptedException;
 
     public abstract void onDisable();
 

@@ -3,6 +3,7 @@ package com.eu.habbo;
 import ch.qos.logback.classic.Level;
 import ch.qos.logback.classic.spi.ILoggingEvent;
 import ch.qos.logback.core.ConsoleAppender;
+import com.eu.websockets.Websockets;
 import com.us.archangel.Archangel;
 import com.eu.habbo.core.*;
 import com.eu.habbo.core.consolecommands.ConsoleCommand;
@@ -60,6 +61,7 @@ public final class Emulator {
     private static BadgeImager badgeImager;
     private static Archangel archangel;
     private static Nova nova;
+    private static Websockets websockets;
 
     static {
         Thread hook = new Thread(new Runnable() {
@@ -128,6 +130,11 @@ public final class Emulator {
             Emulator.gameServer.initializePipeline();
             Emulator.gameServer.connect();
             Emulator.badgeImager = new BadgeImager();
+
+
+
+            Emulator.websockets = new Websockets();
+            Emulator.websockets.load();
 
             log.info("Arcturus Archangel has successfully loaded.");
             log.info("System launched in: {}ms. Using {} threads!", (System.nanoTime() - startTime) / 1e6, Runtime.getRuntime().availableProcessors() * 2);
@@ -229,6 +236,11 @@ public final class Emulator {
         try {
             if (Emulator.getPluginManager() != null)
                 Emulator.getPluginManager().fireEvent(new EmulatorStartShutdownEvent());
+        } catch (Exception ignored) {
+        }
+        try {
+            if (Emulator.websockets != null)
+                Emulator.websockets.dispose();
         } catch (Exception ignored) {
         }
 
@@ -336,6 +348,7 @@ public final class Emulator {
     public static Archangel getArchangel() { return archangel; }
 
     public static Nova getNova() { return nova; }
+    public static Websockets getWebsockets() { return websockets; }
 
     public static synchronized CameraClient getCameraClient() {
         return cameraClient;
