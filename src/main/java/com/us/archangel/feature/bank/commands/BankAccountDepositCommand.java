@@ -5,8 +5,9 @@ import com.eu.habbo.habbohotel.commands.Command;
 import com.eu.habbo.habbohotel.gameclients.GameClient;
 import com.us.archangel.corp.model.CorpModel;
 import com.us.archangel.corp.service.CorpService;
-import com.us.roleplay.database.HabboBankAccountRepository;
-import com.us.roleplay.users.HabboBankAccount;
+import com.us.archangel.player.mapper.PlayerBankAccountMapper;
+import com.us.archangel.player.model.PlayerBankAccountModel;
+import com.us.archangel.player.service.PlayerBankAccountService;
 
 public class BankAccountDepositCommand extends Command  {
 
@@ -33,7 +34,7 @@ public class BankAccountDepositCommand extends Command  {
             return true;
         }
 
-        HabboBankAccount bankAccount = HabboBankAccountRepository.getInstance().getByUserAndCorpID(gameClient.getHabbo().getHabboInfo().getId(), corpID);
+        PlayerBankAccountModel bankAccount = PlayerBankAccountService.getInstance().getByUserIdAndCorpId(gameClient.getHabbo().getHabboInfo().getId(), corpID);
 
         if (bankAccount == null) {
             gameClient.getHabbo().whisper(Emulator.getTexts().getValue("roleplay.bank.account_not_found"));
@@ -48,8 +49,8 @@ public class BankAccountDepositCommand extends Command  {
         }
 
         gameClient.getHabbo().getHabboInfo().setCredits(gameClient.getHabbo().getHabboInfo().getCredits() - depositAmount);
-        bankAccount.setCheckingBalance(bankAccount.getCheckingBalance() + depositAmount);
-        HabboBankAccountRepository.getInstance().update(bankAccount);
+        bankAccount.addAccountBalance(depositAmount);
+        PlayerBankAccountService.getInstance().update(bankAccount.getId(), PlayerBankAccountMapper.toEntity(bankAccount));
 
         gameClient.getHabbo().shout(Emulator.getTexts()
                 .getValue("roleplay.bank.deposit_success")

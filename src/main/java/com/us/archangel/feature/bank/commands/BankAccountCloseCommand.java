@@ -6,8 +6,8 @@ import com.eu.habbo.habbohotel.gameclients.GameClient;
 import com.eu.habbo.habbohotel.users.Habbo;
 import com.us.archangel.corp.enums.CorpIndustry;
 import com.us.archangel.corp.model.CorpModel;
-import com.us.roleplay.database.HabboBankAccountRepository;
-import com.us.roleplay.users.HabboBankAccount;
+import com.us.archangel.player.model.PlayerBankAccountModel;
+import com.us.archangel.player.service.PlayerBankAccountService;
 
 public class BankAccountCloseCommand extends Command  {
 
@@ -70,17 +70,17 @@ public class BankAccountCloseCommand extends Command  {
             return true;
         }
 
-        HabboBankAccount bankAccount = HabboBankAccountRepository.getInstance().getByUserAndCorpID(targetedUser.getHabboInfo().getId(), bankCorp.getId());
+        PlayerBankAccountModel bankAccount = PlayerBankAccountService.getInstance().getByUserIdAndCorpId(targetedUser.getHabboInfo().getId(), bankCorp.getId());
 
         if (bankAccount == null) {
             gameClient.getHabbo().whisper(Emulator.getTexts().getValue("roleplay.bank.account_not_found"));
             return true;
         }
 
-        int bankTotalCredits = bankAccount.getCheckingBalance();
+        int bankTotalCredits = bankAccount.getAccountBalance();
 
         targetedUser.getHabboInfo().setCredits(gameClient.getHabbo().getHabboInfo().getCredits() + bankTotalCredits);
-        HabboBankAccountRepository.getInstance().delete(bankAccount.getId());
+        PlayerBankAccountService.getInstance().deleteById(bankAccount.getId());
 
         targetedUser.shout(Emulator.getTexts().getValue("roleplay.bank.account_closed"));
         gameClient.getHabbo().shout(Emulator.getTexts()

@@ -6,8 +6,10 @@ import com.eu.habbo.habbohotel.gameclients.GameClient;
 import com.eu.habbo.habbohotel.users.Habbo;
 import com.us.archangel.corp.enums.CorpIndustry;
 import com.us.archangel.corp.model.CorpModel;
-import com.us.roleplay.database.HabboBankAccountRepository;
-import com.us.roleplay.users.HabboBankAccount;
+import com.us.archangel.player.entity.PlayerBankAccountEntity;
+import com.us.archangel.player.mapper.PlayerBankAccountMapper;
+import com.us.archangel.player.model.PlayerBankAccountModel;
+import com.us.archangel.player.service.PlayerBankAccountService;
 
 public class BankAccountOpenCommand extends Command  {
 
@@ -69,7 +71,7 @@ public class BankAccountOpenCommand extends Command  {
             return true;
         }
 
-        HabboBankAccount bankAccount = HabboBankAccountRepository.getInstance().getByUserAndCorpID(targetedUser.getHabboInfo().getId(), bankCorp.getId());
+        PlayerBankAccountModel bankAccount = PlayerBankAccountService.getInstance().getByUserIdAndCorpId(targetedUser.getHabboInfo().getId(), bankCorp.getId());
 
         if (bankAccount != null) {
             gameClient.getHabbo().whisper(Emulator.getTexts()
@@ -80,7 +82,16 @@ public class BankAccountOpenCommand extends Command  {
         }
 
         int currentTime = (int) (System.currentTimeMillis() / 1000);
-        HabboBankAccountRepository.getInstance().create(targetedUser.getHabboInfo().getId(), bankCorp.getId(), 0, currentTime, currentTime);
+
+        PlayerBankAccountEntity playerBankAccount = new PlayerBankAccountEntity();
+
+        playerBankAccount.setCorpId(bankCorp.getId());
+        playerBankAccount.setUserId(targetedUser.getHabboInfo().getId());
+        playerBankAccount.setAccountBalance(0);
+        playerBankAccount.setCreatedAt(currentTime);
+        playerBankAccount.setUpdatedAt(currentTime);
+
+        PlayerBankAccountService.getInstance().create(playerBankAccount);
 
         gameClient.getHabbo().shout(Emulator.getTexts()
                 .getValue("roleplay.bank.account_started")

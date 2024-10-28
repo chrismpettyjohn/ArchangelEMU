@@ -24,8 +24,8 @@ public class PlayerBankAccountService {
         return instance;
     }
 
-    public void create(PlayerBankAccountEntity playerEntity, PlayerBankAccountModel playerModel) {
-        playerBankAccountContext.add(playerEntity.getId(), playerModel);
+    public void create(PlayerBankAccountEntity playerEntity) {
+        playerBankAccountContext.add(playerEntity.getId(), PlayerBankAccountMapper.toModel(playerEntity));
         PlayerBankAccountRepository.getInstance().create(playerEntity);
     }
 
@@ -34,20 +34,24 @@ public class PlayerBankAccountService {
         PlayerBankAccountRepository.getInstance().updateById(id, updatedPlayerBankAccount);
     }
 
-    public PlayerBankAccountModel getByUserID(int userID) {
-        PlayerBankAccountModel storedVal = playerBankAccountContext.get(userID);
-        if (storedVal != null) {
-            return storedVal;
+    public PlayerBankAccountModel getByUserIdAndCorpId(int userId, int corpId) {
+        // Check in-memory context first
+        List<PlayerBankAccountModel> models = playerBankAccountContext.getAll().values().stream()
+                .filter(model -> model.getUserId() == userId && model.getCorpId() == corpId)
+                .collect(Collectors.toList());
+
+        if (!models.isEmpty()) {
+            return models.get(0); // Assuming one match based on userId and corpId
         }
 
-        PlayerBankAccountEntity entity = PlayerBankAccountRepository.getInstance().getByUserId(userID);
-        if (entity == null) {
-            return null;
+        // If not in context, check in repository
+        PlayerBankAccountEntity entity = PlayerBankAccountRepository.getInstance().getByUserIdAndCorpId(userId, corpId);
+        if (entity != null) {
+            PlayerBankAccountModel model = PlayerBankAccountMapper.toModel(entity);
+            playerBankAccountContext.add(entity.getId(), model); // Cache it in context
+            return model;
         }
-
-        PlayerBankAccountModel model = PlayerBankAccountMapper.toModel(entity);
-        playerBankAccountContext.add(entity.getId(), model);
-        return model;
+        return null; // Or throw an exception if appropriate
     }
 
     public List<PlayerBankAccountModel> getAll() {

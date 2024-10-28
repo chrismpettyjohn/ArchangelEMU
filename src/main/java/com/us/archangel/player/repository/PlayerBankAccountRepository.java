@@ -66,13 +66,19 @@ public class PlayerBankAccountRepository {
         }
     }
 
-    public PlayerBankAccountEntity getByUserId(int userId) {
+    public PlayerBankAccountEntity getByUserIdAndCorpId(int userId, int corpId) {
         try (Session session = sessionFactory.openSession()) {
-            return session.createQuery("from PlayerBankAccountEntity where userId = :userId", PlayerBankAccountEntity.class)
+            String hql = "FROM PlayerBankAccountEntity WHERE userId = :userId AND corpId = :corpId";
+            return session.createQuery(hql, PlayerBankAccountEntity.class)
                     .setParameter("userId", userId)
+                    .setParameter("corpId", corpId)
                     .uniqueResult();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
         }
     }
+
 
     @SuppressWarnings("unchecked")
     public List<PlayerBankAccountEntity> getAll() {

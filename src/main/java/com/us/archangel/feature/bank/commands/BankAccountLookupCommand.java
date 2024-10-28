@@ -6,9 +6,9 @@ import com.eu.habbo.habbohotel.gameclients.GameClient;
 import com.eu.habbo.habbohotel.users.Habbo;
 import com.us.archangel.corp.model.CorpModel;
 import com.us.archangel.corp.service.CorpService;
-import com.us.roleplay.database.HabboBankAccountRepository;
 import com.us.archangel.feature.bank.packets.outgoing.BankAccountInfoComposer;
-import com.us.roleplay.users.HabboBankAccount;
+import com.us.archangel.player.model.PlayerBankAccountModel;
+import com.us.archangel.player.service.PlayerBankAccountService;
 
 public class BankAccountLookupCommand extends Command  {
 
@@ -44,7 +44,7 @@ public class BankAccountLookupCommand extends Command  {
             return true;
         }
 
-        HabboBankAccount bankAccount = HabboBankAccountRepository.getInstance().getByUserAndCorpID(bankMember.getHabboInfo().getId(), corpID);
+        PlayerBankAccountModel bankAccount = PlayerBankAccountService.getInstance().getByUserIdAndCorpId(bankMember.getHabboInfo().getId(), corpID);
 
         if (bankAccount == null) {
             return true;

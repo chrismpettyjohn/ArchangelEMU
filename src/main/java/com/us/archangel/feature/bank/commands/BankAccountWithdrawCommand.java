@@ -5,8 +5,9 @@ import com.eu.habbo.habbohotel.commands.Command;
 import com.eu.habbo.habbohotel.gameclients.GameClient;
 import com.us.archangel.corp.model.CorpModel;
 import com.us.archangel.corp.service.CorpService;
-import com.us.roleplay.database.HabboBankAccountRepository;
-import com.us.roleplay.users.HabboBankAccount;
+import com.us.archangel.player.mapper.PlayerBankAccountMapper;
+import com.us.archangel.player.model.PlayerBankAccountModel;
+import com.us.archangel.player.service.PlayerBankAccountService;
 
 public class BankAccountWithdrawCommand extends Command  {
 
@@ -32,7 +33,7 @@ public class BankAccountWithdrawCommand extends Command  {
             return true;
         }
 
-        HabboBankAccount bankAccount = HabboBankAccountRepository.getInstance().getByUserAndCorpID(gameClient.getHabbo().getHabboInfo().getId(), corpID);
+        PlayerBankAccountModel bankAccount = PlayerBankAccountService.getInstance().getByUserIdAndCorpId(gameClient.getHabbo().getHabboInfo().getId(), corpID);
 
         if (bankAccount == null) {
             gameClient.getHabbo().whisper(Emulator.getTexts().getValue("roleplay.bank.account_not_found"));
@@ -41,13 +42,14 @@ public class BankAccountWithdrawCommand extends Command  {
 
         int withdrawAmount =Integer.parseInt(params[2]);
 
-        if (bankAccount.getCheckingBalance() < withdrawAmount) {
+        if (bankAccount.getAccountBalance() < withdrawAmount) {
             gameClient.getHabbo().whisper(Emulator.getTexts().getValue("generic.not_enough_credits"));
             return true;
         }
 
-        bankAccount.setCheckingBalance(bankAccount.getCheckingBalance() - withdrawAmount);
-        HabboBankAccountRepository.getInstance().update(bankAccount);
+        bankAccount.deductAccountBalance(withdrawAmount);
+
+        PlayerBankAccountService.getInstance().update(bankAccount.getId(), PlayerBankAccountMapper.toEntity(bankAccount));
 
         gameClient.getHabbo().shout(Emulator.getTexts()
                 .getValue("roleplay.bank.withdraw_success")

@@ -13,7 +13,9 @@ public class PlayerBankAccountMapper {
                 entity.getId(),
                 entity.getUserId(),
                 entity.getCorpId(),
-                entity.getAccountBalance()
+                entity.getAccountBalance(),
+                entity.getCreatedAt(),
+                entity.getUpdatedAt()
         );
     }
 

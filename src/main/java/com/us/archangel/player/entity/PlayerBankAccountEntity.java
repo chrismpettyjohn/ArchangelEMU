@@ -25,6 +25,12 @@ public class PlayerBankAccountEntity {
     @Column(name = "account_balance", nullable = false)
     private int accountBalance;
 
+    @Column(name = "created_at", nullable = false)
+    private int createdAt;
+
+    @Column(name = "updated_at", nullable = false)
+    private int updatedAt;
+
     @ManyToOne
     @JoinColumn(name = "users_id", nullable = false, insertable=false, updatable=false)
     private PlayerEntity player;
