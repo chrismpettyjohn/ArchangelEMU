@@ -66,6 +66,18 @@ public class BountyRepository {
         }
     }
 
+    public List<BountyEntity> getByUserId(int userId) {
+        try (Session session = sessionFactory.openSession()) {
+            String hql = "FROM BountyEntity WHERE userId = :userId";
+            return session.createQuery(hql, BountyEntity.class)
+                    .setParameter("userId", userId)
+                    .list();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     @SuppressWarnings("unchecked")
     public List<BountyEntity> getAll() {
         try (Session session = sessionFactory.openSession()) {

@@ -1,12 +1,13 @@
 package com.us.archangel.corp.service;
 
-import com.us.archangel.core.GenericContext;
+import com.us.archangel.corp.context.CorpContext;
 import com.us.archangel.corp.entity.CorpEntity;
 import com.us.archangel.corp.enums.CorpIndustry;
 import com.us.archangel.corp.mapper.CorpMapper;
 import com.us.archangel.corp.model.CorpModel;
 import com.us.archangel.corp.repository.CorpRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -14,8 +15,6 @@ import java.util.stream.Collectors;
 public class CorpService {
 
     private static CorpService instance;
-
-    private final GenericContext<CorpModel> corpContext = new GenericContext<>();
 
     public static CorpService getInstance() {
         if (instance == null) {
@@ -25,80 +24,48 @@ public class CorpService {
     }
 
     public void create(CorpEntity corpEntity, CorpModel corpModel) {
-        // Add to context first
-        corpContext.add(corpEntity.getId(), corpModel);
-        // Persist to repository as secondary
+        CorpContext.getInstance().add(corpEntity.getId(), corpModel);
         CorpRepository.getInstance().create(corpEntity);
     }
 
     public void update(int id, CorpEntity updatedCorp, CorpModel updatedModel) {
-        // Update context first
-        corpContext.update(id, updatedModel);
-        // Update repository as secondary
+        CorpContext.getInstance().update(id, updatedModel);
         CorpRepository.getInstance().updateById(id, updatedCorp);
     }
 
     public CorpModel getById(int id) {
-        // Check context first
-        CorpModel storedVal = corpContext.get(id);
+        CorpModel storedVal = CorpContext.getInstance().get(id);
         if (storedVal != null) {
             return storedVal;
         }
 
-        // Fallback to repository if not in context
         CorpEntity entity = CorpRepository.getInstance().getById(id);
         if (entity == null) {
-            return null; // Handle case when entity doesn't exist
+            return null;
         }
 
-        // Map entity to model and add to context
         CorpModel model = CorpMapper.toModel(entity);
-        corpContext.add(entity.getId(), model);
+        CorpContext.getInstance().add(entity.getId(), model);
         return model;
     }
 
     public List<CorpModel> getAll() {
-        // Fetch all models from context
-        Map<Integer, CorpModel> models = corpContext.getAll();
+        Map<Integer, CorpModel> models = CorpContext.getInstance().getAll();
         if (!models.isEmpty()) {
-            return models.values().stream().collect(Collectors.toList());
+            return new ArrayList<>(models.values());
         }
 
-        // Fallback to repository if context is empty
         List<CorpEntity> entities = CorpRepository.getInstance().getAll();
         List<CorpModel> modelList = entities.stream()
                 .map(CorpMapper::toModel)
                 .collect(Collectors.toList());
 
-        // Add to context
-        modelList.forEach(model -> corpContext.add(model.getId(), model));
+        modelList.forEach(model -> CorpContext.getInstance().add(model.getId(), model));
         return modelList;
     }
 
-    public List<CorpModel> findManyByDisplayName(String displayName) {
-        // Fetch from context and filter by displayName manually
-        List<CorpModel> models = corpContext.getAll().values().stream()
-                .filter(model -> model.getDisplayName().equalsIgnoreCase(displayName))
-                .collect(Collectors.toList());
-
-        if (!models.isEmpty()) {
-            return models;
-        }
-
-        // Fallback to repository if not found in context
-        List<CorpEntity> entities = CorpRepository.getInstance().findManyByDisplayName(displayName);
-        models = entities.stream()
-                .map(CorpMapper::toModel)
-                .collect(Collectors.toList());
-
-        // Add to context
-        models.forEach(model -> corpContext.add(model.getId(), model));
-        return models;
-    }
-
     public List<CorpModel> findManyByIndustry(CorpIndustry industry) {
-        // Fetch from context and filter by industry manually
-        List<CorpModel> models = corpContext.getAll().values().stream()
+        List<CorpModel> models = CorpContext.getInstance().getAll().values().stream()
                 .filter(model -> model.getIndustry() == industry)
                 .collect(Collectors.toList());
 
@@ -106,21 +73,17 @@ public class CorpService {
             return models;
         }
 
-        // Fallback to repository if not found in context
         List<CorpEntity> entities = CorpRepository.getInstance().findManyByIndustry(industry);
         models = entities.stream()
                 .map(CorpMapper::toModel)
                 .collect(Collectors.toList());
 
-        // Add to context
-        models.forEach(model -> corpContext.add(model.getId(), model));
+        models.forEach(model -> CorpContext.getInstance().add(model.getId(), model));
         return models;
     }
 
     public void deleteById(int id) {
-        // Remove from context first
-        corpContext.delete(id);
-        // Then delete from repository as secondary
+        CorpContext.getInstance().delete(id);
         CorpRepository.getInstance().deleteById(id);
     }
 }

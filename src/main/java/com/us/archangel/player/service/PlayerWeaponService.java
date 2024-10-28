@@ -1,6 +1,6 @@
 package com.us.archangel.player.service;
 
-import com.us.archangel.core.GenericContext;
+import com.us.archangel.player.context.PlayerWeaponContext;
 import com.us.archangel.player.entity.PlayerWeaponEntity;
 import com.us.archangel.player.mapper.PlayerWeaponMapper;
 import com.us.archangel.player.model.PlayerWeaponModel;
@@ -15,8 +15,6 @@ public class PlayerWeaponService {
 
     private static PlayerWeaponService instance;
 
-    private final GenericContext<PlayerWeaponModel> playerContext = new GenericContext<>();
-
     public static PlayerWeaponService getInstance() {
         if (instance == null) {
             instance = new PlayerWeaponService();
@@ -25,17 +23,17 @@ public class PlayerWeaponService {
     }
 
     public void create(PlayerWeaponEntity playerEntity) {
-        playerContext.add(playerEntity.getId(), PlayerWeaponMapper.toModel(playerEntity));
+        PlayerWeaponContext.getInstance().add(playerEntity.getId(), PlayerWeaponMapper.toModel(playerEntity));
         PlayerWeaponRepository.getInstance().create(playerEntity);
     }
 
     public void update(int id, PlayerWeaponEntity updatedPlayerWeapon) {
-        playerContext.update(id, PlayerWeaponMapper.toModel(updatedPlayerWeapon));
+        PlayerWeaponContext.getInstance().update(id, PlayerWeaponMapper.toModel(updatedPlayerWeapon));
         PlayerWeaponRepository.getInstance().updateById(id, updatedPlayerWeapon);
     }
 
     public List<PlayerWeaponModel> getByUserID(int userID) {
-        Map<Integer, PlayerWeaponModel> allWeapons = playerContext.getAll();
+        Map<Integer, PlayerWeaponModel> allWeapons = PlayerWeaponContext.getInstance().getAll();
         List<PlayerWeaponModel> models = allWeapons.values().stream()
                 .filter(weapon -> weapon.getPlayerId() == userID)
                 .collect(Collectors.toList());
@@ -49,13 +47,13 @@ public class PlayerWeaponService {
                 .map(PlayerWeaponMapper::toModel)
                 .collect(Collectors.toList());
 
-        modelList.forEach(model -> playerContext.add(model.getId(), model));
+        modelList.forEach(model -> PlayerWeaponContext.getInstance().add(model.getId(), model));
         return modelList;
     }
 
 
     public List<PlayerWeaponModel> getAll() {
-        Map<Integer, PlayerWeaponModel> models = playerContext.getAll();
+        Map<Integer, PlayerWeaponModel> models = PlayerWeaponContext.getInstance().getAll();
         if (!models.isEmpty()) {
             return new ArrayList<>(models.values());
         }
@@ -65,12 +63,12 @@ public class PlayerWeaponService {
                 .map(PlayerWeaponMapper::toModel)
                 .collect(Collectors.toList());
 
-        modelList.forEach(model -> playerContext.add(model.getId(), model));
+        modelList.forEach(model -> PlayerWeaponContext.getInstance().add(model.getId(), model));
         return modelList;
     }
 
     public void deleteById(int id) {
-        playerContext.delete(id);
+        PlayerWeaponContext.getInstance().delete(id);
         PlayerWeaponRepository.getInstance().deleteById(id);
     }
 }

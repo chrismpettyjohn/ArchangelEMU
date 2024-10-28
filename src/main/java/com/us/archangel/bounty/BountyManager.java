@@ -5,6 +5,7 @@ import com.us.archangel.bounty.entity.BountyEntity;
 import com.us.archangel.bounty.mapper.BountyMapper;
 import com.us.archangel.bounty.model.BountyModel;
 import com.us.archangel.bounty.repository.BountyRepository;
+import com.us.archangel.bounty.service.BountyService;
 import lombok.Getter;
 import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
@@ -33,12 +34,13 @@ public class BountyManager {
     }
 
     private final BountyRepository bountyRepository;
-
     private final BountyContext bountyContext;
+    private final BountyService bountyService;
 
     private BountyManager(SessionFactory sessionFactory) {
         this.bountyContext = BountyContext.getInstance();
         this.bountyRepository = BountyRepository.getInstance(sessionFactory);
+        this.bountyService = BountyService.getInstance();
         this.load();
     }
 

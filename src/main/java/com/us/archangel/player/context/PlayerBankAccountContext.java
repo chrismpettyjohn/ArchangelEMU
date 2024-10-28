@@ -1,9 +1,9 @@
 package com.us.archangel.player.context;
 
 import com.us.archangel.core.GenericContext;
-import com.us.archangel.player.model.PlayerSkillModel;
+import com.us.archangel.player.model.PlayerBankAccountModel;
 
-public class PlayerBankAccountContext extends GenericContext<PlayerSkillModel> {
+public class PlayerBankAccountContext extends GenericContext<PlayerBankAccountModel> {
 
     private static volatile PlayerBankAccountContext instance;
 

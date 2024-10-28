@@ -1,8 +1,9 @@
 package com.us.archangel.player.context;
 
 import com.us.archangel.core.GenericContext;
+import com.us.archangel.player.model.PlayerWeaponModel;
 
-public class PlayerWeaponContext extends GenericContext<PlayerWeaponContext> {
+public class PlayerWeaponContext extends GenericContext<PlayerWeaponModel> {
 
     private static volatile PlayerWeaponContext instance;
 

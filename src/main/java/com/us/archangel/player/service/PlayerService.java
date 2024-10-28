@@ -1,6 +1,6 @@
 package com.us.archangel.player.service;
 
-import com.us.archangel.core.GenericContext;
+import com.us.archangel.player.context.PlayerContext;
 import com.us.archangel.player.entity.PlayerEntity;
 import com.us.archangel.player.mapper.PlayerMapper;
 import com.us.archangel.player.model.PlayerModel;
@@ -15,8 +15,6 @@ public class PlayerService {
 
     private static PlayerService instance;
 
-    private final GenericContext<PlayerModel> playerContext = new GenericContext<>();
-
     public static PlayerService getInstance() {
         if (instance == null) {
             instance = new PlayerService();
@@ -25,17 +23,17 @@ public class PlayerService {
     }
 
     public void create(PlayerEntity playerEntity, PlayerModel playerModel) {
-        playerContext.add(playerEntity.getId(), playerModel);
+        PlayerContext.getInstance().add(playerEntity.getId(), playerModel);
         PlayerRepository.getInstance().create(playerEntity);
     }
 
     public void update(int id, PlayerEntity updatedPlayer) {
-        playerContext.update(id, PlayerMapper.toModel(updatedPlayer));
+        PlayerContext.getInstance().update(id, PlayerMapper.toModel(updatedPlayer));
         PlayerRepository.getInstance().updateById(id, updatedPlayer);
     }
 
     public PlayerModel getByUserID(int userID) {
-        PlayerModel storedVal = playerContext.get(userID);
+        PlayerModel storedVal = PlayerContext.getInstance().get(userID);
         if (storedVal != null) {
             return storedVal;
         }
@@ -46,12 +44,12 @@ public class PlayerService {
         }
 
         PlayerModel model = PlayerMapper.toModel(entity);
-        playerContext.add(entity.getId(), model);
+        PlayerContext.getInstance().add(entity.getId(), model);
         return model;
     }
 
     public List<PlayerModel> getAll() {
-        Map<Integer, PlayerModel> models = playerContext.getAll();
+        Map<Integer, PlayerModel> models = PlayerContext.getInstance().getAll();
         if (!models.isEmpty()) {
             return new ArrayList<>(models.values());
         }
@@ -61,12 +59,12 @@ public class PlayerService {
                 .map(PlayerMapper::toModel)
                 .collect(Collectors.toList());
 
-        modelList.forEach(model -> playerContext.add(model.getId(), model));
+        modelList.forEach(model -> PlayerContext.getInstance().add(model.getId(), model));
         return modelList;
     }
 
     public List<PlayerModel> getByCorpId(int corpId) {
-        Map<Integer, PlayerModel> allPlayers = playerContext.getAll();
+        Map<Integer, PlayerModel> allPlayers = PlayerContext.getInstance().getAll();
         List<PlayerModel> models = allPlayers.values().stream()
                 .filter(player -> player.getCorpId() == corpId)
                 .collect(Collectors.toList());
@@ -81,12 +79,12 @@ public class PlayerService {
                 .collect(Collectors.toList());
 
         // Add to context
-        modelList.forEach(model -> playerContext.add(model.getId(), model));
+        modelList.forEach(model -> PlayerContext.getInstance().add(model.getId(), model));
         return modelList;
     }
 
     public List<PlayerModel> getByCorpRoleID(int corpRoleID) {
-        Map<Integer, PlayerModel> allPlayers = playerContext.getAll();
+        Map<Integer, PlayerModel> allPlayers = PlayerContext.getInstance().getAll();
         List<PlayerModel> models = allPlayers.values().stream()
                 .filter(player -> player.getCorpRoleId() == corpRoleID)
                 .collect(Collectors.toList());
@@ -100,13 +98,13 @@ public class PlayerService {
                 .map(PlayerMapper::toModel)
                 .collect(Collectors.toList());
 
-        modelList.forEach(model -> playerContext.add(model.getId(), model));
+        modelList.forEach(model -> PlayerContext.getInstance().add(model.getId(), model));
         return modelList;
     }
 
 
     public void deleteById(int id) {
-        playerContext.delete(id);
+        PlayerContext.getInstance().delete(id);
         PlayerRepository.getInstance().deleteById(id);
     }
 }

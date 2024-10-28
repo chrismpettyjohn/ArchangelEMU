@@ -1,6 +1,7 @@
 package com.us.archangel.player.service;
 
 import com.us.archangel.core.GenericContext;
+import com.us.archangel.player.context.PlayerSkillContext;
 import com.us.archangel.player.entity.PlayerSkillEntity;
 import com.us.archangel.player.mapper.PlayerSkillMapper;
 import com.us.archangel.player.model.PlayerSkillModel;
@@ -15,8 +16,6 @@ public class PlayerSkillService {
 
     private static PlayerSkillService instance;
 
-    private final GenericContext<PlayerSkillModel> playerSkillContext = new GenericContext<>();
-
     public static PlayerSkillService getInstance() {
         if (instance == null) {
             instance = new PlayerSkillService();
@@ -25,17 +24,17 @@ public class PlayerSkillService {
     }
 
     public void create(PlayerSkillEntity playerEntity, PlayerSkillModel playerModel) {
-        playerSkillContext.add(playerEntity.getId(), playerModel);
+        PlayerSkillContext.getInstance().add(playerEntity.getId(), playerModel);
         PlayerSkillRepository.getInstance().create(playerEntity);
     }
 
     public void update(int id, PlayerSkillEntity updatedPlayerSkill) {
-        playerSkillContext.update(id, PlayerSkillMapper.toModel(updatedPlayerSkill));
+        PlayerSkillContext.getInstance().update(id, PlayerSkillMapper.toModel(updatedPlayerSkill));
         PlayerSkillRepository.getInstance().updateById(id, updatedPlayerSkill);
     }
 
     public PlayerSkillModel getByUserID(int userID) {
-        PlayerSkillModel storedVal = playerSkillContext.get(userID);
+        PlayerSkillModel storedVal = PlayerSkillContext.getInstance().get(userID);
         if (storedVal != null) {
             return storedVal;
         }
@@ -46,12 +45,12 @@ public class PlayerSkillService {
         }
 
         PlayerSkillModel model = PlayerSkillMapper.toModel(entity);
-        playerSkillContext.add(entity.getId(), model);
+        PlayerSkillContext.getInstance().add(entity.getId(), model);
         return model;
     }
 
     public List<PlayerSkillModel> getAll() {
-        Map<Integer, PlayerSkillModel> models = playerSkillContext.getAll();
+        Map<Integer, PlayerSkillModel> models = PlayerSkillContext.getInstance().getAll();
         if (!models.isEmpty()) {
             return new ArrayList<>(models.values());
         }
@@ -61,12 +60,12 @@ public class PlayerSkillService {
                 .map(PlayerSkillMapper::toModel)
                 .collect(Collectors.toList());
 
-        modelList.forEach(model -> playerSkillContext.add(model.getId(), model));
+        modelList.forEach(model -> PlayerSkillContext.getInstance().add(model.getId(), model));
         return modelList;
     }
 
     public void deleteById(int id) {
-        playerSkillContext.delete(id);
+        PlayerSkillContext.getInstance().delete(id);
         PlayerSkillRepository.getInstance().deleteById(id);
     }
 }

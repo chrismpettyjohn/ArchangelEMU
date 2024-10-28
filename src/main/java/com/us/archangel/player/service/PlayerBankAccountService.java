@@ -1,6 +1,6 @@
 package com.us.archangel.player.service;
 
-import com.us.archangel.core.GenericContext;
+import com.us.archangel.player.context.PlayerBankAccountContext;
 import com.us.archangel.player.entity.PlayerBankAccountEntity;
 import com.us.archangel.player.mapper.PlayerBankAccountMapper;
 import com.us.archangel.player.model.PlayerBankAccountModel;
@@ -15,8 +15,6 @@ public class PlayerBankAccountService {
 
     private static PlayerBankAccountService instance;
 
-    private final GenericContext<PlayerBankAccountModel> playerBankAccountContext = new GenericContext<>();
-
     public static PlayerBankAccountService getInstance() {
         if (instance == null) {
             instance = new PlayerBankAccountService();
@@ -25,18 +23,18 @@ public class PlayerBankAccountService {
     }
 
     public void create(PlayerBankAccountEntity playerEntity) {
-        playerBankAccountContext.add(playerEntity.getId(), PlayerBankAccountMapper.toModel(playerEntity));
+        PlayerBankAccountContext.getInstance().add(playerEntity.getId(), PlayerBankAccountMapper.toModel(playerEntity));
         PlayerBankAccountRepository.getInstance().create(playerEntity);
     }
 
     public void update(int id, PlayerBankAccountEntity updatedPlayerBankAccount) {
-        playerBankAccountContext.update(id, PlayerBankAccountMapper.toModel(updatedPlayerBankAccount));
+        PlayerBankAccountContext.getInstance().update(id, PlayerBankAccountMapper.toModel(updatedPlayerBankAccount));
         PlayerBankAccountRepository.getInstance().updateById(id, updatedPlayerBankAccount);
     }
 
     public PlayerBankAccountModel getByUserIdAndCorpId(int userId, int corpId) {
         // Check in-memory context first
-        List<PlayerBankAccountModel> models = playerBankAccountContext.getAll().values().stream()
+        List<PlayerBankAccountModel> models = PlayerBankAccountContext.getInstance().getAll().values().stream()
                 .filter(model -> model.getUserId() == userId && model.getCorpId() == corpId)
                 .collect(Collectors.toList());
 
@@ -48,14 +46,14 @@ public class PlayerBankAccountService {
         PlayerBankAccountEntity entity = PlayerBankAccountRepository.getInstance().getByUserIdAndCorpId(userId, corpId);
         if (entity != null) {
             PlayerBankAccountModel model = PlayerBankAccountMapper.toModel(entity);
-            playerBankAccountContext.add(entity.getId(), model); // Cache it in context
+            PlayerBankAccountContext.getInstance().add(entity.getId(), model); // Cache it in context
             return model;
         }
         return null; // Or throw an exception if appropriate
     }
 
     public List<PlayerBankAccountModel> getAll() {
-        Map<Integer, PlayerBankAccountModel> models = playerBankAccountContext.getAll();
+        Map<Integer, PlayerBankAccountModel> models = PlayerBankAccountContext.getInstance().getAll();
         if (!models.isEmpty()) {
             return new ArrayList<>(models.values());
         }
@@ -65,12 +63,12 @@ public class PlayerBankAccountService {
                 .map(PlayerBankAccountMapper::toModel)
                 .collect(Collectors.toList());
 
-        modelList.forEach(model -> playerBankAccountContext.add(model.getId(), model));
+        modelList.forEach(model -> PlayerBankAccountContext.getInstance().add(model.getId(), model));
         return modelList;
     }
 
     public void deleteById(int id) {
-        playerBankAccountContext.delete(id);
+        PlayerBankAccountContext.getInstance().delete(id);
         PlayerBankAccountRepository.getInstance().deleteById(id);
     }
 }
