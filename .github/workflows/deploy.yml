@@ -1,0 +1,34 @@
+name: Deploy to OVH VPS
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up SSH
+        uses: webfactory/ssh-agent@v0.5.3
+        with:
+          ssh-private-key: ${{ secrets.OVH_SSH_KEY }}
+
+      - name: Build Docker image locally
+        run: docker build -t myapp:latest .
+
+      - name: Deploy Docker image to OVH VPS
+        env:
+          DOCKER_HOST: ssh://root@15.204.232.142
+        run: |
+          # Stop and remove any existing container
+          ssh -o StrictHostKeyChecking=no root@15.204.232.142 "docker stop myapp || true && docker rm myapp || true"
+          # Copy Dockerfile or push image to a registry (optional)
+          scp -o StrictHostKeyChecking=no ./Dockerfile root@15.204.232.142:/root
+          # Rebuild and run the container
+          ssh -o StrictHostKeyChecking=no root@15.204.232.142 "docker build -t myapp:latest /root && docker run -d --name myapp -p 80:80 myapp:latest"
