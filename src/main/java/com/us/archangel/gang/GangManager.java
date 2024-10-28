@@ -4,8 +4,12 @@ import com.us.archangel.gang.context.GangContext;
 import com.us.archangel.gang.context.GangInviteContext;
 import com.us.archangel.gang.context.GangRoleContext;
 import com.us.archangel.gang.entity.GangEntity;
+import com.us.archangel.gang.mapper.GangInviteMapper;
 import com.us.archangel.gang.mapper.GangMapper;
+import com.us.archangel.gang.mapper.GangRoleMapper;
+import com.us.archangel.gang.model.GangInviteModel;
 import com.us.archangel.gang.model.GangModel;
+import com.us.archangel.gang.model.GangRoleModel;
 import com.us.archangel.gang.repository.GangInviteRepository;
 import com.us.archangel.gang.repository.GangRepository;
 import com.us.archangel.gang.repository.GangRoleRepository;
@@ -82,6 +86,16 @@ public class GangManager {
         for (GangModel gangModel : this.gangContext.getAll().values()) {
             this.gangRepository.updateById(gangModel.getId(), GangMapper.toEntity(gangModel));
             this.gangContext.delete(gangModel.getId());
+        }
+
+        for (GangRoleModel gangRoleModel : this.gangRoleContext.getAll().values()) {
+            this.gangRoleRepository.updateById(gangRoleModel.getId(), GangRoleMapper.toEntity(gangRoleModel));
+            this.gangRoleContext.delete(gangRoleModel.getId());
+        }
+
+        for (GangInviteModel gangInviteModel : this.gangInviteContext.getAll().values()) {
+            this.gangInviteRepository.updateById(gangInviteModel.getId(), GangInviteMapper.toEntity(gangInviteModel));
+            this.gangInviteContext.delete(gangInviteModel.getId());
         }
         LOGGER.info("Gang manager > disposed");
     }

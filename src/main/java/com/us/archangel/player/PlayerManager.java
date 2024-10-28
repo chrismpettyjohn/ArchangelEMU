@@ -5,8 +5,14 @@ import com.us.archangel.player.context.PlayerContext;
 import com.us.archangel.player.context.PlayerSkillContext;
 import com.us.archangel.player.context.PlayerWeaponContext;
 import com.us.archangel.player.entity.PlayerEntity;
+import com.us.archangel.player.mapper.PlayerBankAccountMapper;
 import com.us.archangel.player.mapper.PlayerMapper;
+import com.us.archangel.player.mapper.PlayerSkillMapper;
+import com.us.archangel.player.mapper.PlayerWeaponMapper;
+import com.us.archangel.player.model.PlayerBankAccountModel;
 import com.us.archangel.player.model.PlayerModel;
+import com.us.archangel.player.model.PlayerSkillModel;
+import com.us.archangel.player.model.PlayerWeaponModel;
 import com.us.archangel.player.repository.PlayerBankAccountRepository;
 import com.us.archangel.player.repository.PlayerRepository;
 import com.us.archangel.player.repository.PlayerSkillRepository;
@@ -94,6 +100,21 @@ public class PlayerManager {
         for (PlayerModel playerModel : this.playerContext.getAll().values()) {
             this.playerRepository.updateById(playerModel.getId(), PlayerMapper.toEntity(playerModel));
             this.playerContext.delete(playerModel.getId());
+        }
+
+        for (PlayerSkillModel playerSkillModel : this.playerSkillContext.getAll().values()) {
+            this.playerSkillRepository.updateById(playerSkillModel.getId(), PlayerSkillMapper.toEntity(playerSkillModel));
+            this.playerSkillContext.delete(playerSkillModel.getId());
+        }
+
+        for (PlayerWeaponModel playerWeaponModel : this.playerWeaponContext.getAll().values()) {
+            this.playerWeaponRepository.updateById(playerWeaponModel.getId(), PlayerWeaponMapper.toEntity(playerWeaponModel));
+            this.playerWeaponContext.delete(playerWeaponModel.getId());
+        }
+
+        for (PlayerBankAccountModel playerBankAccountModel : this.playerBankAccountContext.getAll().values()) {
+            this.playerBankAccountRepository.updateById(playerBankAccountModel.getId(), PlayerBankAccountMapper.toEntity(playerBankAccountModel));
+            this.playerBankAccountContext.delete(playerBankAccountModel.getId());
         }
         LOGGER.info("Player manager > disposed");
     }

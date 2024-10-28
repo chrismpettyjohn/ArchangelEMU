@@ -4,8 +4,12 @@ import com.us.archangel.corp.context.CorpContext;
 import com.us.archangel.corp.context.CorpInviteContext;
 import com.us.archangel.corp.context.CorpRoleContext;
 import com.us.archangel.corp.entity.CorpEntity;
+import com.us.archangel.corp.mapper.CorpInviteMapper;
 import com.us.archangel.corp.mapper.CorpMapper;
+import com.us.archangel.corp.mapper.CorpRoleMapper;
+import com.us.archangel.corp.model.CorpInviteModel;
 import com.us.archangel.corp.model.CorpModel;
+import com.us.archangel.corp.model.CorpRoleModel;
 import com.us.archangel.corp.repository.CorpInviteRepository;
 import com.us.archangel.corp.repository.CorpRepository;
 import com.us.archangel.corp.repository.CorpRoleRepository;
@@ -84,6 +88,17 @@ public class CorpManager {
             this.corpRepository.updateById(corpModel.getId(), CorpMapper.toEntity(corpModel));
             this.corpContext.delete(corpModel.getId());
         }
+
+        for (CorpRoleModel corpRoleModel : this.corpRoleContext.getAll().values()) {
+            this.corpRoleRepository.updateById(corpRoleModel.getId(), CorpRoleMapper.toEntity(corpRoleModel));
+            this.corpRoleContext.delete(corpRoleModel.getId());
+        }
+
+        for (CorpInviteModel corpInviteModel : this.corpInviteContext.getAll().values()) {
+            this.corpInviteRepository.updateById(corpInviteModel.getId(), CorpInviteMapper.toEntity(corpInviteModel));
+            this.corpInviteContext.delete(corpInviteModel.getId());
+        }
+
         LOGGER.info("Corp manager > disposed");
     }
 }
