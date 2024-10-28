@@ -4,6 +4,7 @@ import com.us.archangel.bounty.entity.BountyEntity;
 import com.us.archangel.corp.entity.CorpEntity;
 import com.us.archangel.corp.entity.CorpInviteEntity;
 import com.us.archangel.corp.entity.CorpRoleEntity;
+import com.us.archangel.crime.entity.CrimeEntity;
 import com.us.archangel.gang.entity.GangEntity;
 import com.us.archangel.gang.entity.GangRoleEntity;
 import com.us.archangel.player.entity.PlayerEntity;
@@ -45,6 +46,9 @@ public class DatabaseConfig {
                 configuration.addAnnotatedClass(CorpEntity.class);
                 configuration.addAnnotatedClass(CorpRoleEntity.class);
                 configuration.addAnnotatedClass(CorpInviteEntity.class);
+
+
+                configuration.addAnnotatedClass(CrimeEntity.class);
 
                 configuration.addAnnotatedClass(GangEntity.class);
                 configuration.addAnnotatedClass(GangRoleEntity.class);
