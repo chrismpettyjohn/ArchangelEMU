@@ -1,4 +1,4 @@
-package com.us.archangel.core;
+package com.us.nova.core;
 
 import com.us.archangel.bounty.entity.BountyEntity;
 import com.us.archangel.corp.entity.CorpEntity;
@@ -10,7 +10,6 @@ import com.us.archangel.gang.entity.GangRoleEntity;
 import com.us.archangel.player.entity.PlayerEntity;
 import com.us.archangel.player.entity.PlayerSkillEntity;
 import com.us.archangel.player.entity.PlayerWeaponEntity;
-import com.us.archangel.player.model.PlayerWeaponModel;
 import com.us.archangel.sanction.entity.SanctionEntity;
 import com.us.archangel.weapon.entity.WeaponEntity;
 import com.eu.habbo.core.ConfigurationManager;

@@ -1,7 +1,7 @@
 package com.us.archangel.bounty.context;
 
 import com.us.archangel.bounty.model.BountyModel;
-import com.us.archangel.core.GenericContext;
+import com.us.nova.core.GenericContext;
 
 import java.util.List;
 import java.util.stream.Collectors;

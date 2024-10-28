@@ -1,4 +1,4 @@
-package com.us.archangel.core;
+package com.us.nova.core;
 
 import java.util.HashMap;
 import java.util.Map;

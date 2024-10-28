@@ -1,6 +1,6 @@
 package com.us.archangel.crime.context;
 
-import com.us.archangel.core.GenericContext;
+import com.us.nova.core.GenericContext;
 import com.us.archangel.crime.model.CrimeModel;
 
 public class CrimeContext extends GenericContext<CrimeModel> {

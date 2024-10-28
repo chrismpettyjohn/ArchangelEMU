@@ -1,7 +1,7 @@
 package com.us.archangel;
 
 import com.us.archangel.bounty.BountyManager;
-import com.us.archangel.core.DatabaseConfig;
+import com.us.nova.core.DatabaseConfig;
 import com.us.archangel.corp.CorpManager;
 import com.us.archangel.crime.CrimeManager;
 import com.us.archangel.feature.RoleplayFeatureManager;

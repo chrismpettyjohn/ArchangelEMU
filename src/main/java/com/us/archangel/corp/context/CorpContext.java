@@ -1,6 +1,6 @@
 package com.us.archangel.corp.context;
 
-import com.us.archangel.core.GenericContext;
+import com.us.nova.core.GenericContext;
 import com.us.archangel.corp.model.CorpModel;
 
 public class CorpContext extends GenericContext<CorpModel> {

@@ -1,6 +1,6 @@
 package com.us.archangel.gang.context;
 
-import com.us.archangel.core.GenericContext;
+import com.us.nova.core.GenericContext;
 import com.us.archangel.gang.model.GangInviteModel;
 
 public class GangInviteContext extends GenericContext<GangInviteModel> {

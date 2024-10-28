@@ -1,6 +1,5 @@
 package com.us.archangel.player.service;
 
-import com.us.archangel.core.GenericContext;
 import com.us.archangel.player.context.PlayerSkillContext;
 import com.us.archangel.player.entity.PlayerSkillEntity;
 import com.us.archangel.player.mapper.PlayerSkillMapper;
