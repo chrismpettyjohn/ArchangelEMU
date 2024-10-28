@@ -1,4 +1,4 @@
-package com.eu.websockets;
+package com.eu.websocket;
 
 import com.eu.habbo.messages.PacketManager;
 import com.eu.habbo.networking.gameserver.decoders.*;
@@ -13,9 +13,9 @@ import io.netty.handler.codec.http.websocketx.WebSocketServerProtocolConfig;
 import io.netty.handler.codec.http.websocketx.WebSocketServerProtocolHandler;
 import io.netty.handler.logging.LoggingHandler;
 import io.netty.handler.ssl.SslContext;
-import com.eu.websockets.codec.WebSocketCodec;
-import com.eu.websockets.handlers.CustomHTTPHandler;
-import com.eu.websockets.ssl.SSLCertificateLoader;
+import com.eu.websocket.codec.WebSocketCodec;
+import com.eu.websocket.handlers.CustomHTTPHandler;
+import com.eu.websocket.ssl.SSLCertificateLoader;
 
 public class NetworkChannelInitializer extends ChannelInitializer<SocketChannel> {
     private static final int MAX_FRAME_SIZE = 500000;

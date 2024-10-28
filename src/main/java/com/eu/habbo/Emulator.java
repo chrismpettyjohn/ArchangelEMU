@@ -3,7 +3,7 @@ package com.eu.habbo;
 import ch.qos.logback.classic.Level;
 import ch.qos.logback.classic.spi.ILoggingEvent;
 import ch.qos.logback.core.ConsoleAppender;
-import com.eu.websockets.Websockets;
+import com.eu.websocket.Websockets;
 import com.us.archangel.Archangel;
 import com.eu.habbo.core.*;
 import com.eu.habbo.core.consolecommands.ConsoleCommand;

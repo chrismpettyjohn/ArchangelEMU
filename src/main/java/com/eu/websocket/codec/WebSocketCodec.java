@@ -1,4 +1,4 @@
-package com.eu.websockets.codec;
+package com.eu.websocket.codec;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;

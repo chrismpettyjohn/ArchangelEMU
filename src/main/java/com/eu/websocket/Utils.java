@@ -1,4 +1,4 @@
-package com.eu.websockets;
+package com.eu.websocket;
 
 import java.net.URI;
 

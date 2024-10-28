@@ -1,8 +1,8 @@
-package com.eu.websockets.handlers;
+package com.eu.websocket.handlers;
 
 import com.eu.habbo.Emulator;
-import com.eu.websockets.Utils;
-import com.eu.websockets.Websockets;
+import com.eu.websocket.Utils;
+import com.eu.websocket.Websockets;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandlerContext;

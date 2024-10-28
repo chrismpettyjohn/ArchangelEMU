@@ -1,4 +1,4 @@
-package com.eu.websockets;
+package com.eu.websocket;
 
 import com.eu.habbo.Emulator;
 import io.netty.util.AttributeKey;

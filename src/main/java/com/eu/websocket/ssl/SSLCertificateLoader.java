@@ -1,4 +1,4 @@
-package com.eu.websockets.ssl;
+package com.eu.websocket.ssl;
 
 import io.netty.handler.ssl.SslContext;
 import io.netty.handler.ssl.SslContextBuilder;
