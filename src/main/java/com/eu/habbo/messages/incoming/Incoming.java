@@ -28,7 +28,6 @@ import com.eu.habbo.messages.incoming.guild.forums.*;
 import com.eu.habbo.messages.incoming.handshake.*;
 import com.eu.habbo.messages.incoming.helper.GetCfhStatusEvent;
 import com.eu.habbo.messages.incoming.helper.GetTalentTrackEvent;
-import com.eu.habbo.messages.incoming.hotelview.*;
 import com.eu.habbo.messages.incoming.inventory.*;
 import com.eu.habbo.messages.incoming.modtool.*;
 import com.eu.habbo.messages.incoming.navigator.*;
@@ -90,6 +89,8 @@ import com.us.archangel.feature.player.packets.incoming.UserOnlineCountEvent;
 import com.us.archangel.feature.player.packets.incoming.UserRoleplayStatsEvent;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+
+import java.awt.desktop.QuitEvent;
 
 @Getter
 @RequiredArgsConstructor
@@ -188,8 +189,6 @@ public enum Incoming {
 
     getBannedUsersFromRoomEvent(2267, GetBannedUsersFromRoomEvent.class),
 
-    getBonusRareInfoEvent(957, GetBonusRareInfoEvent.class),
-
     getBotCommandConfigurationDataEvent(1986, GetBotCommandConfigurationDataEvent.class),
 
     getBotInventoryEvent(3848, GetBotInventoryEvent.class),
@@ -215,8 +214,6 @@ public enum Incoming {
     getCraftingRecipesAvailableEvent(3086, GetCraftingRecipesAvailableEvent.class),
 
     getCreditsInfoEvent(273, GetCreditsInfoEvent.class),
-
-    getCurrentTimingCodeEvent(2912, GetCurrentTimingCodeEvent.class),
 
     getCustomRoomFilterEvent(1911, GetCustomRoomFilterEvent.class),
 
@@ -264,8 +261,6 @@ public enum Incoming {
 
     getJukeboxPlayListEvent(1435, GetJukeboxPlayListEvent.class),
 
-    getLimitedOfferAppearingNextEvent(410, GetLimitedOfferAppearingNextEvent.class),
-
     getMOTDEvent(1523, GetMOTDEvent.class),
 
     getMarketplaceCanMakeOfferEvent(848, GetMarketplaceCanMakeOfferEvent.class),
@@ -303,8 +298,6 @@ public enum Incoming {
     getPopularRoomTagsEvent(826, GetPopularRoomTagsEvent.class),
 
     getProductOfferEvent(2594, GetProductOfferEvent.class),
-
-    getPromoArticlesEvent(1827, GetPromoArticlesEvent.class),
 
     getRecyclerPrizesEvent(398, GetRecyclerPrizesEvent.class),
 
@@ -381,12 +374,6 @@ public enum Incoming {
     guideSessionResolvedEvent(887, GuideSessionResolvedEvent.class),
 
     habboSearchEvent(1210, HabboSearchEvent.class),
-
-    hotelViewClaimBadgeRewardEvent(-1, HotelViewClaimBadgeRewardEvent.class),
-
-    hotelViewRequestBadgeRewardEvent(2318, HotelViewRequestBadgeRewardEvent.class),
-
-    hotelViewRequestSecondsUntilEvent(271, HotelViewRequestSecondsUntilEvent.class),
 
     ignoreUserEvent(1117, IgnoreUserEvent.class),
 
@@ -529,8 +516,6 @@ public enum Incoming {
     purchaseTargetedOfferEvent(1826, PurchaseTargetedOfferEvent.class),
 
     purchaseVipMembershipExtensionEvent(3407, PurchaseVipMembershipExtensionEvent.class),
-
-    quitEvent(105, QuitEvent.class),
 
     rateFlatEvent(3582, RateFlatEvent.class),
 

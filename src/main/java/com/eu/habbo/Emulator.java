@@ -129,12 +129,12 @@ public final class Emulator {
             Emulator.gameEnvironment.load();
             Emulator.gameServer.initializePipeline();
             Emulator.gameServer.connect();
-            Emulator.badgeImager = new BadgeImager();
-
-
 
             Emulator.websockets = new Websockets();
             Emulator.websockets.load();
+
+
+            Emulator.badgeImager = new BadgeImager();
 
             log.info("Arcturus Archangel has successfully loaded.");
             log.info("System launched in: {}ms. Using {} threads!", (System.nanoTime() - startTime) / 1e6, Runtime.getRuntime().availableProcessors() * 2);

@@ -19,18 +19,12 @@ import java.util.Map;
 public class CleanerThread implements Runnable {
 
     private static final int DELAY = 10000;
-    private static final int RELOAD_HALL_OF_FAME = 1800;
-    private static final int RELOAD_NEWS_LIST = 3600;
-    private static final int REMOVE_INACTIVE_ROOMS = 120;
     private static final int REMOVE_INACTIVE_GUILDS = 60;
     private static final int REMOVE_INACTIVE_TOURS = 600;
     private static final int SAVE_ERROR_LOGS = 30;
     private static final int CLEAR_CACHED_VALUES = 60 * 60;
     private static final int CALLBACK_TIME = 60 * 15;
 
-    private static int LAST_HOF_RELOAD = Emulator.getIntUnixTimestamp();
-    private static int LAST_NL_RELOAD = Emulator.getIntUnixTimestamp();
-    private static int LAST_INACTIVE_ROOMS_CLEARED = Emulator.getIntUnixTimestamp();
     private static int LAST_INACTIVE_GUILDS_CLEARED = Emulator.getIntUnixTimestamp();
     private static int LAST_INACTIVE_TOURS_CLEARED = Emulator.getIntUnixTimestamp();
     private static int LAST_ERROR_LOGS_SAVED = Emulator.getIntUnixTimestamp();
@@ -52,16 +46,6 @@ public class CleanerThread implements Runnable {
         Emulator.getThreading().run(this, DELAY);
 
         int time = Emulator.getIntUnixTimestamp();
-
-        if (time - LAST_HOF_RELOAD > RELOAD_HALL_OF_FAME) {
-            Emulator.getGameEnvironment().getHotelViewManager().getHallOfFame().reload();
-            LAST_HOF_RELOAD = time;
-        }
-
-        if (time - LAST_NL_RELOAD > RELOAD_NEWS_LIST) {
-            Emulator.getGameEnvironment().getHotelViewManager().getNewsList().reload();
-            LAST_NL_RELOAD = time;
-        }
 
         if (time - LAST_INACTIVE_GUILDS_CLEARED > REMOVE_INACTIVE_GUILDS) {
             Emulator.getGameEnvironment().getGuildManager().clearInactiveGuilds();

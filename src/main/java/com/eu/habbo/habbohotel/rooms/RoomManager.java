@@ -38,7 +38,6 @@ import com.eu.habbo.habbohotel.wired.WiredHandler;
 import com.eu.habbo.habbohotel.wired.WiredTriggerType;
 import com.eu.habbo.messages.incoming.users.NewUserExperienceScriptProceedEvent;
 import com.eu.habbo.messages.outgoing.generic.alerts.GenericErrorComposer;
-import com.eu.habbo.messages.outgoing.hotelview.CloseConnectionMessageComposer;
 import com.eu.habbo.messages.outgoing.polls.PollOfferComposer;
 import com.eu.habbo.messages.outgoing.rooms.*;
 import com.eu.habbo.messages.outgoing.rooms.items.ItemsComposer;
@@ -458,14 +457,12 @@ public class RoomManager {
         }
 
         if (habbo.getRoomUnit().isLoadingRoom() && room.getRoomInfo().getId() != habbo.getRoomUnit().getLoadingRoom().getRoomInfo().getId()) {
-            habbo.getClient().sendResponse(new CloseConnectionMessageComposer());
             habbo.getRoomUnit().setLoadingRoom(null);
             return;
         }
 
         //Fire Plugin Event
         if (Emulator.getPluginManager().fireEvent(new UserEnterRoomEvent(habbo, room)).isCancelled() && habbo.getRoomUnit().getRoom() == null) {
-            habbo.getClient().sendResponse(new CloseConnectionMessageComposer());
             habbo.getRoomUnit().setLoadingRoom(null);
             return;
         }
@@ -513,7 +510,6 @@ public class RoomManager {
 
             if (!habbosWithRights) {
                 habbo.getClient().sendResponse(new FlatAccessDeniedMessageComposer(""));
-                habbo.getClient().sendResponse(new CloseConnectionMessageComposer());
                 habbo.getRoomUnit().setLoadingRoom(null);
                 return;
             }
@@ -526,11 +522,9 @@ public class RoomManager {
                 this.openRoom(habbo, room, spawnLocation);
             } else {
                 habbo.getClient().sendResponse(new GenericErrorComposer(GenericErrorComposer.WRONG_PASSWORD_USED));
-                habbo.getClient().sendResponse(new CloseConnectionMessageComposer());
                 habbo.getRoomUnit().setLoadingRoom(null);
             }
         } else {
-            habbo.getClient().sendResponse(new CloseConnectionMessageComposer());
             habbo.getRoomUnit().setLoadingRoom(null);
         }
     }
@@ -620,7 +614,6 @@ public class RoomManager {
 
     public void enterRoom(final Habbo habbo, final Room room) {
         if (habbo.getRoomUnit().isLoadingRoom() && room.getRoomInfo().getId() != habbo.getRoomUnit().getLoadingRoom().getRoomInfo().getId()) {
-            habbo.getClient().sendResponse(new CloseConnectionMessageComposer());
             habbo.getRoomUnit().setLoadingRoom(null);
             return;
         }

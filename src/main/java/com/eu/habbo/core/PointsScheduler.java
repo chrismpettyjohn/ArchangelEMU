@@ -22,7 +22,6 @@ public class PointsScheduler extends Scheduler {
 
     public void reloadConfig() {
         if (Emulator.getConfig().getBoolean("hotel.auto.points.enabled")) {
-            IGNORE_HOTEL_VIEW = Emulator.getConfig().getBoolean("hotel.auto.points.ignore.hotelview");
             IGNORE_IDLED = Emulator.getConfig().getBoolean("hotel.auto.points.ignore.idled");
             HC_MODIFIER = Emulator.getConfig().getDouble("hotel.auto.points.hc_modifier", 1.0);
             if (this.disposed) {
@@ -44,9 +43,6 @@ public class PointsScheduler extends Scheduler {
 
             try {
                 if (habbo != null) {
-                    if (habbo.getRoomUnit().getRoom() == null && IGNORE_HOTEL_VIEW)
-                        continue;
-
                     if (habbo.getRoomUnit().isIdle() && IGNORE_IDLED)
                         continue;
 

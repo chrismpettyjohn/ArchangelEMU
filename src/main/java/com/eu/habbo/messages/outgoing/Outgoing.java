@@ -186,8 +186,6 @@ public class Outgoing {
     public static final int heightMapUpdateMessageComposer = 558;
     public static final int hotelClosedAndOpensComposer = 3728;
     public static final int hotelClosesAndWillOpenAtComposer = 2771;
-    public static final int hotelViewCatalogPageExpiringComposer = 690;
-    public static final int hotelViewCustomTimerComposer = -1;
     public static final int hotelWillCloseInMinutesComposer = 1050;
     public static final int identityAccountsComposer = 3523;
     public static final int ignoredUsersMessageComposer = 126;

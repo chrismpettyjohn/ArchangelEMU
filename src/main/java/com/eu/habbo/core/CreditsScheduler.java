@@ -22,7 +22,6 @@ public class CreditsScheduler extends Scheduler {
 
     public void reloadConfig() {
         if (Emulator.getConfig().getBoolean("hotel.auto.credits.enabled")) {
-            IGNORE_HOTEL_VIEW = Emulator.getConfig().getBoolean("hotel.auto.credits.ignore.hotelview");
             IGNORE_IDLED = Emulator.getConfig().getBoolean("hotel.auto.credits.ignore.idled");
             HC_MODIFIER = Emulator.getConfig().getDouble("hotel.auto.credits.hc_modifier", 1.0);
 
@@ -45,8 +44,6 @@ public class CreditsScheduler extends Scheduler {
 
             try {
                 if (habbo != null) {
-                    if (habbo.getRoomUnit().getRoom() == null && IGNORE_HOTEL_VIEW)
-                        continue;
 
                     if (habbo.getRoomUnit().isIdle() && IGNORE_IDLED)
                         continue;

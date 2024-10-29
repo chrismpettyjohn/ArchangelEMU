@@ -321,7 +321,7 @@ public class HabboInfo implements Runnable {
     }
 
     public int getBonusRarePoints() {
-        return this.getCurrencyAmount(Emulator.getConfig().getInt("hotelview.promotional.points.type"));
+        return 0;
     }
 
     public HabboStats getHabboStats() {

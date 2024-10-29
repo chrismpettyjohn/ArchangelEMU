@@ -8,7 +8,6 @@ import java.util.Map;
 
 @Slf4j
 public class PixelScheduler extends Scheduler {
-    public static boolean IGNORE_HOTEL_VIEW;
     public static boolean IGNORE_IDLED;
     public static double HC_MODIFIER;
 
@@ -19,7 +18,6 @@ public class PixelScheduler extends Scheduler {
 
     public void reloadConfig() {
         if (Emulator.getConfig().getBoolean("hotel.auto.pixels.enabled")) {
-            IGNORE_HOTEL_VIEW = Emulator.getConfig().getBoolean("hotel.auto.pixels.ignore.hotelview");
             IGNORE_IDLED = Emulator.getConfig().getBoolean("hotel.auto.pixels.ignore.idled");
             HC_MODIFIER = Emulator.getConfig().getDouble("hotel.auto.pixels.hc_modifier", 1.0);
             if (this.disposed) {
@@ -40,8 +38,6 @@ public class PixelScheduler extends Scheduler {
             habbo = map.getValue();
             try {
                 if (habbo != null) {
-                    if (habbo.getRoomUnit().getRoom() == null && IGNORE_HOTEL_VIEW)
-                        continue;
 
                     if (habbo.getRoomUnit().isIdle() && IGNORE_IDLED)
                         continue;

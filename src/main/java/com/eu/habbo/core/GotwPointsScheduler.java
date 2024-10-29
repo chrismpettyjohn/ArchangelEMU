@@ -21,7 +21,6 @@ public class GotwPointsScheduler extends Scheduler {
 
     public void reloadConfig() {
         if (Emulator.getConfig().getBoolean("hotel.auto.gotwpoints.enabled")) {
-            IGNORE_HOTEL_VIEW = Emulator.getConfig().getBoolean("hotel.auto.gotwpoints.ignore.hotelview");
             IGNORE_IDLED = Emulator.getConfig().getBoolean("hotel.auto.gotwpoints.ignore.idled");
             HC_MODIFIER = Emulator.getConfig().getDouble("hotel.auto.gotwpoints.hc_modifier", 1.0);
             GOTW_POINTS_NAME =  Emulator.getConfig().getValue("hotel.auto.gotwpoints.name");
@@ -45,8 +44,6 @@ public class GotwPointsScheduler extends Scheduler {
 
             try {
                 if (habbo != null) {
-                    if (habbo.getRoomUnit().getRoom() == null && IGNORE_HOTEL_VIEW)
-                        continue;
 
                     if (habbo.getRoomUnit().isIdle() && IGNORE_IDLED)
                         continue;

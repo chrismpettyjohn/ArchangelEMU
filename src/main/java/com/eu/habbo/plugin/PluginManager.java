@@ -34,7 +34,6 @@ import com.eu.habbo.messages.incoming.camera.PublishPhotoEvent;
 import com.eu.habbo.messages.incoming.camera.PurchasePhotoEvent;
 import com.eu.habbo.messages.incoming.catalog.ApproveNameEvent;
 import com.eu.habbo.messages.incoming.floorplaneditor.UpdateFloorPropertiesEvent;
-import com.eu.habbo.messages.incoming.hotelview.GetLimitedOfferAppearingNextEvent;
 import com.eu.habbo.messages.incoming.rooms.promotions.PurchaseRoomAdEvent;
 import com.eu.habbo.messages.incoming.users.CheckUserNameEvent;
 import com.eu.habbo.messages.outgoing.catalog.BundleDiscountRulesetMessageComposer;
@@ -134,12 +133,7 @@ public class PluginManager {
         RoomConfiguration.PREFIX_FORMAT = Emulator.getConfig().getValue("room.chat.prefix.format");
         UpdateFloorPropertiesEvent.MAXIMUM_FLOORPLAN_WIDTH_LENGTH = Emulator.getConfig().getInt("hotel.floorplan.max.widthlength");
         UpdateFloorPropertiesEvent.MAXIMUM_FLOORPLAN_SIZE = Emulator.getConfig().getInt("hotel.floorplan.max.totalarea");
-
-        GetLimitedOfferAppearingNextEvent.ENABLED = Emulator.getConfig().getBoolean("hotel.view.ltdcountdown.enabled");
-        GetLimitedOfferAppearingNextEvent.TIMESTAMP = Emulator.getConfig().getInt("hotel.view.ltdcountdown.timestamp");
-        GetLimitedOfferAppearingNextEvent.ITEM_ID = Emulator.getConfig().getInt("hotel.view.ltdcountdown.itemid");
-        GetLimitedOfferAppearingNextEvent.PAGE_ID = Emulator.getConfig().getInt("hotel.view.ltdcountdown.pageid");
-        GetLimitedOfferAppearingNextEvent.ITEM_NAME = Emulator.getConfig().getValue("hotel.view.ltdcountdown.itemname");
+        ;
         InteractionPostIt.STICKYPOLE_PREFIX_TEXT = Emulator.getConfig().getValue("hotel.room.stickypole.prefix");
         TargetOffer.ACTIVE_TARGET_OFFER_ID = Emulator.getConfig().getInt("hotel.targetoffer.id");
         WordFilter.DEFAULT_REPLACEMENT = Emulator.getConfig().getValue("hotel.wordfilter.replacement");

@@ -13,7 +13,6 @@ import com.eu.habbo.habbohotel.commands.CommandsManager;
 import com.eu.habbo.habbohotel.crafting.CraftingManager;
 import com.eu.habbo.habbohotel.guides.GuideManager;
 import com.eu.habbo.habbohotel.guilds.GuildManager;
-import com.eu.habbo.habbohotel.hotelview.HotelViewManager;
 import com.eu.habbo.habbohotel.items.ItemManager;
 import com.eu.habbo.habbohotel.modtool.ModToolManager;
 import com.eu.habbo.habbohotel.modtool.ModToolSanctions;
@@ -43,7 +42,6 @@ public class GameEnvironment {
     private GuildManager guildManager;
     private ItemManager itemManager;
     private CatalogManager catalogManager;
-    private HotelViewManager hotelViewManager;
     private RoomManager roomManager;
     private CommandsManager commandsManager;
     private PermissionsManager permissionsManager;
@@ -66,7 +64,6 @@ public class GameEnvironment {
 
         this.permissionsManager = new PermissionsManager();
         this.habboManager = new HabboManager();
-        this.hotelViewManager = new HotelViewManager();
         this.itemManager = new ItemManager();
         this.itemManager.load();
         this.botManager = new BotManager();
@@ -120,7 +117,6 @@ public class GameEnvironment {
         this.catalogManager.dispose();
         this.roomManager.dispose();
         this.itemManager.dispose();
-        this.hotelViewManager.dispose();
         this.subscriptionManager.dispose();
         this.calendarManager.dispose();
         log.info("GameEnvironment -> Disposed!");
