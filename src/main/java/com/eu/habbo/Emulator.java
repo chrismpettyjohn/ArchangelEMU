@@ -133,7 +133,6 @@ public final class Emulator {
             Emulator.websockets = new Websockets();
             Emulator.websockets.load();
 
-
             Emulator.badgeImager = new BadgeImager();
 
             log.info("Arcturus Archangel has successfully loaded.");
