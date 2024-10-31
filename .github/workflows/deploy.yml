@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      IMAGE_NAME: ghcr.io/${{ github.repository }}/archangel-emu:latest
+      IMAGE_NAME: ghcr.io/${{ github.repository | toLower }}/archangel-emu:latest
 
     steps:
       - name: Checkout code
