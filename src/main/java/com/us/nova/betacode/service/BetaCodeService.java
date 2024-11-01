@@ -5,6 +5,11 @@ import com.us.nova.betacode.entity.BetaCodeEntity;
 import com.us.nova.betacode.mapper.BetaCodeMapper;
 import com.us.nova.betacode.model.BetaCodeModel;
 import com.us.nova.betacode.repository.BetaCodeRepository;
+import com.us.nova.bugreport.context.BugReportContext;
+import com.us.nova.bugreport.entity.BugReportEntity;
+import com.us.nova.bugreport.mapper.BugReportMapper;
+import com.us.nova.bugreport.model.BugReportModel;
+import com.us.nova.bugreport.repository.BugReportRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -56,6 +61,21 @@ public class BetaCodeService {
         return modelList;
     }
 
+    public BetaCodeModel getById(int id) {
+        BetaCodeModel storedVal = BetaCodeContext.getInstance().get(id);
+        if (storedVal != null) {
+            return storedVal;
+        }
+
+        BetaCodeEntity entity = BetaCodeRepository.getInstance().getById(id);
+        if (entity == null) {
+            return null;
+        }
+
+        BetaCodeModel model = BetaCodeMapper.toModel(entity);
+        BetaCodeContext.getInstance().add(entity.getId(), model);
+        return model;
+    }
 
     public void deleteById(int id) {
         BetaCodeContext.getInstance().delete(id);

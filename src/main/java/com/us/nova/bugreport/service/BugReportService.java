@@ -1,5 +1,10 @@
 package com.us.nova.bugreport.service;
 
+import com.us.archangel.corp.context.CorpContext;
+import com.us.archangel.corp.entity.CorpEntity;
+import com.us.archangel.corp.mapper.CorpMapper;
+import com.us.archangel.corp.model.CorpModel;
+import com.us.archangel.corp.repository.CorpRepository;
 import com.us.nova.bugreport.context.BugReportContext;
 import com.us.nova.bugreport.entity.BugReportEntity;
 import com.us.nova.bugreport.mapper.BugReportMapper;
@@ -56,6 +61,21 @@ public class BugReportService {
         return modelList;
     }
 
+    public BugReportModel getById(int id) {
+        BugReportModel storedVal = BugReportContext.getInstance().get(id);
+        if (storedVal != null) {
+            return storedVal;
+        }
+
+        BugReportEntity entity = BugReportRepository.getInstance().getById(id);
+        if (entity == null) {
+            return null;
+        }
+
+        BugReportModel model = BugReportMapper.toModel(entity);
+        BugReportContext.getInstance().add(entity.getId(), model);
+        return model;
+    }
 
     public void deleteById(int id) {
         BugReportContext.getInstance().delete(id);

@@ -469,4 +469,6 @@ public class Outgoing {
     public static final int turfCaptureTimeLeftComposer = 9037;
     public static final int weaponActionComposer = 9038;
     public static final int betaCodeListComposer = 9039;
+    public static final int bugReportDataComposer = 9040;
+    public static final int bugReportListComposer = 9041;
 }
