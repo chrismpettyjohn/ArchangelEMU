@@ -5,6 +5,9 @@ import com.us.archangel.crime.entity.CrimeEntity;
 import com.us.archangel.crime.mapper.CrimeMapper;
 import com.us.archangel.crime.model.CrimeModel;
 import com.us.archangel.crime.repository.CrimeRepository;
+import com.us.archangel.gang.service.GangService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +15,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class CrimeService {
+    private static final Logger LOGGER = LoggerFactory.getLogger(CrimeService.class);
 
     private static CrimeService instance;
 
@@ -21,6 +25,12 @@ public class CrimeService {
             instance = new CrimeService();
         }
         return instance;
+    }
+
+    private CrimeService() {
+        LOGGER.info("Crime Service > starting");
+        this.getAll();
+        LOGGER.info("Crime Service > loaded {} crimes", this.getAll().size());
     }
 
     public void create(CrimeEntity crimeEntity, CrimeModel crimeModel) {

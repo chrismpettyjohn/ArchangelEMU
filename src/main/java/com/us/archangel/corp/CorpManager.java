@@ -80,7 +80,7 @@ public class CorpManager {
             this.corpContext.add(entity.getId(), CorpMapper.toModel(entity));
         }
 
-        LOGGER.info("Corp manager > loaded " + entities.size() + " corps");
+        LOGGER.info("Corp manager > loaded");
     }
 
     public void dispose() {

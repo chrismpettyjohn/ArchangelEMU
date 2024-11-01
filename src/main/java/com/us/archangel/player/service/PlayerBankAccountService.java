@@ -5,6 +5,8 @@ import com.us.archangel.player.entity.PlayerBankAccountEntity;
 import com.us.archangel.player.mapper.PlayerBankAccountMapper;
 import com.us.archangel.player.model.PlayerBankAccountModel;
 import com.us.archangel.player.repository.PlayerBankAccountRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +14,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class PlayerBankAccountService {
+    private static final Logger LOGGER = LoggerFactory.getLogger(PlayerBankAccountService.class);
 
     private static PlayerBankAccountService instance;
 
@@ -20,6 +23,12 @@ public class PlayerBankAccountService {
             instance = new PlayerBankAccountService();
         }
         return instance;
+    }
+
+    private PlayerBankAccountService() {
+        LOGGER.info("Player Bank Account Service > starting");
+        this.getAll();
+        LOGGER.info("Player Bank Account Service > loaded {} bank accounts", this.getAll().size());
     }
 
     public void create(PlayerBankAccountEntity playerEntity) {

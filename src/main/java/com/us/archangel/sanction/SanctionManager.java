@@ -5,6 +5,7 @@ import com.us.archangel.sanction.entity.SanctionEntity;
 import com.us.archangel.sanction.mapper.SanctionMapper;
 import com.us.archangel.sanction.model.SanctionModel;
 import com.us.archangel.sanction.repository.SanctionRepository;
+import com.us.archangel.sanction.service.SanctionService;
 import lombok.Getter;
 import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
@@ -27,7 +28,7 @@ public class SanctionManager {
 
     public static SanctionManager getInstance() {
         if (instance == null) {
-            throw new RuntimeException("SanctionManager has not been initialized");
+            throw new RuntimeException("SanctionService has not been initialized");
         }
         return instance;
     }
@@ -36,9 +37,12 @@ public class SanctionManager {
 
     private final SanctionContext sanctionContext;
 
+    private final SanctionService sanctionService;
+
     private SanctionManager(SessionFactory sessionFactory) {
         this.sanctionContext = SanctionContext.getInstance();
         this.sanctionRepository = SanctionRepository.getInstance(sessionFactory);
+        this.sanctionService = SanctionService.getInstance();
         this.load();
     }
 
@@ -51,7 +55,7 @@ public class SanctionManager {
             this.sanctionContext.add(entity.getId(), SanctionMapper.toModel(entity));
         }
 
-        LOGGER.info("Sanction manager > loaded " + entities.size() + " sanctions");
+        LOGGER.info("Sanction manager > loaded");
     }
 
     public void dispose() {

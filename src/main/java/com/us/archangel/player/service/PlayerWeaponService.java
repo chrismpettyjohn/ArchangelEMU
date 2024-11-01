@@ -5,6 +5,8 @@ import com.us.archangel.player.entity.PlayerWeaponEntity;
 import com.us.archangel.player.mapper.PlayerWeaponMapper;
 import com.us.archangel.player.model.PlayerWeaponModel;
 import com.us.archangel.player.repository.PlayerWeaponRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,14 +14,22 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class PlayerWeaponService {
+    private static final Logger LOGGER = LoggerFactory.getLogger(PlayerWeaponService.class);
 
     private static PlayerWeaponService instance;
 
     public static PlayerWeaponService getInstance() {
         if (instance == null) {
             instance = new PlayerWeaponService();
+            instance.getAll();
         }
         return instance;
+    }
+
+    private PlayerWeaponService() {
+        LOGGER.info("Player Weapon Service > starting");
+        this.getAll();
+        LOGGER.info("Player Weapon Service > loaded {} player weapons", this.getAll().size());
     }
 
     public void create(PlayerWeaponEntity playerEntity) {
@@ -35,7 +45,7 @@ public class PlayerWeaponService {
     public List<PlayerWeaponModel> getByUserID(int userID) {
         Map<Integer, PlayerWeaponModel> allWeapons = PlayerWeaponContext.getInstance().getAll();
         List<PlayerWeaponModel> models = allWeapons.values().stream()
-                .filter(weapon -> weapon.getPlayerId() == userID)
+                .filter(weapon -> weapon.getUserId() == userID)
                 .collect(Collectors.toList());
 
         if (!models.isEmpty()) {

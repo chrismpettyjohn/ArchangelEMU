@@ -5,6 +5,8 @@ import com.us.archangel.corp.entity.CorpRoleEntity;
 import com.us.archangel.corp.mapper.CorpRoleMapper;
 import com.us.archangel.corp.model.CorpRoleModel;
 import com.us.archangel.corp.repository.CorpRoleRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +14,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class CorpRoleService {
+    private static final Logger LOGGER = LoggerFactory.getLogger(CorpRoleService.class);
 
     private static CorpRoleService instance;
 
@@ -20,6 +23,12 @@ public class CorpRoleService {
             instance = new CorpRoleService();
         }
         return instance;
+    }
+
+    private CorpRoleService() {
+        LOGGER.info("Corp Role Service > starting");
+        this.getAll();
+        LOGGER.info("Corp Role Service > loaded {} corp roles", this.getAll().size());
     }
 
     public CorpRoleModel create(CorpRoleEntity corpEntity) {

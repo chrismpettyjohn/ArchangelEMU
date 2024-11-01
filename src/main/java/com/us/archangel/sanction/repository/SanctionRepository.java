@@ -1,5 +1,6 @@
 package com.us.archangel.sanction.repository;
 
+import com.us.archangel.bounty.entity.BountyEntity;
 import com.us.archangel.sanction.entity.SanctionEntity;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;

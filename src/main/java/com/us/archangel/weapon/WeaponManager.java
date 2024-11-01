@@ -53,7 +53,7 @@ public class WeaponManager {
             this.weaponContext.add(entity.getId(), WeaponMapper.toModel(entity));
         }
 
-        LOGGER.info("Weapon manager > loaded " + entities.size() + " weapons");
+        LOGGER.info("Weapon manager > loaded");
     }
 
     public void dispose() {

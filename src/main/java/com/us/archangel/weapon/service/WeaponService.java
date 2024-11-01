@@ -1,10 +1,13 @@
 package com.us.archangel.weapon.service;
 
+import com.us.archangel.bounty.service.BountyService;
 import com.us.archangel.weapon.context.WeaponContext;
 import com.us.archangel.weapon.entity.WeaponEntity;
 import com.us.archangel.weapon.mapper.WeaponMapper;
 import com.us.archangel.weapon.model.WeaponModel;
 import com.us.archangel.weapon.repository.WeaponRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +15,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class WeaponService {
+    private static final Logger LOGGER = LoggerFactory.getLogger(WeaponService.class);
 
     private static WeaponService instance;
 

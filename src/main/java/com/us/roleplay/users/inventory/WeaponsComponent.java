@@ -30,7 +30,7 @@ public class WeaponsComponent {
     }
 
     public PlayerWeaponModel getWeaponByUniqueName(String uniqueName) {
-        List<PlayerWeaponModel> playerWeapons = PlayerWeaponService.getInstance().getByUserID(this.habbo.getPlayer().getId());
+        List<PlayerWeaponModel> playerWeapons = PlayerWeaponService.getInstance().getByUserID(this.habbo.getHabboInfo().getId());
         for (PlayerWeaponModel playerWeapon : playerWeapons) {
             if (playerWeapon.getWeapon().getUniqueName().equals(uniqueName)) {
                 return playerWeapon;
@@ -42,14 +42,14 @@ public class WeaponsComponent {
     public void createWeapon(int weaponID) {
         WeaponModel weapon = WeaponService.getInstance().getById(weaponID);
         PlayerWeaponEntity playerWeapon = new PlayerWeaponEntity();
-        playerWeapon.setPlayerId(this.habbo.getPlayer().getId());
+        playerWeapon.setUserId(this.habbo.getPlayer().getId());
         playerWeapon.setWeaponId(weaponID);
         playerWeapon.setAmmoRemaining(weapon.getAmmoCapacity());
         PlayerWeaponService.getInstance().create(playerWeapon);
     }
 
     public void dispose() {
-        List<PlayerWeaponModel> playerWeapons = PlayerWeaponService.getInstance().getByUserID(this.habbo.getPlayer().getId());
+        List<PlayerWeaponModel> playerWeapons = PlayerWeaponService.getInstance().getByUserID(this.habbo.getHabboInfo().getId());
         for (PlayerWeaponModel playerWeapon : playerWeapons) {
             PlayerWeaponService.getInstance().update(playerWeapon.getId(), PlayerWeaponMapper.toEntity(playerWeapon));
         }

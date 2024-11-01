@@ -16,7 +16,7 @@ public class MyWeaponListComposer extends MessageComposer {
 
     @Override
     protected ServerMessage composeInternal() {
-        List<PlayerWeaponModel> habboWeapons = PlayerWeaponService.getInstance().getByUserID(this.habbo.getPlayer().getUserId());
+        List<PlayerWeaponModel> habboWeapons = PlayerWeaponService.getInstance().getByUserID(this.habbo.getHabboInfo().getId());
         this.response.init(Outgoing.myWeaponListComposer);
         for (PlayerWeaponModel weapon : habboWeapons) {
             this.response.appendString(

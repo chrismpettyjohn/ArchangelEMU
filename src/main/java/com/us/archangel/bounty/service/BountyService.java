@@ -5,6 +5,9 @@ import com.us.archangel.bounty.entity.BountyEntity;
 import com.us.archangel.bounty.mapper.BountyMapper;
 import com.us.archangel.bounty.model.BountyModel;
 import com.us.archangel.bounty.repository.BountyRepository;
+import com.us.archangel.corp.service.CorpService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,15 +15,21 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class BountyService {
+    private static final Logger LOGGER = LoggerFactory.getLogger(BountyService.class);
 
     private static BountyService instance;
-
 
     public static BountyService getInstance() {
         if (instance == null) {
             instance = new BountyService();
         }
         return instance;
+    }
+
+    private BountyService() {
+        LOGGER.info("Bounty Service > starting");
+        this.getAll();
+        LOGGER.info("Bounty Service > loaded {} bounties", this.getAll().size());
     }
 
     public void create(BountyEntity bountyEntity, BountyModel bountyModel) {

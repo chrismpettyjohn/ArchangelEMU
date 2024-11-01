@@ -5,6 +5,8 @@ import com.us.archangel.player.entity.PlayerSkillEntity;
 import com.us.archangel.player.mapper.PlayerSkillMapper;
 import com.us.archangel.player.model.PlayerSkillModel;
 import com.us.archangel.player.repository.PlayerSkillRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +14,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class PlayerSkillService {
+    private static final Logger LOGGER = LoggerFactory.getLogger(PlayerSkillService.class);
 
     private static PlayerSkillService instance;
 
@@ -20,6 +23,12 @@ public class PlayerSkillService {
             instance = new PlayerSkillService();
         }
         return instance;
+    }
+
+    private PlayerSkillService() {
+        LOGGER.info("Player Skill Service > starting");
+        this.getAll();
+        LOGGER.info("Player Skill Service > loaded {} player skills", this.getAll().size());
     }
 
     public void create(PlayerSkillEntity playerEntity, PlayerSkillModel playerModel) {

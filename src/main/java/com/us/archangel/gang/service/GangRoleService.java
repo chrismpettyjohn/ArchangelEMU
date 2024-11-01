@@ -5,6 +5,8 @@ import com.us.archangel.gang.entity.GangRoleEntity;
 import com.us.archangel.gang.mapper.GangRoleMapper;
 import com.us.archangel.gang.model.GangRoleModel;
 import com.us.archangel.gang.repository.GangRoleRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +14,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class GangRoleService {
+    private static final Logger LOGGER = LoggerFactory.getLogger(GangRoleService.class);
 
     private static GangRoleService instance;
 
@@ -20,6 +23,12 @@ public class GangRoleService {
             instance = new GangRoleService();
         }
         return instance;
+    }
+
+    private GangRoleService() {
+        LOGGER.info("Gang Role Service > starting");
+        this.getAll();
+        LOGGER.info("Gang Role Service > loaded {} gang roles", this.getAll().size());
     }
 
     public GangRoleModel create(GangRoleEntity gangEntity) {

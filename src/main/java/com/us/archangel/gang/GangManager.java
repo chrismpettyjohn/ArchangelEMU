@@ -79,7 +79,7 @@ public class GangManager {
             this.gangContext.add(entity.getId(), GangMapper.toModel(entity));
         }
 
-        LOGGER.info("Gang manager > loaded " + entities.size() + " gangs");
+        LOGGER.info("Gang manager > loaded");
     }
 
     public void dispose() {

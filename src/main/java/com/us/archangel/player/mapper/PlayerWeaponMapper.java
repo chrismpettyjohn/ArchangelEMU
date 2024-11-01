@@ -11,7 +11,7 @@ public class PlayerWeaponMapper {
         }
         return new PlayerWeaponModel(
                 entity.getId(),
-                entity.getPlayerId(),
+                entity.getUserId(),
                 entity.getWeaponId(),
                 entity.getAmmoRemaining()
         );
@@ -23,7 +23,7 @@ public class PlayerWeaponMapper {
         }
         PlayerWeaponEntity entity = new PlayerWeaponEntity();
         entity.setId(model.getId());
-        entity.setPlayerId(model.getPlayerId());
+        entity.setUserId(model.getUserId());
         entity.setWeaponId(model.getWeaponId());
         entity.setAmmoRemaining(model.getAmmoRemaining());
         return entity;

@@ -17,7 +17,7 @@ public class WeaponActionComposer extends MessageComposer {
 
     @Override
     protected ServerMessage composeInternal() {
-        Habbo weaponUser = Emulator.getGameEnvironment().getHabboManager().getHabbo(this.weapon.getPlayerId());
+        Habbo weaponUser = Emulator.getGameEnvironment().getHabboManager().getHabbo(this.weapon.getUserId());
 
         if (weaponUser.getRoomUnit().getRoom().getRoomInfo().getId() != this.currentUser.getRoomUnit().getRoom().getRoomInfo().getId()) {
             return null;

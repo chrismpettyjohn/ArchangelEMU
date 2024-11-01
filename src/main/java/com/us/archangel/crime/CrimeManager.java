@@ -53,7 +53,7 @@ public class CrimeManager {
             this.crimeContext.add(entity.getId(), CrimeMapper.toModel(entity));
         }
 
-        LOGGER.info("Crime manager > loaded " + entities.size() + " bounties");
+        LOGGER.info("Crime manager > loaded");
     }
 
     public void dispose() {

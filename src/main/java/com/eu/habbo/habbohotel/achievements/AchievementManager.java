@@ -275,6 +275,7 @@ public class AchievementManager {
             }
         }
 
+
         log.info("Achievement Manager -> Loaded! (" + (System.currentTimeMillis() - millis) + " MS)");
     }
 

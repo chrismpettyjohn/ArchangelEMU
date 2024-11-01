@@ -5,11 +5,14 @@ import com.us.archangel.gang.entity.GangInviteEntity;
 import com.us.archangel.gang.mapper.GangInviteMapper;
 import com.us.archangel.gang.model.GangInviteModel;
 import com.us.archangel.gang.repository.GangInviteRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class GangInviteService {
+    private static final Logger LOGGER = LoggerFactory.getLogger(GangInviteService.class);
 
     private static GangInviteService instance;
 
@@ -18,6 +21,12 @@ public class GangInviteService {
             instance = new GangInviteService();
         }
         return instance;
+    }
+
+    private GangInviteService() {
+        LOGGER.info("Gang Invite Service > starting");
+        this.getAll();
+        LOGGER.info("Gang Invite Service > loaded {} gang invites", this.getAll().size());
     }
 
     public GangInviteModel create(GangInviteEntity gangEntity) {

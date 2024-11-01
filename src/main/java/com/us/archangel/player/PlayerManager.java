@@ -93,7 +93,7 @@ public class PlayerManager {
             this.playerContext.add(playerEntity.getId(), PlayerMapper.toModel(playerEntity));
         }
 
-        LOGGER.info("Player manager > loaded " + playerEntities.size() + " players");
+        LOGGER.info("Player manager > loaded");
     }
 
     public void dispose() {

@@ -5,11 +5,15 @@ import com.us.archangel.corp.entity.CorpInviteEntity;
 import com.us.archangel.corp.mapper.CorpInviteMapper;
 import com.us.archangel.corp.model.CorpInviteModel;
 import com.us.archangel.corp.repository.CorpInviteRepository;
+import com.us.archangel.crime.service.CrimeService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class CorpInviteService {
+    private static final Logger LOGGER = LoggerFactory.getLogger(CorpInviteService.class);
 
     private static CorpInviteService instance;
 
@@ -18,6 +22,12 @@ public class CorpInviteService {
             instance = new CorpInviteService();
         }
         return instance;
+    }
+
+    private CorpInviteService() {
+        LOGGER.info("Corp Invite Service > starting");
+        this.getAll();
+        LOGGER.info("Corp Invite Service > loaded {} corp invites", this.getAll().size());
     }
 
     public CorpInviteModel create(CorpInviteEntity corpEntity) {

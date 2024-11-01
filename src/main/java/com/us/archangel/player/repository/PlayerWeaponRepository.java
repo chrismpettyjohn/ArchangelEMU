@@ -49,7 +49,7 @@ public class PlayerWeaponRepository {
             transaction = session.beginTransaction();
             PlayerWeaponEntity player = session.get(PlayerWeaponEntity.class, id);
             if (player != null) {;
-                player.setPlayerId(updatedPlayerWeapon.getPlayerId());
+                player.setUserId(updatedPlayerWeapon.getUserId());
                 session.update(player);
             }
             transaction.commit();
@@ -68,7 +68,7 @@ public class PlayerWeaponRepository {
 
     public List<PlayerWeaponEntity> getByPlayerId(int playerId) {
         try (Session session = sessionFactory.openSession()) {
-            return session.createQuery("from PlayerWeaponEntity where playerId = :playerId", PlayerWeaponEntity.class)
+            return session.createQuery("from PlayerWeaponEntity where userId = :playerId", PlayerWeaponEntity.class)
                     .setParameter("playerId", playerId)
                     .list();
         }
