@@ -87,6 +87,8 @@ import com.us.archangel.feature.police.packets.incoming.*;
 import com.us.archangel.feature.player.packets.incoming.RoleplayPermissionsEvent;
 import com.us.archangel.feature.player.packets.incoming.UserOnlineCountEvent;
 import com.us.archangel.feature.player.packets.incoming.UserRoleplayStatsEvent;
+import com.us.nova.feature.betacode.packets.incoming.BetaCodeDeleteEvent;
+import com.us.nova.feature.betacode.packets.incoming.BetaCodeGenerateEvent;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
@@ -1063,7 +1065,11 @@ public enum Incoming {
 
     userAttackEvent(8067, UserAttackEvent.class),
 
-    weaponReloadEvent(8068, WeaponReloadEvent.class);
+    weaponReloadEvent(8068, WeaponReloadEvent.class),
+
+    betaCodeGenerateEvent(8069, BetaCodeGenerateEvent.class),
+
+    betaCodeDeleteEvent(8070, BetaCodeDeleteEvent.class);
 
     private final int messageId;
     private final Class<? extends MessageHandler> messageClass;

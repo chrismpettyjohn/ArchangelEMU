@@ -25,7 +25,7 @@ public class BetaCodeMapper {
         BetaCodeEntity entity = new BetaCodeEntity();
         entity.setId(model.getId());
         entity.setCode(model.getCode());
-        entity.setUserId(model.getUserId());
+        entity.setUserId(model.getClaimedByUserId());
         entity.setClaimedAt(model.getClaimedAt());
         entity.setCreatedAt(model.getCreatedAt());
         return entity;

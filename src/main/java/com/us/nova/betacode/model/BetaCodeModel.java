@@ -11,7 +11,7 @@ public class BetaCodeModel {
 
     private int id;
     private String code;
-    private Integer userId;
+    private Integer claimedByUserId;
     private Integer claimedAt;
     private int createdAt;
 
