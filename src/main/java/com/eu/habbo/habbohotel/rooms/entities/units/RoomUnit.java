@@ -170,7 +170,7 @@ public abstract class RoomUnit extends RoomEntity {
                     stopMoving();
                 }
             }
-        }, 0, 25);
+        }, 0, 25); // Set to 25 ms for smooth, responsive movement
     }
 
     public synchronized void stopMoving() {
@@ -236,7 +236,6 @@ public abstract class RoomUnit extends RoomEntity {
                     });
         }
     }
-
     @Override
     public RoomUnit setCurrentZ(double currentZ) {
         super.setCurrentZ(currentZ);

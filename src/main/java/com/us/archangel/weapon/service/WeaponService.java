@@ -26,6 +26,12 @@ public class WeaponService {
         return instance;
     }
 
+    private WeaponService() {
+        LOGGER.info("Weapon Service > starting");
+        this.getAll();
+        LOGGER.info("Weapon Service > loaded {} weapons", this.getAll().size());
+    }
+
     public void create(WeaponEntity weaponEntity, WeaponModel weaponModel) {
         WeaponContext.getInstance().add(weaponEntity.getId(), weaponModel);
         WeaponRepository.getInstance().create(weaponEntity);

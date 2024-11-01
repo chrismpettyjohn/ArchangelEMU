@@ -6,6 +6,7 @@ import com.us.archangel.corp.entity.CorpInviteEntity;
 import com.us.archangel.corp.entity.CorpRoleEntity;
 import com.us.archangel.crime.entity.CrimeEntity;
 import com.us.archangel.gang.entity.GangEntity;
+import com.us.archangel.gang.entity.GangInviteEntity;
 import com.us.archangel.gang.entity.GangRoleEntity;
 import com.us.archangel.player.entity.PlayerBankAccountEntity;
 import com.us.archangel.player.entity.PlayerEntity;
@@ -51,6 +52,7 @@ public class DatabaseConfig {
                 configuration.addAnnotatedClass(CorpInviteEntity.class);
                 configuration.addAnnotatedClass(CrimeEntity.class);
                 configuration.addAnnotatedClass(GangEntity.class);
+                configuration.addAnnotatedClass(GangInviteEntity.class);
                 configuration.addAnnotatedClass(GangRoleEntity.class);
                 configuration.addAnnotatedClass(PlayerEntity.class);
                 configuration.addAnnotatedClass(PlayerBankAccountEntity.class);
