@@ -16,8 +16,6 @@ import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.List;
-
 @Getter
 public class UserManager {
     private static final Logger LOGGER = LoggerFactory.getLogger(UserManager.class);
@@ -54,19 +52,6 @@ public class UserManager {
         this.userSSOContext = UserSSOContext.getInstance();
         this.userSSORepository = UserSSORepository.getInstance(sessionFactory);
         this.userSSOService = UserSSOService.getInstance();
-        this.load();
-    }
-
-    public void load() {
-        LOGGER.info("User manager > starting");
-
-        List<UserEntity> entities = UserRepository.getInstance().getAll();
-
-        for (UserEntity entity : entities) {
-            this.userContext.add(entity.getId(), UserMapper.toModel(entity));
-        }
-
-        LOGGER.info("User manager > loaded " + entities.size() + " bounties");
     }
 
     public void dispose() {

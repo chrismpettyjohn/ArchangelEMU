@@ -1,7 +1,9 @@
 package com.us.nova.user.mapper;
 
 import com.us.nova.user.entity.UserEntity;
+import com.us.nova.user.entity.UserSSOEntity;
 import com.us.nova.user.model.UserModel;
+import com.us.nova.user.model.UserSSOModel;
 
 public class UserMapper {
 

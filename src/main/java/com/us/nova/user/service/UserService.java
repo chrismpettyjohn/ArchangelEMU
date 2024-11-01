@@ -5,6 +5,8 @@ import com.us.nova.user.entity.UserEntity;
 import com.us.nova.user.mapper.UserMapper;
 import com.us.nova.user.model.UserModel;
 import com.us.nova.user.repository.UserRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,15 +14,21 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class UserService {
+    private static final Logger LOGGER = LoggerFactory.getLogger(UserService.class);
 
     private static UserService instance;
-
 
     public static UserService getInstance() {
         if (instance == null) {
             instance = new UserService();
         }
         return instance;
+    }
+
+    private UserService() {
+        LOGGER.info("User Service > starting");
+        this.getAll();
+        LOGGER.info("User Service > loaded {} users", this.getAll().size());
     }
 
     public void create(UserEntity userEntity, UserModel userModel) {
