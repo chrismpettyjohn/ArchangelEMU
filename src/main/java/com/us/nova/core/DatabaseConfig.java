@@ -16,6 +16,7 @@ import com.us.archangel.sanction.entity.SanctionEntity;
 import com.us.archangel.weapon.entity.WeaponEntity;
 import com.eu.habbo.core.ConfigurationManager;
 import com.us.nova.betacode.entity.BetaCodeEntity;
+import com.us.nova.bugreport.entity.BugReportEntity;
 import com.us.nova.user.entity.UserEntity;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
@@ -45,6 +46,7 @@ public class DatabaseConfig {
 
                 // Nova
                 configuration.addAnnotatedClass(BetaCodeEntity.class);
+                configuration.addAnnotatedClass(BugReportEntity.class);
                 configuration.addAnnotatedClass(UserEntity.class);
 
                 // Archangel

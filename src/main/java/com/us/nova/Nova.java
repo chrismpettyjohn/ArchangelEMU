@@ -2,6 +2,7 @@ package com.us.nova;
 
 import com.eu.habbo.core.ConfigurationManager;
 import com.us.nova.betacode.BetaCodeManager;
+import com.us.nova.bugreport.BugReportManager;
 import com.us.nova.core.DatabaseConfig;
 import com.us.nova.user.UserManager;
 import lombok.Getter;
@@ -18,6 +19,7 @@ public class Nova {
     private static final Logger LOGGER = LoggerFactory.getLogger(Nova.class);
 
     private BetaCodeManager betaCodeManager;
+    private BugReportManager bugReportManager;
     private UserManager userManager;
 
     public void load(ConfigurationManager config) {
@@ -31,6 +33,7 @@ public class Nova {
             session.beginTransaction();
 
             this.betaCodeManager = BetaCodeManager.getInstance(sessionFactory);
+            this.bugReportManager = BugReportManager.getInstance(sessionFactory);
             this.userManager = UserManager.getInstance(sessionFactory);
 
             session.getTransaction().commit();

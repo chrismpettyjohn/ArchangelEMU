@@ -7,7 +7,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "nova_users")
+@Table(name = "nova_beta_codes")
 public class BetaCodeEntity {
 
     @Id
