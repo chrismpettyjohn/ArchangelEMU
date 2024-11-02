@@ -15,6 +15,11 @@ public class BugReportUpdateEvent extends MessageHandler {
 
         BugReportModel bugReportModel = BugReportService.getInstance().getById(bugReportId);
 
+        if (bugReportModel.getClosedAt() == null) {
+            this.client.getHabbo().whisper(Emulator.getTexts().getValue("nova.bug-report.update.not-allowed"));
+            return;
+        }
+
         if (bugReportModel.getCreatedByUserId() != this.client.getHabbo().getHabboInfo().getId()) {
             this.client.getHabbo().whisper(Emulator.getTexts().getValue("nova.bug-report.update.not-allowed"));
             return;

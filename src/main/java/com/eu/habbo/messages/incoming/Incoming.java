@@ -89,10 +89,7 @@ import com.us.archangel.feature.player.packets.incoming.UserOnlineCountEvent;
 import com.us.archangel.feature.player.packets.incoming.UserRoleplayStatsEvent;
 import com.us.nova.feature.betacode.packets.incoming.BetaCodeDeleteEvent;
 import com.us.nova.feature.betacode.packets.incoming.BetaCodeGenerateEvent;
-import com.us.nova.feature.bugreport.packets.incoming.BugReportCloseEvent;
-import com.us.nova.feature.bugreport.packets.incoming.BugReportCreateEvent;
-import com.us.nova.feature.bugreport.packets.incoming.BugReportDeleteEvent;
-import com.us.nova.feature.bugreport.packets.incoming.BugReportUpdateEvent;
+import com.us.nova.feature.bugreport.packets.incoming.*;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
@@ -1081,7 +1078,11 @@ public enum Incoming {
 
     bugReportDeleteEvent(8073, BugReportDeleteEvent.class),
 
-    bugReportCloseEvent(8074, BugReportCloseEvent.class);
+    bugReportCloseEvent(8074, BugReportCloseEvent.class),
+
+    bugReportQueryListEvent(8075, BugReportQueryListEvent.class),
+
+    bugReportQueryOneEvent(8076, BugReportQueryOneEvent.class);
 
     private final int messageId;
     private final Class<? extends MessageHandler> messageClass;

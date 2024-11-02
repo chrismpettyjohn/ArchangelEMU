@@ -5,15 +5,15 @@ import com.eu.habbo.messages.incoming.MessageHandler;
 import com.us.nova.bugreport.entity.BugReportEntity;
 import com.us.nova.bugreport.mapper.BugReportMapper;
 import com.us.nova.bugreport.model.BugReportModel;
+import com.us.nova.bugreport.model.BugReportPermissions;
 import com.us.nova.bugreport.service.BugReportService;
 import com.us.nova.feature.bugreport.packets.outgoing.BugReportDataComposer;
 
 public class BugReportCloseEvent extends MessageHandler {
-    static final String BUG_REPORT_CLOSE_PERMISSION = "bug-report-close";
 
     @Override
     public void handle() {
-        boolean canCloseBugReport = this.client.getHabbo().getHabboInfo().getPermissionGroup().hasPermissionRight(BUG_REPORT_CLOSE_PERMISSION, false);
+        boolean canCloseBugReport = this.client.getHabbo().getHabboInfo().getPermissionGroup().hasPermissionRight(BugReportPermissions.CLOSE, false);
 
         if (!canCloseBugReport) {
             this.client.getHabbo().whisper(Emulator.getTexts().getValue("nova.bug-report.close.not-allowed"));
