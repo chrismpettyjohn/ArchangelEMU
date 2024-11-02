@@ -19,8 +19,8 @@ public class BugReportDataComposer extends MessageComposer {
         this.response.appendString(this.bugReport.getContent());
         this.response.appendInt(this.bugReport.getCreatedByUserId());
         this.response.appendInt(this.bugReport.getCreatedAt());
-        this.response.appendInt(this.bugReport.getClosedByUserId());
-        this.response.appendInt(this.bugReport.getClosedAt());
+        this.response.appendInt(this.bugReport.getClosedByUserId() != null ? this.bugReport.getClosedByUserId() : -1);
+        this.response.appendInt(this.bugReport.getClosedAt() != null ? this.bugReport.getClosedAt() : -1);
 
         return this.response;
     }
