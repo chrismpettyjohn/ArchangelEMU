@@ -3,6 +3,7 @@ package com.us.archangel.feature.corp.packets.incoming;
 import com.eu.habbo.Emulator;
 import com.eu.habbo.messages.incoming.MessageHandler;
 import com.us.archangel.corp.entity.CorpRoleEntity;
+import com.us.archangel.corp.mapper.CorpRoleMapper;
 import com.us.archangel.corp.model.CorpModel;
 import com.us.archangel.corp.service.CorpRoleService;
 import com.us.archangel.corp.service.CorpService;
@@ -50,7 +51,7 @@ public class CorpCreatePositionEvent extends MessageHandler {
         corpRoleEntity.setCanDemote(canDemote);
         corpRoleEntity.setCanWorkAnywhere(canWorkAnywhere);
 
-        CorpRoleService.getInstance().create(corpRoleEntity);
+        CorpRoleService.getInstance().create(CorpRoleMapper.toEntity(corpRoleEntity));
 
         this.client.getHabbo().whisper(Emulator.getTexts()
                 .getValue("roleplay.corp_position.create_success")

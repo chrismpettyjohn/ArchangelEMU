@@ -2,8 +2,9 @@ package com.us.archangel.corp.mapper;
 
 import com.us.archangel.corp.entity.CorpRoleEntity;
 import com.us.archangel.corp.model.CorpRoleModel;
+import com.us.nova.core.GenericMapper;
 
-public class CorpRoleMapper {
+public class CorpRoleMapper extends GenericMapper<CorpRoleEntity, CorpRoleModel> {
 
     public static CorpRoleModel toModel(CorpRoleEntity entity) {
         if (entity == null) {

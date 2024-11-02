@@ -5,17 +5,17 @@ import com.us.archangel.corp.entity.CorpInviteEntity;
 import com.us.archangel.corp.mapper.CorpInviteMapper;
 import com.us.archangel.corp.model.CorpInviteModel;
 import com.us.archangel.corp.repository.CorpInviteRepository;
-import com.us.archangel.crime.service.CrimeService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.us.nova.core.GenericService;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class CorpInviteService {
-    private static final Logger LOGGER = LoggerFactory.getLogger(CorpInviteService.class);
-
+public class CorpInviteService extends GenericService<CorpInviteModel, CorpInviteContext, CorpInviteRepository> {
     private static CorpInviteService instance;
+
+    private CorpInviteService() {
+        super(CorpInviteContext.getInstance(), CorpInviteRepository.getInstance(), CorpInviteMapper.class);
+    }
 
     public static CorpInviteService getInstance() {
         if (instance == null) {
@@ -24,11 +24,6 @@ public class CorpInviteService {
         return instance;
     }
 
-    private CorpInviteService() {
-        LOGGER.info("Corp Invite Service > starting");
-        this.getAll();
-        LOGGER.info("Corp Invite Service > loaded {} corp invites", this.getAll().size());
-    }
 
     public CorpInviteModel create(CorpInviteEntity corpEntity) {
         CorpInviteRepository.getInstance().create(corpEntity);

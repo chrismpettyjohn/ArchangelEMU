@@ -7,7 +7,6 @@ public class GenericContext<T> {
 
     private final Map<Integer, T> entities = new HashMap<>();
 
-
     public void add(Integer id, T entity) {
         entities.put(id, entity);
     }

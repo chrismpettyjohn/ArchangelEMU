@@ -2,8 +2,9 @@ package com.us.archangel.corp.mapper;
 
 import com.us.archangel.corp.entity.CorpInviteEntity;
 import com.us.archangel.corp.model.CorpInviteModel;
+import com.us.nova.core.GenericMapper;
 
-public class CorpInviteMapper {
+public class CorpInviteMapper extends GenericMapper<CorpInviteEntity, CorpInviteModel> {
 
     public static CorpInviteModel toModel(CorpInviteEntity entity) {
         if (entity == null) {

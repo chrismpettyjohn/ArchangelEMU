@@ -2,6 +2,7 @@ package com.us.archangel.feature.corp.packets.incoming;
 
 import com.eu.habbo.Emulator;
 import com.eu.habbo.messages.incoming.MessageHandler;
+import com.us.archangel.corp.mapper.CorpRoleMapper;
 import com.us.archangel.corp.model.CorpModel;
 import com.us.archangel.corp.model.CorpRoleModel;
 import com.us.archangel.corp.service.CorpRoleService;
@@ -45,7 +46,7 @@ public class CorpEditPositionEvent extends MessageHandler {
         corpPosition.setCanDemote((this.packet.readBoolean()));
         corpPosition.setCanWorkAnywhere((this.packet.readBoolean()));
 
-        CorpRoleService.getInstance().update(corpPosition);
+        CorpRoleService.getInstance().update(corpPosition.getId(), CorpRoleMapper.toModel(corpPosition));
 
         this.client.getHabbo().whisper(Emulator.getTexts()
                 .getValue("roleplay.corp_position.edit_success")

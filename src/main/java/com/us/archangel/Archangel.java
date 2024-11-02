@@ -47,7 +47,7 @@ public class Archangel {
         }
 
         this.bountyManager = BountyManager.getInstance(sessionFactory);
-        this.corpManager = CorpManager.getInstance(sessionFactory);
+        this.corpManager = CorpManager.getInstance();
         this.crimeManager = CrimeManager.getInstance(sessionFactory);
         this.gangManager = GangManager.getInstance(sessionFactory);
         this.sanctionManager = SanctionManager.getInstance(sessionFactory);

@@ -2,8 +2,9 @@ package com.us.archangel.corp.mapper;
 
 import com.us.archangel.corp.entity.CorpEntity;
 import com.us.archangel.corp.model.CorpModel;
+import com.us.nova.core.GenericMapper;
 
-public class CorpMapper {
+public class CorpMapper extends GenericMapper<CorpEntity, CorpModel> {
 
     public static CorpModel toModel(CorpEntity entity) {
         if (entity == null) {

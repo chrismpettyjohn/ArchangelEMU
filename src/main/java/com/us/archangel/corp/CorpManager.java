@@ -17,7 +17,6 @@ import com.us.archangel.corp.service.CorpInviteService;
 import com.us.archangel.corp.service.CorpRoleService;
 import com.us.archangel.corp.service.CorpService;
 import lombok.Getter;
-import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,16 +28,9 @@ public class CorpManager {
 
     private static CorpManager instance;
 
-    public static CorpManager getInstance(SessionFactory sessionFactory) {
-        if (instance == null) {
-            instance = new CorpManager(sessionFactory);
-        }
-        return instance;
-    }
-
     public static CorpManager getInstance() {
         if (instance == null) {
-            throw new RuntimeException("CorpManager has not been initialized");
+            instance = new CorpManager();
         }
         return instance;
     }
@@ -55,16 +47,16 @@ public class CorpManager {
     private final CorpRoleService corpRoleService;
     private final CorpInviteService corpInviteService;
 
-    private CorpManager(SessionFactory sessionFactory) {
+    private CorpManager() {
         this.corpContext = CorpContext.getInstance();
-        this.corpRepository = CorpRepository.getInstance(sessionFactory);
+        this.corpRepository = CorpRepository.getInstance();
         this.corpService = CorpService.getInstance();
 
         this.corpRoleContext = CorpRoleContext.getInstance();
-        this.corpRoleRepository = CorpRoleRepository.getInstance(sessionFactory);
+        this.corpRoleRepository = CorpRoleRepository.getInstance();
         this.corpRoleService = CorpRoleService.getInstance();
 
-        this.corpInviteRepository = CorpInviteRepository.getInstance(sessionFactory);
+        this.corpInviteRepository = CorpInviteRepository.getInstance();
         this.corpInviteContext = CorpInviteContext.getInstance();
         this.corpInviteService = CorpInviteService.getInstance();
 
