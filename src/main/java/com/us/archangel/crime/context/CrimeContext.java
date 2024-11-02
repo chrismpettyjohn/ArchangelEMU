@@ -7,13 +7,9 @@ public class CrimeContext extends GenericContext<CrimeModel> {
 
     private static volatile CrimeContext instance;
 
-    public static CrimeContext getInstance() {
+    public static synchronized CrimeContext getInstance() {
         if (instance == null) {
-            synchronized (CrimeContext.class) {
-                if (instance == null) {
-                    instance = new CrimeContext();
-                }
-            }
+            instance = new CrimeContext();
         }
         return instance;
     }
@@ -21,5 +17,4 @@ public class CrimeContext extends GenericContext<CrimeModel> {
     protected CrimeContext() {
         super();
     }
-
 }

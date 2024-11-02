@@ -2,8 +2,9 @@ package com.us.archangel.player.mapper;
 
 import com.us.archangel.player.entity.PlayerBankAccountEntity;
 import com.us.archangel.player.model.PlayerBankAccountModel;
+import com.us.nova.core.GenericMapper;
 
-public class PlayerBankAccountMapper {
+public class PlayerBankAccountMapper extends GenericMapper<PlayerBankAccountEntity, PlayerBankAccountModel> {
 
     public static PlayerBankAccountModel toModel(PlayerBankAccountEntity entity) {
         if (entity == null) {
@@ -28,6 +29,8 @@ public class PlayerBankAccountMapper {
         entity.setUserId(model.getUserId());
         entity.setCorpId(model.getCorpId());
         entity.setAccountBalance(model.getAccountBalance());
+        entity.setCreatedAt(model.getCreatedAt());
+        entity.setUpdatedAt(model.getUpdatedAt());
         return entity;
     }
 }

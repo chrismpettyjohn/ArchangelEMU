@@ -205,7 +205,7 @@ public class Habbo extends Avatar implements Runnable {
                 this.disconnected = true;
                 AchievementManager.saveAchievements(this);
 
-                PlayerService.getInstance().update(this.player.getId(), PlayerMapper.toEntity(this.getPlayer()));
+                PlayerService.getInstance().update(this.player.getId(), this.getPlayer());
                 this.habboStats.dispose();
             } catch (Exception e) {
                 log.error("Caught exception", e);
@@ -222,7 +222,7 @@ public class Habbo extends Avatar implements Runnable {
     public void run() {
         if (this.needsUpdate()) {
             this.habboInfo.run();
-            PlayerService.getInstance().update(this.getHabboInfo().getId(), PlayerMapper.toEntity(this.getPlayer()));
+            PlayerService.getInstance().update(this.getHabboInfo().getId(), this.getPlayer());
             this.needsUpdate(false);
         }
     }

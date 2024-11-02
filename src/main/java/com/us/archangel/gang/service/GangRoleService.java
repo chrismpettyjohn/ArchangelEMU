@@ -5,6 +5,7 @@ import com.us.archangel.gang.entity.GangRoleEntity;
 import com.us.archangel.gang.mapper.GangRoleMapper;
 import com.us.archangel.gang.model.GangRoleModel;
 import com.us.archangel.gang.repository.GangRoleRepository;
+import com.us.nova.core.GenericService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -13,12 +14,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class GangRoleService {
+public class GangRoleService extends GenericService<GangRoleModel, GangRoleContext, GangRoleRepository> {
     private static final Logger LOGGER = LoggerFactory.getLogger(GangRoleService.class);
 
     private static GangRoleService instance;
 
-    public static GangRoleService getInstance() {
+    public static synchronized GangRoleService getInstance() {
         if (instance == null) {
             instance = new GangRoleService();
         }
@@ -26,57 +27,29 @@ public class GangRoleService {
     }
 
     private GangRoleService() {
+        super(GangRoleContext.getInstance(), GangRoleRepository.getInstance(), GangRoleMapper.class);
         LOGGER.info("Gang Role Service > starting");
-        this.getAll();
+        this.getAll();  // Preload all gang roles
         LOGGER.info("Gang Role Service > loaded {} gang roles", this.getAll().size());
     }
 
-    public GangRoleModel create(GangRoleEntity gangEntity) {
-        GangRoleModel model = GangRoleMapper.toModel(gangEntity);
-        GangRoleContext.getInstance().add(gangEntity.getId(), model);
-        GangRoleRepository.getInstance().create(gangEntity);
-        return model;
-    }
-
-    public void update(GangRoleModel gangRoleModel) {
-        GangRoleContext.getInstance().update(gangRoleModel.getId(), gangRoleModel);
-        GangRoleRepository.getInstance().updateById(gangRoleModel.getId(), GangRoleMapper.toEntity(gangRoleModel));
-    }
-
-    public GangRoleModel getById(int id) {
-        GangRoleModel storedVal = GangRoleContext.getInstance().get(id);
-        if (storedVal != null) {
-            return storedVal;
-        }
-
-        GangRoleEntity entity = GangRoleRepository.getInstance().getById(id);
-        if (entity == null) {
-            return null;
-        }
-
-        GangRoleModel model = GangRoleMapper.toModel(entity);
-        GangRoleContext.getInstance().add(entity.getId(), model);
-        return model;
-    }
-
     public GangRoleModel getByGangIdAndOrderId(int gangId, int orderId) {
-        GangRoleModel storedVal = GangRoleContext.getInstance().getByGangIdAndOrderId(gangId, orderId);
+        GangRoleModel storedVal = context.getByGangIdAndOrderId(gangId, orderId);
         if (storedVal != null) {
             return storedVal;
         }
 
-        GangRoleEntity entity = GangRoleRepository.getInstance().getByGangIdAndOrderId(gangId, orderId);
-        if (entity == null) {
-            return null;
+        GangRoleEntity entity = repository.getByGangIdAndOrderId(gangId, orderId);
+        if (entity != null) {
+            GangRoleModel model = GangRoleMapper.toModel(entity);
+            context.add(entity.getId(), model);
+            return model;
         }
-
-        GangRoleModel model = GangRoleMapper.toModel(entity);
-        GangRoleContext.getInstance().add(entity.getId(), model);
-        return model;
+        return null;
     }
 
     public List<GangRoleModel> getByGangId(int gangId) {
-        List<GangRoleModel> storedValues = GangRoleContext.getInstance().getAll().values().stream()
+        List<GangRoleModel> storedValues = context.getAll().values().stream()
                 .filter(model -> model.getGangId() == gangId)
                 .collect(Collectors.toList());
 
@@ -84,33 +57,12 @@ public class GangRoleService {
             return storedValues;
         }
 
-        List<GangRoleEntity> entities = GangRoleRepository.getInstance().getByGangId(gangId);
+        List<GangRoleEntity> entities = repository.getByGangId(gangId);
         List<GangRoleModel> models = entities.stream()
                 .map(GangRoleMapper::toModel)
                 .collect(Collectors.toList());
 
-        models.forEach(model -> GangRoleContext.getInstance().add(model.getId(), model));
+        models.forEach(model -> context.add(model.getId(), model));
         return models;
-    }
-
-
-    public List<GangRoleModel> getAll() {
-        Map<Integer, GangRoleModel> contextData = GangRoleContext.getInstance().getAll();
-        if (!contextData.isEmpty()) {
-            return new ArrayList<>(contextData.values());
-        }
-
-        List<GangRoleEntity> gangRoleEntities = GangRoleRepository.getInstance().getAll();
-        List<GangRoleModel> modelList = gangRoleEntities.stream()
-                .map(GangRoleMapper::toModel)
-                .collect(Collectors.toList());
-
-        modelList.forEach(model -> GangRoleContext.getInstance().add(model.getId(), model));
-        return modelList;
-    }
-
-    public void deleteById(int id) {
-        GangRoleContext.getInstance().delete(id);
-        GangRoleRepository.getInstance().deleteById(id);
     }
 }

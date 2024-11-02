@@ -3,8 +3,9 @@ package com.us.archangel.sanction.mapper;
 
 import com.us.archangel.sanction.entity.SanctionEntity;
 import com.us.archangel.sanction.model.SanctionModel;
+import com.us.nova.core.GenericMapper;
 
-public class SanctionMapper {
+public class SanctionMapper extends GenericMapper<SanctionEntity, SanctionModel> {
 
     public static SanctionModel toModel(SanctionEntity entity) {
         if (entity == null) {

@@ -5,75 +5,43 @@ import com.us.archangel.player.entity.PlayerSkillEntity;
 import com.us.archangel.player.mapper.PlayerSkillMapper;
 import com.us.archangel.player.model.PlayerSkillModel;
 import com.us.archangel.player.repository.PlayerSkillRepository;
+import com.us.nova.core.GenericService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class PlayerSkillService {
+public class PlayerSkillService extends GenericService<PlayerSkillModel, PlayerSkillContext, PlayerSkillRepository> {
     private static final Logger LOGGER = LoggerFactory.getLogger(PlayerSkillService.class);
 
     private static PlayerSkillService instance;
 
-    public static PlayerSkillService getInstance() {
+    public static synchronized PlayerSkillService getInstance() {
         if (instance == null) {
             instance = new PlayerSkillService();
+            instance.getAll(); // preload cache
         }
         return instance;
     }
 
     private PlayerSkillService() {
-        LOGGER.info("Player Skill Service > starting");
-        this.getAll();
-        LOGGER.info("Player Skill Service > loaded {} player skills", this.getAll().size());
-    }
-
-    public void create(PlayerSkillEntity playerEntity, PlayerSkillModel playerModel) {
-        PlayerSkillContext.getInstance().add(playerEntity.getId(), playerModel);
-        PlayerSkillRepository.getInstance().create(playerEntity);
-    }
-
-    public void update(int id, PlayerSkillEntity updatedPlayerSkill) {
-        PlayerSkillContext.getInstance().update(id, PlayerSkillMapper.toModel(updatedPlayerSkill));
-        PlayerSkillRepository.getInstance().updateById(id, updatedPlayerSkill);
+        super(PlayerSkillContext.getInstance(), PlayerSkillRepository.getInstance(), PlayerSkillMapper.class);
     }
 
     public PlayerSkillModel getByUserID(int userID) {
-        PlayerSkillModel storedVal = PlayerSkillContext.getInstance().get(userID);
-        if (storedVal != null) {
-            return storedVal;
+        PlayerSkillModel cachedModel = context.get(userID);
+        if (cachedModel != null) {
+            return cachedModel;
         }
 
-        PlayerSkillEntity entity = PlayerSkillRepository.getInstance().getByUserId(userID);
-        if (entity == null) {
-            return null;
+        PlayerSkillEntity entity = repository.getByUserId(userID);
+        if (entity != null) {
+            PlayerSkillModel model = PlayerSkillMapper.toModel(entity);
+            context.add(entity.getId(), model);
+            return model;
         }
-
-        PlayerSkillModel model = PlayerSkillMapper.toModel(entity);
-        PlayerSkillContext.getInstance().add(entity.getId(), model);
-        return model;
-    }
-
-    public List<PlayerSkillModel> getAll() {
-        Map<Integer, PlayerSkillModel> models = PlayerSkillContext.getInstance().getAll();
-        if (!models.isEmpty()) {
-            return new ArrayList<>(models.values());
-        }
-
-        List<PlayerSkillEntity> entities = PlayerSkillRepository.getInstance().getAll();
-        List<PlayerSkillModel> modelList = entities.stream()
-                .map(PlayerSkillMapper::toModel)
-                .collect(Collectors.toList());
-
-        modelList.forEach(model -> PlayerSkillContext.getInstance().add(model.getId(), model));
-        return modelList;
-    }
-
-    public void deleteById(int id) {
-        PlayerSkillContext.getInstance().delete(id);
-        PlayerSkillRepository.getInstance().deleteById(id);
+        return null;
     }
 }

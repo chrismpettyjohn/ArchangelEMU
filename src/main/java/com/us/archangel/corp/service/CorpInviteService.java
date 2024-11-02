@@ -17,36 +17,38 @@ public class CorpInviteService extends GenericService<CorpInviteModel, CorpInvit
         super(CorpInviteContext.getInstance(), CorpInviteRepository.getInstance(), CorpInviteMapper.class);
     }
 
-    public static CorpInviteService getInstance() {
+    public static synchronized CorpInviteService getInstance() {
         if (instance == null) {
             instance = new CorpInviteService();
         }
         return instance;
     }
 
-
     public CorpInviteModel create(CorpInviteEntity corpEntity) {
-        CorpInviteRepository.getInstance().create(corpEntity);
+        repository.create(corpEntity);
         CorpInviteModel model = CorpInviteMapper.toModel(corpEntity);
-        CorpInviteContext.getInstance().add(corpEntity.getId(), model);
+        context.add(corpEntity.getId(), model);
         return model;
     }
 
     public void update(CorpInviteEntity updatedCorpInvite, CorpInviteModel updatedModel) {
-        CorpInviteRepository.getInstance().updateById(updatedCorpInvite.getId(), updatedCorpInvite);
-        CorpInviteContext.getInstance().update(updatedCorpInvite.getId(), updatedModel);
+        repository.updateById(updatedCorpInvite.getId(), updatedCorpInvite);
+        context.update(updatedCorpInvite.getId(), updatedModel);
     }
 
     public CorpInviteModel getById(int id) {
-        CorpInviteModel storedVal = CorpInviteContext.getInstance().get(id);
+        CorpInviteModel storedVal = context.get(id);
         if (storedVal != null) {
             return storedVal;
         }
 
-        CorpInviteEntity entity = CorpInviteRepository.getInstance().getById(id);
-        CorpInviteModel model = CorpInviteMapper.toModel(entity);
-        CorpInviteContext.getInstance().add(entity.getId(), model);
-        return model;
+        CorpInviteEntity entity = repository.getById(id);
+        if (entity != null) {
+            CorpInviteModel model = CorpInviteMapper.toModel(entity);
+            context.add(entity.getId(), model);
+            return model;
+        }
+        return null;
     }
 
     public CorpInviteModel getByCorpAndUserId(int corpId, int userId) {
@@ -56,21 +58,32 @@ public class CorpInviteService extends GenericService<CorpInviteModel, CorpInvit
             }
         }
 
-        CorpInviteEntity entity = CorpInviteRepository.getInstance().getByCorpAndUserId(corpId, userId);
-        CorpInviteModel model = CorpInviteMapper.toModel(entity);
-        CorpInviteContext.getInstance().add(entity.getId(), model);
-        return model;
+        CorpInviteEntity entity = repository.getByCorpAndUserId(corpId, userId);
+        if (entity != null) {
+            CorpInviteModel model = CorpInviteMapper.toModel(entity);
+            context.add(entity.getId(), model);
+            return model;
+        }
+        return null;
     }
 
+    @Override
     public List<CorpInviteModel> getAll() {
-        List<CorpInviteEntity> corpRoleEntities = CorpInviteRepository.getInstance().getAll();
-        return corpRoleEntities.stream()
-                .map(entity -> CorpInviteContext.getInstance().get(entity.getId()))
+        List<CorpInviteEntity> entities = repository.getAll();
+        return entities.stream()
+                .map(entity -> {
+                    CorpInviteModel model = context.get(entity.getId());
+                    if (model == null) {
+                        model = CorpInviteMapper.toModel(entity);
+                        context.add(entity.getId(), model);
+                    }
+                    return model;
+                })
                 .collect(Collectors.toList());
     }
 
     public void deleteById(int id) {
-        CorpInviteRepository.getInstance().deleteById(id);
-        CorpInviteContext.getInstance().delete(id);
+        repository.deleteById(id);
+        context.delete(id);
     }
 }

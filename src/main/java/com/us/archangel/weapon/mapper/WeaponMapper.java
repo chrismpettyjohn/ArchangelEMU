@@ -2,8 +2,9 @@ package com.us.archangel.weapon.mapper;
 
 import com.us.archangel.weapon.entity.WeaponEntity;
 import com.us.archangel.weapon.model.WeaponModel;
+import com.us.nova.core.GenericMapper;
 
-public class WeaponMapper {
+public class WeaponMapper extends GenericMapper<WeaponEntity, WeaponModel> {
 
     public static WeaponModel toModel(WeaponEntity entity) {
         if (entity == null) {

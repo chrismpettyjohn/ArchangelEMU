@@ -9,13 +9,10 @@ import com.us.archangel.weapon.model.WeaponModel;
 import com.us.archangel.weapon.service.WeaponService;
 import lombok.Getter;
 import lombok.Setter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
 public class WeaponsComponent {
-    private static final Logger LOGGER = LoggerFactory.getLogger(WeaponsComponent.class);
 
     @Setter
     @Getter
@@ -45,13 +42,13 @@ public class WeaponsComponent {
         playerWeapon.setUserId(this.habbo.getPlayer().getId());
         playerWeapon.setWeaponId(weaponID);
         playerWeapon.setAmmoRemaining(weapon.getAmmoCapacity());
-        PlayerWeaponService.getInstance().create(playerWeapon);
+        PlayerWeaponService.getInstance().create(PlayerWeaponMapper.toModel(playerWeapon));
     }
 
     public void dispose() {
         List<PlayerWeaponModel> playerWeapons = PlayerWeaponService.getInstance().getByUserID(this.habbo.getHabboInfo().getId());
         for (PlayerWeaponModel playerWeapon : playerWeapons) {
-            PlayerWeaponService.getInstance().update(playerWeapon.getId(), PlayerWeaponMapper.toEntity(playerWeapon));
+            PlayerWeaponService.getInstance().update(playerWeapon.getId(), playerWeapon);
         }
     }
 

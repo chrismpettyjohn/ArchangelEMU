@@ -7,13 +7,9 @@ public class GangRoleContext extends GenericContext<GangRoleModel> {
 
     private static volatile GangRoleContext instance;
 
-    public static GangRoleContext getInstance() {
+    public static synchronized GangRoleContext getInstance() {
         if (instance == null) {
-            synchronized (GangRoleContext.class) {
-                if (instance == null) {
-                    instance = new GangRoleContext();
-                }
-            }
+            instance = new GangRoleContext();
         }
         return instance;
     }
@@ -28,5 +24,4 @@ public class GangRoleContext extends GenericContext<GangRoleModel> {
                 .findFirst()
                 .orElse(null);
     }
-
 }

@@ -6,12 +6,11 @@ import com.us.nova.core.GenericContext;
 import java.util.List;
 import java.util.stream.Collectors;
 
-
 public class BountyContext extends GenericContext<BountyModel> {
 
     private static volatile BountyContext instance;
 
-    public static BountyContext getInstance() {
+    public static synchronized BountyContext getInstance() {
         if (instance == null) {
             synchronized (BountyContext.class) {
                 if (instance == null) {
@@ -25,7 +24,6 @@ public class BountyContext extends GenericContext<BountyModel> {
     protected BountyContext() {
         super();
     }
-
     public List<BountyModel> getByUserId(int userId) {
         return getAll().values().stream()
                 .filter(model -> model.getUserId() == userId)

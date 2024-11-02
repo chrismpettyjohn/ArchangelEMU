@@ -22,7 +22,6 @@ import com.us.archangel.player.service.PlayerService;
 import com.us.archangel.player.service.PlayerSkillService;
 import com.us.archangel.player.service.PlayerWeaponService;
 import lombok.Getter;
-import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -34,16 +33,9 @@ public class PlayerManager {
 
     private static PlayerManager instance;
 
-    public static PlayerManager getInstance(SessionFactory sessionFactory) {
-        if (instance == null) {
-            instance = new PlayerManager(sessionFactory);
-        }
-        return instance;
-    }
-
     public static PlayerManager getInstance() {
         if (instance == null) {
-            throw new RuntimeException("PlayerManager has not been initialized");
+            instance = new PlayerManager();
         }
         return instance;
     }
@@ -64,21 +56,21 @@ public class PlayerManager {
     private final PlayerBankAccountRepository playerBankAccountRepository;
     private final PlayerBankAccountService playerBankAccountService;
 
-    private PlayerManager(SessionFactory sessionFactory) {
+    private PlayerManager() {
         this.playerContext = PlayerContext.getInstance();
-        this.playerRepository = PlayerRepository.getInstance(sessionFactory);
+        this.playerRepository = PlayerRepository.getInstance();
         this.playerService = PlayerService.getInstance();
 
         this.playerSkillContext = PlayerSkillContext.getInstance();
-        this.playerSkillRepository = PlayerSkillRepository.getInstance(sessionFactory);
+        this.playerSkillRepository = PlayerSkillRepository.getInstance();
         this.playerSkillService = PlayerSkillService.getInstance();
 
         this.playerWeaponContext = PlayerWeaponContext.getInstance();
-        this.playerWeaponRepository = PlayerWeaponRepository.getInstance(sessionFactory);
+        this.playerWeaponRepository = PlayerWeaponRepository.getInstance();
         this.playerWeaponService = PlayerWeaponService.getInstance();
 
         this.playerBankAccountContext = PlayerBankAccountContext.getInstance();
-        this.playerBankAccountRepository = PlayerBankAccountRepository.getInstance(sessionFactory);
+        this.playerBankAccountRepository = PlayerBankAccountRepository.getInstance();
         this.playerBankAccountService = PlayerBankAccountService.getInstance();
 
         this.load();

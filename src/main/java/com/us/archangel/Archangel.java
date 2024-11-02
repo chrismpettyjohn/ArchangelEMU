@@ -46,14 +46,14 @@ public class Archangel {
             e.printStackTrace();
         }
 
-        this.bountyManager = BountyManager.getInstance(sessionFactory);
+        this.bountyManager = BountyManager.getInstance();
         this.corpManager = CorpManager.getInstance();
-        this.crimeManager = CrimeManager.getInstance(sessionFactory);
-        this.gangManager = GangManager.getInstance(sessionFactory);
-        this.sanctionManager = SanctionManager.getInstance(sessionFactory);
-        this.playerManager = PlayerManager.getInstance(sessionFactory);
+        this.crimeManager = CrimeManager.getInstance();
+        this.gangManager = GangManager.getInstance();
+        this.sanctionManager = SanctionManager.getInstance();
+        this.playerManager = PlayerManager.getInstance();
         this.roleplayFeatureManager = RoleplayFeatureManager.getInstance();
-        this.weaponManager = WeaponManager.getInstance(sessionFactory);
+        this.weaponManager = WeaponManager.getInstance();
 
         LOGGER.info("Archangel -> Loaded! (" + (System.currentTimeMillis() - millis) + " MS)");
     }

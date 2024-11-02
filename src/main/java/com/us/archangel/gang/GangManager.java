@@ -17,7 +17,6 @@ import com.us.archangel.gang.service.GangInviteService;
 import com.us.archangel.gang.service.GangRoleService;
 import com.us.archangel.gang.service.GangService;
 import lombok.Getter;
-import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,16 +28,9 @@ public class GangManager {
 
     private static GangManager instance;
 
-    public static GangManager getInstance(SessionFactory sessionFactory) {
-        if (instance == null) {
-            instance = new GangManager(sessionFactory);
-        }
-        return instance;
-    }
-
     public static GangManager getInstance() {
         if (instance == null) {
-            throw new RuntimeException("GangManager has not been initialized");
+            instance = new GangManager();
         }
         return instance;
     }
@@ -55,17 +47,17 @@ public class GangManager {
     private final GangInviteContext gangInviteContext;
     private final GangInviteService gangInviteService;
 
-    private GangManager(SessionFactory sessionFactory) {
+    private GangManager() {
         this.gangContext = GangContext.getInstance();
-        this.gangRepository = GangRepository.getInstance(sessionFactory);
+        this.gangRepository = GangRepository.getInstance();
         this.gangService = GangService.getInstance();
 
         this.gangRoleContext = GangRoleContext.getInstance();
-        this.gangRoleRepository = GangRoleRepository.getInstance(sessionFactory);
+        this.gangRoleRepository = GangRoleRepository.getInstance();
         this.gangRoleService = GangRoleService.getInstance();
 
         this.gangInviteContext = GangInviteContext.getInstance();
-        this.gangInviteRepository = GangInviteRepository.getInstance(sessionFactory);
+        this.gangInviteRepository = GangInviteRepository.getInstance();
         this.gangInviteService = GangInviteService.getInstance();
         this.load();
     }

@@ -91,7 +91,7 @@ public class BankAccountOpenCommand extends Command  {
         playerBankAccount.setCreatedAt(currentTime);
         playerBankAccount.setUpdatedAt(currentTime);
 
-        PlayerBankAccountService.getInstance().create(playerBankAccount);
+        PlayerBankAccountService.getInstance().create(PlayerBankAccountMapper.toModel(playerBankAccount));
 
         gameClient.getHabbo().shout(Emulator.getTexts()
                 .getValue("roleplay.bank.account_started")

@@ -7,13 +7,9 @@ public class GangInviteContext extends GenericContext<GangInviteModel> {
 
     private static volatile GangInviteContext instance;
 
-    public static GangInviteContext getInstance() {
+    public static synchronized GangInviteContext getInstance() {
         if (instance == null) {
-            synchronized (GangInviteContext.class) {
-                if (instance == null) {
-                    instance = new GangInviteContext();
-                }
-            }
+            instance = new GangInviteContext();
         }
         return instance;
     }

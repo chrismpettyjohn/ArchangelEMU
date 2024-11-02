@@ -7,7 +7,6 @@ import com.us.archangel.sanction.model.SanctionModel;
 import com.us.archangel.sanction.repository.SanctionRepository;
 import com.us.archangel.sanction.service.SanctionService;
 import lombok.Getter;
-import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,29 +18,21 @@ public class SanctionManager {
 
     private static SanctionManager instance;
 
-    public static SanctionManager getInstance(SessionFactory sessionFactory) {
-        if (instance == null) {
-            instance = new SanctionManager(sessionFactory);
-        }
-        return instance;
-    }
-
     public static SanctionManager getInstance() {
         if (instance == null) {
-            throw new RuntimeException("SanctionService has not been initialized");
+            instance = new SanctionManager();
         }
         return instance;
     }
-
     private final SanctionRepository sanctionRepository;
 
     private final SanctionContext sanctionContext;
 
     private final SanctionService sanctionService;
 
-    private SanctionManager(SessionFactory sessionFactory) {
+    private SanctionManager() {
         this.sanctionContext = SanctionContext.getInstance();
-        this.sanctionRepository = SanctionRepository.getInstance(sessionFactory);
+        this.sanctionRepository = SanctionRepository.getInstance();
         this.sanctionService = SanctionService.getInstance();
         this.load();
     }

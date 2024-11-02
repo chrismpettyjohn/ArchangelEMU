@@ -1,34 +1,24 @@
 package com.us.archangel.crime.repository;
 
 import com.us.archangel.crime.entity.CrimeEntity;
+import com.us.nova.core.GenericRepository;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
 import java.util.List;
 
-public class CrimeRepository {
+public class CrimeRepository extends GenericRepository<CrimeEntity> {
 
     private static CrimeRepository instance;
 
-    public static CrimeRepository getInstance(SessionFactory sessionFactory) {
-        if (instance == null) {
-            instance = new CrimeRepository(sessionFactory);
-        }
-        return instance;
-    }
-
     public static CrimeRepository getInstance() {
         if (instance == null) {
-            throw new RuntimeException("CrimeRepository has not been initialized");
+            instance = new CrimeRepository();
         }
         return instance;
     }
-
-    private final SessionFactory sessionFactory;
-
-    private CrimeRepository(SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
+    private CrimeRepository() {
+        super(CrimeEntity.class); // Pass entity type to GenericRepository
     }
 
     public void create(CrimeEntity crime) {
@@ -67,10 +57,9 @@ public class CrimeRepository {
         }
     }
 
-    @SuppressWarnings("unchecked")
     public List<CrimeEntity> getAll() {
         try (Session session = sessionFactory.openSession()) {
-            return session.createQuery("from CrimeEntity", CrimeEntity.class).list();  // Query simplified
+            return session.createQuery("from CrimeEntity", CrimeEntity.class).list();
         }
     }
 

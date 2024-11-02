@@ -7,7 +7,6 @@ import com.us.archangel.crime.model.CrimeModel;
 import com.us.archangel.crime.repository.CrimeRepository;
 import com.us.archangel.crime.service.CrimeService;
 import lombok.Getter;
-import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,16 +18,9 @@ public class CrimeManager {
 
     private static CrimeManager instance;
 
-    public static CrimeManager getInstance(SessionFactory sessionFactory) {
-        if (instance == null) {
-            instance = new CrimeManager(sessionFactory);
-        }
-        return instance;
-    }
-
     public static CrimeManager getInstance() {
         if (instance == null) {
-            throw new RuntimeException("CrimeManager has not been initialized");
+            instance = new CrimeManager();
         }
         return instance;
     }
@@ -37,9 +29,9 @@ public class CrimeManager {
     private final CrimeContext crimeContext;
     private final CrimeService crimeService;
 
-    private CrimeManager(SessionFactory sessionFactory) {
+    private CrimeManager() {
         this.crimeContext = CrimeContext.getInstance();
-        this.crimeRepository = CrimeRepository.getInstance(sessionFactory);
+        this.crimeRepository = CrimeRepository.getInstance();
         this.crimeService = CrimeService.getInstance();
         this.load();
     }

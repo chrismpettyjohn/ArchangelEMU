@@ -2,8 +2,9 @@ package com.us.archangel.player.mapper;
 
 import com.us.archangel.player.entity.PlayerWeaponEntity;
 import com.us.archangel.player.model.PlayerWeaponModel;
+import com.us.nova.core.GenericMapper;
 
-public class PlayerWeaponMapper {
+public class PlayerWeaponMapper extends GenericMapper<PlayerWeaponEntity, PlayerWeaponModel> {
 
     public static PlayerWeaponModel toModel(PlayerWeaponEntity entity) {
         if (entity == null) {

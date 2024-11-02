@@ -2,8 +2,9 @@ package com.us.archangel.gang.mapper;
 
 import com.us.archangel.gang.entity.GangEntity;
 import com.us.archangel.gang.model.GangModel;
+import com.us.nova.core.GenericMapper;
 
-public class GangMapper {
+public class GangMapper extends GenericMapper<GangEntity, GangModel> {
 
     public static GangModel toModel(GangEntity entity) {
         if (entity == null) {

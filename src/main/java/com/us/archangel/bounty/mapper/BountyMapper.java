@@ -2,8 +2,9 @@ package com.us.archangel.bounty.mapper;
 
 import com.us.archangel.bounty.entity.BountyEntity;
 import com.us.archangel.bounty.model.BountyModel;
+import com.us.nova.core.GenericMapper;
 
-public class BountyMapper {
+public class BountyMapper extends GenericMapper<BountyEntity, BountyModel> {
 
     public static BountyModel toModel(BountyEntity entity) {
         if (entity == null) {

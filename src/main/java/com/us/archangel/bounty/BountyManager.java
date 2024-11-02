@@ -7,7 +7,6 @@ import com.us.archangel.bounty.model.BountyModel;
 import com.us.archangel.bounty.repository.BountyRepository;
 import com.us.archangel.bounty.service.BountyService;
 import lombok.Getter;
-import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,27 +18,19 @@ public class BountyManager {
 
     private static BountyManager instance;
 
-    public static BountyManager getInstance(SessionFactory sessionFactory) {
-        if (instance == null) {
-            instance = new BountyManager(sessionFactory);
-        }
-        return instance;
-    }
-
     public static BountyManager getInstance() {
         if (instance == null) {
-            throw new RuntimeException("BountyManager has not been initialized");
+            instance = new BountyManager();
         }
         return instance;
     }
-
     private final BountyRepository bountyRepository;
     private final BountyContext bountyContext;
     private final BountyService bountyService;
 
-    private BountyManager(SessionFactory sessionFactory) {
+    private BountyManager() {
         this.bountyContext = BountyContext.getInstance();
-        this.bountyRepository = BountyRepository.getInstance(sessionFactory);
+        this.bountyRepository = BountyRepository.getInstance();
         this.bountyService = BountyService.getInstance();
         this.load();
     }

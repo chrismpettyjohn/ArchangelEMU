@@ -2,8 +2,9 @@ package com.us.archangel.crime.mapper;
 
 import com.us.archangel.crime.entity.CrimeEntity;
 import com.us.archangel.crime.model.CrimeModel;
+import com.us.nova.core.GenericMapper;
 
-public class CrimeMapper {
+public class CrimeMapper extends GenericMapper<CrimeEntity, CrimeModel> {
 
     public static CrimeModel toModel(CrimeEntity entity) {
         if (entity == null) {

@@ -7,7 +7,6 @@ import com.us.archangel.weapon.model.WeaponModel;
 import com.us.archangel.weapon.repository.WeaponRepository;
 import com.us.archangel.weapon.service.WeaponService;
 import lombok.Getter;
-import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,16 +18,9 @@ public class WeaponManager {
 
     private static WeaponManager instance;
 
-    public static WeaponManager getInstance(SessionFactory sessionFactory) {
-        if (instance == null) {
-            instance = new WeaponManager(sessionFactory);
-        }
-        return instance;
-    }
-
     public static WeaponManager getInstance() {
         if (instance == null) {
-            throw new RuntimeException("WeaponManager has not been initialized");
+            instance = new WeaponManager();
         }
         return instance;
     }
@@ -37,9 +29,9 @@ public class WeaponManager {
     private final WeaponContext weaponContext;
     private final WeaponService weaponService;
 
-    private WeaponManager(SessionFactory sessionFactory) {
+    private WeaponManager() {
         this.weaponContext = WeaponContext.getInstance();
-        this.weaponRepository = WeaponRepository.getInstance(sessionFactory);
+        this.weaponRepository = WeaponRepository.getInstance();
         this.weaponService = WeaponService.getInstance();
         this.load();
     }

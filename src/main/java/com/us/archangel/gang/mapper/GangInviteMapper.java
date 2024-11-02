@@ -2,8 +2,9 @@ package com.us.archangel.gang.mapper;
 
 import com.us.archangel.gang.entity.GangInviteEntity;
 import com.us.archangel.gang.model.GangInviteModel;
+import com.us.nova.core.GenericMapper;
 
-public class GangInviteMapper {
+public class GangInviteMapper extends GenericMapper<GangInviteEntity, GangInviteModel> {
 
     public static GangInviteModel toModel(GangInviteEntity entity) {
         if (entity == null) {
@@ -25,6 +26,7 @@ public class GangInviteMapper {
         entity.setId(model.getId());
         entity.setGangId(model.getGangId());
         entity.setGangRoleId(model.getGangRoleId());
+        entity.setUserId(model.getUserId());
         return entity;
     }
 }

@@ -5,7 +5,6 @@ import com.eu.habbo.habbohotel.commands.Command;
 import com.eu.habbo.habbohotel.gameclients.GameClient;
 import com.us.archangel.corp.model.CorpModel;
 import com.us.archangel.corp.service.CorpService;
-import com.us.archangel.player.mapper.PlayerBankAccountMapper;
 import com.us.archangel.player.model.PlayerBankAccountModel;
 import com.us.archangel.player.service.PlayerBankAccountService;
 
@@ -50,7 +49,7 @@ public class BankAccountDepositCommand extends Command  {
 
         gameClient.getHabbo().getHabboInfo().setCredits(gameClient.getHabbo().getHabboInfo().getCredits() - depositAmount);
         bankAccount.addAccountBalance(depositAmount);
-        PlayerBankAccountService.getInstance().update(bankAccount.getId(), PlayerBankAccountMapper.toEntity(bankAccount));
+        PlayerBankAccountService.getInstance().update(bankAccount.getId(), bankAccount);
 
         gameClient.getHabbo().shout(Emulator.getTexts()
                 .getValue("roleplay.bank.deposit_success")

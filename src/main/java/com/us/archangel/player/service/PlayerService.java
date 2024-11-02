@@ -5,115 +5,81 @@ import com.us.archangel.player.entity.PlayerEntity;
 import com.us.archangel.player.mapper.PlayerMapper;
 import com.us.archangel.player.model.PlayerModel;
 import com.us.archangel.player.repository.PlayerRepository;
+import com.us.nova.core.GenericService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class PlayerService {
+public class PlayerService extends GenericService<PlayerModel, PlayerContext, PlayerRepository> {
     private static final Logger LOGGER = LoggerFactory.getLogger(PlayerService.class);
 
     private static PlayerService instance;
 
-    public static PlayerService getInstance() {
+    public static synchronized PlayerService getInstance() {
         if (instance == null) {
             instance = new PlayerService();
+            instance.getAll(); // Preload all player data
         }
         return instance;
     }
 
     private PlayerService() {
+        super(PlayerContext.getInstance(), PlayerRepository.getInstance(), PlayerMapper.class);
         LOGGER.info("Player Service > starting");
-        this.getAll();
-        LOGGER.info("Player Service > loaded {} rp stats", this.getAll().size());
-    }
-
-    public void create(PlayerEntity playerEntity, PlayerModel playerModel) {
-        PlayerContext.getInstance().add(playerEntity.getId(), playerModel);
-        PlayerRepository.getInstance().create(playerEntity);
-    }
-
-    public void update(int id, PlayerEntity updatedPlayer) {
-        PlayerContext.getInstance().update(id, PlayerMapper.toModel(updatedPlayer));
-        PlayerRepository.getInstance().updateById(id, updatedPlayer);
+        LOGGER.info("Player Service > loaded {} player stats", this.getAll().size());
     }
 
     public PlayerModel getByUserID(int userID) {
-        PlayerModel storedVal = PlayerContext.getInstance().get(userID);
-        if (storedVal != null) {
-            return storedVal;
+        PlayerModel cachedModel = context.getAll().get(userID);
+        if (cachedModel != null) {
+            return cachedModel;
         }
 
-        PlayerEntity entity = PlayerRepository.getInstance().getByUserId(userID);
-        if (entity == null) {
-            return null;
+        PlayerEntity entity = repository.getByUserId(userID);
+        if (entity != null) {
+            PlayerModel model = PlayerMapper.toModel(entity);
+            context.add(entity.getId(), model);
+            return model;
         }
-
-        PlayerModel model = PlayerMapper.toModel(entity);
-        PlayerContext.getInstance().add(entity.getId(), model);
-        return model;
-    }
-
-    public List<PlayerModel> getAll() {
-        Map<Integer, PlayerModel> models = PlayerContext.getInstance().getAll();
-        if (!models.isEmpty()) {
-            return new ArrayList<>(models.values());
-        }
-
-        List<PlayerEntity> entities = PlayerRepository.getInstance().getAll();
-        List<PlayerModel> modelList = entities.stream()
-                .map(PlayerMapper::toModel)
-                .collect(Collectors.toList());
-
-        modelList.forEach(model -> PlayerContext.getInstance().add(model.getId(), model));
-        return modelList;
+        return null;
     }
 
     public List<PlayerModel> getByCorpId(int corpId) {
-        Map<Integer, PlayerModel> allPlayers = PlayerContext.getInstance().getAll();
-        List<PlayerModel> models = allPlayers.values().stream()
+        List<PlayerModel> cachedModels = context.getAll().values().stream()
                 .filter(player -> player.getCorpId() == corpId)
                 .collect(Collectors.toList());
 
-        if (!models.isEmpty()) {
-            return models;
+        if (!cachedModels.isEmpty()) {
+            return cachedModels;
         }
 
-        List<PlayerEntity> entities = PlayerRepository.getInstance().getByCorpId(corpId);
+        List<PlayerEntity> entities = repository.getByCorpId(corpId);
         List<PlayerModel> modelList = entities.stream()
                 .map(PlayerMapper::toModel)
                 .collect(Collectors.toList());
 
-        // Add to context
-        modelList.forEach(model -> PlayerContext.getInstance().add(model.getId(), model));
+        modelList.forEach(model -> context.add(model.getId(), model));
         return modelList;
     }
 
     public List<PlayerModel> getByCorpRoleID(int corpRoleID) {
-        Map<Integer, PlayerModel> allPlayers = PlayerContext.getInstance().getAll();
-        List<PlayerModel> models = allPlayers.values().stream()
+        List<PlayerModel> cachedModels = context.getAll().values().stream()
                 .filter(player -> player.getCorpRoleId() == corpRoleID)
                 .collect(Collectors.toList());
 
-        if (!models.isEmpty()) {
-            return models;
+        if (!cachedModels.isEmpty()) {
+            return cachedModels;
         }
 
-        List<PlayerEntity> entities = PlayerRepository.getInstance().getByCorpRoleId(corpRoleID);
+        List<PlayerEntity> entities = repository.getByCorpRoleId(corpRoleID);
         List<PlayerModel> modelList = entities.stream()
                 .map(PlayerMapper::toModel)
                 .collect(Collectors.toList());
 
-        modelList.forEach(model -> PlayerContext.getInstance().add(model.getId(), model));
+        modelList.forEach(model -> context.add(model.getId(), model));
         return modelList;
-    }
-
-
-    public void deleteById(int id) {
-        PlayerContext.getInstance().delete(id);
-        PlayerRepository.getInstance().deleteById(id);
     }
 }

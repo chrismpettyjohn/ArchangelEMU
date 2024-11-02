@@ -5,45 +5,35 @@ import com.us.archangel.player.entity.PlayerWeaponEntity;
 import com.us.archangel.player.mapper.PlayerWeaponMapper;
 import com.us.archangel.player.model.PlayerWeaponModel;
 import com.us.archangel.player.repository.PlayerWeaponRepository;
+import com.us.nova.core.GenericService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class PlayerWeaponService {
+public class PlayerWeaponService extends GenericService<PlayerWeaponModel, PlayerWeaponContext, PlayerWeaponRepository> {
     private static final Logger LOGGER = LoggerFactory.getLogger(PlayerWeaponService.class);
 
     private static PlayerWeaponService instance;
 
-    public static PlayerWeaponService getInstance() {
+    public static synchronized PlayerWeaponService getInstance() {
         if (instance == null) {
             instance = new PlayerWeaponService();
-            instance.getAll();
+            instance.getAll(); // preload cache
         }
         return instance;
     }
 
     private PlayerWeaponService() {
+        super(PlayerWeaponContext.getInstance(), PlayerWeaponRepository.getInstance(), PlayerWeaponMapper.class);
         LOGGER.info("Player Weapon Service > starting");
-        this.getAll();
         LOGGER.info("Player Weapon Service > loaded {} player weapons", this.getAll().size());
     }
 
-    public void create(PlayerWeaponEntity playerEntity) {
-        PlayerWeaponContext.getInstance().add(playerEntity.getId(), PlayerWeaponMapper.toModel(playerEntity));
-        PlayerWeaponRepository.getInstance().create(playerEntity);
-    }
-
-    public void update(int id, PlayerWeaponEntity updatedPlayerWeapon) {
-        PlayerWeaponContext.getInstance().update(id, PlayerWeaponMapper.toModel(updatedPlayerWeapon));
-        PlayerWeaponRepository.getInstance().updateById(id, updatedPlayerWeapon);
-    }
-
     public List<PlayerWeaponModel> getByUserID(int userID) {
-        Map<Integer, PlayerWeaponModel> allWeapons = PlayerWeaponContext.getInstance().getAll();
+        Map<Integer, PlayerWeaponModel> allWeapons = context.getAll();
         List<PlayerWeaponModel> models = allWeapons.values().stream()
                 .filter(weapon -> weapon.getUserId() == userID)
                 .collect(Collectors.toList());
@@ -52,33 +42,12 @@ public class PlayerWeaponService {
             return models;
         }
 
-        List<PlayerWeaponEntity> entities = PlayerWeaponRepository.getInstance().getByPlayerId(userID);
+        List<PlayerWeaponEntity> entities = repository.getByPlayerId(userID);
         List<PlayerWeaponModel> modelList = entities.stream()
                 .map(PlayerWeaponMapper::toModel)
                 .collect(Collectors.toList());
 
-        modelList.forEach(model -> PlayerWeaponContext.getInstance().add(model.getId(), model));
+        modelList.forEach(model -> context.add(model.getId(), model));
         return modelList;
-    }
-
-
-    public List<PlayerWeaponModel> getAll() {
-        Map<Integer, PlayerWeaponModel> models = PlayerWeaponContext.getInstance().getAll();
-        if (!models.isEmpty()) {
-            return new ArrayList<>(models.values());
-        }
-
-        List<PlayerWeaponEntity> entities = PlayerWeaponRepository.getInstance().getAll();
-        List<PlayerWeaponModel> modelList = entities.stream()
-                .map(PlayerWeaponMapper::toModel)
-                .collect(Collectors.toList());
-
-        modelList.forEach(model -> PlayerWeaponContext.getInstance().add(model.getId(), model));
-        return modelList;
-    }
-
-    public void deleteById(int id) {
-        PlayerWeaponContext.getInstance().delete(id);
-        PlayerWeaponRepository.getInstance().deleteById(id);
     }
 }
