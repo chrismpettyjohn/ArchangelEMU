@@ -11,7 +11,12 @@ public class GangModel {
 
     private int id;
     private String displayName;
+    private String description;
+    private String badge;
     private int userId;
     private int roomId;
+
+    public GangModel() {
+    }
 
 }

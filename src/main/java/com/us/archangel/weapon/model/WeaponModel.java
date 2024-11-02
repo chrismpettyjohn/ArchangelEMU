@@ -27,4 +27,7 @@ public class WeaponModel {
     private String equipMessage;
     private String unequipMessage;
     private String attackMessage;
+
+    public WeaponModel() {
+    }
 }

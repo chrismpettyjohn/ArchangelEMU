@@ -15,4 +15,7 @@ public class GangRoleModel {
     private String name;
     private boolean canInvite;
     private boolean canKick;
+
+    public GangRoleModel() {
+    }
 }

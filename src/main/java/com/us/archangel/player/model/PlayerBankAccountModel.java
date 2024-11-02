@@ -13,6 +13,9 @@ public class PlayerBankAccountModel {
     private int createdAt;
     private int updatedAt;
 
+    public PlayerBankAccountModel() {
+    }
+
     public void addAccountBalance(int credits) {
         this.accountBalance += credits;
     }

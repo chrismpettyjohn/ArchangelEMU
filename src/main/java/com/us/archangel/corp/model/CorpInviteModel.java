@@ -13,4 +13,7 @@ public class CorpInviteModel {
     private int corpId;
     private int corpRoleId;
     private int userId;
+
+    public CorpInviteModel() {
+    }
 }

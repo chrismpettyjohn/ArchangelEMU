@@ -13,4 +13,7 @@ public class GangInviteModel {
     private int gangId;
     private int gangRoleId;
     private int userId;
+
+    public GangInviteModel() {
+    }
 }

@@ -13,4 +13,7 @@ public class BountyModel {
     private int userId;
     private int crimeId;
 
+    public BountyModel() {
+    }
+
 }

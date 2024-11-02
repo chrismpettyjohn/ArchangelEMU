@@ -11,4 +11,7 @@ public class UserModel {
 
     private int id;
 
+    public UserModel() {
+    }
+
 }

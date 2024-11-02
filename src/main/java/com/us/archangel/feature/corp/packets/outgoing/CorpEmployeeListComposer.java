@@ -1,5 +1,7 @@
 package com.us.archangel.feature.corp.packets.outgoing;
 
+import com.eu.habbo.Emulator;
+import com.eu.habbo.habbohotel.users.Habbo;
 import com.eu.habbo.messages.ServerMessage;
 import com.eu.habbo.messages.outgoing.MessageComposer;
 import com.eu.habbo.messages.outgoing.Outgoing;
@@ -22,10 +24,11 @@ public class CorpEmployeeListComposer extends MessageComposer {
         this.response.appendInt(habboRoleplayStatsList.size());
 
         for (PlayerModel habboRoleplayStats : habboRoleplayStatsList) {
+            Habbo habbo = Emulator.getGameEnvironment().getHabboManager().getHabbo(habboRoleplayStats.getUserId());
             this.response.appendString(
                     habboRoleplayStats.getUserId()
-                            + ";" + habboRoleplayStats.getHabbo().getHabboInfo().getUsername()
-                            + ";" + habboRoleplayStats.getHabbo().getHabboInfo().getLook()
+                            + ";" + habbo.getHabboInfo().getUsername()
+                            + ";" + habbo.getHabboInfo().getLook()
                             + ";" + habboRoleplayStats.getCorpRoleId()
                             + ";" + habboRoleplayStats.getCorpRole().getDisplayName());
         }

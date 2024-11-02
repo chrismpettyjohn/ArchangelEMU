@@ -22,6 +22,9 @@ public class PlayerSkillModel {
     private int fishingXp;
     private int staminaXp;
 
+    public PlayerSkillModel() {
+    }
+
     public void addStrengthXp(int strengthXp) {
         this.strengthXp += strengthXp;
     }

@@ -17,5 +17,6 @@ public class SanctionModel {
     private Boolean isCivil;
     private int civilFineInCredits;
 
-
+    public SanctionModel() {
+    }
 }

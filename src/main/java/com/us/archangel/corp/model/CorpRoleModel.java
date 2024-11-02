@@ -22,4 +22,7 @@ public class CorpRoleModel {
     private boolean canPromote;
     private boolean canDemote;
     private boolean canWorkAnywhere;
+
+    public CorpRoleModel() {
+    }
 }

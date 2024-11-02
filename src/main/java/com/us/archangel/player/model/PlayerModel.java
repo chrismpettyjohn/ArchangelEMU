@@ -1,7 +1,5 @@
 package com.us.archangel.player.model;
 
-import com.eu.habbo.Emulator;
-import com.eu.habbo.habbohotel.users.Habbo;
 import com.us.archangel.corp.model.CorpModel;
 import com.us.archangel.corp.model.CorpRoleModel;
 import com.us.archangel.corp.service.CorpRoleService;
@@ -18,6 +16,7 @@ import lombok.Setter;
 @Getter
 @AllArgsConstructor
 public class PlayerModel {
+
     private int id;
     private int userId;
     @Setter
@@ -48,6 +47,9 @@ public class PlayerModel {
     private PlayerAction currentAction;
     @Setter
     private Integer escortingPlayerId;
+
+    public PlayerModel() {
+    }
 
     public void addHealth(int health) {
         this.healthNow += Math.max(health, this.healthMax);
@@ -118,10 +120,6 @@ public class PlayerModel {
 
     public boolean isDead() {
         return this.healthNow  <= 0;
-    }
-
-    public Habbo getHabbo() {
-        return Emulator.getGameEnvironment().getHabboManager().getHabbo(this.getUserId());
     }
 }
 

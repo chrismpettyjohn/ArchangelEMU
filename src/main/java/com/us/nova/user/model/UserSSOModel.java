@@ -16,4 +16,7 @@ public class UserSSOModel {
     private Integer activatedAt;
     private String ipAddress;
 
+    public UserSSOModel() {
+    }
+
 }

@@ -14,4 +14,7 @@ public class CrimeModel {
     private String description;
     private int jailTimeSeconds;
 
+    public CrimeModel() {
+    }
+
 }

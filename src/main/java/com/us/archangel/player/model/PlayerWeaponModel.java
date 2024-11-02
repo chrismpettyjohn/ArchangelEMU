@@ -15,6 +15,9 @@ public class PlayerWeaponModel {
     @Setter
     private int ammoRemaining;
 
+    public PlayerWeaponModel() {
+    }
+
     public void depleteAmmo(int ammo) {
         this.ammoRemaining = Math.min(this.ammoRemaining - ammo, 0);
     }

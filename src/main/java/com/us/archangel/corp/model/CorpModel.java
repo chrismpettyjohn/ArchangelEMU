@@ -20,4 +20,7 @@ public class CorpModel {
     private int userId;
     private int roomId;
 
+    public CorpModel() {
+    }
+
 }

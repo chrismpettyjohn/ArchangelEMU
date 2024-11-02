@@ -15,4 +15,7 @@ public class BetaCodeModel {
     private Integer claimedAt;
     private int createdAt;
 
+    public BetaCodeModel() {
+    }
+
 }

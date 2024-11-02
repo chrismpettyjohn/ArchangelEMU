@@ -13,6 +13,8 @@ public class GangMapper extends GenericMapper<GangEntity, GangModel> {
         return new GangModel(
                 entity.getId(),
                 entity.getDisplayName(),
+                entity.getDescription(),
+                entity.getBadge(),
                 entity.getUserId(),
                 entity.getRoomId()
         );

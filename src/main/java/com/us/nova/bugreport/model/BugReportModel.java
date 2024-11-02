@@ -17,4 +17,7 @@ public class BugReportModel {
     private Integer closedAt;
     private Integer closedByUserId;
 
+    public BugReportModel() {
+    }
+
 }
