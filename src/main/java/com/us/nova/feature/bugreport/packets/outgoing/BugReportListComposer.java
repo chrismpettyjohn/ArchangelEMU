@@ -20,15 +20,17 @@ public class BugReportListComposer extends MessageComposer {
         this.response.appendInt(this.bugReports.size());
 
         for (BugReportModel bugReport : this.bugReports) {
-            Habbo habbo = Emulator.getGameEnvironment().getHabboManager().getHabbo(bugReport.getId());
+            Habbo createdByHabbo = Emulator.getGameEnvironment().getHabboManager().getHabbo(bugReport.getCreatedByUserId());
+            Habbo closedByHabbo = Emulator.getGameEnvironment().getHabboManager().getHabbo(bugReport.getClosedByUserId());
             this.response.appendString(
                         bugReport.getId() + ";" +
                             bugReport.getDisplayName() + ";" +
                             bugReport.getContent() + ";" +
                             bugReport.getCreatedByUserId() + ";" +
+                            createdByHabbo.getHabboInfo().getUsername() + ";" +
                             bugReport.getCreatedAt() + ";" +
                             (bugReport.getClosedByUserId() != null ? bugReport.getClosedByUserId() : -1) + ";" +
-                            (habbo != null ? habbo.getHabboInfo().getUsername() : "") + ";" +
+                            (closedByHabbo != null ? closedByHabbo.getHabboInfo().getUsername() : "") + ";" +
                             (bugReport.getClosedAt() != null ? bugReport.getClosedAt() : -1)
 
             );
