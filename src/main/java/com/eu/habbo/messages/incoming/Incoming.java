@@ -87,6 +87,7 @@ import com.us.archangel.feature.police.packets.incoming.*;
 import com.us.archangel.feature.player.packets.incoming.RoleplayPermissionsEvent;
 import com.us.archangel.feature.player.packets.incoming.UserOnlineCountEvent;
 import com.us.archangel.feature.player.packets.incoming.UserRoleplayStatsEvent;
+import com.us.archangel.feature.weapon.packets.incoming.*;
 import com.us.nova.feature.betacode.packets.incoming.BetaCodeDeleteEvent;
 import com.us.nova.feature.betacode.packets.incoming.BetaCodeGenerateEvent;
 import com.us.nova.feature.betacode.packets.incoming.BetaCodeQueryListEvent;
@@ -1085,7 +1086,23 @@ public enum Incoming {
 
     bugReportQueryOneEvent(8076, BugReportQueryOneEvent.class),
 
-    betaCodeQueryListEvent(8077, BetaCodeQueryListEvent .class);
+    betaCodeQueryListEvent(8077, BetaCodeQueryListEvent .class),
+
+    playerWeaponCreateEvent(8078, PlayerWeaponCreateEvent.class),
+
+    playerWeaponDeleteEvent(8079, PlayerWeaponDeleteEvent.class),
+
+    playerWeaponQueryListEvent(8080, PlayerWeaponQueryListEvent.class),
+
+    weaponCreateEvent(8081, WeaponCreateEvent.class),
+
+    weaponDeleteEvent(8082, WeaponDeleteEvent.class),
+
+    weaponQueryListEvent(8083, WeaponQueryListEvent .class),
+
+    weaponQueryOneEvent(8084, WeaponQueryOneEvent.class),
+
+    weaponUpdateEvent(8085, WeaponUpdateEvent.class);
 
     private final int messageId;
     private final Class<? extends MessageHandler> messageClass;

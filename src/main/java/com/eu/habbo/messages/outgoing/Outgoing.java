@@ -471,4 +471,7 @@ public class Outgoing {
     public static final int betaCodeListComposer = 9039;
     public static final int bugReportListComposer = 9040;
     public static final int bugReportDataComposer = 9041;
+    public static final int weaponDataComposer = 9042;
+    public static final int weaponListComposer = 9043;
+    public static final int playerWeaponListComposer = 9044;
 }
