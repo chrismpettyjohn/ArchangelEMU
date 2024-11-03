@@ -1,11 +1,15 @@
 package com.us.nova.user.service;
 
+import com.us.nova.core.GenericService;
 import com.us.nova.user.context.UserSSOContext;
 import com.us.nova.user.entity.UserSSOEntity;
 import com.us.nova.user.mapper.UserSSOMapper;
+import com.us.nova.user.model.UserSSOModel;
 import com.us.nova.user.repository.UserSSORepository;
 
-public class UserSSOService {
+import java.util.List;
+
+public class UserSSOService extends GenericService<UserSSOModel, UserSSOContext, UserSSORepository> {
     private static UserSSOService instance;
 
     public static UserSSOService getInstance() {
@@ -15,18 +19,27 @@ public class UserSSOService {
         return instance;
     }
 
-    public void create(UserSSOEntity userSSOEntity) {
-        UserSSOContext.getInstance().add(userSSOEntity.getId(), UserSSOMapper.toModel(userSSOEntity));
-        UserSSORepository.getInstance().create(userSSOEntity);
+    private UserSSOService() {
+        super(UserSSOContext.getInstance(), UserSSORepository.getInstance(), UserSSOMapper.class, UserSSOEntity.class);
     }
 
-    public void update(int id, UserSSOEntity userSSOEntity) {
-        UserSSOContext.getInstance().update(id, UserSSOMapper.toModel(userSSOEntity));
-        UserSSORepository.getInstance().updateById(id, userSSOEntity);
+    public void create(UserSSOModel model) {
+        super.create(model);
+    }
+
+    public void update(int id, UserSSOModel model) {
+        super.update(id, model);
+    }
+
+    public List<UserSSOModel> getAll() {
+        return super.getAll();
+    }
+
+    public UserSSOModel getById(int id) {
+        return super.getById(id);
     }
 
     public void deleteById(int id) {
-        UserSSOContext.getInstance().delete(id);
-        UserSSORepository.getInstance().deleteById(id);
+        super.deleteById(id);
     }
 }

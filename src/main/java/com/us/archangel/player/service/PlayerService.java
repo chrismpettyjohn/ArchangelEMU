@@ -6,15 +6,11 @@ import com.us.archangel.player.mapper.PlayerMapper;
 import com.us.archangel.player.model.PlayerModel;
 import com.us.archangel.player.repository.PlayerRepository;
 import com.us.nova.core.GenericService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 public class PlayerService extends GenericService<PlayerModel, PlayerContext, PlayerRepository> {
-    private static final Logger LOGGER = LoggerFactory.getLogger(PlayerService.class);
 
     private static PlayerService instance;
 
@@ -28,8 +24,26 @@ public class PlayerService extends GenericService<PlayerModel, PlayerContext, Pl
 
     private PlayerService() {
         super(PlayerContext.getInstance(), PlayerRepository.getInstance(), PlayerMapper.class, PlayerEntity.class);
-        LOGGER.info("Player Service > starting");
-        LOGGER.info("Player Service > loaded {} player stats", this.getAll().size());
+    }
+
+    public void create(PlayerModel model) {
+        super.create(model);
+    }
+
+    public void update(int id, PlayerModel model) {
+        super.update(id, model);
+    }
+
+    public List<PlayerModel> getAll() {
+        return super.getAll();
+    }
+
+    public PlayerModel getById(int id) {
+        return super.getById(id);
+    }
+
+    public void deleteById(int id) {
+        super.deleteById(id);
     }
 
     public PlayerModel getByUserID(int userID) {

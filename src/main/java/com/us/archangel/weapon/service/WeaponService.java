@@ -7,6 +7,8 @@ import com.us.archangel.weapon.model.WeaponModel;
 import com.us.archangel.weapon.repository.WeaponRepository;
 import com.us.nova.core.GenericService;
 
+import java.util.List;
+
 
 public class WeaponService extends GenericService<WeaponModel, WeaponContext, WeaponRepository> {
 
@@ -21,6 +23,26 @@ public class WeaponService extends GenericService<WeaponModel, WeaponContext, We
 
     private WeaponService() {
         super(WeaponContext.getInstance(), WeaponRepository.getInstance(), WeaponMapper.class, WeaponEntity.class);
+    }
+
+    public void create(WeaponModel model) {
+        super.create(model);
+    }
+
+    public void update(int id, WeaponModel model) {
+        super.update(id, model);
+    }
+
+    public List<WeaponModel> getAll() {
+        return super.getAll();
+    }
+
+    public WeaponModel getById(int id) {
+        return super.getById(id);
+    }
+
+    public void deleteById(int id) {
+        super.deleteById(id);
     }
 
 }

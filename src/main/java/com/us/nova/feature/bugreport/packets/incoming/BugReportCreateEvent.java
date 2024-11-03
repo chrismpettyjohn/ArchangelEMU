@@ -18,7 +18,7 @@ public class BugReportCreateEvent extends MessageHandler {
         bugReportEntity.setCreatedByUserId(this.client.getHabbo().getHabboInfo().getId());
         bugReportEntity.setCreatedAt((int) (System.currentTimeMillis() / 1000L));
 
-        BugReportService.getInstance().create(bugReportEntity);
+        BugReportService.getInstance().create(BugReportMapper.toModel(bugReportEntity));
 
         this.client.sendResponse(new BugReportDataComposer(BugReportMapper.toModel(bugReportEntity)));
     }

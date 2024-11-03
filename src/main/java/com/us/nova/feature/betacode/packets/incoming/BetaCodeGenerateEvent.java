@@ -3,6 +3,7 @@ package com.us.nova.feature.betacode.packets.incoming;
 import com.eu.habbo.Emulator;
 import com.eu.habbo.messages.incoming.MessageHandler;
 import com.us.nova.betacode.entity.BetaCodeEntity;
+import com.us.nova.betacode.mapper.BetaCodeMapper;
 import com.us.nova.betacode.model.BetaCodePermissions;
 import com.us.nova.betacode.service.BetaCodeService;
 import com.us.nova.core.RandomString;
@@ -25,7 +26,7 @@ public class BetaCodeGenerateEvent extends MessageHandler {
         betaCodeEntity.setCode(betaCode);
         betaCodeEntity.setCreatedAt((int) (System.currentTimeMillis() / 1000L));
 
-        BetaCodeService.getInstance().create(betaCodeEntity);
+        BetaCodeService.getInstance().create(BetaCodeMapper.toModel(betaCodeEntity));
 
         this.client.sendResponse(new BetaCodeListComposer());
     }

@@ -1,7 +1,10 @@
 package com.us.archangel.gang.service;
 
+import com.us.archangel.gang.context.GangInviteContext;
 import com.us.archangel.gang.context.GangRoleContext;
+import com.us.archangel.gang.entity.GangInviteEntity;
 import com.us.archangel.gang.entity.GangRoleEntity;
+import com.us.archangel.gang.mapper.GangInviteMapper;
 import com.us.archangel.gang.mapper.GangRoleMapper;
 import com.us.archangel.gang.model.GangRoleModel;
 import com.us.archangel.gang.repository.GangRoleRepository;
@@ -26,9 +29,6 @@ public class GangRoleService extends GenericService<GangRoleModel, GangRoleConte
 
     private GangRoleService() {
         super(GangRoleContext.getInstance(), GangRoleRepository.getInstance(), GangRoleMapper.class, GangRoleEntity.class);
-        LOGGER.info("Gang Role Service > starting");
-        this.getAll();  // Preload all gang roles
-        LOGGER.info("Gang Role Service > loaded {} gang roles", this.getAll().size());
     }
 
     public GangRoleModel getByGangIdAndOrderId(int gangId, int orderId) {

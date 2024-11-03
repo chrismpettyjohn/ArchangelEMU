@@ -5,7 +5,7 @@ import com.eu.habbo.habbohotel.commands.Command;
 import com.eu.habbo.habbohotel.gameclients.GameClient;
 import com.eu.habbo.habbohotel.users.Habbo;
 import com.us.archangel.gang.entity.GangInviteEntity;
-import com.us.archangel.gang.entity.GangRoleEntity;
+import com.us.archangel.gang.mapper.GangInviteMapper;
 import com.us.archangel.gang.model.GangRoleModel;
 import com.us.archangel.gang.service.GangInviteService;
 import com.us.archangel.gang.service.GangRoleService;
@@ -51,7 +51,7 @@ public class GangInviteUserCommand extends Command {
         gangInvite.setGangId(gameClient.getHabbo().getPlayer().getGangId());
         gangInvite.setGangRoleId(gangRole.getId());
 
-        GangInviteService.getInstance().create(gangInvite);
+        GangInviteService.getInstance().create(GangInviteMapper.toModel(gangInvite));
 
         gameClient.getHabbo().shout(Emulator.getTexts().getValue("commands.roleplay.cmd_gang_invite_sent").replace(":username", targetedHabbo.getHabboInfo().getUsername()));
 

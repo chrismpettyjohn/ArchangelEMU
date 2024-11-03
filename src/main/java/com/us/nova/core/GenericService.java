@@ -1,11 +1,5 @@
 package com.us.nova.core;
 
-import com.us.archangel.player.entity.PlayerEntity;
-import com.us.archangel.player.repository.PlayerRepository;
-
-import java.lang.invoke.MethodHandle;
-import java.lang.invoke.MethodHandles;
-import java.lang.invoke.MethodType;
 import java.lang.reflect.Method;
 import java.util.List;
 import java.util.Map;
@@ -28,8 +22,10 @@ public class GenericService<Model, Context extends GenericContext<Model>, Reposi
 
     public void create(Model model) {
         Object entity = invokeMapperMethod("toEntity", model);
-        context.add(getId(model), model);
         invokeRepositoryMethod("create", entity);
+        int generatedId = getId(entity);
+        setId(model, generatedId);
+        context.add(generatedId, model);
     }
 
     public void update(int id, Model updatedModel) {
@@ -69,6 +65,16 @@ public class GenericService<Model, Context extends GenericContext<Model>, Reposi
         context.delete(id);
         invokeRepositoryMethod("deleteById", id);
     }
+
+    private void setId(Model model, int id) {
+        try {
+            Method setIdMethod = model.getClass().getMethod("setId", int.class);
+            setIdMethod.invoke(model, id);
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to set ID via setId()", e);
+        }
+    }
+
 
     private Object invokeRepositoryMethod(String methodName, Object... args) {
         try {

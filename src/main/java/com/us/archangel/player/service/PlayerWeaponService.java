@@ -6,15 +6,12 @@ import com.us.archangel.player.mapper.PlayerWeaponMapper;
 import com.us.archangel.player.model.PlayerWeaponModel;
 import com.us.archangel.player.repository.PlayerWeaponRepository;
 import com.us.nova.core.GenericService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 public class PlayerWeaponService extends GenericService<PlayerWeaponModel, PlayerWeaponContext, PlayerWeaponRepository> {
-    private static final Logger LOGGER = LoggerFactory.getLogger(PlayerWeaponService.class);
 
     private static PlayerWeaponService instance;
 
@@ -27,9 +24,27 @@ public class PlayerWeaponService extends GenericService<PlayerWeaponModel, Playe
     }
 
     private PlayerWeaponService() {
-        super(PlayerWeaponContext.getInstance(), PlayerWeaponRepository.getInstance(), PlayerWeaponMapper.class, PlayerWeaponService.class);
-        LOGGER.info("Player Weapon Service > starting");
-        LOGGER.info("Player Weapon Service > loaded {} player weapons", this.getAll().size());
+        super(PlayerWeaponContext.getInstance(), PlayerWeaponRepository.getInstance(), PlayerWeaponMapper.class, PlayerWeaponEntity.class);
+    }
+
+    public void create(PlayerWeaponModel model) {
+        super.create(model);
+    }
+
+    public void update(int id, PlayerWeaponModel model) {
+        super.update(id, model);
+    }
+
+    public List<PlayerWeaponModel> getAll() {
+        return super.getAll();
+    }
+
+    public PlayerWeaponModel getById(int id) {
+        return super.getById(id);
+    }
+
+    public void deleteById(int id) {
+        super.deleteById(id);
     }
 
     public List<PlayerWeaponModel> getByUserID(int userID) {

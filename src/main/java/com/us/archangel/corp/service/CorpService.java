@@ -15,15 +15,35 @@ public class CorpService extends GenericService<CorpModel, CorpContext, CorpRepo
 
     private static CorpService instance;
 
-    private CorpService() {
-        super(CorpContext.getInstance(), CorpRepository.getInstance(), CorpMapper.class, CorpEntity.class);
-    }
-
     public static CorpService getInstance() {
         if (instance == null) {
             instance = new CorpService();
         }
         return instance;
+    }
+
+    private CorpService() {
+        super(CorpContext.getInstance(), CorpRepository.getInstance(), CorpMapper.class, CorpEntity.class);
+    }
+
+    public void create(CorpModel model) {
+        super.create(model);
+    }
+
+    public void update(int id, CorpModel model) {
+        super.update(id, model);
+    }
+
+    public List<CorpModel> getAll() {
+        return super.getAll();
+    }
+
+    public CorpModel getById(int id) {
+        return super.getById(id);
+    }
+
+    public void deleteById(int id) {
+        super.deleteById(id);
     }
 
     public List<CorpModel> findManyByIndustry(CorpIndustry industry) {

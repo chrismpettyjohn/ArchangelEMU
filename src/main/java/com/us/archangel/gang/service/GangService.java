@@ -6,11 +6,10 @@ import com.us.archangel.gang.mapper.GangMapper;
 import com.us.archangel.gang.model.GangModel;
 import com.us.archangel.gang.repository.GangRepository;
 import com.us.nova.core.GenericService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+import java.util.List;
 
 public class GangService extends GenericService<GangModel, GangContext, GangRepository> {
-    private static final Logger LOGGER = LoggerFactory.getLogger(GangService.class);
 
     private static GangService instance;
 
@@ -23,8 +22,25 @@ public class GangService extends GenericService<GangModel, GangContext, GangRepo
 
     private GangService() {
         super(GangContext.getInstance(), GangRepository.getInstance(), GangMapper.class, GangEntity.class);
-        LOGGER.info("Gang Service > starting");
-        this.getAll();  // Preload all gang data
-        LOGGER.info("Gang Service > loaded {} gangs", this.getAll().size());
+    }
+
+    public void create(GangModel model) {
+        super.create(model);
+    }
+
+    public void update(int id, GangModel model) {
+        super.update(id, model);
+    }
+
+    public List<GangModel> getAll() {
+        return super.getAll();
+    }
+
+    public GangModel getById(int id) {
+        return super.getById(id);
+    }
+
+    public void deleteById(int id) {
+        super.deleteById(id);
     }
 }

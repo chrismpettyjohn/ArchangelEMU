@@ -33,7 +33,7 @@ public class BugReportUpdateEvent extends MessageHandler {
         bugReportEntity.setDisplayName(displayName);
         bugReportEntity.setContent(content);
 
-        BugReportService.getInstance().update(bugReportId, bugReportEntity);
+        BugReportService.getInstance().update(bugReportId, BugReportMapper.toModel(bugReportEntity));
 
         this.client.sendResponse(new BugReportDataComposer(BugReportMapper.toModel(bugReportEntity)));
     }

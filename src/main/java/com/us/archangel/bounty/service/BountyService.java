@@ -5,16 +5,11 @@ import com.us.archangel.bounty.entity.BountyEntity;
 import com.us.archangel.bounty.mapper.BountyMapper;
 import com.us.archangel.bounty.model.BountyModel;
 import com.us.archangel.bounty.repository.BountyRepository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.us.nova.core.GenericService;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
-public class BountyService {
-    private static final Logger LOGGER = LoggerFactory.getLogger(BountyService.class);
+public class BountyService extends GenericService<BountyModel, BountyContext, BountyRepository> {
 
     private static BountyService instance;
 
@@ -26,59 +21,26 @@ public class BountyService {
     }
 
     private BountyService() {
-        LOGGER.info("Bounty Service > starting");
-        this.getAll();
-        LOGGER.info("Bounty Service > loaded {} bounties", this.getAll().size());
+        super(BountyContext.getInstance(), BountyRepository.getInstance(), BountyMapper.class, BountyEntity.class);
     }
 
-    public void create(BountyEntity bountyEntity, BountyModel bountyModel) {
-        BountyContext.getInstance().add(bountyEntity.getId(), bountyModel);
-        BountyRepository.getInstance().create(bountyEntity);
+    public void create(BountyModel model) {
+        super.create(model);
     }
 
-    public void update(int id, BountyEntity updatedBounty) {
-        BountyContext.getInstance().update(id, BountyMapper.toModel(updatedBounty));
-        BountyRepository.getInstance().updateById(id, updatedBounty);
+    public void update(int id, BountyModel model) {
+        super.update(id, model);
     }
-
-    public List<BountyModel> getByUserID(int userID) {
-        List<BountyModel> storedValues = BountyContext.getInstance().getByUserId(userID);
-        if (!storedValues.isEmpty()) {
-            return storedValues;
-        }
-
-        List<BountyEntity> entities = BountyRepository.getInstance().getByUserId(userID);
-        if (entities == null || entities.isEmpty()) {
-            return null;
-        }
-
-        List<BountyModel> models = entities.stream()
-                .map(BountyMapper::toModel)
-                .collect(Collectors.toList());
-
-        models.forEach(model -> BountyContext.getInstance().add(model.getId(), model));
-        return models;
-    }
-
 
     public List<BountyModel> getAll() {
-        Map<Integer, BountyModel> models = BountyContext.getInstance().getAll();
-        if (!models.isEmpty()) {
-            return new ArrayList<>(models.values());
-        }
-
-        List<BountyEntity> entities = BountyRepository.getInstance().getAll();
-        List<BountyModel> modelList = entities.stream()
-                .map(BountyMapper::toModel)
-                .collect(Collectors.toList());
-
-        modelList.forEach(model -> BountyContext.getInstance().add(model.getId(), model));
-        return modelList;
+        return super.getAll();
     }
 
+    public BountyModel getById(int id) {
+        return super.getById(id);
+    }
 
     public void deleteById(int id) {
-        BountyContext.getInstance().delete(id);
-        BountyRepository.getInstance().deleteById(id);
+        super.deleteById(id);
     }
 }

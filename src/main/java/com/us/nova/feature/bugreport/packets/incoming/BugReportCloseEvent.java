@@ -26,7 +26,7 @@ public class BugReportCloseEvent extends MessageHandler {
         BugReportEntity bugReportEntity = BugReportMapper.toEntity(bugReportModel);
         bugReportEntity.setClosedAt((int) (System.currentTimeMillis() / 1000L));
 
-        BugReportService.getInstance().update(bugReportId, bugReportEntity);
+        BugReportService.getInstance().update(bugReportId, BugReportMapper.toModel(bugReportEntity));
 
         this.client.sendResponse(new BugReportDataComposer(BugReportMapper.toModel(bugReportEntity)));
     }

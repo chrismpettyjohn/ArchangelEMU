@@ -14,15 +14,35 @@ public class CorpRoleService extends GenericService<CorpRoleModel, CorpRoleConte
 
     private static CorpRoleService instance;
 
-    private CorpRoleService() {
-        super(CorpRoleContext.getInstance(), CorpRoleRepository.getInstance(), CorpRoleMapper.class, CorpRoleEntity.class);
-    }
-
     public static synchronized CorpRoleService getInstance() {
         if (instance == null) {
             instance = new CorpRoleService();
         }
         return instance;
+    }
+
+    private CorpRoleService() {
+        super(CorpRoleContext.getInstance(), CorpRoleRepository.getInstance(), CorpRoleMapper.class, CorpRoleEntity.class);
+    }
+
+    public void create(CorpRoleModel model) {
+        super.create(model);
+    }
+
+    public void update(int id, CorpRoleModel model) {
+        super.update(id, model);
+    }
+
+    public List<CorpRoleModel> getAll() {
+        return super.getAll();
+    }
+
+    public CorpRoleModel getById(int id) {
+        return super.getById(id);
+    }
+
+    public void deleteById(int id) {
+        super.deleteById(id);
     }
 
     public CorpRoleModel getByCorpAndOrderId(int corpId, int orderId) {

@@ -8,7 +8,6 @@ import com.us.archangel.corp.repository.CorpInviteRepository;
 import com.us.nova.core.GenericService;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class CorpInviteService extends GenericService<CorpInviteModel, CorpInviteContext, CorpInviteRepository> {
     private static CorpInviteService instance;
@@ -24,31 +23,24 @@ public class CorpInviteService extends GenericService<CorpInviteModel, CorpInvit
         return instance;
     }
 
-    public CorpInviteModel create(CorpInviteEntity corpEntity) {
-        repository.create(corpEntity);
-        CorpInviteModel model = CorpInviteMapper.toModel(corpEntity);
-        context.add(corpEntity.getId(), model);
-        return model;
+    public void create(CorpInviteModel model) {
+        super.create(model);
     }
 
-    public void update(CorpInviteEntity updatedCorpInvite, CorpInviteModel updatedModel) {
-        repository.updateById(updatedCorpInvite.getId(), updatedCorpInvite);
-        context.update(updatedCorpInvite.getId(), updatedModel);
+    public void update(int id, CorpInviteModel model) {
+        super.update(id, model);
+    }
+
+    public List<CorpInviteModel> getAll() {
+        return super.getAll();
     }
 
     public CorpInviteModel getById(int id) {
-        CorpInviteModel storedVal = context.get(id);
-        if (storedVal != null) {
-            return storedVal;
-        }
+        return super.getById(id);
+    }
 
-        CorpInviteEntity entity = repository.getById(id);
-        if (entity != null) {
-            CorpInviteModel model = CorpInviteMapper.toModel(entity);
-            context.add(entity.getId(), model);
-            return model;
-        }
-        return null;
+    public void deleteById(int id) {
+        super.deleteById(id);
     }
 
     public CorpInviteModel getByCorpAndUserId(int corpId, int userId) {
@@ -65,25 +57,5 @@ public class CorpInviteService extends GenericService<CorpInviteModel, CorpInvit
             return model;
         }
         return null;
-    }
-
-    @Override
-    public List<CorpInviteModel> getAll() {
-        List<CorpInviteEntity> entities = repository.getAll();
-        return entities.stream()
-                .map(entity -> {
-                    CorpInviteModel model = context.get(entity.getId());
-                    if (model == null) {
-                        model = CorpInviteMapper.toModel(entity);
-                        context.add(entity.getId(), model);
-                    }
-                    return model;
-                })
-                .collect(Collectors.toList());
-    }
-
-    public void deleteById(int id) {
-        repository.deleteById(id);
-        context.delete(id);
     }
 }

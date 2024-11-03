@@ -7,6 +7,8 @@ import com.us.archangel.player.model.PlayerSkillModel;
 import com.us.archangel.player.repository.PlayerSkillRepository;
 import com.us.nova.core.GenericService;
 
+import java.util.List;
+
 public class PlayerSkillService extends GenericService<PlayerSkillModel, PlayerSkillContext, PlayerSkillRepository> {
 
     private static PlayerSkillService instance;
@@ -21,6 +23,26 @@ public class PlayerSkillService extends GenericService<PlayerSkillModel, PlayerS
 
     private PlayerSkillService() {
         super(PlayerSkillContext.getInstance(), PlayerSkillRepository.getInstance(), PlayerSkillMapper.class, PlayerSkillEntity.class);
+    }
+
+    public void create(PlayerSkillModel model) {
+        super.create(model);
+    }
+
+    public void update(int id, PlayerSkillModel model) {
+        super.update(id, model);
+    }
+
+    public List<PlayerSkillModel> getAll() {
+        return super.getAll();
+    }
+
+    public PlayerSkillModel getById(int id) {
+        return super.getById(id);
+    }
+
+    public void deleteById(int id) {
+        super.deleteById(id);
     }
 
     public PlayerSkillModel getByUserID(int userID) {
