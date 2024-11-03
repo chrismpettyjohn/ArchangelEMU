@@ -1,6 +1,5 @@
 package com.us.archangel.weapon.entity;
 
-import com.us.archangel.corp.enums.converter.CorpSectorConverter;
 import com.us.archangel.weapon.enums.WeaponType;
 import com.us.archangel.weapon.enums.converter.WeaponTypeConverter;
 import jakarta.persistence.*;

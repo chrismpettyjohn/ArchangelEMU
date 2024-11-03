@@ -20,8 +20,18 @@ public class WeaponDataComposer extends MessageComposer {
         this.response.appendString(this.weapon.getType().toString());
         this.response.appendInt(this.weapon.getMinDamage());
         this.response.appendInt(this.weapon.getMaxDamage());
+        this.response.appendInt(this.weapon.getRangeInTiles());
         this.response.appendInt(this.weapon.getAccuracy());
+        this.response.appendInt(this.weapon.getReloadTime());
+        this.response.appendString(this.weapon.getReloadMessage());
         this.response.appendInt(this.weapon.getAmmoCapacity());
+        this.response.appendInt(this.weapon.getWeight());
+        this.response.appendInt(this.weapon.getCooldownSeconds());
+        this.response.appendString(this.weapon.getSpecialAbilities());
+        this.response.appendInt(this.weapon.getEquipEffect());
+        this.response.appendString(this.weapon.getEquipMessage());
+        this.response.appendString(this.weapon.getUnequipMessage());
+        this.response.appendString(this.weapon.getAttackMessage());
 
         return this.response;
     }
