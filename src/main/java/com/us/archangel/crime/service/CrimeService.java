@@ -27,7 +27,7 @@ public class CrimeService extends GenericService<CrimeModel, CrimeContext, Crime
     }
 
     private CrimeService() {
-        super(CrimeContext.getInstance(), CrimeRepository.getInstance(), CrimeMapper.class);
+        super(CrimeContext.getInstance(), CrimeRepository.getInstance(), CrimeMapper.class, CrimeEntity.class);
         LOGGER.info("Crime Service > starting");
         this.getAll(); // preload
         LOGGER.info("Crime Service > loaded {} crimes", this.getAll().size());

@@ -1,6 +1,7 @@
 package com.us.archangel.weapon.service;
 
 import com.us.archangel.weapon.context.WeaponContext;
+import com.us.archangel.weapon.entity.WeaponEntity;
 import com.us.archangel.weapon.mapper.WeaponMapper;
 import com.us.archangel.weapon.model.WeaponModel;
 import com.us.archangel.weapon.repository.WeaponRepository;
@@ -19,7 +20,7 @@ public class WeaponService extends GenericService<WeaponModel, WeaponContext, We
     }
 
     private WeaponService() {
-        super(WeaponContext.getInstance(), WeaponRepository.getInstance(), WeaponMapper.class);
+        super(WeaponContext.getInstance(), WeaponRepository.getInstance(), WeaponMapper.class, WeaponEntity.class);
     }
 
 }

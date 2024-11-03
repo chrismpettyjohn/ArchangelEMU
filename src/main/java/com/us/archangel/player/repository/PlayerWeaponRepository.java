@@ -21,6 +21,26 @@ public class PlayerWeaponRepository extends GenericRepository<PlayerWeaponEntity
         super(PlayerWeaponEntity.class);
     }
 
+    public void create(PlayerWeaponEntity entity) {
+        super.create(entity);
+    }
+
+    public void updateById(int id, PlayerWeaponEntity entity) {
+        super.updateById(id, entity);
+    }
+
+    public PlayerWeaponEntity getById(int id) {
+        return super.getById(id);
+    }
+
+    public List<PlayerWeaponEntity> getAll() {
+        return super.getAll();
+    }
+
+    public void deleteById(int id) {
+        super.deleteById(id);
+    }
+
     public List<PlayerWeaponEntity> getByPlayerId(int playerId) {
         try (Session session = sessionFactory.openSession()) {
             return session.createQuery("from PlayerWeaponEntity where userId = :playerId", PlayerWeaponEntity.class)

@@ -9,11 +9,8 @@ import com.us.archangel.gang.GangManager;
 import com.us.archangel.sanction.SanctionManager;
 import com.us.archangel.player.PlayerManager;
 import com.us.archangel.weapon.WeaponManager;
-import com.eu.habbo.core.ConfigurationManager;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -32,19 +29,8 @@ public class Archangel {
     private RoleplayFeatureManager roleplayFeatureManager;
     private WeaponManager weaponManager;
 
-    public void load(ConfigurationManager config) {
+    public void load() {
         long millis = System.currentTimeMillis();
-
-        DatabaseConfig.initialize(config);
-
-        SessionFactory sessionFactory = DatabaseConfig.getSessionFactory();
-
-        try (Session session = sessionFactory.openSession()) {
-            session.beginTransaction();
-            session.getTransaction().commit();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
 
         this.bountyManager = BountyManager.getInstance();
         this.corpManager = CorpManager.getInstance();

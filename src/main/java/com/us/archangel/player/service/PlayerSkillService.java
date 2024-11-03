@@ -6,15 +6,8 @@ import com.us.archangel.player.mapper.PlayerSkillMapper;
 import com.us.archangel.player.model.PlayerSkillModel;
 import com.us.archangel.player.repository.PlayerSkillRepository;
 import com.us.nova.core.GenericService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 public class PlayerSkillService extends GenericService<PlayerSkillModel, PlayerSkillContext, PlayerSkillRepository> {
-    private static final Logger LOGGER = LoggerFactory.getLogger(PlayerSkillService.class);
 
     private static PlayerSkillService instance;
 
@@ -27,7 +20,7 @@ public class PlayerSkillService extends GenericService<PlayerSkillModel, PlayerS
     }
 
     private PlayerSkillService() {
-        super(PlayerSkillContext.getInstance(), PlayerSkillRepository.getInstance(), PlayerSkillMapper.class);
+        super(PlayerSkillContext.getInstance(), PlayerSkillRepository.getInstance(), PlayerSkillMapper.class, PlayerSkillEntity.class);
     }
 
     public PlayerSkillModel getByUserID(int userID) {

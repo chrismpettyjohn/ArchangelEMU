@@ -25,7 +25,7 @@ public class GangInviteService extends GenericService<GangInviteModel, GangInvit
     }
 
     private GangInviteService() {
-        super(GangInviteContext.getInstance(), GangInviteRepository.getInstance(), GangInviteMapper.class);
+        super(GangInviteContext.getInstance(), GangInviteRepository.getInstance(), GangInviteMapper.class, GangInviteEntity.class);
         LOGGER.info("Gang Invite Service > starting");
         this.getAll();  // preload all gang invites
         LOGGER.info("Gang Invite Service > loaded {} gang invites", this.getAll().size());

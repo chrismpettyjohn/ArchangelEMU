@@ -14,7 +14,7 @@ public class CorpInviteService extends GenericService<CorpInviteModel, CorpInvit
     private static CorpInviteService instance;
 
     private CorpInviteService() {
-        super(CorpInviteContext.getInstance(), CorpInviteRepository.getInstance(), CorpInviteMapper.class);
+        super(CorpInviteContext.getInstance(), CorpInviteRepository.getInstance(), CorpInviteMapper.class, CorpInviteEntity.class);
     }
 
     public static synchronized CorpInviteService getInstance() {

@@ -15,7 +15,7 @@ public class CorpRoleService extends GenericService<CorpRoleModel, CorpRoleConte
     private static CorpRoleService instance;
 
     private CorpRoleService() {
-        super(CorpRoleContext.getInstance(), CorpRoleRepository.getInstance(), CorpRoleMapper.class);
+        super(CorpRoleContext.getInstance(), CorpRoleRepository.getInstance(), CorpRoleMapper.class, CorpRoleEntity.class);
     }
 
     public static synchronized CorpRoleService getInstance() {

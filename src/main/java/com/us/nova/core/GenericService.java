@@ -1,5 +1,11 @@
 package com.us.nova.core;
 
+import com.us.archangel.player.entity.PlayerEntity;
+import com.us.archangel.player.repository.PlayerRepository;
+
+import java.lang.invoke.MethodHandle;
+import java.lang.invoke.MethodHandles;
+import java.lang.invoke.MethodType;
 import java.lang.reflect.Method;
 import java.util.List;
 import java.util.Map;
@@ -10,11 +16,13 @@ public class GenericService<Model, Context extends GenericContext<Model>, Reposi
     protected final Context context;
     protected final Repository repository;
     protected final Class<?> mapperClass;
+    protected final Class<?> entityClass; // New field to store the entity class type
 
-    public GenericService(Context context, Repository repository, Class<?> mapperClass) {
+    public GenericService(Context context, Repository repository, Class<?> mapperClass, Class<?> entityClass) {
         this.context = context;
         this.repository = repository;
         this.mapperClass = mapperClass;
+        this.entityClass = entityClass;
         this.loadAll(); // preload all items into the context
     }
 
@@ -64,11 +72,30 @@ public class GenericService<Model, Context extends GenericContext<Model>, Reposi
 
     private Object invokeRepositoryMethod(String methodName, Object... args) {
         try {
-            Class<?>[] argTypes = new Class<?>[args.length];
-            for (int i = 0; i < args.length; i++) {
-                argTypes[i] = args[i].getClass();
+            if (repository instanceof IGenericRepository<?>) {
+                // Define argument types for reflection
+                Class<?>[] argTypes = new Class<?>[args.length];
+                for (int i = 0; i < args.length; i++) {
+                    if (args[i] instanceof Integer) {
+                        argTypes[i] = int.class; // Use int.class for Integer arguments
+                    } else {
+                        argTypes[i] = args[i].getClass(); // Fallback to actual class
+                    }
+                }
+
+                // Debugging output to verify argument types
+                System.out.println("Invoking method: " + methodName);
+                System.out.println("Argument types: " + java.util.Arrays.toString(argTypes));
+
+                // Get and invoke the method
+                Method method = repository.getClass().getMethod(methodName, argTypes);
+                return method.invoke(repository, args);
+            } else {
+                throw new RuntimeException("Repository is not an instance of IGenericRepository");
             }
-            return repository.getClass().getMethod(methodName, argTypes).invoke(repository, args);
+        } catch (NoSuchMethodException e) {
+            System.err.println("No such method: " + methodName + " with parameters " + java.util.Arrays.toString(args));
+            throw new RuntimeException("Repository method invocation failed - NoSuchMethodException", e);
         } catch (Exception e) {
             throw new RuntimeException("Repository method invocation failed", e);
         }

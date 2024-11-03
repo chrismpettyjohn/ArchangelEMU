@@ -16,7 +16,7 @@ public class CorpService extends GenericService<CorpModel, CorpContext, CorpRepo
     private static CorpService instance;
 
     private CorpService() {
-        super(CorpContext.getInstance(), CorpRepository.getInstance(), CorpMapper.class);
+        super(CorpContext.getInstance(), CorpRepository.getInstance(), CorpMapper.class, CorpEntity.class);
     }
 
     public static CorpService getInstance() {

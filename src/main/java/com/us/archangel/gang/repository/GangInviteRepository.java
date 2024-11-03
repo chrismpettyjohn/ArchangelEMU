@@ -4,6 +4,8 @@ import com.us.archangel.gang.entity.GangInviteEntity;
 import com.us.nova.core.GenericRepository;
 import org.hibernate.Session;
 
+import java.util.List;
+
 public class GangInviteRepository extends GenericRepository<GangInviteEntity> {
 
     private static GangInviteRepository instance;
@@ -17,6 +19,22 @@ public class GangInviteRepository extends GenericRepository<GangInviteEntity> {
 
     private GangInviteRepository() {
         super(GangInviteEntity.class);
+    }
+
+    public void create(GangInviteEntity entity) {
+        super.create(entity);
+    }
+
+    public void updateById(int id, GangInviteEntity entity) {
+        super.updateById(id, entity);
+    }
+
+    public GangInviteEntity getById(int id) {
+        return super.getById(id);
+    }
+
+    public List<GangInviteEntity> getAll() {
+        return super.getAll();
     }
 
     public GangInviteEntity getByGangAndUserId(int gangId, int userId) {

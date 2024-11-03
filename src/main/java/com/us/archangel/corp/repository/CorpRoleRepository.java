@@ -21,6 +21,22 @@ public class CorpRoleRepository extends GenericRepository<CorpRoleEntity> {
         super(CorpRoleEntity.class);
     }
 
+    public void create(CorpRoleEntity entity) {
+        super.create(entity);
+    }
+
+    public void updateById(int id, CorpRoleEntity entity) {
+        super.updateById(id, entity);
+    }
+
+    public CorpRoleEntity getById(int id) {
+        return super.getById(id);
+    }
+
+    public List<CorpRoleEntity> getAll() {
+        return super.getAll();
+    }
+
     public CorpRoleEntity getByCorpAndOrderId(int corpId, int orderId) {
         try (Session session = sessionFactory.openSession()) {
             return session.createQuery("from CorpRoleEntity where corpId = :corpId AND orderId = :orderId", CorpRoleEntity.class)

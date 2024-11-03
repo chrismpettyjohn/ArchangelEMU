@@ -21,6 +21,22 @@ public class GangRepository extends GenericRepository<GangEntity> {
         super(GangEntity.class);
     }
 
+    public void create(GangEntity entity) {
+        super.create(entity);
+    }
+
+    public void updateById(int id, GangEntity entity) {
+        super.updateById(id, entity);
+    }
+
+    public GangEntity getById(int id) {
+        return super.getById(id);
+    }
+
+    public List<GangEntity> getAll() {
+        return super.getAll();
+    }
+
     public List<GangEntity> findManyByDisplayName(String displayName) {
         try (Session session = sessionFactory.openSession()) {
             return session.createQuery("from GangEntity where displayName ILIKE :displayName", GangEntity.class)

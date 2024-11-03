@@ -1,88 +1,42 @@
 package com.us.nova.user.repository;
 
+import com.us.nova.core.GenericRepository;
 import com.us.nova.user.entity.UserEntity;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
 
 import java.util.List;
 
-public class UserRepository {
+public class UserRepository extends GenericRepository<UserEntity>  {
 
     private static UserRepository instance;
 
-    public static UserRepository getInstance(SessionFactory sessionFactory) {
-        if (instance == null) {
-            instance = new UserRepository(sessionFactory);
-        }
-        return instance;
-    }
-
     public static UserRepository getInstance() {
         if (instance == null) {
-            throw new RuntimeException("UserRepository has not been initialized");
+            instance = new UserRepository();
         }
         return instance;
     }
 
-    private final SessionFactory sessionFactory;
-
-    private UserRepository(SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
+    private UserRepository() {
+        super(UserEntity.class);
     }
 
-    public void create(UserEntity user) {
-        Transaction transaction = null;
-        try (Session session = sessionFactory.openSession()) {
-            transaction = session.beginTransaction();
-            session.save(user);
-            transaction.commit();
-        } catch (Exception e) {
-            if (transaction != null) transaction.rollback();
-            e.printStackTrace();
-        }
+    public void create(UserEntity entity) {
+        super.create(entity);
     }
 
-    public void updateById(int id, UserEntity updatedUser) {
-        Transaction transaction = null;
-        try (Session session = sessionFactory.openSession()) {
-            transaction = session.beginTransaction();
-            UserEntity user = session.get(UserEntity.class, id);
-            if (user != null) {
-                session.update(user);
-            }
-            transaction.commit();
-        } catch (Exception e) {
-            if (transaction != null) transaction.rollback();
-            e.printStackTrace();
-        }
+    public void updateById(int id, UserEntity entity) {
+        super.updateById(id, entity);
     }
 
     public UserEntity getById(int id) {
-        try (Session session = sessionFactory.openSession()) {
-            return session.get(UserEntity.class, id);
-        }
+        return super.getById(id);
     }
 
-    @SuppressWarnings("unchecked")
     public List<UserEntity> getAll() {
-        try (Session session = sessionFactory.openSession()) {
-            return session.createQuery("from UserEntity", UserEntity.class).list();  // Query simplified
-        }
+        return super.getAll();
     }
 
     public void deleteById(int id) {
-        Transaction transaction = null;
-        try (Session session = sessionFactory.openSession()) {
-            transaction = session.beginTransaction();
-            UserEntity user = session.get(UserEntity.class, id);
-            if (user != null) {
-                session.delete(user);
-            }
-            transaction.commit();
-        } catch (Exception e) {
-            if (transaction != null) transaction.rollback();
-            e.printStackTrace();
-        }
+        super.deleteById(id);
     }
 }

@@ -9,9 +9,7 @@ import com.us.nova.core.GenericService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 public class GangRoleService extends GenericService<GangRoleModel, GangRoleContext, GangRoleRepository> {
@@ -27,7 +25,7 @@ public class GangRoleService extends GenericService<GangRoleModel, GangRoleConte
     }
 
     private GangRoleService() {
-        super(GangRoleContext.getInstance(), GangRoleRepository.getInstance(), GangRoleMapper.class);
+        super(GangRoleContext.getInstance(), GangRoleRepository.getInstance(), GangRoleMapper.class, GangRoleEntity.class);
         LOGGER.info("Gang Role Service > starting");
         this.getAll();  // Preload all gang roles
         LOGGER.info("Gang Role Service > loaded {} gang roles", this.getAll().size());

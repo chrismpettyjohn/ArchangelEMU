@@ -1,6 +1,7 @@
 package com.us.archangel.gang.service;
 
 import com.us.archangel.gang.context.GangContext;
+import com.us.archangel.gang.entity.GangEntity;
 import com.us.archangel.gang.mapper.GangMapper;
 import com.us.archangel.gang.model.GangModel;
 import com.us.archangel.gang.repository.GangRepository;
@@ -21,7 +22,7 @@ public class GangService extends GenericService<GangModel, GangContext, GangRepo
     }
 
     private GangService() {
-        super(GangContext.getInstance(), GangRepository.getInstance(), GangMapper.class);
+        super(GangContext.getInstance(), GangRepository.getInstance(), GangMapper.class, GangEntity.class);
         LOGGER.info("Gang Service > starting");
         this.getAll();  // Preload all gang data
         LOGGER.info("Gang Service > loaded {} gangs", this.getAll().size());

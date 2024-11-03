@@ -5,7 +5,6 @@ import com.us.archangel.bounty.entity.BountyEntity;
 import com.us.archangel.bounty.mapper.BountyMapper;
 import com.us.archangel.bounty.model.BountyModel;
 import com.us.archangel.bounty.repository.BountyRepository;
-import com.us.archangel.corp.service.CorpService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

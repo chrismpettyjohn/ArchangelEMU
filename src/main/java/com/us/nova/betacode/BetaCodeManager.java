@@ -2,17 +2,13 @@ package com.us.nova.betacode;
 
 
 import com.us.nova.betacode.context.BetaCodeContext;
-import com.us.nova.betacode.entity.BetaCodeEntity;
 import com.us.nova.betacode.mapper.BetaCodeMapper;
 import com.us.nova.betacode.model.BetaCodeModel;
 import com.us.nova.betacode.repository.BetaCodeRepository;
 import com.us.nova.betacode.service.BetaCodeService;
 import lombok.Getter;
-import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.List;
 
 @Getter
 public class BetaCodeManager {
@@ -20,16 +16,9 @@ public class BetaCodeManager {
 
     private static BetaCodeManager instance;
 
-    public static BetaCodeManager getInstance(SessionFactory sessionFactory) {
-        if (instance == null) {
-            instance = new BetaCodeManager(sessionFactory);
-        }
-        return instance;
-    }
-
     public static BetaCodeManager getInstance() {
         if (instance == null) {
-            throw new RuntimeException("Beta Code Manager has not been initialized");
+            instance = new BetaCodeManager();
         }
         return instance;
     }
@@ -38,9 +27,9 @@ public class BetaCodeManager {
     private final BetaCodeContext betaCodeContext;
     private final BetaCodeService betaCodeService;
 
-    private BetaCodeManager(SessionFactory sessionFactory) {
+    private BetaCodeManager() {
         this.betaCodeContext = BetaCodeContext.getInstance();
-        this.betaCodeRepository = BetaCodeRepository.getInstance(sessionFactory);
+        this.betaCodeRepository = BetaCodeRepository.getInstance();
         this.betaCodeService = BetaCodeService.getInstance();
     }
 

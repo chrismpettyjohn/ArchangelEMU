@@ -27,7 +27,7 @@ public class PlayerWeaponService extends GenericService<PlayerWeaponModel, Playe
     }
 
     private PlayerWeaponService() {
-        super(PlayerWeaponContext.getInstance(), PlayerWeaponRepository.getInstance(), PlayerWeaponMapper.class);
+        super(PlayerWeaponContext.getInstance(), PlayerWeaponRepository.getInstance(), PlayerWeaponMapper.class, PlayerWeaponService.class);
         LOGGER.info("Player Weapon Service > starting");
         LOGGER.info("Player Weapon Service > loaded {} player weapons", this.getAll().size());
     }

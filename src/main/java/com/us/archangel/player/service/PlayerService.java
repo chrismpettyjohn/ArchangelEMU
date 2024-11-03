@@ -27,7 +27,7 @@ public class PlayerService extends GenericService<PlayerModel, PlayerContext, Pl
     }
 
     private PlayerService() {
-        super(PlayerContext.getInstance(), PlayerRepository.getInstance(), PlayerMapper.class);
+        super(PlayerContext.getInstance(), PlayerRepository.getInstance(), PlayerMapper.class, PlayerEntity.class);
         LOGGER.info("Player Service > starting");
         LOGGER.info("Player Service > loaded {} player stats", this.getAll().size());
     }

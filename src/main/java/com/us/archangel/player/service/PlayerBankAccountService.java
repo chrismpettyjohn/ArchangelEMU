@@ -9,11 +9,6 @@ import com.us.nova.core.GenericService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
-
 public class PlayerBankAccountService extends GenericService<PlayerBankAccountModel, PlayerBankAccountContext, PlayerBankAccountRepository> {
     private static final Logger LOGGER = LoggerFactory.getLogger(PlayerBankAccountService.class);
 
@@ -27,7 +22,7 @@ public class PlayerBankAccountService extends GenericService<PlayerBankAccountMo
     }
 
     private PlayerBankAccountService() {
-        super(PlayerBankAccountContext.getInstance(), PlayerBankAccountRepository.getInstance(), PlayerBankAccountMapper.class);
+        super(PlayerBankAccountContext.getInstance(), PlayerBankAccountRepository.getInstance(), PlayerBankAccountMapper.class, PlayerBankAccountEntity.class);
         LOGGER.info("Player Bank Account Service > starting");
         this.getAll();  // Preload all bank accounts
         LOGGER.info("Player Bank Account Service > loaded {} bank accounts", this.getAll().size());

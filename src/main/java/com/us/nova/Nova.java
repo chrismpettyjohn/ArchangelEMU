@@ -7,8 +7,6 @@ import com.us.nova.core.DatabaseConfig;
 import com.us.nova.user.UserManager;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -27,20 +25,9 @@ public class Nova {
 
         DatabaseConfig.initialize(config);
 
-        SessionFactory sessionFactory = DatabaseConfig.getSessionFactory();
-
-        try (Session session = sessionFactory.openSession()) {
-            session.beginTransaction();
-
-            this.betaCodeManager = BetaCodeManager.getInstance(sessionFactory);
-            this.bugReportManager = BugReportManager.getInstance(sessionFactory);
-            this.userManager = UserManager.getInstance(sessionFactory);
-
-            session.getTransaction().commit();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
+        this.betaCodeManager = BetaCodeManager.getInstance();
+        this.bugReportManager = BugReportManager.getInstance();
+        this.userManager = UserManager.getInstance();
 
         LOGGER.info("Nova -> Loaded! (" + (System.currentTimeMillis() - millis) + " MS)");
     }

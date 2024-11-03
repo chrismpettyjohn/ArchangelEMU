@@ -21,6 +21,26 @@ public class PlayerRepository extends GenericRepository<PlayerEntity> {
         super(PlayerEntity.class);
     }
 
+    public void create(PlayerEntity entity) {
+        super.create(entity);
+    }
+
+    public void updateById(int id, PlayerEntity entity) {
+        super.updateById(id, entity);
+    }
+
+    public PlayerEntity getById(int id) {
+        return super.getById(id);
+    }
+
+    public List<PlayerEntity> getAll() {
+        return super.getAll();
+    }
+
+    public void deleteById(int id) {
+        super.deleteById(id);
+    }
+
     public PlayerEntity getByUserId(int userId) {
         try (Session session = sessionFactory.openSession()) {
             return session.createQuery("from PlayerEntity where userId = :userId", PlayerEntity.class)

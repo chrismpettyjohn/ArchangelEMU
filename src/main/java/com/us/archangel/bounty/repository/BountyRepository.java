@@ -21,6 +21,22 @@ public class BountyRepository extends GenericRepository<BountyEntity> {
         super(BountyEntity.class);
     }
 
+    public void create(BountyEntity entity) {
+        super.create(entity);
+    }
+
+    public void updateById(int id, BountyEntity entity) {
+        super.updateById(id, entity);
+    }
+
+    public BountyEntity getById(int id) {
+        return super.getById(id);
+    }
+
+    public List<BountyEntity> getAll() {
+        return super.getAll();
+    }
+
     public List<BountyEntity> getByUserId(int userId) {
         try (Session session = sessionFactory.openSession()) {
             return session.createQuery("FROM BountyEntity WHERE userId = :userId", BountyEntity.class)

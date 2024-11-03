@@ -7,7 +7,6 @@ import com.us.nova.bugreport.model.BugReportModel;
 import com.us.nova.bugreport.repository.BugReportRepository;
 import com.us.nova.bugreport.service.BugReportService;
 import lombok.Getter;
-import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,16 +16,9 @@ public class BugReportManager {
 
     private static BugReportManager instance;
 
-    public static BugReportManager getInstance(SessionFactory sessionFactory) {
-        if (instance == null) {
-            instance = new BugReportManager(sessionFactory);
-        }
-        return instance;
-    }
-
     public static BugReportManager getInstance() {
         if (instance == null) {
-            throw new RuntimeException("Bug Report Manager has not been initialized");
+            instance = new BugReportManager();
         }
         return instance;
     }
@@ -35,9 +27,9 @@ public class BugReportManager {
     private final BugReportContext bugReportContext;
     private final BugReportService bugReportService;
 
-    private BugReportManager(SessionFactory sessionFactory) {
+    private BugReportManager() {
         this.bugReportContext = BugReportContext.getInstance();
-        this.bugReportRepository = BugReportRepository.getInstance(sessionFactory);
+        this.bugReportRepository = BugReportRepository.getInstance();
         this.bugReportService = BugReportService.getInstance();
     }
 

@@ -1,88 +1,42 @@
 package com.us.nova.betacode.repository;
 
 import com.us.nova.betacode.entity.BetaCodeEntity;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
+import com.us.nova.core.GenericRepository;
 
 import java.util.List;
 
-public class BetaCodeRepository {
+public class BetaCodeRepository extends GenericRepository<BetaCodeEntity> {
 
     private static BetaCodeRepository instance;
 
-    public static BetaCodeRepository getInstance(SessionFactory sessionFactory) {
-        if (instance == null) {
-            instance = new BetaCodeRepository(sessionFactory);
-        }
-        return instance;
-    }
-
     public static BetaCodeRepository getInstance() {
         if (instance == null) {
-            throw new RuntimeException("Beta Code Repository has not been initialized");
+            instance = new BetaCodeRepository();
         }
         return instance;
     }
 
-    private final SessionFactory sessionFactory;
-
-    private BetaCodeRepository(SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
+    private BetaCodeRepository() {
+        super(BetaCodeEntity.class);
     }
 
     public void create(BetaCodeEntity betaCode) {
-        Transaction transaction = null;
-        try (Session session = sessionFactory.openSession()) {
-            transaction = session.beginTransaction();
-            session.save(betaCode);
-            transaction.commit();
-        } catch (Exception e) {
-            if (transaction != null) transaction.rollback();
-            e.printStackTrace();
-        }
+        super.create(betaCode);
     }
 
     public void updateById(int id, BetaCodeEntity updatedBetaCode) {
-        Transaction transaction = null;
-        try (Session session = sessionFactory.openSession()) {
-            transaction = session.beginTransaction();
-            BetaCodeEntity betaCode = session.get(BetaCodeEntity.class, id);
-            if (betaCode != null) {
-                session.update(betaCode);
-            }
-            transaction.commit();
-        } catch (Exception e) {
-            if (transaction != null) transaction.rollback();
-            e.printStackTrace();
-        }
+        super.updateById(id, updatedBetaCode);
     }
 
     public BetaCodeEntity getById(int id) {
-        try (Session session = sessionFactory.openSession()) {
-            return session.get(BetaCodeEntity.class, id);
-        }
+        return super.getById(id);
     }
 
-    @SuppressWarnings("unchecked")
     public List<BetaCodeEntity> getAll() {
-        try (Session session = sessionFactory.openSession()) {
-            return session.createQuery("from BetaCodeEntity", BetaCodeEntity.class).list();  // Query simplified
-        }
+        return super.getAll();
     }
 
     public void deleteById(int id) {
-        Transaction transaction = null;
-        try (Session session = sessionFactory.openSession()) {
-            transaction = session.beginTransaction();
-            BetaCodeEntity betaCode = session.get(BetaCodeEntity.class, id);
-            if (betaCode != null) {
-                session.delete(betaCode);
-            }
-            transaction.commit();
-        } catch (Exception e) {
-            if (transaction != null) transaction.rollback();
-            e.printStackTrace();
-        }
+        super.deleteById(id);
     }
 }

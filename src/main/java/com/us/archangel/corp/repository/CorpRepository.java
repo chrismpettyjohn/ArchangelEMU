@@ -22,6 +22,22 @@ public class CorpRepository extends GenericRepository<CorpEntity> {
         super(CorpEntity.class);
     }
 
+    public void create(CorpEntity entity) {
+        super.create(entity);
+    }
+
+    public void updateById(int id, CorpEntity entity) {
+        super.updateById(id, entity);
+    }
+
+    public CorpEntity getById(int id) {
+        return super.getById(id);
+    }
+
+    public List<CorpEntity> getAll() {
+        return super.getAll();
+    }
+
     public List<CorpEntity> findManyByDisplayName(String displayName) {
         try (Session session = sessionFactory.openSession()) {
             return session.createQuery("from CorpEntity where displayName ILIKE :displayName", CorpEntity.class)

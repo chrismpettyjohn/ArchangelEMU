@@ -4,6 +4,8 @@ import com.us.archangel.player.entity.PlayerSkillEntity;
 import com.us.nova.core.GenericRepository;
 import org.hibernate.Session;
 
+import java.util.List;
+
 public class PlayerSkillRepository extends GenericRepository<PlayerSkillEntity> {
 
     private static PlayerSkillRepository instance;
@@ -17,6 +19,26 @@ public class PlayerSkillRepository extends GenericRepository<PlayerSkillEntity> 
 
     private PlayerSkillRepository() {
         super(PlayerSkillEntity.class);
+    }
+
+    public void create(PlayerSkillEntity entity) {
+        super.create(entity);
+    }
+
+    public void updateById(int id, PlayerSkillEntity entity) {
+        super.updateById(id, entity);
+    }
+
+    public PlayerSkillEntity getById(int id) {
+        return super.getById(id);
+    }
+
+    public List<PlayerSkillEntity> getAll() {
+        return super.getAll();
+    }
+
+    public void deleteById(int id) {
+        super.deleteById(id);
     }
 
     public PlayerSkillEntity getByUserId(int userId) {

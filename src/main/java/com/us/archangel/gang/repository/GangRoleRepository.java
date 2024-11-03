@@ -21,6 +21,26 @@ public class GangRoleRepository extends GenericRepository<GangRoleEntity> {
         super(GangRoleEntity.class);
     }
 
+    public void create(GangRoleEntity entity) {
+        super.create(entity);
+    }
+
+    public void updateById(int id, GangRoleEntity entity) {
+        super.updateById(id, entity);
+    }
+
+    public GangRoleEntity getById(int id) {
+        return super.getById(id);
+    }
+
+    public List<GangRoleEntity> getAll() {
+        return super.getAll();
+    }
+
+    public void deleteById(int id) {
+        super.deleteById(id);
+    }
+
     public GangRoleEntity getByGangIdAndOrderId(int gangId, int orderId) {
         try (Session session = sessionFactory.openSession()) {
             return session.createQuery(

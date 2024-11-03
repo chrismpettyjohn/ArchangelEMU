@@ -3,19 +3,19 @@ package com.us.nova.core;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-
 import java.util.List;
 
-public class GenericRepository<Entity> {
+public class GenericRepository<Entity> implements IGenericRepository<Entity> {
 
     private final Class<Entity> entityType;
     protected final SessionFactory sessionFactory;
 
     public GenericRepository(Class<Entity> entityType) {
         this.entityType = entityType;
-        this.sessionFactory = DatabaseConfig.getSessionFactory(); // Get session factory directly from DatabaseConfig
+        this.sessionFactory = DatabaseConfig.getSessionFactory();
     }
 
+    @Override
     public void create(Entity entity) {
         Transaction transaction = null;
         try (Session session = sessionFactory.openSession()) {
@@ -28,6 +28,7 @@ public class GenericRepository<Entity> {
         }
     }
 
+    @Override
     public void updateById(int id, Entity updatedEntity) {
         Transaction transaction = null;
         try (Session session = sessionFactory.openSession()) {
@@ -43,18 +44,21 @@ public class GenericRepository<Entity> {
         }
     }
 
+    @Override
     public Entity getById(int id) {
         try (Session session = sessionFactory.openSession()) {
             return session.get(entityType, id);
         }
     }
 
+    @Override
     public List<Entity> getAll() {
         try (Session session = sessionFactory.openSession()) {
             return session.createQuery("from " + entityType.getSimpleName(), entityType).list();
         }
     }
 
+    @Override
     public void deleteById(int id) {
         Transaction transaction = null;
         try (Session session = sessionFactory.openSession()) {

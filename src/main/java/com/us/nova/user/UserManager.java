@@ -2,7 +2,6 @@ package com.us.nova.user;
 
 import com.us.nova.user.context.UserContext;
 import com.us.nova.user.context.UserSSOContext;
-import com.us.nova.user.entity.UserEntity;
 import com.us.nova.user.mapper.UserMapper;
 import com.us.nova.user.mapper.UserSSOMapper;
 import com.us.nova.user.model.UserModel;
@@ -12,7 +11,6 @@ import com.us.nova.user.repository.UserSSORepository;
 import com.us.nova.user.service.UserSSOService;
 import com.us.nova.user.service.UserService;
 import lombok.Getter;
-import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -22,16 +20,9 @@ public class UserManager {
 
     private static UserManager instance;
 
-    public static UserManager getInstance(SessionFactory sessionFactory) {
-        if (instance == null) {
-            instance = new UserManager(sessionFactory);
-        }
-        return instance;
-    }
-
     public static UserManager getInstance() {
         if (instance == null) {
-            throw new RuntimeException("UserManager has not been initialized");
+            instance = new UserManager();
         }
         return instance;
     }
@@ -44,13 +35,13 @@ public class UserManager {
     private final UserSSOContext userSSOContext;
     private final UserSSOService userSSOService;
 
-    private UserManager(SessionFactory sessionFactory) {
+    private UserManager() {
         this.userContext = UserContext.getInstance();
-        this.userRepository = UserRepository.getInstance(sessionFactory);
+        this.userRepository = UserRepository.getInstance();
         this.userService = UserService.getInstance();
 
         this.userSSOContext = UserSSOContext.getInstance();
-        this.userSSORepository = UserSSORepository.getInstance(sessionFactory);
+        this.userSSORepository = UserSSORepository.getInstance();
         this.userSSOService = UserSSOService.getInstance();
     }
 

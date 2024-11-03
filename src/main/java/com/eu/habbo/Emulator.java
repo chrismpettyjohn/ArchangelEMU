@@ -122,7 +122,7 @@ public final class Emulator {
             Emulator.nova.load(config);
 
             Emulator.archangel = new Archangel();
-            Emulator.archangel.load(config);
+            Emulator.archangel.load();
 
             Emulator.gameServer = new GameServer(getConfig().getValue("game.host", "127.0.0.1"), getConfig().getInt("game.port", 30000));
             Emulator.gameEnvironment = new GameEnvironment();
