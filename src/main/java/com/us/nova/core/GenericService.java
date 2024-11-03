@@ -17,7 +17,7 @@ public class GenericService<Model, Context extends GenericContext<Model>, Reposi
         this.repository = repository;
         this.mapperClass = mapperClass;
         this.entityClass = entityClass;
-        this.loadAll(); // preload all items into the context
+        this.loadAll();
     }
 
     public void create(Model model) {

@@ -26,20 +26,20 @@ public class PlayerWeaponCreateEvent extends MessageHandler {
         int weaponId = this.packet.readInt();
         int userId = this.packet.readInt();
 
-        WeaponModel weapon = WeaponService.getInstance().getById(this.packet.readInt());
+        WeaponModel weapon = WeaponService.getInstance().getById(weaponId);
 
         if (weapon == null) {
             return;
         }
 
         PlayerWeaponEntity playerWeaponEntity = new PlayerWeaponEntity();
-        playerWeaponEntity.setWeaponId(this.packet.readInt());
-        playerWeaponEntity.setUserId(this.packet.readInt());
+        playerWeaponEntity.setWeaponId(weaponId);
+        playerWeaponEntity.setUserId(userId);
         playerWeaponEntity.setAmmoRemaining(weapon.getAmmoCapacity());
 
         PlayerWeaponService.getInstance().update(playerWeaponEntity.getId(), PlayerWeaponMapper.toModel(playerWeaponEntity));
 
-        List<PlayerWeaponModel> playerWeaponModels = PlayerWeaponService.getInstance().getByUserID(playerWeaponEntity.getUserId());
+        List<PlayerWeaponModel> playerWeaponModels = PlayerWeaponService.getInstance().getByUserID(userId);
         this.client.sendResponse(new PlayerWeaponListComposer(playerWeaponModels));
     }
 }

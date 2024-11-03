@@ -20,11 +20,11 @@ public class WeaponListComposer extends MessageComposer {
 
         for (WeaponModel playerWeapon : this.weaponModels) {
             this.response.appendString(
-                    String.format("%s;%s;%s;%s;%s;%s;%s%s",
+                    String.format("%s;%s;%s;%s;%s;%s;%s;%s",
                             playerWeapon.getId(),
                             playerWeapon.getUniqueName(),
                             playerWeapon.getDisplayName(),
-                            playerWeapon.getType(),
+                            playerWeapon.getType().toString(),
                             playerWeapon.getMinDamage(),
                             playerWeapon.getMaxDamage(),
                             playerWeapon.getAccuracy(),
