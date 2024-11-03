@@ -19,7 +19,7 @@ public class BetaCodeContext extends GenericContext<BetaCodeModel> {
     }
 
     protected BetaCodeContext() {
-        super();
+        super(BetaCodeModel.class);
     }
 
 }

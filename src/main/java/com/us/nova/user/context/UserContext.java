@@ -19,7 +19,7 @@ public class UserContext extends GenericContext<UserModel> {
     }
 
     protected UserContext() {
-        super();
+        super(UserModel.class);
     }
 
 }

@@ -15,6 +15,6 @@ public class GangInviteContext extends GenericContext<GangInviteModel> {
     }
 
     protected GangInviteContext() {
-        super();
+        super(GangInviteModel.class);
     }
 }

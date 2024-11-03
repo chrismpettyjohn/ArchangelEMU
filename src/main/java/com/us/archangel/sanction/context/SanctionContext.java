@@ -19,6 +19,6 @@ public class SanctionContext extends GenericContext<SanctionModel> {
     }
 
     private SanctionContext() {
-        super();
+        super(SanctionModel.class);
     }
 }

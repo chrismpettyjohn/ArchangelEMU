@@ -19,6 +19,6 @@ public class CorpInviteContext extends GenericContext<CorpInviteModel> {
     }
 
     protected CorpInviteContext() {
-        super();
+        super(CorpInviteModel.class);
     }
 }

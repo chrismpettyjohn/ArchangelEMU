@@ -15,7 +15,7 @@ public class GangRoleContext extends GenericContext<GangRoleModel> {
     }
 
     protected GangRoleContext() {
-        super();
+        super(GangRoleModel.class);
     }
 
     public GangRoleModel getByGangIdAndOrderId(int gangId, int orderId) {

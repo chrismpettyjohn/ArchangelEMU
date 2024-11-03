@@ -19,6 +19,6 @@ public class PlayerContext extends GenericContext<PlayerModel> {
     }
 
     protected PlayerContext() {
-        super();
+        super(PlayerModel.class);
     }
 }

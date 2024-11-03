@@ -19,6 +19,6 @@ public class CorpContext extends GenericContext<CorpModel> {
     }
 
     protected CorpContext() {
-        super();
+        super(CorpModel.class);
     }
 }

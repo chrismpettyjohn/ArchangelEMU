@@ -19,7 +19,7 @@ public class BugReportContext extends GenericContext<BugReportModel> {
     }
 
     protected BugReportContext() {
-        super();
+        super(BugReportModel.class);
     }
 
 }

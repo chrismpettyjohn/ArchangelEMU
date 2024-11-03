@@ -22,7 +22,7 @@ public class BountyContext extends GenericContext<BountyModel> {
     }
 
     protected BountyContext() {
-        super();
+        super(BountyModel.class);
     }
     public List<BountyModel> getByUserId(int userId) {
         return getAll().values().stream()

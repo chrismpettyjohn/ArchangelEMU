@@ -19,6 +19,6 @@ public class PlayerBankAccountContext extends GenericContext<PlayerBankAccountMo
     }
 
     protected PlayerBankAccountContext() {
-        super();
+        super(PlayerBankAccountModel.class);
     }
 }

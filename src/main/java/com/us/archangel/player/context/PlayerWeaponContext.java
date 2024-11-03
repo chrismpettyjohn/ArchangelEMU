@@ -19,6 +19,6 @@ public class PlayerWeaponContext extends GenericContext<PlayerWeaponModel> {
     }
 
     protected PlayerWeaponContext() {
-        super();
+        super(PlayerWeaponModel.class);
     }
 }

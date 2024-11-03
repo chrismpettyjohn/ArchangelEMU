@@ -15,6 +15,6 @@ public class CrimeContext extends GenericContext<CrimeModel> {
     }
 
     protected CrimeContext() {
-        super();
+        super(CrimeModel.class);
     }
 }

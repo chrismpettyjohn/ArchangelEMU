@@ -19,7 +19,7 @@ public class UserSSOContext extends GenericContext<UserSSOModel> {
     }
 
     protected UserSSOContext() {
-        super();
+        super(UserSSOModel.class);
     }
 
 }

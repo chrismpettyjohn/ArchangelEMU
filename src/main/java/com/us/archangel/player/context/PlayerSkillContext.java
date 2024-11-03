@@ -19,6 +19,6 @@ public class PlayerSkillContext extends GenericContext<PlayerSkillModel> {
     }
 
     protected PlayerSkillContext() {
-        super();
+        super(PlayerSkillModel.class);
     }
 }

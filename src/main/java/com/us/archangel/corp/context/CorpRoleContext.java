@@ -19,7 +19,7 @@ public class CorpRoleContext extends GenericContext<CorpRoleModel> {
     }
 
     protected CorpRoleContext() {
-        super();
+        super(CorpRoleModel.class);
     }
 
     public CorpRoleModel findByCorpAndOrderId(int corpId, int orderId) {
