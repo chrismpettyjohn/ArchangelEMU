@@ -474,4 +474,6 @@ public class Outgoing {
     public static final int weaponDataComposer = 9042;
     public static final int weaponListComposer = 9043;
     public static final int playerWeaponListComposer = 9044;
+    public static final int crimeListComposer = 9045;
+    public static final int crimeDataComposer = 9046;
 }

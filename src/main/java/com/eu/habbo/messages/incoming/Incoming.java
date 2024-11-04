@@ -68,6 +68,7 @@ import com.us.archangel.feature.combat.packets.incoming.ListMyWeaponsEvent;
 import com.us.archangel.feature.combat.packets.incoming.UserAttackEvent;
 import com.us.archangel.feature.combat.packets.incoming.WeaponReloadEvent;
 import com.us.archangel.feature.controls.packets.incoming.UserMovementEvent;
+import com.us.archangel.feature.crime.packets.incoming.*;
 import com.us.archangel.feature.device.interactions.packets.incoming.DeviceCloseEvent;
 import com.us.archangel.feature.device.interactions.packets.incoming.DeviceOpenEvent;
 import com.us.archangel.feature.device.interactions.packets.incoming.InfoScreenSaveEvent;
@@ -1102,7 +1103,17 @@ public enum Incoming {
 
     weaponQueryOneEvent(8084, WeaponQueryOneEvent.class),
 
-    weaponUpdateEvent(8085, WeaponUpdateEvent.class);
+    weaponUpdateEvent(8085, WeaponUpdateEvent.class),
+
+    crimeCreateEvent(8086, CrimeCreateEvent.class),
+
+    crimeDeleteEvent(8087, CrimeDeleteEvent.class),
+
+    crimeQueryListEvent(8088, CrimeQueryListEvent.class),
+
+    crimeQueryOneEvent(8089, CrimeQueryOneEvent.class),
+
+    crimeUpdateEvent(8090, CrimeUpdateEvent.class);
 
     private final int messageId;
     private final Class<? extends MessageHandler> messageClass;
