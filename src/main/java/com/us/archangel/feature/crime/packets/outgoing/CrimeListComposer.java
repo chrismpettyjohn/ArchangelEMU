@@ -18,7 +18,12 @@ public class CrimeListComposer extends MessageComposer {
         this.response.appendInt(crimeModels.size());
 
         for (CrimeModel crime : crimeModels) {
-            this.response.appendString(String.format("%s;%s;%s;%s", crime.getId(), crime.getDisplayName(), crime.getDescription(), crime.getJailTimeSeconds()));
+            this.response.appendString(String.join(";",
+                    String.valueOf(crime.getId()),
+                    crime.getDisplayName(),
+                    crime.getDescription(),
+                    String.valueOf(crime.getJailTimeSeconds())
+            ));
         }
 
         return this.response;
