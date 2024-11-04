@@ -1113,7 +1113,17 @@ public enum Incoming {
 
     crimeQueryOneEvent(8089, CrimeQueryOneEvent.class),
 
-    crimeUpdateEvent(8090, CrimeUpdateEvent.class);
+    crimeUpdateEvent(8090, CrimeUpdateEvent.class),
+
+    corpCreateEvent(8091, CorpCreateEvent.class),
+
+    corpUpdateEvent(8092, CorpUpdateEvent.class),
+
+    corpDeleteEvent(8093, CorpDeleteEvent.class),
+
+    corpQueryListEvent(8094, CorpQueryListEvent.class),
+
+    corpQueryOneEvent(8095, CorpQueryOneEvent.class);
 
     private final int messageId;
     private final Class<? extends MessageHandler> messageClass;
