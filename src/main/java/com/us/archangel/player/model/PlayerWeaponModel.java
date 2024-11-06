@@ -19,8 +19,8 @@ public class PlayerWeaponModel {
     }
 
     public void depleteAmmo(int ammo) {
-        this.ammoRemaining = Math.min(this.ammoRemaining - ammo, 0);
-    }
+            this.ammoRemaining = Math.max(this.ammoRemaining - ammo, 0);
+        }
 
     public WeaponModel getWeapon() {
         return WeaponService.getInstance().getById(this.weaponId);
