@@ -557,16 +557,6 @@ public class RoomManager {
             RoomTile spawnTile = spawnLocation == null ? room.getLayout().getDoorTile() : spawnLocation;
             RoomRotation spawnDirection = RoomRotation.values()[room.getLayout().getDoorDirection()];
 
-            if (spawnLocation != null) {
-                roomHabbo.setCanLeaveRoomByDoor(false);
-                roomHabbo.setTeleporting(true);
-                RoomItem topItem = room.getRoomItemManager().getTopItemAt(spawnLocation);
-
-                if (topItem != null) {
-                    spawnDirection = RoomRotation.values()[topItem.getRotation()];
-                }
-            }
-
             this.handleSpawnLocation(roomHabbo, spawnTile, spawnDirection);
         }
 
