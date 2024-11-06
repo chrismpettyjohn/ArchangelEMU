@@ -37,7 +37,7 @@ public class PlayerWeaponCreateEvent extends MessageHandler {
         playerWeaponEntity.setUserId(userId);
         playerWeaponEntity.setAmmoRemaining(weapon.getAmmoCapacity());
 
-        PlayerWeaponService.getInstance().update(playerWeaponEntity.getId(), PlayerWeaponMapper.toModel(playerWeaponEntity));
+        PlayerWeaponService.getInstance().create(PlayerWeaponMapper.toModel(playerWeaponEntity));
 
         List<PlayerWeaponModel> playerWeaponModels = PlayerWeaponService.getInstance().getByUserID(userId);
         this.client.sendResponse(new PlayerWeaponListComposer(playerWeaponModels));
