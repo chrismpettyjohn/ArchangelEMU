@@ -11,8 +11,6 @@ import com.us.archangel.room.enums.RoomType;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
-import java.util.HashSet;
-import java.util.Set;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -22,89 +20,67 @@ public class CallTaxiAction implements Runnable {
 
     @NonNull
     private final Habbo habbo;
-
     @NonNull
     private final Room targetRoom;
 
     @Override
     public void run() {
-        if (this.habbo.getRoomUnit().getRoom() == null) {
-            return;
-        }
-        if (this.habbo.getRoomUnit().getRoom().getRoomInfo().getId() == this.targetRoom.getRoomInfo().getId() ) {
+        if (habbo.getRoomUnit().getRoom() != null && habbo.getRoomUnit().getRoom().getRoomInfo().getId() == targetRoom.getRoomInfo().getId()) {
             return;
         }
 
         int taxiFee = Integer.parseInt(Emulator.getConfig().getValue("roleplay.taxi.fee", "20"));
+        boolean hasFreeTaxiPermission = habbo.hasPermissionRight(Permission.ACC_NAVIGATOR_SHOW_ALL);
 
-        if (!this.habbo.hasPermissionRight(Permission.ACC_NAVIGATOR_SHOW_ALL)) {
-            if (this.habbo.getHabboInfo().getCredits() < taxiFee) {
-                this.habbo.whisper(Emulator.getTexts().getValue("roleplay.taxi.cant_afford"));
+        if (!hasFreeTaxiPermission) {
+            if (habbo.getHabboInfo().getCredits() < taxiFee) {
+                habbo.whisper(Emulator.getTexts().getValue("roleplay.taxi.cant_afford"));
                 return;
             }
 
-            if (!this.targetRoom.getRoomInfo().getTags().contains(RoomType.TAXI)) {
-                this.habbo.whisper(Emulator.getTexts()
-                        .getValue("roleplay.taxi.not_available")
-                        .replace(":roomname", this.targetRoom.getRoomInfo().getName())
-                );
+            if (!targetRoom.getRoomInfo().getTags().contains(RoomType.TAXI)) {
+                habbo.whisper(Emulator.getTexts().getValue("roleplay.taxi.not_available")
+                        .replace(":roomname", targetRoom.getRoomInfo().getName()));
                 return;
             }
         }
 
-        int taxiDelay = this.habbo.hasPermissionRight(Permission.ACC_NAVIGATOR_SHOW_ALL)
-                ? Integer.parseInt(Emulator.getConfig().getValue("roleplay.taxi.delay_secs", "20"))
-                : 0;
-        long arrivesAt = (System.currentTimeMillis() / 1000) + taxiDelay;
+        int taxiDelay = hasFreeTaxiPermission ? Integer.parseInt(Emulator.getConfig().getValue("roleplay.taxi.delay_secs", "20")) : 0;
+        long arrivesAt = System.currentTimeMillis() / 1000 + taxiDelay;
 
-        if (!this.habbo.hasPermissionRight(Permission.ACC_NAVIGATOR_SHOW_ALL)) {
-            this.habbo.getHabboInfo().setCredits(this.habbo.getHabboInfo().getCredits() - taxiFee);
-            this.habbo.shout(
-                    Emulator.getTexts()
-                            .getValue("roleplay.taxi.dispatched")
-                            .replace(":roomName", this.targetRoom.getRoomInfo().getName())
-                            .replace(":roomID", String.valueOf(this.targetRoom.getRoomInfo().getId()))
-            );
-            this.habbo.getClient().sendResponse(new CreditBalanceComposer(this.habbo));
-            this.habbo.getClient().sendResponse(new UserRoleplayStatsChangeComposer(this.habbo));
+        if (!hasFreeTaxiPermission) {
+            habbo.getHabboInfo().setCredits(habbo.getHabboInfo().getCredits() - taxiFee);
+            habbo.shout(Emulator.getTexts().getValue("roleplay.taxi.dispatched")
+                    .replace(":roomName", targetRoom.getRoomInfo().getName())
+                    .replace(":roomID", String.valueOf(targetRoom.getRoomInfo().getId())));
+            habbo.getClient().sendResponse(new CreditBalanceComposer(habbo));
+            habbo.getClient().sendResponse(new UserRoleplayStatsChangeComposer(habbo));
         }
 
-        this.habbo.getClient().sendResponse(new TaxiDispatchedComposer(this.targetRoom.getRoomInfo().getId(), arrivesAt));
+        habbo.getClient().sendResponse(new TaxiDispatchedComposer(targetRoom.getRoomInfo().getId(), arrivesAt));
 
         ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
-        Set<Integer> scheduledSeconds = new HashSet<>();
-
         int countdownInterval = 5;
+
         for (int i = 1; i <= 4; i++) {
             int countdownSeconds = i * countdownInterval;
+            int delaySeconds = taxiDelay - countdownSeconds;
 
-            if (countdownSeconds <= taxiDelay && !scheduledSeconds.contains(countdownSeconds)) {
-                scheduledSeconds.add(countdownSeconds); // Mark countdownSeconds as scheduled
-
-                int delaySeconds = taxiDelay - countdownSeconds; // Calculate delay
-
-                executor.schedule(() -> {
-                    this.habbo.getClient().getHabbo().shout(Emulator.getTexts()
-                            .getValue("roleplay.taxi.eta")
-                            .replace(":seconds", String.valueOf(countdownSeconds))
-                    );
-                }, delaySeconds, TimeUnit.SECONDS);
+            if (countdownSeconds <= taxiDelay) {
+                executor.schedule(() -> habbo.shout(
+                        Emulator.getTexts().getValue("roleplay.taxi.eta").replace(":seconds", String.valueOf(countdownSeconds))
+                ), delaySeconds, TimeUnit.SECONDS);
             }
         }
 
         executor.schedule(() -> {
-            this.habbo.shout(Emulator.getTexts()
-                    .getValue("roleplay.taxi.picked_up")
-                    .replace(":fee", String.valueOf(taxiFee))
-            );
-
-            habbo.goToRoom(this.targetRoom.getRoomInfo().getId());
+            habbo.shout(Emulator.getTexts().getValue("roleplay.taxi.picked_up").replace(":fee", String.valueOf(taxiFee)));
+            habbo.goToRoom(targetRoom.getRoomInfo().getId());
 
             executor.schedule(() -> {
-                this.habbo.shout(Emulator.getTexts().getValue("roleplay.taxi.arrived"));
+                habbo.shout(Emulator.getTexts().getValue("roleplay.taxi.arrived"));
                 executor.shutdown();
             }, 500, TimeUnit.MILLISECONDS);
         }, taxiDelay, TimeUnit.SECONDS);
     }
-
 }
