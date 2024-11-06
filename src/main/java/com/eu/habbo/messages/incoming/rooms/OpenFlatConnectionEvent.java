@@ -2,6 +2,7 @@ package com.eu.habbo.messages.incoming.rooms;
 
 import com.eu.habbo.Emulator;
 import com.eu.habbo.habbohotel.rooms.Room;
+import com.eu.habbo.habbohotel.rooms.RoomTile;
 import com.eu.habbo.messages.incoming.MessageHandler;
 import lombok.extern.slf4j.Slf4j;
 
@@ -29,7 +30,13 @@ public class OpenFlatConnectionEvent extends MessageHandler {
                 this.client.getHabbo().getRoomUnit().setTeleporting(false);
             }
 
-            Emulator.getGameEnvironment().getRoomManager().enterRoom(this.client.getHabbo(), roomId, password, false);
+            Room futureRoom = Emulator.getGameEnvironment().getRoomManager().getRoom(roomId, true);
+
+            RoomTile spawnTile = this.client.getHabbo().getHabboInfo().getHomeRoom() == roomId
+                    ? futureRoom.getLayout().getTile(this.client.getHabbo().getPlayer().getLastPosX(), this.client.getHabbo().getPlayer().getLastPosY())
+                    : null;
+
+            Emulator.getGameEnvironment().getRoomManager().enterRoom(this.client.getHabbo(), roomId, password, false, spawnTile);
         }
     }
 }

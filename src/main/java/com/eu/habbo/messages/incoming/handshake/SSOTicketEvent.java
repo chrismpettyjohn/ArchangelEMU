@@ -299,20 +299,6 @@ public class SSOTicketEvent extends MessageHandler {
                     }, Emulator.getConfig().getInt("hotel.welcome.alert.delay", 5000));
                 }
 
-                Emulator.getThreading().run(() -> {
-                    while (this.client.getHabbo().getRoomUnit().getRoom()== null) {
-                        try {
-                            Thread.sleep(100); // Adjust the sleep time as needed
-                        } catch (InterruptedException e) {
-                            throw new RuntimeException(e);
-                        }
-                    }
-
-                    PlayerModel rpStats = this.client.getHabbo().getPlayer();
-                    RoomTile lastUserPos = this.client.getHabbo().getRoomUnit().getRoom().getLayout().getClosestWalkableTile(rpStats.getLastPosX(),rpStats.getLastPosY());
-                    this.client.getHabbo().getRoomUnit().setLocation(lastUserPos);
-                }, 25);
-
                 if (SubscriptionHabboClub.HC_PAYDAY_ENABLED) {
                     SubscriptionHabboClub.processUnclaimed(habbo);
                 }
