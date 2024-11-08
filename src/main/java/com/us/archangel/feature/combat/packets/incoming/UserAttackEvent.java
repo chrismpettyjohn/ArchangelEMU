@@ -21,19 +21,17 @@ public class UserAttackEvent extends MessageHandler {
 
     @Override
     public void handle() {
-        int x = this.packet.readInt();
+        int x = this.packet.readInt() + 1;
         int y = this.packet.readInt();
 
         PlayerWeaponModel equippedWeapon = this.client.getHabbo().getInventory().getWeaponsComponent().getEquippedWeapon();
 
-        // Deduct ammo immediately for gun-type weapons before other checks
         if (equippedWeapon != null && !handleWeaponUsage(equippedWeapon)) {
-            // Return early if ammo is 0 or handling the weapon failed
             return;
         }
 
         RoomTile roomTile = this.client.getHabbo().getRoomUnit().getRoom().getLayout().getTile((short) x, (short) y);
-        if (roomTile == null || checkCombatBlocked() || checkPassiveRoom() || !checkTargetRange(x, y, roomTile)) return;
+        if (roomTile == null || checkCombatBlocked() || checkPassiveRoom()) return;
 
         Habbo targetedHabbo = this.client.getHabbo().getRoomUnit().getRoom().getRoomUnitManager().getHabbosAt(roomTile)
                 .stream().findFirst().orElse(null);
@@ -45,7 +43,7 @@ public class UserAttackEvent extends MessageHandler {
 
         if (!checkEnergyLevel(targetedHabbo)) return;
 
-        int totalDamage = calculateDamage(targetedHabbo, equippedWeapon);
+        int totalDamage = calculateDamage(this.client.getHabbo(), equippedWeapon);
         handleAttackMessages(targetedHabbo, equippedWeapon, totalDamage);
         processAttackEffects(targetedHabbo, totalDamage);
     }
@@ -73,16 +71,6 @@ public class UserAttackEvent extends MessageHandler {
             return true;
         }
         return false;
-    }
-
-    private boolean checkTargetRange(int x, int y, RoomTile roomTile) {
-        int distanceX = x - this.client.getHabbo().getRoomUnit().getCurrentPosition().getX();
-        int distanceY = y - this.client.getHabbo().getRoomUnit().getCurrentPosition().getY();
-        if (Math.abs(distanceX) > 1 || Math.abs(distanceY) > 1) {
-            this.client.getHabbo().whisper(Emulator.getTexts().getValue("commands.roleplay.cmd_hit_user_is_out_of_range"));
-            return false;
-        }
-        return true;
     }
 
     private boolean handleWeaponUsage(PlayerWeaponModel weapon) {
@@ -116,8 +104,8 @@ public class UserAttackEvent extends MessageHandler {
         return true;
     }
 
-    private int calculateDamage(Habbo target, PlayerWeaponModel equippedWeapon) {
-        return target.getPlayerSkills().getDamageModifier(equippedWeapon != null ? equippedWeapon.getWeapon() : null);
+    private int calculateDamage(Habbo player, PlayerWeaponModel equippedWeapon) {
+        return player.getPlayerSkills().getDamageModifier(equippedWeapon != null ? equippedWeapon.getWeapon() : null);
     }
 
     private void handleAttackMessages(Habbo target, PlayerWeaponModel equippedWeapon, int damage) {
