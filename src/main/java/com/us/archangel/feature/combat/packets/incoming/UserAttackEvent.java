@@ -3,25 +3,28 @@ package com.us.archangel.feature.combat.packets.incoming;
 import com.eu.habbo.Emulator;
 import com.eu.habbo.habbohotel.rooms.RoomTile;
 import com.eu.habbo.habbohotel.users.Habbo;
+import com.eu.habbo.messages.incoming.MessageHandler;
 import com.us.archangel.feature.combat.packets.outgoing.CombatDelayComposer;
-import com.us.archangel.feature.combat.packets.outgoing.WeaponActionComposer;
 import com.us.archangel.feature.combat.packets.outgoing.UserDiedComposer;
 import com.us.archangel.feature.player.packets.outgoing.UserRoleplayStatsChangeComposer;
 import com.us.archangel.player.model.PlayerWeaponModel;
 import com.us.archangel.room.enums.RoomType;
-import com.eu.habbo.messages.incoming.MessageHandler;
 import com.us.archangel.weapon.enums.WeaponType;
 
 import java.util.Collection;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 
 public class UserAttackEvent extends MessageHandler {
 
     @Override
     public void handle() {
-        int x = this.packet.readInt() + 1;
+
+        if (this.client.getHabbo().getPlayer().isCombatBlocked()) {
+            this.client.getHabbo().whisper("You need to wait a bit before attacking again.");
+            this.client.sendResponse(new CombatDelayComposer(this.client.getHabbo()));
+            return;
+        }
+
+        int x = this.packet.readInt();
         int y = this.packet.readInt();
 
         PlayerWeaponModel equippedWeapon = this.client.getHabbo().getInventory().getWeaponsComponent().getEquippedWeapon();
@@ -31,7 +34,7 @@ public class UserAttackEvent extends MessageHandler {
         }
 
         RoomTile roomTile = this.client.getHabbo().getRoomUnit().getRoom().getLayout().getTile((short) x, (short) y);
-        if (roomTile == null || checkCombatBlocked() || checkPassiveRoom()) return;
+        if (roomTile == null || checkPassiveRoom()) return;
 
         Habbo targetedHabbo = this.client.getHabbo().getRoomUnit().getRoom().getRoomUnitManager().getHabbosAt(roomTile)
                 .stream().findFirst().orElse(null);
@@ -48,23 +51,6 @@ public class UserAttackEvent extends MessageHandler {
         processAttackEffects(targetedHabbo, totalDamage);
     }
 
-    private boolean checkCombatBlocked() {
-        if (this.client.getHabbo().getPlayer().isCombatBlocked()) {
-            int delayRemaining = (int) this.client.getHabbo().getPlayer().getCombatDelayRemainingSecs();
-            this.client.getHabbo().whisper("You need to wait a bit before attacking again.");
-            this.client.sendResponse(new CombatDelayComposer(this.client.getHabbo()));
-
-            // Scheduler to end the delay without polling packets
-            ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
-            executor.schedule(() -> {
-                this.client.getHabbo().getPlayer().setCombatDelayRemainingSecs(0);
-                this.client.sendResponse(new CombatDelayComposer(this.client.getHabbo()));
-            }, delayRemaining, TimeUnit.SECONDS);
-            return true;
-        }
-        return false;
-    }
-
     private boolean checkPassiveRoom() {
         if (this.client.getHabbo().getRoomUnit().getRoom().getRoomInfo().getTags().contains(RoomType.PASSIVE)) {
             this.client.getHabbo().whisper(Emulator.getTexts().getValue("roleplay.generic.passive_room"));
@@ -77,13 +63,13 @@ public class UserAttackEvent extends MessageHandler {
         if (weapon.getWeapon().getType() == WeaponType.GUN) {
             if (weapon.getAmmoRemaining() == 0) {
                 this.client.getHabbo().whisper(Emulator.getTexts().getValue("roleplay.combat_out_of_ammo"));
-                this.client.getHabbo().getPlayer().setCombatDelayRemainingSecs(weapon.getWeapon().getReloadTime());
+                this.client.getHabbo().getPlayer().setCombatDelayExpiresAt(System.currentTimeMillis() + weapon.getWeapon().getReloadTime() * 1000);
                 return false;
             }
             weapon.depleteAmmo(1);
             this.client.sendResponse(new UserRoleplayStatsChangeComposer(this.client.getHabbo()));
         }
-        this.client.getHabbo().getPlayer().setCombatDelayRemainingSecs(weapon.getWeapon().getCooldownSeconds());
+        this.client.getHabbo().getPlayer().setCombatDelayExpiresAt(System.currentTimeMillis() + weapon.getWeapon().getCooldownSeconds() * 1000);
         return true;
     }
 

@@ -13,6 +13,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.Date;
+
 @Getter
 @AllArgsConstructor
 public class PlayerModel {
@@ -40,7 +42,7 @@ public class PlayerModel {
     @Setter
     private long workTimeRemainingSecs;
     @Setter
-    private long combatDelayRemainingSecs;
+    private long combatDelayExpiresAt;
     @Setter
     private long jailTimeRemainingSecs;
     @Setter
@@ -88,7 +90,7 @@ public class PlayerModel {
     }
 
     public boolean isCombatBlocked() {
-        return this.combatDelayRemainingSecs > 0;
+        return System.currentTimeMillis() < this.combatDelayExpiresAt;
     }
 
     public CorpModel getCorp() {

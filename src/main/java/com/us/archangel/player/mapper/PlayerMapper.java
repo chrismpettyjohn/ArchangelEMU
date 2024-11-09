@@ -57,7 +57,7 @@ public class PlayerMapper extends GenericMapper<PlayerEntity, PlayerModel> {
         entity.setLastPosX(model.getLastPosX());
         entity.setLastPosY(model.getLastPosY());
         entity.setWorkTimeRemainingSecs(model.getWorkTimeRemainingSecs());
-        entity.setCombatDelayRemainingSecs(model.getCombatDelayRemainingSecs());
+        entity.setCombatDelayRemainingSecs(model.getCombatDelayExpiresAt());
         entity.setJailTimeRemainingSecs(model.getJailTimeRemainingSecs());
         entity.setCurrentAction(model.getCurrentAction());
         entity.setEscortingPlayerId(model.getEscortingPlayerId());
