@@ -6,7 +6,7 @@ import lombok.Getter;
 public enum CorpIndustry {
     Bank("bank"),
     DriversEd("drivers-ed"),
-    Farm("fish"),
+    Farm("farm"),
     Fish("fish"),
     Mine("mine"),
     Lumber("lumber"),
