@@ -954,7 +954,7 @@ public enum Incoming {
 
     corpStartWorkEvent(8011, CorpEditPositionEvent.CorpStartWorkEvent.class),
 
-    corpStopWorkEvent(8012, CorpListEvent.CorpStopWorkEvent.class),
+    corpStopWorkEvent(8012, CorpStopWorkEvent.class),
 
     gangDeclineInviteEvent(8008, GangDeclineInviteEvent.class),
 
@@ -1121,8 +1121,6 @@ public enum Incoming {
     corpUpdateEvent(8092, CorpUpdateEvent.class),
 
     corpDeleteEvent(8093, CorpDeleteEvent.class),
-
-    corpQueryListEvent(8094, CorpQueryListEvent.class),
 
     corpQueryOneEvent(8095, CorpQueryOneEvent.class),
 
