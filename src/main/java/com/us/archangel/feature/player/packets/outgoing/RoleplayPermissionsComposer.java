@@ -15,6 +15,9 @@ public class RoleplayPermissionsComposer extends MessageComposer {
     protected ServerMessage composeInternal() {
         this.response.init(Outgoing.roleplayPermissionsComposer);
         this.response.appendBoolean(this.habbo.hasPermissionRight(Permission.ACC_NAVIGATOR_SHOW_ALL));
+        this.response.appendBoolean(this.habbo.hasPermissionRight(Permission.ACC_CORPS_EDIT_ALL));
+        this.response.appendBoolean(this.habbo.hasPermissionRight(Permission.ACC_GANGS_EDIT_ALL));
+        this.response.appendBoolean(this.habbo.hasPermissionRight(Permission.ACC_USERS_EDIT_ALL));
         return this.response;
     }
 }

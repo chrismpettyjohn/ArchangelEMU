@@ -2,6 +2,7 @@ package com.us.archangel.feature.corp.packets.outgoing;
 
 import com.eu.habbo.Emulator;
 import com.eu.habbo.habbohotel.users.Habbo;
+import com.eu.habbo.habbohotel.users.HabboInfo;
 import com.eu.habbo.messages.ServerMessage;
 import com.eu.habbo.messages.outgoing.MessageComposer;
 import com.eu.habbo.messages.outgoing.Outgoing;
@@ -24,7 +25,7 @@ public class CorpListComposer extends MessageComposer {
 
         // Append the sorted positions to the response
         for (CorpModel corp : corps) {
-            Habbo owner = Emulator.getGameEnvironment().getHabboManager().getHabbo(corp.getUserId());
+            HabboInfo owner = Emulator.getGameEnvironment().getHabboManager().getOfflineHabboInfo(corp.getUserId());
             List<PlayerModel> employees =PlayerService.getInstance().getByCorpId(corp.getId());
 
             this.response.appendString(
@@ -34,7 +35,7 @@ public class CorpListComposer extends MessageComposer {
                             + ";" + corp.getIndustry()
                             + ";" + corp.getSector()
                             + ";" + corp.getUserId()
-                            + ";" + owner.getHabboInfo().getUsername()
+                            + ";" + owner.getUsername()
                             + ";" + employees.size()
             );
         }

@@ -56,4 +56,7 @@ public class Permission {
     public static final String ACC_MIMIC_UNREDEEMED = "acc_mimic_unredeemed";
     public static final String ACC_CALENDAR_FORCE = "acc_calendar_force";
     public static final String ACC_NAVIGATOR_SHOW_ALL = "acc_navigator_show_all";
+    public static final String ACC_CORPS_EDIT_ALL = "acc_corps_edit_all";
+    public static final String ACC_GANGS_EDIT_ALL = "acc_gangs_edit_all";
+    public static final String ACC_USERS_EDIT_ALL = "acc_users_edit_all";
 }
