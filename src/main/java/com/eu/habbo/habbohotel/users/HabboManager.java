@@ -79,6 +79,43 @@ public class HabboManager {
         return info;
     }
 
+    public List<HabboInfo> queryHabbos(int page, String searchTerm) {
+        List<HabboInfo> habbos = new ArrayList<>();
+        int limit = 20;
+        int offset = (page - 1) * limit;
+        String query;
+
+        if (searchTerm != null && !searchTerm.isEmpty()) {
+            query = "SELECT * FROM users WHERE username ILIKE ? LIMIT ? OFFSET ?";
+        } else {
+            query = "SELECT * FROM users ORDER BY RANDOM() LIMIT ? OFFSET ?";
+        }
+
+        try (Connection connection = Emulator.getDatabase().getDataSource().getConnection();
+             PreparedStatement statement = connection.prepareStatement(query)) {
+
+            if (searchTerm != null && !searchTerm.isEmpty()) {
+                statement.setString(1, "%" + searchTerm + "%");
+                statement.setInt(2, limit);
+                statement.setInt(3, offset);
+            } else {
+                statement.setInt(1, limit);
+                statement.setInt(2, offset);
+            }
+
+            try (ResultSet set = statement.executeQuery()) {
+                while (set.next()) {
+                    habbos.add(new HabboInfo(set));
+                }
+            }
+        } catch (SQLException e) {
+            log.error("Caught SQL exception", e);
+        }
+
+        return habbos;
+    }
+
+
     public HabboInfo getOfflineHabboInfo(String username) {
         HabboInfo info = null;
 
