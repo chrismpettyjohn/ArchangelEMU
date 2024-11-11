@@ -4,6 +4,14 @@ import com.eu.habbo.habbohotel.users.Habbo;
 import com.eu.habbo.messages.ServerMessage;
 import com.eu.habbo.messages.outgoing.MessageComposer;
 import com.eu.habbo.messages.outgoing.Outgoing;
+import com.us.archangel.corp.model.CorpModel;
+import com.us.archangel.corp.model.CorpRoleModel;
+import com.us.archangel.corp.service.CorpRoleService;
+import com.us.archangel.corp.service.CorpService;
+import com.us.archangel.gang.model.GangModel;
+import com.us.archangel.gang.model.GangRoleModel;
+import com.us.archangel.gang.service.GangRoleService;
+import com.us.archangel.gang.service.GangService;
 import com.us.archangel.player.enums.PlayerAction;
 import lombok.AllArgsConstructor;
 
@@ -13,10 +21,20 @@ public class UserRoleplayStatsChangeComposer extends MessageComposer {
 
     @Override
     protected ServerMessage composeInternal() {
+        CorpModel corp = CorpService.getInstance().getById(this.habbo.getPlayer().getCorpId());
+        CorpRoleModel corpRole = CorpRoleService.getInstance().getById(this.habbo.getPlayer().getCorpRoleId());
+
+        GangModel gang = this.habbo.getPlayer().getGangRoleId() != null ?  GangService.getInstance().getById(this.habbo.getPlayer().getGangId()) : null;
+        GangRoleModel gangRole = this.habbo.getPlayer().getGangRoleId() != null ? GangRoleService.getInstance().getByGangIdAndOrderId(gang.getId(), corpRole.getId()) : null;
+
         this.response.init(Outgoing.userRoleplayStatsChangeComposer);
         this.response.appendInt(this.habbo.getHabboInfo().getId());
         this.response.appendString(this.habbo.getHabboInfo().getUsername());
         this.response.appendString(this.habbo.getHabboInfo().getLook());
+        this.response.appendString(this.habbo.getHabboInfo().getMotto());
+        this.response.appendInt(this.habbo.getHabboInfo().getAccountCreated());
+        this.response.appendInt(this.habbo.getHabboInfo().getLastOnline());
+        this.response.appendBoolean(this.habbo.getHabboInfo().isOnline());
         this.response.appendInt(this.habbo.getHabboInfo().getCredits());
         this.response.appendInt(0); // TODO: Bank
         this.response.appendBoolean(this.habbo.getPlayer().isDead());
@@ -33,12 +51,13 @@ public class UserRoleplayStatsChangeComposer extends MessageComposer {
         this.response.appendInt(this.habbo.getInventory().getWeaponsComponent().getEquippedWeapon() != null ? this.habbo.getInventory().getWeaponsComponent().getEquippedWeapon().getWeaponId() : -1);
         this.response.appendInt(this.habbo.getInventory().getWeaponsComponent().getEquippedWeapon() != null ? this.habbo.getInventory().getWeaponsComponent().getEquippedWeapon().getAmmoRemaining() : 0);
         this.response.appendInt(this.habbo.getPlayer().getCorpId());
+        this.response.appendString(corp.getDisplayName());
         this.response.appendInt(this.habbo.getPlayer().getCorpRoleId());
-        if (this.habbo.getPlayer().getGang() != null) {
-            this.response.appendInt(this.habbo.getPlayer().getGang().getId());
-        } else {
-            this.response.appendInt(0);
-        }
+        this.response.appendString(corpRole.getDisplayName());
+        this.response.appendInt(this.habbo.getPlayer().getGangId() != null ? this.habbo.getPlayer().getGangId() : -1);
+        this.response.appendString(gang != null ? gang.getDisplayName() : "");
+        this.response.appendInt(this.habbo.getPlayer().getGangRoleId() != null ? this.habbo.getPlayer().getGangId() : -1);
+        this.response.appendString(gangRole != null ? gangRole.getName() : "");
         this.response.appendInt(0);
         return this.response;
     }

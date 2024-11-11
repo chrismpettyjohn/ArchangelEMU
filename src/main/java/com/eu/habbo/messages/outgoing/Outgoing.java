@@ -477,4 +477,5 @@ public class Outgoing {
     public static final int crimeListComposer = 9045;
     public static final int crimeDataComposer = 9046;
     public static final int userQueryListComposer = 9047;
+    public static final int playerQuerySkillsListComposer = 9048;
 }

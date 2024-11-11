@@ -79,16 +79,13 @@ import com.us.archangel.feature.license.packets.incoming.LicenseAgencyListEvent;
 import com.us.archangel.feature.license.packets.incoming.LicenseConnectComputerEvent;
 import com.us.archangel.feature.license.packets.incoming.LicenseOfferEvent;
 import com.us.archangel.feature.license.packets.incoming.LicenseStatusQueryEvent;
-import com.us.archangel.feature.player.packets.incoming.UserQueryListEvent;
+import com.us.archangel.feature.player.packets.incoming.*;
 import com.us.archangel.feature.room.packets.incoming.RoomListUsersEvent;
 import com.us.archangel.feature.taxi.packets.incoming.CallTaxiEvent;
 import com.us.archangel.feature.taxi.packets.incoming.TaxiFeeQueryEvent;
 import com.us.archangel.feature.time.packets.incoming.TimeOfDayQueryEvent;
 import com.us.archangel.feature.gang.packets.incoming.*;
 import com.us.archangel.feature.police.packets.incoming.*;
-import com.us.archangel.feature.player.packets.incoming.RoleplayPermissionsEvent;
-import com.us.archangel.feature.player.packets.incoming.UserOnlineCountEvent;
-import com.us.archangel.feature.player.packets.incoming.UserRoleplayStatsEvent;
 import com.us.archangel.feature.weapon.packets.incoming.*;
 import com.us.nova.feature.betacode.packets.incoming.BetaCodeDeleteEvent;
 import com.us.nova.feature.betacode.packets.incoming.BetaCodeGenerateEvent;
@@ -1032,7 +1029,7 @@ public enum Incoming {
 
     corpCreatePositionEvent(8048, CorpCreatePositionEvent.class),
 
-    corpSuperhireEvent(8049, CorpInfoQueryEvent.CorpSuperHireEvent.class),
+    corpSuperhireEvent(8049, CorpSuperHireEvent.class),
 
     corpListEvent(8050, CorpListEvent.class),
 
@@ -1124,7 +1121,9 @@ public enum Incoming {
 
     corpQueryOneEvent(8095, CorpQueryOneEvent.class),
 
-    userQueryListEvent(8096, UserQueryListEvent.class);
+    userQueryListEvent(8096, UserQueryListEvent.class),
+
+    playerQuerySkillsListEvent(8097, PlayerQuerySkillsListEvent.class);
 
     private final int messageId;
     private final Class<? extends MessageHandler> messageClass;
