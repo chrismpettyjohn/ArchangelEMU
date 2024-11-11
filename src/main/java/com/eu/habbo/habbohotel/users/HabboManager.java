@@ -88,7 +88,7 @@ public class HabboManager {
         if (searchTerm != null && !searchTerm.isEmpty()) {
             query = "SELECT * FROM users WHERE username ILIKE ? LIMIT ? OFFSET ?";
         } else {
-            query = "SELECT * FROM users ORDER BY RANDOM() LIMIT ? OFFSET ?";
+            query = "SELECT * FROM users ORDER BY last_login LIMIT ? OFFSET ?";
         }
 
         try (Connection connection = Emulator.getDatabase().getDataSource().getConnection();
