@@ -9,11 +9,10 @@ import com.us.archangel.gang.model.GangRoleModel;
 import com.us.archangel.gang.service.GangRoleService;
 import com.us.archangel.gang.service.GangService;
 import com.us.archangel.player.enums.PlayerAction;
+import com.us.archangel.player.service.PlayerService;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
-
-import java.util.Date;
 
 @Getter
 @AllArgsConstructor
@@ -122,6 +121,10 @@ public class PlayerModel {
 
     public boolean isDead() {
         return this.healthNow  <= 0;
+    }
+
+    public void save() {
+        PlayerService.getInstance().update(this.id, this);
     }
 }
 

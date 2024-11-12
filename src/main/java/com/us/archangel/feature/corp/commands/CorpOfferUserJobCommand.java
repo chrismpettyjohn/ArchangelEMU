@@ -44,10 +44,10 @@ public class CorpOfferUserJobCommand extends Command {
             return true;
         }
 
+        CorpRoleModel corpRole = CorpRoleService.getInstance().getByCorpAndOrderId(gameClient.getHabbo().getPlayer().getCorp().getId(), 1);
+
         CorpInviteEntity corpInvite = new CorpInviteEntity();
         corpInvite.setCorpId(gameClient.getHabbo().getPlayer().getCorp().getId());
-
-        CorpRoleModel corpRole = CorpRoleService.getInstance().getByCorpAndOrderId(gameClient.getHabbo().getPlayer().getCorp().getId(), 1);
         corpInvite.setCorpRoleId(corpRole.getId());
 
         CorpInviteService.getInstance().create(CorpInviteMapper.toModel(corpInvite));

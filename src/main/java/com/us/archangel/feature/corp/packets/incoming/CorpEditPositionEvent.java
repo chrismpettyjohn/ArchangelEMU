@@ -25,7 +25,7 @@ public class CorpEditPositionEvent extends MessageHandler {
         }
 
         if (corp.getUserId() != this.client.getHabbo().getHabboInfo().getId()) {
-            this.client.getHabbo().whisper(Emulator.getTexts().getValue("roleplay.cor.not_the_owner"));
+            this.client.getHabbo().whisper(Emulator.getTexts().getValue("roleplay.corp.not_the_owner"));
             return;
         }
 

@@ -3,9 +3,11 @@ package com.us.archangel.feature.corp.commands;
 import com.eu.habbo.Emulator;
 import com.eu.habbo.habbohotel.commands.Command;
 import com.eu.habbo.habbohotel.gameclients.GameClient;
-import com.eu.habbo.habbohotel.users.Habbo;
+import com.eu.habbo.habbohotel.users.HabboInfo;
 import com.us.archangel.corp.model.CorpRoleModel;
 import com.us.archangel.corp.service.CorpRoleService;
+import com.us.archangel.player.model.PlayerModel;
+import com.us.archangel.player.service.PlayerService;
 
 public class CorpPromoteCommand extends Command {
     public CorpPromoteCommand() {
@@ -25,19 +27,20 @@ public class CorpPromoteCommand extends Command {
             return true;
         }
 
-        Habbo targetedHabbo = gameClient.getHabbo().getRoomUnit().getRoom().getRoomUnitManager().getRoomHabboByUsername(targetedUsername);
+        HabboInfo targetedHabbo = Emulator.getGameEnvironment().getHabboManager().getOfflineHabboInfo(targetedUsername);
+        PlayerModel targetedPlayer = PlayerService.getInstance().getById(targetedHabbo.getId());
 
         if (targetedHabbo == null) {
             gameClient.getHabbo().whisper(Emulator.getTexts().getValue("generic.user_not_found").replace(":username", targetedUsername));
             return true;
         }
 
-        if (targetedHabbo == gameClient.getHabbo()) {
+        if (targetedHabbo.getId() == gameClient.getHabbo().getHabboInfo().getId()) {
             gameClient.getHabbo().whisper(Emulator.getTexts().getValue("commands.roleplay.cmd_promote_user_is_self"));
             return true;
         }
 
-        if (gameClient.getHabbo().getPlayer().getCorp().getId() != targetedHabbo.getPlayer().getCorp().getId()) {
+        if (gameClient.getHabbo().getPlayer().getCorp().getId() !=targetedPlayer.getCorp().getId()) {
             gameClient.getHabbo().whisper(Emulator.getTexts().getValue("commands.roleplay.cmd_demote_not_allowed"));
             return true;
         }
@@ -47,12 +50,12 @@ public class CorpPromoteCommand extends Command {
             return true;
         }
 
-        if (gameClient.getHabbo().getPlayer().getCorpRole().getOrderId() <= targetedHabbo.getPlayer().getCorpRole().getOrderId()) {
+        if (gameClient.getHabbo().getPlayer().getCorpRole().getOrderId() <= targetedPlayer.getCorpRole().getOrderId()) {
             gameClient.getHabbo().whisper(Emulator.getTexts().getValue("commands.roleplay.cmd_promote_not_allowed"));
             return true;
         }
 
-        CorpRoleModel newRole = CorpRoleService.getInstance().getByCorpAndOrderId(targetedHabbo.getPlayer().getCorp().getId(), targetedHabbo.getPlayer().getCorpRole().getOrderId() + 1);
+        CorpRoleModel newRole = CorpRoleService.getInstance().getByCorpAndOrderId(targetedPlayer.getCorp().getId(), targetedPlayer.getCorpRole().getOrderId() + 1);
 
         if (newRole == null) {
             gameClient.getHabbo().whisper(Emulator.getTexts().getValue("commands.roleplay.cmd_promote_not_allowed_too_high"));
@@ -64,17 +67,14 @@ public class CorpPromoteCommand extends Command {
             return true;
         }
 
-        targetedHabbo.getPlayer().setCorpId(targetedHabbo.getPlayer().getCorp().getId());
-        targetedHabbo.getPlayer().setCorpRoleId(newRole.getId());
+        targetedPlayer.setCorpId(targetedPlayer.getCorp().getId());
+        targetedPlayer.setCorpRoleId(newRole.getId());
+        targetedPlayer.save();
 
         gameClient.getHabbo().shout(Emulator.getTexts().getValue("commands.roleplay.cmd_promote_success")
-                .replace(":username", targetedHabbo.getHabboInfo().getUsername())
-                .replace(":corp", targetedHabbo.getPlayer().getCorp().getDisplayName())
-                .replace(":position", targetedHabbo.getPlayer().getCorpRole().getDisplayName()));
-
-        targetedHabbo.shout(Emulator.getTexts().getValue("generic.roleplay.started_new_job").
-                replace(":corp", targetedHabbo.getPlayer().getCorp().getDisplayName())
-                .replace(":position", newRole.getDisplayName()));
+                .replace(":username", targetedHabbo.getUsername())
+                .replace(":corp", targetedPlayer.getCorp().getDisplayName())
+                .replace(":position", targetedPlayer.getCorpRole().getDisplayName()));
 
         return true;
     }

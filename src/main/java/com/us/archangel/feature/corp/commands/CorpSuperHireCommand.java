@@ -3,11 +3,13 @@ package com.us.archangel.feature.corp.commands;
 import com.eu.habbo.Emulator;
 import com.eu.habbo.habbohotel.commands.Command;
 import com.eu.habbo.habbohotel.gameclients.GameClient;
-import com.eu.habbo.habbohotel.users.Habbo;
+import com.eu.habbo.habbohotel.users.HabboInfo;
 import com.us.archangel.corp.model.CorpModel;
 import com.us.archangel.corp.model.CorpRoleModel;
 import com.us.archangel.corp.service.CorpRoleService;
 import com.us.archangel.corp.service.CorpService;
+import com.us.archangel.player.model.PlayerModel;
+import com.us.archangel.player.service.PlayerService;
 
 public class CorpSuperHireCommand extends Command {
     public CorpSuperHireCommand() {
@@ -27,7 +29,8 @@ public class CorpSuperHireCommand extends Command {
             return true;
         }
 
-        Habbo targetedHabbo = gameClient.getHabbo().getRoomUnit().getRoom().getRoomUnitManager().getRoomHabboByUsername(targetedUsername);
+        HabboInfo targetedHabbo = Emulator.getGameEnvironment().getHabboManager().getOfflineHabboInfo(targetedUsername);
+        PlayerModel targetedPlayer = PlayerService.getInstance().getById(targetedHabbo.getId());
 
         if (targetedHabbo == null) {
             gameClient.getHabbo().whisper(Emulator.getTexts().getValue("generic.user_not_found").replace(":username", targetedUsername));
@@ -63,16 +66,13 @@ public class CorpSuperHireCommand extends Command {
             return true;
         }
 
-        targetedHabbo.getPlayer().setCorpId(corporationId);
-        targetedHabbo.getPlayer().setCorpRoleId(positionId);
+        targetedPlayer.setCorpId(corporationId);
+        targetedPlayer.setCorpRoleId(positionId);
+        targetedPlayer.save();
 
         gameClient.getHabbo().shout(Emulator.getTexts().getValue("commands.roleplay.cmd_superhire_success")
-                .replace(":username", targetedHabbo.getHabboInfo().getUsername())
+                .replace(":username", targetedHabbo.getUsername())
                 .replace(":corp", matchingCorp.getDisplayName())
-                .replace(":position", matchingPosition.getDisplayName()));
-
-        targetedHabbo.shout(Emulator.getTexts().getValue("generic.roleplay.started_new_job").
-                replace(":corp", matchingCorp.getDisplayName())
                 .replace(":position", matchingPosition.getDisplayName()));
 
         return true;

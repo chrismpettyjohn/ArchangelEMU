@@ -1,5 +1,6 @@
 package com.us.archangel.corp.model;
 
+import com.us.archangel.corp.service.CorpRoleService;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -23,6 +24,10 @@ public class CorpRoleModel {
     private boolean canPromote;
     private boolean canDemote;
     private boolean canWorkAnywhere;
+
+    public void save() {
+        CorpRoleService.getInstance().update(this.id, this);
+    }
 
     public CorpRoleModel() {
     }

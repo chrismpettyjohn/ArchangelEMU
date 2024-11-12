@@ -35,6 +35,8 @@ public class CorpQuitJobCommand extends Command {
 
         gameClient.getHabbo().getPlayer().setCorpId(welfareCorp.getId());
         gameClient.getHabbo().getPlayer().setCorpRoleId(welfareRole.getId());
+        gameClient.getHabbo().getPlayer().save();
+
 
         gameClient.getHabbo().shout(Emulator.getTexts().getValue("commands.roleplay.cmd_quitjob_success"));
 
