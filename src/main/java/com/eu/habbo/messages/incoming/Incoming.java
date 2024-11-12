@@ -1128,7 +1128,9 @@ public enum Incoming {
 
     playerQuerySkillsListEvent(8097, PlayerQuerySkillsListEvent.class),
 
-    roomQueryListEvent(8098, RoomQueryListEvent.class);
+    roomQueryListEvent(8098, RoomQueryListEvent.class),
+
+    corpEditEvent(8099, CorpEditEvent.class);
 
     private final int messageId;
     private final Class<? extends MessageHandler> messageClass;
