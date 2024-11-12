@@ -27,6 +27,9 @@ public class CorpRoleEntity {
     @Column(name = "display_name", nullable = false)
     private String name;
 
+    @Column(name = "description", nullable = false)
+    private String description;
+
     @Column(name = "motto", nullable = false)
     private String motto;
 

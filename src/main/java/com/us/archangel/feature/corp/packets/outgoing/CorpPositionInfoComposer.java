@@ -9,7 +9,6 @@ import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 public class CorpPositionInfoComposer extends MessageComposer {
-    private final int corpID;
     private final int corpPositionID;
 
     @Override
@@ -19,6 +18,7 @@ public class CorpPositionInfoComposer extends MessageComposer {
         this.response.appendInt(matchingPosition.getId());
         this.response.appendInt(matchingPosition.getCorpId());
         this.response.appendString(matchingPosition.getDisplayName());
+        this.response.appendString(matchingPosition.getDescription());
         this.response.appendString(matchingPosition.getMotto());
         this.response.appendInt(matchingPosition.getSalary());
         this.response.appendInt(matchingPosition.getOrderId());

@@ -15,6 +15,7 @@ public class CorpRoleMapper extends GenericMapper<CorpRoleEntity, CorpRoleModel>
                 entity.getCorpId(),
                 entity.getOrderId(),
                 entity.getName(),
+                entity.getDescription(),
                 entity.getMotto(),
                 entity.getSalary(),
                 entity.getMaleFigure(),
@@ -36,6 +37,7 @@ public class CorpRoleMapper extends GenericMapper<CorpRoleEntity, CorpRoleModel>
         entity.setCorpId(model.getCorpId());
         entity.setOrderId(model.getOrderId());
         entity.setName(model.getDisplayName());
+        entity.setDescription(model.getDescription());
         entity.setMotto(model.getMotto());
         entity.setSalary(model.getSalary());
         entity.setMaleFigure(model.getMaleFigure());

@@ -6,6 +6,8 @@ import com.eu.habbo.messages.outgoing.Outgoing;
 import com.us.archangel.corp.model.CorpModel;
 import com.us.archangel.corp.model.CorpRoleModel;
 import com.us.archangel.corp.service.CorpRoleService;
+import com.us.archangel.player.model.PlayerModel;
+import com.us.archangel.player.service.PlayerService;
 import lombok.AllArgsConstructor;
 
 import java.util.Comparator;
@@ -18,6 +20,7 @@ public class CorpPositionListComposer extends MessageComposer {
     @Override
     protected ServerMessage composeInternal() {
         List<CorpRoleModel> corpPositions = CorpRoleService.getInstance().findManyByCorpId(this.corp.getId());
+        List<PlayerModel> playerModels = PlayerService.getInstance().getByCorpId(this.corp.getId());
 
         this.response.init(Outgoing.corpPositionListComposer);
         this.response.appendInt(corp.getId());
@@ -31,7 +34,8 @@ public class CorpPositionListComposer extends MessageComposer {
                             + corpPosition.getDisplayName() + ";"
                             + corpPosition.getSalary() + ";"
                             + corpPosition.getMaleFigure() + ";"
-                            + corpPosition.getFemaleFigure()
+                            + corpPosition.getFemaleFigure() + ";"
+                            + playerModels.size()
             );
         }
 

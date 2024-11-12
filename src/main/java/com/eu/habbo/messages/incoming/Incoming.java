@@ -68,6 +68,8 @@ import com.us.archangel.feature.combat.packets.incoming.ListMyWeaponsEvent;
 import com.us.archangel.feature.combat.packets.incoming.UserAttackEvent;
 import com.us.archangel.feature.combat.packets.incoming.WeaponReloadEvent;
 import com.us.archangel.feature.controls.packets.incoming.UserMovementEvent;
+import com.us.archangel.feature.corp.packets.outgoing.CorpFireUserEvent;
+import com.us.archangel.feature.corp.packets.outgoing.CorpPositionInfoQueryEvent;
 import com.us.archangel.feature.crime.packets.incoming.*;
 import com.us.archangel.feature.device.interactions.packets.incoming.DeviceCloseEvent;
 import com.us.archangel.feature.device.interactions.packets.incoming.DeviceOpenEvent;
@@ -943,7 +945,7 @@ public enum Incoming {
 
     corpDemoteUserEvent(8004, CorpDemoteUserEvent.class),
 
-    corpFireUserEvent(8005, CorpDeletePositionEvent.CorpFireUserEvent.class),
+    corpFireUserEvent(8005, CorpFireUserEvent.class),
 
     corpAcceptJobEvent(8006, CorpOfferUserJobEvent.class),
 
@@ -969,7 +971,7 @@ public enum Incoming {
 
     gangInfoQueryEvent(8017, GangInfoQueryEvent.class),
 
-    corpPositionInfoQueryEvent(8018, CorpDeletePositionEvent.CorpPositionInfoQueryEvent.class),
+    corpPositionInfoQueryEvent(8018,  CorpPositionInfoQueryEvent.class),
 
     timeOfDayQueryEvent(8019, TimeOfDayQueryEvent.class),
 

@@ -7,10 +7,8 @@ import com.us.archangel.corp.model.CorpModel;
 import com.us.archangel.corp.model.CorpRoleModel;
 import com.us.archangel.corp.service.CorpRoleService;
 import com.us.archangel.corp.service.CorpService;
-import com.us.archangel.feature.corp.commands.CorpFireUserCommand;
 import com.us.archangel.player.model.PlayerModel;
 import com.us.archangel.player.service.PlayerService;
-import com.us.archangel.feature.corp.packets.outgoing.CorpPositionInfoComposer;
 import com.us.archangel.feature.corp.packets.outgoing.CorpPositionListComposer;
 
 import java.util.List;
@@ -74,30 +72,4 @@ public class CorpDeletePositionEvent extends MessageHandler {
         this.client.sendResponse(new CorpPositionListComposer(corp));
     }
 
-    public static class CorpPositionInfoQueryEvent  extends MessageHandler {
-        @Override
-        public void handle() {
-            Integer corpID = this.packet.readInt();
-            Integer corpPositionID = this.packet.readInt();
-
-            if (corpID == 0 || corpPositionID == null) {
-                return;
-            }
-
-            this.client.sendResponse(new CorpPositionInfoComposer(corpID, corpPositionID));
-        }
-    }
-
-    public static class CorpFireUserEvent extends MessageHandler {
-        @Override
-        public void handle() {
-            String targetedUsername = this.packet.readString();
-
-            if (targetedUsername == null) {
-                return;
-            }
-
-            new CorpFireUserCommand().handle(this.client, new String[] {null, targetedUsername});
-        }
-    }
 }
