@@ -432,6 +432,23 @@ public class RoomManager {
         return false;
     }
 
+    public List<Room> getAllRooms() {
+        List<Room> rooms = new ArrayList<>();
+        try (Connection connection = Emulator.getDatabase().getDataSource().getConnection();
+             PreparedStatement statement = connection.prepareStatement("SELECT * FROM rooms")) {
+            try (ResultSet set = statement.executeQuery()) {
+                while (set.next()) {
+                    rooms.add(new Room(set));
+                }
+            }
+        } catch (SQLException e) {
+            log.error(CAUGHT_SQL_EXCEPTION, e);
+        }
+
+        return rooms;
+    }
+
+
     public Room getActiveRoomById(int roomId) {
         return this.activeRooms.get(roomId);
     }

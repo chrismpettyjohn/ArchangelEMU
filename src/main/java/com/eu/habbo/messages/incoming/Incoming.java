@@ -83,6 +83,7 @@ import com.us.archangel.feature.license.packets.incoming.LicenseOfferEvent;
 import com.us.archangel.feature.license.packets.incoming.LicenseStatusQueryEvent;
 import com.us.archangel.feature.player.packets.incoming.*;
 import com.us.archangel.feature.room.packets.incoming.RoomListUsersEvent;
+import com.us.archangel.feature.room.packets.incoming.RoomQueryListEvent;
 import com.us.archangel.feature.taxi.packets.incoming.CallTaxiEvent;
 import com.us.archangel.feature.taxi.packets.incoming.TaxiFeeQueryEvent;
 import com.us.archangel.feature.time.packets.incoming.TimeOfDayQueryEvent;
@@ -1125,7 +1126,9 @@ public enum Incoming {
 
     userQueryListEvent(8096, UserQueryListEvent.class),
 
-    playerQuerySkillsListEvent(8097, PlayerQuerySkillsListEvent.class);
+    playerQuerySkillsListEvent(8097, PlayerQuerySkillsListEvent.class),
+
+    roomQueryListEvent(8098, RoomQueryListEvent.class);
 
     private final int messageId;
     private final Class<? extends MessageHandler> messageClass;
