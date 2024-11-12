@@ -18,7 +18,8 @@ public class CorpMapper extends GenericMapper<CorpEntity, CorpModel> {
                 entity.getSector(),
                 entity.getIndustry(),
                 entity.getUserId(),
-                entity.getRoomId()
+                entity.getRoomId(),
+                entity.getCreatedAt()
         );
     }
 
@@ -35,6 +36,7 @@ public class CorpMapper extends GenericMapper<CorpEntity, CorpModel> {
         entity.setIndustry(model.getIndustry());
         entity.setUserId(model.getUserId());
         entity.setRoomId(model.getRoomId());
+        entity.setCreatedAt(model.getCreatedAt());
         return entity;
     }
 }

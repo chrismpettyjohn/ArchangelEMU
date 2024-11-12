@@ -19,6 +19,7 @@ public class CorpModel {
     private CorpIndustry industry;
     private int userId;
     private int roomId;
+    private int createdAt;
 
     public CorpModel() {
     }

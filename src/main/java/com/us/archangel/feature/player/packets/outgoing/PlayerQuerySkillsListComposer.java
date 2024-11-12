@@ -17,7 +17,7 @@ public class PlayerQuerySkillsListComposer extends MessageComposer {
 
         PlayerSkillModel playerSkills = PlayerSkillService.getInstance().getByUserID(this.userID);
 
-        this.response.appendInt(playerSkills.getUserId());
+        this.response.appendInt(this.userID);
         this.response.appendInt(playerSkills.getStrengthXp());
         this.response.appendInt(playerSkills.getStrength().getCurrentLevel());
         this.response.appendInt(playerSkills.getLumberjackXp());

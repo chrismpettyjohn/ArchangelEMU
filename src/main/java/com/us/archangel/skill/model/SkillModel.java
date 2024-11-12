@@ -42,7 +42,7 @@ public abstract class SkillModel<T> {
             totalXp += getXpForLevel(level);
         }
 
-        return level;
+        return Math.min(level, 1);
     }
 
     // Method to determine the XP needed for the next level

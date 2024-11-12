@@ -47,4 +47,7 @@ public class CorpEntity {
 
     @Column(name = "room_id", nullable = false)
     private int roomId;
+
+    @Column(name = "created_at", nullable = false)
+    private int createdAt;
 }
