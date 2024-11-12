@@ -1,11 +1,11 @@
 package com.us.archangel.feature.corp.packets.incoming;
 
 import com.eu.habbo.Emulator;
+import com.eu.habbo.habbohotel.permissions.Permission;
 import com.eu.habbo.habbohotel.rooms.Room;
 import com.eu.habbo.messages.incoming.MessageHandler;
 import com.us.archangel.corp.enums.CorpIndustry;
 import com.us.archangel.corp.model.CorpModel;
-import com.us.archangel.corp.model.CorpPermissions;
 import com.us.archangel.corp.model.CorpRoleModel;
 import com.us.archangel.corp.service.CorpRoleService;
 import com.us.archangel.corp.service.CorpService;
@@ -18,7 +18,7 @@ import java.util.List;
 public class CorpDeleteEvent extends MessageHandler {
     @Override
     public void handle() {
-        boolean canDeleteCorps = this.client.getHabbo().hasPermissionRight(CorpPermissions.DELETE);
+        boolean canDeleteCorps = this.client.getHabbo().hasPermissionRight(Permission.ACC_CORPS_EDIT_ALL);
 
         if (!canDeleteCorps) {
             this.client.getHabbo().whisper(Emulator.getTexts().getValue("nova.generic.not_allowed"));

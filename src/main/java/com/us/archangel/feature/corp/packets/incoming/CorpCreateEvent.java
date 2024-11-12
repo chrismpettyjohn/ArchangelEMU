@@ -1,40 +1,35 @@
 package com.us.archangel.feature.corp.packets.incoming;
 
 import com.eu.habbo.Emulator;
+import com.eu.habbo.habbohotel.permissions.Permission;
 import com.eu.habbo.messages.incoming.MessageHandler;
 import com.us.archangel.corp.entity.CorpEntity;
 import com.us.archangel.corp.enums.CorpIndustry;
 import com.us.archangel.corp.enums.CorpSector;
 import com.us.archangel.corp.mapper.CorpMapper;
 import com.us.archangel.corp.model.CorpModel;
-import com.us.archangel.corp.model.CorpPermissions;
 import com.us.archangel.corp.service.CorpService;
 import com.us.archangel.feature.corp.packets.outgoing.CorpInfoComposer;
 
 public class CorpCreateEvent extends MessageHandler {
     @Override
     public void handle() {
-        boolean canCreateCorps = this.client.getHabbo().hasPermissionRight(CorpPermissions.CREATE);
+        boolean canCreateCorps = this.client.getHabbo().hasPermissionRight(Permission.ACC_CORPS_EDIT_ALL);
 
         if (!canCreateCorps) {
             this.client.getHabbo().whisper(Emulator.getTexts().getValue("nova.generic.not_allowed"));
             return;
         }
 
-        String displayName = this.packet.readString();
-        String description = this.packet.readString();
-        CorpIndustry industry = CorpIndustry.fromString(this.packet.readString());
-        int roomId = this.packet.readInt();
-        CorpSector sector = CorpSector.fromString(this.packet.readString());
-        int userID = this.packet.readInt();
-
         CorpEntity corp = new CorpEntity();
-        corp.setDisplayName(displayName);
-        corp.setDescription(description);
-        corp.setIndustry(industry);
-        corp.setRoomId(roomId);
-        corp.setSector(sector);
-        corp.setUserId(userID);
+        corp.setDisplayName(this.packet.readString());
+        corp.setDescription(this.packet.readString());
+        corp.setBadge(this.packet.readString());
+        corp.setUserId(this.packet.readInt());
+        corp.setRoomId(this.packet.readInt());
+        corp.setSector(CorpSector.fromString(this.packet.readString()));
+        corp.setIndustry(CorpIndustry.fromString(this.packet.readString()));
+        corp.setCreatedAt((int) (System.currentTimeMillis() / 1000L));
 
         CorpModel savedCorp = CorpService.getInstance().create(CorpMapper.toModel(corp));
 
