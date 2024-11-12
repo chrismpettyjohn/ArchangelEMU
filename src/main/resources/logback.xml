@@ -8,7 +8,7 @@
     <appender name="Console" class="ch.qos.logback.core.ConsoleAppender">
         <withJansi>false</withJansi>
         <encoder>
-            <pattern>%d{HH:mm:ss.SSS} [%-14thread] %highlight(%-5level) %cyan(%-36logger{36}) - %msg%n</pattern>
+            <pattern>%d{HH:mm} %cyan(%-36logger{36}) - %msg%n</pattern>
         </encoder>
     </appender>
 

@@ -950,9 +950,9 @@ public enum Incoming {
 
     corpAcceptJobEvent(8006, CorpOfferUserJobEvent.class),
 
-    corpPromoteUserEvent(8007, CorpDeclineOfferEvent.CorpPromoteUserEvent.class),
+    corpPromoteUserEvent(8007, CorpPromoteUserEvent.class),
 
-    corpStartWorkEvent(8011, CorpEditPositionEvent.CorpStartWorkEvent.class),
+    corpStartWorkEvent(8011, CorpStartWorkEvent.class),
 
     corpStopWorkEvent(8012, CorpStopWorkEvent.class),
 
@@ -1024,7 +1024,7 @@ public enum Incoming {
 
     corpPositionListEvent(8044, CorpPositionListEvent.class),
 
-    corpEmployeeListEvent(8045, CorpEditPositionEvent.CorpEmployeeListEvent.class),
+    corpEmployeeListEvent(8045, CorpEmployeeListEvent.class),
 
     corpEditPositionEvent(8046, CorpEditPositionEvent.class),
 

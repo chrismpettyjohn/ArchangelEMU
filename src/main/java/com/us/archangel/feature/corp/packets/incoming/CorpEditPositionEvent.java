@@ -46,7 +46,7 @@ public class CorpEditPositionEvent extends MessageHandler {
         corpPosition.setCanDemote((this.packet.readBoolean()));
         corpPosition.setCanWorkAnywhere((this.packet.readBoolean()));
 
-        CorpRoleService.getInstance().update(corpPosition.getId(), CorpRoleMapper.toModel(corpPosition));
+        CorpRoleService.getInstance().update(corpPosition.getId(), corpPosition);
 
         this.client.getHabbo().whisper(Emulator.getTexts()
                 .getValue("roleplay.corp_position.edit_success")
@@ -56,26 +56,4 @@ public class CorpEditPositionEvent extends MessageHandler {
         this.client.sendResponse(new CorpPositionListComposer(corp));
     }
 
-    public static class CorpEmployeeListEvent extends MessageHandler {
-
-        @Override
-        public void handle() {
-            int corpID = this.packet.readInt();
-
-            CorpModel corp = CorpService.getInstance().getById(corpID);
-
-            if (corp == null) {
-                return;
-            }
-
-            this.client.sendResponse(new CorpEmployeeListComposer(corp.getId()));
-        }
-    }
-
-    public static class CorpStartWorkEvent extends MessageHandler {
-        @Override
-        public void handle() {
-            new CorpStartWorkCommand().handle(this.client, new String[] {});
-        }
-    }
 }
