@@ -2,6 +2,7 @@ package com.us.nova.user.repository;
 
 import com.us.nova.core.GenericRepository;
 import com.us.nova.user.entity.UserEntity;
+import com.us.nova.user.model.UserModel;
 
 import java.util.List;
 
@@ -20,8 +21,8 @@ public class UserRepository extends GenericRepository<UserEntity>  {
         super(UserEntity.class);
     }
 
-    public void create(UserEntity entity) {
-        super.create(entity);
+    public UserEntity create(UserEntity entity) {
+        return super.create(entity);
     }
 
     public void updateById(int id, UserEntity entity) {

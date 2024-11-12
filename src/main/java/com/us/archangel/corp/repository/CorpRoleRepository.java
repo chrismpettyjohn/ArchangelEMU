@@ -21,8 +21,8 @@ public class CorpRoleRepository extends GenericRepository<CorpRoleEntity> {
         super(CorpRoleEntity.class);
     }
 
-    public void create(CorpRoleEntity entity) {
-        super.create(entity);
+    public CorpRoleEntity CorpRoleModel(CorpRoleEntity entity) {
+        return super.create(entity);
     }
 
     public void updateById(int id, CorpRoleEntity entity) {

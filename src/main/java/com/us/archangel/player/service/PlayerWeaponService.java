@@ -27,8 +27,8 @@ public class PlayerWeaponService extends GenericService<PlayerWeaponModel, Playe
         super(PlayerWeaponContext.getInstance(), PlayerWeaponRepository.getInstance(), PlayerWeaponMapper.class, PlayerWeaponEntity.class);
     }
 
-    public void create(PlayerWeaponModel model) {
-        super.create(model);
+    public PlayerWeaponModel create(PlayerWeaponModel model) {
+        return super.create(model);
     }
 
     public void update(int id, PlayerWeaponModel model) {

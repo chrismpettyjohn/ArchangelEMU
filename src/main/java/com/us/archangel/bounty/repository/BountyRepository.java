@@ -21,8 +21,8 @@ public class BountyRepository extends GenericRepository<BountyEntity> {
         super(BountyEntity.class);
     }
 
-    public void create(BountyEntity entity) {
-        super.create(entity);
+    public BountyEntity create(BountyEntity entity) {
+        return super.create(entity);
     }
 
     public void updateById(int id, BountyEntity entity) {

@@ -24,8 +24,8 @@ public class BugReportService extends GenericService<BugReportModel, BugReportCo
         super(BugReportContext.getInstance(), BugReportRepository.getInstance(), BugReportMapper.class, BugReportEntity.class);
     }
 
-    public void create(BugReportModel model) {
-        super.create(model);
+    public BugReportModel create(BugReportModel model) {
+        return super.create(model);
     }
 
     public void update(int id, BugReportModel model) {

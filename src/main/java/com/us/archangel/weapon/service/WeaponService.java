@@ -25,8 +25,8 @@ public class WeaponService extends GenericService<WeaponModel, WeaponContext, We
         super(WeaponContext.getInstance(), WeaponRepository.getInstance(), WeaponMapper.class, WeaponEntity.class);
     }
 
-    public void create(WeaponModel model) {
-        super.create(model);
+    public WeaponModel create(WeaponModel model) {
+        return super.create(model);
     }
 
     public void update(int id, WeaponModel model) {

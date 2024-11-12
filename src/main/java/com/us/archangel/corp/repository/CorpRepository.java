@@ -22,8 +22,8 @@ public class CorpRepository extends GenericRepository<CorpEntity> {
         super(CorpEntity.class);
     }
 
-    public void create(CorpEntity entity) {
-        super.create(entity);
+    public CorpEntity create(CorpEntity entity) {
+        return super.create(entity);
     }
 
     public void updateById(int id, CorpEntity entity) {

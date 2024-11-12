@@ -21,8 +21,8 @@ public class GangInviteRepository extends GenericRepository<GangInviteEntity> {
         super(GangInviteEntity.class);
     }
 
-    public void create(GangInviteEntity entity) {
-        super.create(entity);
+    public GangInviteEntity create(GangInviteEntity entity) {
+       return super.create(entity);
     }
 
     public void updateById(int id, GangInviteEntity entity) {

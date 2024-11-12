@@ -24,8 +24,8 @@ public class BountyService extends GenericService<BountyModel, BountyContext, Bo
         super(BountyContext.getInstance(), BountyRepository.getInstance(), BountyMapper.class, BountyEntity.class);
     }
 
-    public void create(BountyModel model) {
-        super.create(model);
+    public BountyModel create(BountyModel model) {
+        return super.create(model);
     }
 
     public void update(int id, BountyModel model) {

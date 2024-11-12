@@ -16,16 +16,17 @@ public class GenericRepository<Entity> implements IGenericRepository<Entity> {
     }
 
     @Override
-    public void create(Entity entity) {
+    public Entity create(Entity entity) {
         Transaction transaction = null;
         try (Session session = sessionFactory.openSession()) {
             transaction = session.beginTransaction();
-            session.save(entity);
+            session.persist(entity);
             transaction.commit();
         } catch (Exception e) {
             if (transaction != null) transaction.rollback();
-            e.printStackTrace();
+            throw new RuntimeException("Failed to create entity", e);
         }
+        return entity;
     }
 
     @Override

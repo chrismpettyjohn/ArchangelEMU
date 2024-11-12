@@ -6,9 +6,10 @@ import com.us.archangel.corp.entity.CorpEntity;
 import com.us.archangel.corp.enums.CorpIndustry;
 import com.us.archangel.corp.enums.CorpSector;
 import com.us.archangel.corp.mapper.CorpMapper;
+import com.us.archangel.corp.model.CorpModel;
 import com.us.archangel.corp.model.CorpPermissions;
 import com.us.archangel.corp.service.CorpService;
-import com.us.archangel.feature.corp.packets.outgoing.CorpListComposer;
+import com.us.archangel.feature.corp.packets.outgoing.CorpInfoComposer;
 
 public class CorpCreateEvent extends MessageHandler {
     @Override
@@ -35,8 +36,8 @@ public class CorpCreateEvent extends MessageHandler {
         corp.setSector(sector);
         corp.setUserId(userID);
 
-        CorpService.getInstance().create(CorpMapper.toModel(corp));
+        CorpModel savedCorp = CorpService.getInstance().create(CorpMapper.toModel(corp));
 
-        this.client.sendResponse(new CorpListComposer());
+        this.client.sendResponse(new CorpInfoComposer(savedCorp.getId()));
     }
 }

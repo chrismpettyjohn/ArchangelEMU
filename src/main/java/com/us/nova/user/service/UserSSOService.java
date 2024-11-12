@@ -23,8 +23,8 @@ public class UserSSOService extends GenericService<UserSSOModel, UserSSOContext,
         super(UserSSOContext.getInstance(), UserSSORepository.getInstance(), UserSSOMapper.class, UserSSOEntity.class);
     }
 
-    public void create(UserSSOModel model) {
-        super.create(model);
+    public UserSSOModel create(UserSSOModel model) {
+        return super.create(model);
     }
 
     public void update(int id, UserSSOModel model) {

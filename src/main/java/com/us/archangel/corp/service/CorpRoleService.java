@@ -25,8 +25,8 @@ public class CorpRoleService extends GenericService<CorpRoleModel, CorpRoleConte
         super(CorpRoleContext.getInstance(), CorpRoleRepository.getInstance(), CorpRoleMapper.class, CorpRoleEntity.class);
     }
 
-    public void create(CorpRoleModel model) {
-        super.create(model);
+    public CorpRoleModel create(CorpRoleModel model) {
+        return super.create(model);
     }
 
     public void update(int id, CorpRoleModel model) {

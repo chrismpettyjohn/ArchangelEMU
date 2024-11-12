@@ -21,8 +21,8 @@ public class PlayerRepository extends GenericRepository<PlayerEntity> {
         super(PlayerEntity.class);
     }
 
-    public void create(PlayerEntity entity) {
-        super.create(entity);
+    public PlayerEntity create(PlayerEntity entity) {
+        return super.create(entity);
     }
 
     public void updateById(int id, PlayerEntity entity) {

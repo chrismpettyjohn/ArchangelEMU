@@ -24,8 +24,8 @@ public class CrimeService extends GenericService<CrimeModel, CrimeContext, Crime
         super(CrimeContext.getInstance(), CrimeRepository.getInstance(), CrimeMapper.class, CrimeEntity.class);
     }
 
-    public void create(CrimeModel model) {
-        super.create(model);
+    public CrimeModel create(CrimeModel model) {
+        return super.create(model);
     }
 
     public void update(int id, CrimeModel model) {

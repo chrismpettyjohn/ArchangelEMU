@@ -23,8 +23,8 @@ public class CorpInviteService extends GenericService<CorpInviteModel, CorpInvit
         return instance;
     }
 
-    public void create(CorpInviteModel model) {
-        super.create(model);
+    public CorpInviteModel create(CorpInviteModel model) {
+        return super.create(model);
     }
 
     public void update(int id, CorpInviteModel model) {

@@ -4,7 +4,7 @@ import java.util.List;
 
 public interface IGenericRepository<Entity> {
 
-    void create(Entity entity);
+    Entity create(Entity entity);
 
     void updateById(int id, Entity updatedEntity);
 

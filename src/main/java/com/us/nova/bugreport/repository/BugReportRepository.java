@@ -20,8 +20,8 @@ public class BugReportRepository extends GenericRepository<BugReportEntity> {
         super(BugReportEntity.class);
     }
 
-    public void create(BugReportEntity entity) {
-        super.create(entity);
+    public BugReportEntity create(BugReportEntity entity) {
+        return super.create(entity);
     }
 
     public void updateById(int id, BugReportEntity entity) {

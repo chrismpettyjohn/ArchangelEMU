@@ -26,8 +26,8 @@ public class PlayerService extends GenericService<PlayerModel, PlayerContext, Pl
         super(PlayerContext.getInstance(), PlayerRepository.getInstance(), PlayerMapper.class, PlayerEntity.class);
     }
 
-    public void create(PlayerModel model) {
-        super.create(model);
+    public PlayerModel create(PlayerModel model) {
+        return super.create(model);
     }
 
     public void update(int id, PlayerModel model) {

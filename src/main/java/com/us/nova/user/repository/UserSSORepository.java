@@ -20,8 +20,8 @@ public class UserSSORepository extends GenericRepository<UserSSOEntity> {
         super(UserSSOEntity.class);
     }
 
-    public void create(UserSSOEntity entity) {
-        super.create(entity);
+    public UserSSOEntity create(UserSSOEntity entity) {
+        return super.create(entity);
     }
 
     public void updateById(int id, UserSSOEntity entity) {

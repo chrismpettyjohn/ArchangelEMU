@@ -21,8 +21,8 @@ public class PlayerWeaponRepository extends GenericRepository<PlayerWeaponEntity
         super(PlayerWeaponEntity.class);
     }
 
-    public void create(PlayerWeaponEntity entity) {
-        super.create(entity);
+    public PlayerWeaponEntity create(PlayerWeaponEntity entity) {
+        return super.create(entity);
     }
 
     public void updateById(int id, PlayerWeaponEntity entity) {

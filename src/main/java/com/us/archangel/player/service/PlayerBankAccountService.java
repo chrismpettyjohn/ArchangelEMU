@@ -24,8 +24,8 @@ public class PlayerBankAccountService extends GenericService<PlayerBankAccountMo
         super(PlayerBankAccountContext.getInstance(), PlayerBankAccountRepository.getInstance(), PlayerBankAccountMapper.class, PlayerBankAccountEntity.class);
     }
 
-    public void create(PlayerBankAccountModel model) {
-        super.create(model);
+    public PlayerBankAccountModel create(PlayerBankAccountModel model) {
+        return super.create(model);
     }
 
     public void update(int id, PlayerBankAccountModel model) {

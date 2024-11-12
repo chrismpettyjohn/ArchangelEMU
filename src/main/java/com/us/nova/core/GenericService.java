@@ -20,12 +20,13 @@ public class GenericService<Model, Context extends GenericContext<Model>, Reposi
         this.loadAll();
     }
 
-    public void create(Model model) {
+    public Model create(Model model) {
         Object entity = invokeMapperMethod("toEntity", model);
         invokeRepositoryMethod("create", entity);
         int generatedId = getId(entity);
         setId(model, generatedId);
         context.add(generatedId, model);
+        return model;
     }
 
     public void update(int id, Model updatedModel) {

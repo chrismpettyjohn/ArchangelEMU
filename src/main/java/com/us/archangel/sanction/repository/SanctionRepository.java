@@ -21,8 +21,8 @@ public class SanctionRepository extends GenericRepository<SanctionEntity> {
         super(SanctionEntity.class);
     }
 
-    public void create(SanctionEntity entity) {
-        super.create(entity);
+    public SanctionEntity create(SanctionEntity entity) {
+        return super.create(entity);
     }
 
     public void updateById(int id, SanctionEntity entity) {

@@ -24,8 +24,8 @@ public class UserService extends GenericService<UserModel, UserContext, UserRepo
         super(UserContext.getInstance(), UserRepository.getInstance(), UserMapper.class, UserEntity.class);
     }
 
-    public void create(UserModel model) {
-        super.create(model);
+    public UserModel create(UserModel model) {
+        return super.create(model);
     }
 
     public void update(int id, UserModel model) {

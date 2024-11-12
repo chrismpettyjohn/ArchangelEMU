@@ -23,8 +23,8 @@ public class SanctionService extends GenericService<SanctionModel, SanctionConte
         super(SanctionContext.getInstance(), SanctionRepository.getInstance(), SanctionManager.class, SanctionEntity.class);
     }
 
-    public void create(SanctionModel model) {
-        super.create(model);
+    public SanctionModel create(SanctionModel model) {
+        return super.create(model);
     }
 
     public void update(int id, SanctionModel model) {

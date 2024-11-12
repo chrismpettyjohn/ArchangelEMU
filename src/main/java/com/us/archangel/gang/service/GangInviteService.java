@@ -24,8 +24,8 @@ public class GangInviteService extends GenericService<GangInviteModel, GangInvit
         super(GangInviteContext.getInstance(), GangInviteRepository.getInstance(), GangInviteMapper.class, GangInviteEntity.class);
     }
 
-    public void create(GangInviteModel model) {
-        super.create(model);
+    public GangInviteModel create(GangInviteModel model) {
+        return super.create(model);
     }
 
     public void update(int id, GangInviteModel model) {

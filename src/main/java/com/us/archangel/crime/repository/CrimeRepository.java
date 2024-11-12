@@ -19,8 +19,8 @@ public class CrimeRepository extends GenericRepository<CrimeEntity> {
         super(CrimeEntity.class); // Pass entity type to GenericRepository
     }
 
-    public void create(CrimeEntity entity) {
-        super.create(entity);
+    public CrimeEntity create(CrimeEntity entity) {
+        return super.create(entity);
     }
 
     public void updateById(int id, CrimeEntity entity) {

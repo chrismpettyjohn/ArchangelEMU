@@ -20,8 +20,8 @@ public class BetaCodeRepository extends GenericRepository<BetaCodeEntity> {
         super(BetaCodeEntity.class);
     }
 
-    public void create(BetaCodeEntity betaCode) {
-        super.create(betaCode);
+    public BetaCodeEntity create(BetaCodeEntity betaCode) {
+        return super.create(betaCode);
     }
 
     public void updateById(int id, BetaCodeEntity updatedBetaCode) {

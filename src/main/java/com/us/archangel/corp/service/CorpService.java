@@ -26,8 +26,8 @@ public class CorpService extends GenericService<CorpModel, CorpContext, CorpRepo
         super(CorpContext.getInstance(), CorpRepository.getInstance(), CorpMapper.class, CorpEntity.class);
     }
 
-    public void create(CorpModel model) {
-        super.create(model);
+    public CorpModel create(CorpModel model) {
+        return super.create(model);
     }
 
     public void update(int id, CorpModel model) {

@@ -19,8 +19,8 @@ public class WeaponRepository extends GenericRepository<WeaponEntity> {
         super(WeaponEntity.class);
     }
 
-    public void create(WeaponEntity entity) {
-        super.create(entity);
+    public WeaponEntity create(WeaponEntity entity) {
+        return super.create(entity);
     }
 
     public void updateById(int id, WeaponEntity entity) {

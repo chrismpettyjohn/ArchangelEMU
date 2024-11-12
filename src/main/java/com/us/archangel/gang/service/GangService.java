@@ -24,8 +24,8 @@ public class GangService extends GenericService<GangModel, GangContext, GangRepo
         super(GangContext.getInstance(), GangRepository.getInstance(), GangMapper.class, GangEntity.class);
     }
 
-    public void create(GangModel model) {
-        super.create(model);
+    public GangModel create(GangModel model) {
+        return super.create(model);
     }
 
     public void update(int id, GangModel model) {

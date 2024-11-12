@@ -24,8 +24,8 @@ public class BetaCodeService extends GenericService<BetaCodeModel, BetaCodeConte
         super(BetaCodeContext.getInstance(), BetaCodeRepository.getInstance(), BetaCodeMapper.class, BetaCodeEntity.class);
     }
 
-    public void create(BetaCodeModel model) {
-        super.create(model);
+    public BetaCodeModel create(BetaCodeModel model) {
+       return super.create(model);
     }
 
     public void update(int id, BetaCodeModel model) {

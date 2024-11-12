@@ -21,8 +21,8 @@ public class PlayerSkillRepository extends GenericRepository<PlayerSkillEntity> 
         super(PlayerSkillEntity.class);
     }
 
-    public void create(PlayerSkillEntity entity) {
-        super.create(entity);
+    public PlayerSkillEntity create(PlayerSkillEntity entity) {
+        return super.create(entity);
     }
 
     public void updateById(int id, PlayerSkillEntity entity) {
