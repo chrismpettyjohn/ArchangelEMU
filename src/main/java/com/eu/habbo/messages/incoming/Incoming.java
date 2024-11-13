@@ -1144,7 +1144,15 @@ public enum Incoming {
 
     gangRoleQueryListEvent(8106, GangRoleQueryListEvent.class),
 
-    gangRoleQueryOneEvent(8107, GangRoleQueryOneEvent.class);
+    gangRoleQueryOneEvent(8107, GangRoleQueryOneEvent.class),
+
+    gangQueryMemberListEvent(8108, GangMemberQueryListEvent.class),
+
+    gangMemberKickEvent(8109, GangMemberKickEvent.class),
+
+    gangQueryOneEvent(8110, GangQueryOneEvent.class),
+
+    gangQueryListEvent(8111, GangQueryListEvent.class);
 
     private final int messageId;
     private final Class<? extends MessageHandler> messageClass;

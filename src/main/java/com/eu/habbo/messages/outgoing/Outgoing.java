@@ -483,4 +483,5 @@ public class Outgoing {
     public static final int gangQueryListComposer = 9051;
     public static final int gangRoleQueryListComposer = 9052;
     public static final int gangRoleQueryOneComposer = 9053;
+    public static final int gangMemberQueryListComposer = 9054;
 }

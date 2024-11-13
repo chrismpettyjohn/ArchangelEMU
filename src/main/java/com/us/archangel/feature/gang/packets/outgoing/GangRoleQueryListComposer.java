@@ -5,6 +5,8 @@ import com.eu.habbo.messages.outgoing.MessageComposer;
 import com.eu.habbo.messages.outgoing.Outgoing;
 import com.us.archangel.gang.model.GangRoleModel;
 import com.us.archangel.gang.service.GangRoleService;
+import com.us.archangel.player.model.PlayerModel;
+import com.us.archangel.player.service.PlayerService;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
@@ -21,8 +23,9 @@ public class GangRoleQueryListComposer extends MessageComposer {
 
         this.response.appendInt(gangRoles.size());
 
-        for (GangRoleModel gang : gangRoles) {
-            this.response.appendString(String.format("%s;%s;%s;%s;%s", gang.getId(), gang.getOrderId(), gang.getName(), gang.isCanInvite(), gang.isCanKick()));
+        for (GangRoleModel gangRole : gangRoles) {
+            List<PlayerModel> players = PlayerService.getInstance().getByGangRoleId(gangRole.getId());
+            this.response.appendString(String.format("%s;%s;%s;%s;%s;%s;%s", gangRole.getId(), gangRole.getGangId(), gangRole.getOrderId(), gangRole.getName(), gangRole.isCanInvite(), gangRole.isCanKick(), players.size()));
         }
 
         return this.response;
