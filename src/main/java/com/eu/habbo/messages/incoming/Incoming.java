@@ -969,7 +969,7 @@ public enum Incoming {
     userRoleplayStatsQueryEvent(8015, UserRoleplayStatsEvent.class),
 
     corpInfoQueryEvent(8016, CorpInfoQueryEvent.class),
-    
+
     corpPositionInfoQueryEvent(8018,  CorpPositionInfoQueryEvent.class),
 
     timeOfDayQueryEvent(8019, TimeOfDayQueryEvent.class),
@@ -1134,7 +1134,17 @@ public enum Incoming {
 
     gangUpdateEvent(8101, GangUpdateEvent.class),
 
-    gangDeleteEvent(8102, GangDeleteEvent.class);
+    gangDeleteEvent(8102, GangDeleteEvent.class),
+
+    gangRoleCreateEvent(8103, GangRoleCreateEvent.class),
+
+    gangRoleUpdateEvent(8104, GangRoleUpdateEvent.class),
+
+    gangRoleDeleteEvent(8105, GangRoleDeleteEvent.class),
+
+    gangRoleQueryListEvent(8106, GangRoleQueryListEvent.class),
+
+    gangRoleQueryOneEvent(8107, GangRoleQueryOneEvent.class);
 
     private final int messageId;
     private final Class<? extends MessageHandler> messageClass;

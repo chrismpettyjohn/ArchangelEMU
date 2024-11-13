@@ -1,4 +1,11 @@
 package com.us.archangel.feature.gang.packets.incoming;
 
-public class GangQueryListEvent {
+import com.eu.habbo.messages.incoming.MessageHandler;
+import lombok.RequiredArgsConstructor;
+
+public class GangQueryListEvent extends MessageHandler {
+    @Override
+    public void handle() {
+
+    }
 }

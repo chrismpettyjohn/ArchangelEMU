@@ -1,5 +1,6 @@
 package com.us.archangel.gang.model;
 
+import com.us.archangel.gang.service.GangRoleService;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -17,5 +18,9 @@ public class GangRoleModel {
     private boolean canKick;
 
     public GangRoleModel() {
+    }
+
+    public void update() {
+        GangRoleService.getInstance().update(this.id, this);
     }
 }

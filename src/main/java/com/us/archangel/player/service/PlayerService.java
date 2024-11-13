@@ -96,4 +96,43 @@ public class PlayerService extends GenericService<PlayerModel, PlayerContext, Pl
         modelList.forEach(model -> context.add(model.getId(), model));
         return modelList;
     }
+
+
+
+    public List<PlayerModel> getByGangId(int gangId) {
+        List<PlayerModel> cachedModels = context.getAll().values().stream()
+                .filter(player -> player.getCorpId() == gangId)
+                .collect(Collectors.toList());
+
+        if (!cachedModels.isEmpty()) {
+            return cachedModels;
+        }
+
+        List<PlayerEntity> entities = repository.getByCorpId(gangId);
+        List<PlayerModel> modelList = entities.stream()
+                .map(PlayerMapper::toModel)
+                .collect(Collectors.toList());
+
+        modelList.forEach(model -> context.add(model.getId(), model));
+        return modelList;
+    }
+
+    public List<PlayerModel> getByGangRoleId(int gangRoleId) {
+        List<PlayerModel> cachedModels = context.getAll().values().stream()
+                .filter(player -> player.getCorpRoleId() == gangRoleId)
+                .collect(Collectors.toList());
+
+        if (!cachedModels.isEmpty()) {
+            return cachedModels;
+        }
+
+        List<PlayerEntity> entities = repository.getByCorpRoleId(gangRoleId);
+        List<PlayerModel> modelList = entities.stream()
+                .map(PlayerMapper::toModel)
+                .collect(Collectors.toList());
+
+        modelList.forEach(model -> context.add(model.getId(), model));
+        return modelList;
+    }
+
 }

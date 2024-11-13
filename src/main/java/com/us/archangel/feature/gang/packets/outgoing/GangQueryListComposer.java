@@ -12,7 +12,7 @@ public class GangQueryListComposer extends MessageComposer {
 
     @Override
     protected ServerMessage composeInternal() {
-        this.response.init(Outgoing.gangQueryOneComposer);
+        this.response.init(Outgoing.gangQueryListComposer);
 
         List<GangModel> gangs = GangService.getInstance().getAll();
 
