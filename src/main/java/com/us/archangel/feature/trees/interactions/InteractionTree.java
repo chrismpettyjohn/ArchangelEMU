@@ -28,6 +28,12 @@ public class InteractionTree extends InteractionDefault {
 
     @Override
     public void onClick(GameClient client, Room room, Object[] objects) throws Exception {
+        boolean isWithinOneTile = Math.abs(this.getCurrentPosition().getX() - client.getHabbo().getRoomUnit().getCurrentPosition().getX()) <= 1 && Math.abs(this.getCurrentPosition().getY() - client.getHabbo().getRoomUnit().getCurrentPosition().getY()) <= 1;
+
+        if (!isWithinOneTile) {
+            return;
+        }
+
         HabboLicense lumberjackLicense = HabboLicenseRepository.getInstance().getByUserAndLicense(client.getHabbo().getHabboInfo().getId(), LicenseType.LUMBERJACK);
 
         if (lumberjackLicense == null) {

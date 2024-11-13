@@ -33,6 +33,11 @@ public class InteractionTrash extends InteractionGymEquipment {
 
     @Override
     public void onClick(GameClient client, Room room, Object[] objects) {
+        boolean isWithinOneTile = Math.abs(this.getCurrentPosition().getX() - client.getHabbo().getRoomUnit().getCurrentPosition().getX()) <= 1 && Math.abs(this.getCurrentPosition().getY() - client.getHabbo().getRoomUnit().getCurrentPosition().getY()) <= 1;
+
+        if (!isWithinOneTile) {
+            return;
+        }
 
         String extraData = this.getExtraData();
 
