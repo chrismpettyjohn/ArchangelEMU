@@ -1,5 +1,6 @@
 package com.us.archangel.gang.model;
 
+import com.us.archangel.gang.service.GangService;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -17,6 +18,10 @@ public class GangModel {
     private int roomId;
 
     public GangModel() {
+    }
+
+    public void update() {
+        GangService.getInstance().update(this.id, this);
     }
 
 }

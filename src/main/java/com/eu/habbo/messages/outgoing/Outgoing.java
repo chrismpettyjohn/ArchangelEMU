@@ -479,4 +479,6 @@ public class Outgoing {
     public static final int userQueryListComposer = 9047;
     public static final int playerQuerySkillsListComposer = 9048;
     public static final int roomQueryListComposer = 9049;
+    public static final int gangQueryOneComposer = 9050;
+    public static final int gangQueryListComposer = 9051;
 }

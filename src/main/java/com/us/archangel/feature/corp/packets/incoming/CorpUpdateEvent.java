@@ -2,6 +2,7 @@ package com.us.archangel.feature.corp.packets.incoming;
 
 import com.eu.habbo.Emulator;
 import com.eu.habbo.habbohotel.permissions.Permission;
+import com.eu.habbo.habbohotel.rooms.Room;
 import com.eu.habbo.messages.incoming.MessageHandler;
 import com.us.archangel.corp.entity.CorpEntity;
 import com.us.archangel.corp.enums.CorpIndustry;
@@ -28,6 +29,18 @@ public class CorpUpdateEvent extends MessageHandler {
         corpEntity.setRoomId(this.packet.readInt());
         corpEntity.setSector(CorpSector.fromString(this.packet.readString()));
         corpEntity.setIndustry(CorpIndustry.fromString(this.packet.readString()));
+
+        Room room = Emulator.getGameEnvironment().getRoomManager().getRoom(corpEntity.getRoomId());
+
+        if (room == null) {
+            this.client.getHabbo().whisper(Emulator.getTexts().getValue("roleplay.room_not_yours"));
+            return;
+        }
+
+        if (room.getRoomInfo().getOwnerInfo().getId() != this.client.getHabbo().getHabboInfo().getId() && !canUpdateCorps) {
+            this.client.getHabbo().whisper(Emulator.getTexts().getValue("roleplay.room_not_yours"));
+            return;
+        }
 
         CorpService.getInstance().update(corpEntity.getId(), CorpMapper.toModel(corpEntity));
 

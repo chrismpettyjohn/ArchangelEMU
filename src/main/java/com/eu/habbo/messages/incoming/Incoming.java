@@ -1130,7 +1130,13 @@ public enum Incoming {
 
     roomQueryListEvent(8098, RoomQueryListEvent.class),
 
-    corpEditEvent(8099, CorpEditEvent.class);
+    corpEditEvent(8099, CorpEditEvent.class),
+
+    gangCreateEvent(8100, GangCreateEvent.class),
+
+    gangUpdateEvent(8101, GangUpdateEvent.class),
+
+    gangDeleteEvent(8102, GangDeleteEvent.class);
 
     private final int messageId;
     private final Class<? extends MessageHandler> messageClass;
