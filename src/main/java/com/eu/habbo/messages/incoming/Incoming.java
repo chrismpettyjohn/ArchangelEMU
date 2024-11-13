@@ -969,9 +969,7 @@ public enum Incoming {
     userRoleplayStatsQueryEvent(8015, UserRoleplayStatsEvent.class),
 
     corpInfoQueryEvent(8016, CorpInfoQueryEvent.class),
-
-    gangInfoQueryEvent(8017, GangInfoQueryEvent.class),
-
+    
     corpPositionInfoQueryEvent(8018,  CorpPositionInfoQueryEvent.class),
 
     timeOfDayQueryEvent(8019, TimeOfDayQueryEvent.class),
