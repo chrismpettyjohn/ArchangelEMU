@@ -21,7 +21,7 @@ public class WantedListQueryListComposer extends MessageComposer {
                     bounty.getHabbo().getHabboInfo().getId()
                             + ";" + bounty.getHabbo().getHabboInfo().getUsername()
                             + ";" + bounty.getHabbo().getHabboInfo().getLook()
-                            + ";" + bounty.getCrime()
+                            + ";" + bounty.getCrime().getDisplayName()
             );
         }
         return this.response;
