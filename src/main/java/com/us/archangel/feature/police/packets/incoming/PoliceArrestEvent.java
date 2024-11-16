@@ -20,7 +20,7 @@ public class PoliceArrestEvent extends MessageHandler {
     @Override
     public void handle() {
 
-        if (!this.client.getHabbo().getPlayer().isCanInteract()) {
+        if (!this.client.getHabbo().getPlayer().canInteract()) {
             return;
         }
 

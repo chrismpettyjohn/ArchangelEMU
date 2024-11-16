@@ -27,8 +27,6 @@ public class PlayerMapper extends GenericMapper<PlayerEntity, PlayerModel> {
                 entity.getHungerMax(),
                 entity.getLastPosX(),
                 entity.getLastPosY(),
-                entity.isCanInteract(),
-                entity.isCanWalk(),
                 entity.getWorkTimeRemainingSecs(),
                 entity.getCombatDelayRemainingSecs(),
                 entity.getJailTimeRemainingSecs(),

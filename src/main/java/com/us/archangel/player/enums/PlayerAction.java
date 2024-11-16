@@ -8,6 +8,7 @@ public enum PlayerAction {
     Cuffed("cuffed"),
     Escorted("escorted"),
     Escorting("escorting"),
+    HospitalHealing("hospital-healing"),
     None("none");
 
     // Getter to retrieve the string value of the enum

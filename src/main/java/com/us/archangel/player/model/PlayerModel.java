@@ -12,7 +12,10 @@ import com.us.archangel.player.enums.PlayerAction;
 import com.us.archangel.player.service.PlayerService;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+
+import java.util.List;
 
 @Getter
 @AllArgsConstructor
@@ -39,10 +42,6 @@ public class PlayerModel {
     private short lastPosX;
     private short lastPosY;
     @Setter
-    private boolean canInteract;
-    @Setter
-    private boolean canWalk;
-    @Setter
     private long workTimeRemainingSecs;
     @Setter
     private long combatDelayExpiresAt;
@@ -52,9 +51,6 @@ public class PlayerModel {
     private PlayerAction currentAction;
     @Setter
     private Integer escortingPlayerId;
-
-    public PlayerModel() {
-    }
 
     public void addHealth(int health) {
         this.healthNow += Math.max(health, this.healthMax);
@@ -127,8 +123,34 @@ public class PlayerModel {
         return this.healthNow  <= 0;
     }
 
+    public static List<PlayerAction> blockedStates = List.of(PlayerAction.Cuffed, PlayerAction.Escorted, PlayerAction.Stunned, PlayerAction.HospitalHealing);
+
+    public boolean canWalk() {
+        if (this.isDead()) {
+            return false;
+        }
+
+        if (PlayerModel.blockedStates.contains(this.getCurrentAction())) {
+            return false;
+        }
+
+        return true;
+    }
+
+    public boolean canInteract() {
+        if (this.isDead()) {
+            return false;
+        }
+
+        if (PlayerModel.blockedStates.contains(this.getCurrentAction())) {
+            return false;
+        }
+        return true;
+    }
+
     public void save() {
         PlayerService.getInstance().update(this.id, this);
     }
+
 }
 
