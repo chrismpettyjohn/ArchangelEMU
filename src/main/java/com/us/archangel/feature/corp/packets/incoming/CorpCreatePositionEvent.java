@@ -5,18 +5,22 @@ import com.eu.habbo.messages.incoming.MessageHandler;
 import com.us.archangel.corp.entity.CorpRoleEntity;
 import com.us.archangel.corp.mapper.CorpRoleMapper;
 import com.us.archangel.corp.model.CorpModel;
+import com.us.archangel.corp.model.CorpRoleModel;
 import com.us.archangel.corp.service.CorpRoleService;
 import com.us.archangel.corp.service.CorpService;
+import com.us.archangel.feature.corp.packets.outgoing.CorpPositionInfoComposer;
 import com.us.archangel.feature.corp.packets.outgoing.CorpPositionListComposer;
+
+import java.util.List;
 
 public class CorpCreatePositionEvent extends MessageHandler {
 
     @Override
     public void handle() {
         int corpID = this.packet.readInt();
-        int orderId = this.packet.readInt();
         String name = this.packet.readString();
         String motto = this.packet.readString();
+        String description = this.packet.readString();
         int salary = this.packet.readInt();
         String maleFigure = this.packet.readString();
         String femaleFigure = this.packet.readString();
@@ -37,27 +41,31 @@ public class CorpCreatePositionEvent extends MessageHandler {
             return;
         }
 
-        CorpRoleEntity corpRoleEntity = new CorpRoleEntity();
-        corpRoleEntity.setCorpId(corpID);
-        corpRoleEntity.setOrderId(orderId);
-        corpRoleEntity.setName(name);
-        corpRoleEntity.setMotto(motto);
-        corpRoleEntity.setSalary(salary);
-        corpRoleEntity.setMaleFigure(maleFigure);
-        corpRoleEntity.setFemaleFigure(femaleFigure);
-        corpRoleEntity.setCanHire(canHire);
-        corpRoleEntity.setCanFire(canFire);
-        corpRoleEntity.setCanPromote(canPromote);
-        corpRoleEntity.setCanDemote(canDemote);
-        corpRoleEntity.setCanWorkAnywhere(canWorkAnywhere);
+        List<CorpRoleModel> corpRoleList = CorpRoleService.getInstance().findManyByCorpId(corpID);
 
-        CorpRoleService.getInstance().create(CorpRoleMapper.toEntity(corpRoleEntity));
+        CorpRoleModel corpRoleModel = new CorpRoleModel();
+        corpRoleModel.setCorpId(corpID);
+        corpRoleModel.setOrderId(corpRoleList.size() + 1);
+        corpRoleModel.setDisplayName(name);
+        corpRoleModel.setDescription(description);
+        corpRoleModel.setMotto(motto);
+        corpRoleModel.setSalary(salary);
+        corpRoleModel.setMaleFigure(maleFigure);
+        corpRoleModel.setFemaleFigure(femaleFigure);
+        corpRoleModel.setCanHire(canHire);
+        corpRoleModel.setCanFire(canFire);
+        corpRoleModel.setCanPromote(canPromote);
+        corpRoleModel.setCanDemote(canDemote);
+        corpRoleModel.setCanWorkAnywhere(canWorkAnywhere);
+
+        CorpRoleModel savedCorpRoleModel = CorpRoleService.getInstance().create(corpRoleModel);
 
         this.client.getHabbo().whisper(Emulator.getTexts()
                 .getValue("roleplay.corp_position.create_success")
                 .replace(":position", name)
         );
 
+        this.client.sendResponse(new CorpPositionInfoComposer(savedCorpRoleModel.getId()));
         this.client.sendResponse(new CorpPositionListComposer(corp));
     }
 }

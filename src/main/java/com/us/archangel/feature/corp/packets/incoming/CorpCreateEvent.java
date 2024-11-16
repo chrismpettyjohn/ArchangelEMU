@@ -11,6 +11,7 @@ import com.us.archangel.corp.mapper.CorpMapper;
 import com.us.archangel.corp.model.CorpModel;
 import com.us.archangel.corp.service.CorpService;
 import com.us.archangel.feature.corp.packets.outgoing.CorpInfoComposer;
+import com.us.archangel.feature.corp.packets.outgoing.CorpListComposer;
 
 public class CorpCreateEvent extends MessageHandler {
     @Override
@@ -47,5 +48,6 @@ public class CorpCreateEvent extends MessageHandler {
         CorpModel savedCorp = CorpService.getInstance().create(CorpMapper.toModel(corp));
 
         this.client.sendResponse(new CorpInfoComposer(savedCorp.getId()));
+        this.client.sendResponse(new CorpListComposer());
     }
 }

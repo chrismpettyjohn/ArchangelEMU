@@ -43,19 +43,19 @@ public class CorpRoleEntity {
     private String femaleFigure;
 
     @Column(name = "can_hire", nullable = false)
-    private boolean canHire;
+    private int canHire;
 
     @Column(name = "can_fire", nullable = false)
-    private boolean canFire;
+    private int canFire;
 
     @Column(name = "can_promote", nullable = false)
-    private boolean canPromote;
+    private int canPromote;
 
     @Column(name = "can_demote", nullable = false)
-    private boolean canDemote;
+    private int canDemote;
 
     @Column(name = "can_work_anywhere", nullable = false)
-    private boolean canWorkAnywhere;
+    private int canWorkAnywhere;
 
     @ManyToOne
     @JoinColumn(name = "corps_id", nullable = false, insertable=false, updatable=false)

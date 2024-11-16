@@ -40,7 +40,7 @@ public class DatabaseConfig {
                 configuration.setProperty("jakarta.persistence.lock.timeout", "5000");
                 configuration.setProperty("hibernate.transaction.jta.platform", "org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform");
 
-                configuration.setProperty("hibernate.show_sql", "false");
+                configuration.setProperty("hibernate.show_sql", "true");
                 configuration.setProperty("hibernate.format_sql", "false");
                 configuration.setProperty("hibernate.use_sql_comments", "false");
                 configuration.setProperty("hibernate.generate_statistics", "false");

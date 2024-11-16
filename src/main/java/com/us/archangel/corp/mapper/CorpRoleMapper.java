@@ -20,11 +20,11 @@ public class CorpRoleMapper extends GenericMapper<CorpRoleEntity, CorpRoleModel>
                 entity.getSalary(),
                 entity.getMaleFigure(),
                 entity.getFemaleFigure(),
-                entity.isCanHire(),
-                entity.isCanFire(),
-                entity.isCanPromote(),
-                entity.isCanDemote(),
-                entity.isCanWorkAnywhere()
+                entity.getCanHire() == 1,
+                entity.getCanFire() == 1,
+                entity.getCanPromote() == 1,
+                entity.getCanDemote() == 1,
+                entity.getCanWorkAnywhere() == 1
         );
     }
 
@@ -42,11 +42,11 @@ public class CorpRoleMapper extends GenericMapper<CorpRoleEntity, CorpRoleModel>
         entity.setSalary(model.getSalary());
         entity.setMaleFigure(model.getMaleFigure());
         entity.setFemaleFigure(model.getFemaleFigure());
-        entity.setCanHire(model.isCanHire());
-        entity.setCanFire(model.isCanFire());
-        entity.setCanPromote(model.isCanPromote());
-        entity.setCanDemote(model.isCanDemote());
-        entity.setCanWorkAnywhere(model.isCanWorkAnywhere());
+        entity.setCanHire(model.isCanHire() ? 1 : 0);
+        entity.setCanFire(model.isCanFire() ? 1 : 0);
+        entity.setCanPromote(model.isCanPromote() ? 1 : 0);
+        entity.setCanDemote(model.isCanDemote() ? 1 : 0);
+        entity.setCanWorkAnywhere(model.isCanWorkAnywhere() ? 1 : 0);
         return entity;
     }
 }

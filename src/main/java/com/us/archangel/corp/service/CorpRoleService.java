@@ -25,26 +25,6 @@ public class CorpRoleService extends GenericService<CorpRoleModel, CorpRoleConte
         super(CorpRoleContext.getInstance(), CorpRoleRepository.getInstance(), CorpRoleMapper.class, CorpRoleEntity.class);
     }
 
-    public CorpRoleModel create(CorpRoleModel model) {
-        return super.create(model);
-    }
-
-    public void update(int id, CorpRoleModel model) {
-        super.update(id, model);
-    }
-
-    public List<CorpRoleModel> getAll() {
-        return super.getAll();
-    }
-
-    public CorpRoleModel getById(int id) {
-        return super.getById(id);
-    }
-
-    public void deleteById(int id) {
-        super.deleteById(id);
-    }
-
     public CorpRoleModel getByCorpAndOrderId(int corpId, int orderId) {
         CorpRoleModel role = context.getAll().values().stream()
                 .filter(model -> model.getCorpId() == corpId && model.getOrderId() == orderId)

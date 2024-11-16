@@ -3,6 +3,8 @@ package com.us.nova.core;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.resource.transaction.spi.TransactionStatus;
+
 import java.util.List;
 
 public class GenericRepository<Entity> implements IGenericRepository<Entity> {
@@ -20,14 +22,18 @@ public class GenericRepository<Entity> implements IGenericRepository<Entity> {
         Transaction transaction = null;
         try (Session session = sessionFactory.openSession()) {
             transaction = session.beginTransaction();
-            session.persist(entity);
-            transaction.commit();
+            session.persist(entity); // Save the entity
+            transaction.commit();   // Commit the transaction
         } catch (Exception e) {
-            if (transaction != null) transaction.rollback();
-            throw new RuntimeException("Failed to create entity", e);
+            if (transaction != null && transaction.getStatus() != TransactionStatus.COMMITTED) {
+                transaction.rollback(); // Roll back if not already committed
+            }
+            // Log the exception (optional)
+            throw new RuntimeException("Failed to create entity: " + entity, e);
         }
         return entity;
     }
+
 
     @Override
     public void updateById(int id, Entity updatedEntity) {
