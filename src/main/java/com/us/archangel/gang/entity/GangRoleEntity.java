@@ -24,10 +24,10 @@ public class GangRoleEntity {
     private String name;
 
     @Column(name = "can_invite", nullable = false)
-    private Boolean canInvite;
+    private int canInvite;
 
     @Column(name = "can_kick", nullable = false)
-    private Boolean canKick;
+    private int canKick;
 
     @ManyToOne
     @JoinColumn(name = "gangs_id", nullable = false, insertable=false, updatable=false)

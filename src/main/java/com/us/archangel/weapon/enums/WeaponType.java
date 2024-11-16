@@ -5,7 +5,8 @@ import lombok.Getter;
 @Getter
 public enum WeaponType {
     GUN("gun"),
-    MELEE("melee");
+    MELEE("melee"),
+    CONSUMABLE("consumable");
 
     // Getter to retrieve the string value of the enum
     private final String typeName;

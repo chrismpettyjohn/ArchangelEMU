@@ -22,7 +22,7 @@ public class GangQueryListComposer extends MessageComposer {
 
         for (GangModel gang : gangs) {
             List<PlayerModel> players =PlayerService.getInstance().getByGangId(gang.getId());
-            this.response.appendString(String.format("%s;%s;%s;%s;%s;%s", gang.getId(), gang.getDisplayName(), gang.getDescription(), gang.getBadge(), gang.getUserId(), players.size()));
+            this.response.appendString(String.format("%s;%s;%s;%s;%s;%s;%s", gang.getId(), gang.getDisplayName(), gang.getDescription(), gang.getBadge(), gang.getUserId() , gang.getRoomId(), players.size()));
         }
 
         return this.response;

@@ -15,8 +15,8 @@ public class GangRoleMapper extends GenericMapper<GangRoleEntity, GangRoleModel>
                 entity.getGangId(),
                 entity.getOrderId(),
                 entity.getName(),
-                entity.getCanInvite(),
-                entity.getCanKick()
+                entity.getCanInvite() == 1,
+                entity.getCanKick() == 1
         );
     }
 
@@ -29,8 +29,8 @@ public class GangRoleMapper extends GenericMapper<GangRoleEntity, GangRoleModel>
         entity.setGangId(model.getGangId());
         entity.setOrderId(model.getOrderId());
         entity.setName(model.getName());
-        entity.setCanInvite(model.isCanInvite());
-        entity.setCanKick(model.isCanKick());
+        entity.setCanInvite(model.isCanInvite() ? 1 : 0);
+        entity.setCanKick(model.isCanKick() ? 1 : 0);
         return entity;
     }
 }

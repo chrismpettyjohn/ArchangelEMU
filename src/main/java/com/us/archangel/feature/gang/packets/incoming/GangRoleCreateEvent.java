@@ -2,10 +2,14 @@ package com.us.archangel.feature.gang.packets.incoming;
 
 import com.eu.habbo.Emulator;
 import com.eu.habbo.messages.incoming.MessageHandler;
+import com.us.archangel.feature.gang.packets.outgoing.GangRoleQueryListComposer;
 import com.us.archangel.feature.gang.packets.outgoing.GangRoleQueryOneComposer;
 import com.us.archangel.gang.model.GangModel;
 import com.us.archangel.gang.model.GangRoleModel;
+import com.us.archangel.gang.service.GangRoleService;
 import com.us.archangel.gang.service.GangService;
+
+import java.util.List;
 
 public class GangRoleCreateEvent extends MessageHandler {
     @Override
@@ -24,13 +28,18 @@ public class GangRoleCreateEvent extends MessageHandler {
             return;
         }
 
+        List<GangRoleModel> gangRoleList = GangRoleService.getInstance().getByGangId(gangId);
+
         GangRoleModel gangRole = new GangRoleModel();
-        gangRole.setOrderId(this.packet.readInt());
+        gangRole.setGangId(gangId);
+        gangRole.setOrderId(gangRoleList.size() + 1);
         gangRole.setName(this.packet.readString());
         gangRole.setCanInvite(this.packet.readBoolean());
         gangRole.setCanKick(this.packet.readBoolean());
-        gangRole.update();
 
-        this.client.sendResponse(new GangRoleQueryOneComposer(gangRole.getId()));
+        GangRoleModel savedGangRole = GangRoleService.getInstance().create(gangRole);
+
+        this.client.sendResponse(new GangRoleQueryOneComposer(savedGangRole.getId()));
+        this.client.sendResponse(new GangRoleQueryListComposer(savedGangRole.getGangId()));
     }
 }

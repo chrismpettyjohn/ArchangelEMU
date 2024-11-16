@@ -4,6 +4,7 @@ import com.eu.habbo.Emulator;
 import com.eu.habbo.habbohotel.permissions.Permission;
 import com.eu.habbo.habbohotel.rooms.Room;
 import com.eu.habbo.messages.incoming.MessageHandler;
+import com.us.archangel.feature.gang.packets.outgoing.GangQueryListComposer;
 import com.us.archangel.feature.gang.packets.outgoing.GangQueryOneComposer;
 import com.us.archangel.gang.model.GangModel;
 import com.us.archangel.gang.service.GangService;
@@ -40,5 +41,6 @@ public class GangCreateEvent extends MessageHandler {
         GangModel savedGang = GangService.getInstance().create(gang);
 
         this.client.sendResponse(new GangQueryOneComposer(savedGang.getId()));
+        this.client.sendResponse(new GangQueryListComposer());
     }
 }
