@@ -35,7 +35,7 @@ public class CorpStartWorkCommand extends Command {
             return true;
         }
 
-        if (gameClient.getHabbo().getRoomUnit().getRoom().getRoomInfo().getId() != userEmployer.getRoomId()) {
+        if (!userRole.isCanWorkAnywhere() && gameClient.getHabbo().getRoomUnit().getRoom().getRoomInfo().getId() != userEmployer.getRoomId()) {
             gameClient.getHabbo().whisper(Emulator.getTexts().getValue("commands.roleplay.cmd_start_work_not_in_boundaries"));
             return true;
         }
