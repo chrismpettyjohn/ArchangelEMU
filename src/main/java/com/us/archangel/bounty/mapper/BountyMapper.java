@@ -13,7 +13,8 @@ public class BountyMapper extends GenericMapper<BountyEntity, BountyModel> {
         return new BountyModel(
                 entity.getId(),
                 entity.getUserId(),
-                entity.getCrimeId()
+                entity.getCrimeId(),
+                entity.getClosedAt()
         );
     }
 
@@ -25,6 +26,7 @@ public class BountyMapper extends GenericMapper<BountyEntity, BountyModel> {
         entity.setId(model.getId());
         entity.setUserId(model.getUserId());
         entity.setCrimeId(model.getCrimeId());
+        entity.setClosedAt(model.getClosedAt());
         return entity;
     }
 }

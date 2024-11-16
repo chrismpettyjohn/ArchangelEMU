@@ -62,6 +62,12 @@ public class PlayerEntity {
     @Column(name = "last_pos_y", nullable = false)
     private short lastPosY;
 
+    @Column(name = "can_interact", nullable = false)
+    private boolean canInteract;
+
+    @Column(name = "can_walk", nullable = false)
+    private boolean canWalk;
+
     @Column(name = "work_time_remaining_secs", nullable = false)
     private long workTimeRemainingSecs;
 

@@ -345,15 +345,12 @@ public class CommandsManager {
         addCommand(new LicenseOfferCommand());
         addCommand(new LicenseStatusCommand());
         // Police
-        addCommand(new ArrestCommand());
         addCommand(new CuffCommand());
         addCommand(new EscortCommand());
         addCommand(new StunCommand());
         addCommand(new ReleaseCommand());
         addCommand(new PayBillCommand());
         addCommand(new CallPoliceCommand());
-        addCommand(new WantedListAddUserCommand());
-        addCommand(new WantedListRemoveUserCommand());
         // Taxi
         addCommand(new CallTaxiCommand());
     }

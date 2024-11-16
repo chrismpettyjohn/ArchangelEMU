@@ -39,6 +39,10 @@ public class PlayerModel {
     private short lastPosX;
     private short lastPosY;
     @Setter
+    private boolean canInteract;
+    @Setter
+    private boolean canWalk;
+    @Setter
     private long workTimeRemainingSecs;
     @Setter
     private long combatDelayExpiresAt;

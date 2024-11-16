@@ -37,9 +37,9 @@ public class BountyRepository extends GenericRepository<BountyEntity> {
         return super.getAll();
     }
 
-    public List<BountyEntity> getByUserId(int userId) {
+    public List<BountyEntity> findPendingByUserId(int userId) {
         try (Session session = sessionFactory.openSession()) {
-            return session.createQuery("FROM BountyEntity WHERE userId = :userId", BountyEntity.class)
+            return session.createQuery("FROM BountyEntity WHERE userId = :userId AND :closedAt IS NULL", BountyEntity.class)
                     .setParameter("userId", userId)
                     .list();
         } catch (Exception e) {

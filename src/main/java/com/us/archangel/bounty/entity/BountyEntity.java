@@ -15,9 +15,12 @@ public class BountyEntity {
     @Column(name = "id")
     private int id;
 
-    @Column(name = "user_id")
+    @Column(name = "user_id", nullable = false)
     private int userId;
 
-    @Column(name = "crime_id")
+    @Column(name = "crime_id", nullable = false)
     private int crimeId;
+
+    @Column(name = "closed_at")
+    private Integer closedAt;
 }

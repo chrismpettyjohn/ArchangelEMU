@@ -100,8 +100,6 @@ import com.us.nova.feature.emusettings.packages.incoming.EmuSettingsUpdateEvent;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
-import java.awt.desktop.QuitEvent;
-
 @Getter
 @RequiredArgsConstructor
 public enum Incoming {
@@ -1057,11 +1055,11 @@ public enum Incoming {
 
     hotBarPickupItemEvent(8060, HotBarPickupItemEvent.class),
 
-    wantedListEvent(8061, WantedListEvent.class),
+    wantedListQueryListEvent(8061, WantedListQueryListEvent.class),
 
-    wantedListAddUserEvent(8062, WantedListAddUserEvent.class),
+    wantedListCreateEvent(8062, WantedListCreateEvent.class),
 
-    wantedListRemoveUserEvent(8063, WantedListRemoveUserEvent.class),
+    wantedListDeleteEvent(8063, WantedListDeleteEvent.class),
 
     turfStartCaptureEvent(8064, TurfStartCaptureEvent.class),
 

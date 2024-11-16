@@ -27,15 +27,13 @@ public class ServeJailTimeAction implements Runnable {
     private ScheduledFuture<?> cycle;
     private ScheduledFuture<?> checkState;
 
-    public String crime;
     private String oldMotto;
     private String oldFigure;
 
     private final long endsAt;
 
-    public ServeJailTimeAction(Habbo habbo, String crime, int minutesLeft) {
+    public ServeJailTimeAction(Habbo habbo, int minutesLeft) {
         this.habbo = habbo;
-        this.crime = crime;
         this.endsAt = Instant.now().getEpochSecond() + Duration.ofMinutes(minutesLeft).getSeconds();
         this.habbo.getPlayer().setJailTimeRemainingSecs(Duration.ofMinutes(minutesLeft).getSeconds());
     }
@@ -75,9 +73,7 @@ public class ServeJailTimeAction implements Runnable {
         }
 
 
-        habbo.shout(Emulator.getTexts()
-                .getValue("roleplay.jail.sentence_start")
-                .replace(":crime", this.crime)
+        habbo.shout(Emulator.getTexts().getValue("roleplay.jail.sentence_start")
         );
 
         habbo.getHabboInfo().changeClothes(habbo.getHabboInfo().getGender() == HabboGender.M
@@ -107,7 +103,6 @@ public class ServeJailTimeAction implements Runnable {
                 .replace(":id", String.valueOf(this.habbo.getHabboInfo().getId() * 3))
                 .replace(":time", String.valueOf(minutesLeft > 0 ? minutesLeft : secondsLeft))
                 .replace(":unit", minutesLeft > 0 ? "minutes" : "seconds")
-                .replace(":crime", this.crime)
         );
 
         if (secondsLeft <= 0) {
