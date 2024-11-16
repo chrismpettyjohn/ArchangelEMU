@@ -2,6 +2,7 @@ package com.us.nova.user.repository;
 
 import com.us.nova.core.GenericRepository;
 import com.us.nova.user.entity.UserGuestbookEntity;
+import org.hibernate.Session;
 
 import java.util.List;
 
@@ -34,6 +35,14 @@ public class UserGuestbookRepository extends GenericRepository<UserGuestbookEnti
 
     public List<UserGuestbookEntity> getAll() {
         return super.getAll();
+    }
+
+    public List<UserGuestbookEntity> getByUserId(int userId) {
+        try (Session session = sessionFactory.openSession()) {
+            return session.createQuery("from UserGuestbookEntity where postedOnUsersId = :userId", UserGuestbookEntity.class)
+                    .setParameter("userId", userId)
+                    .list();
+        }
     }
 
     public void deleteById(int id) {

@@ -8,6 +8,7 @@ import com.us.nova.user.model.UserGuestbookModel;
 import com.us.nova.user.repository.UserGuestbookRepository;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class UserGuestbookService extends GenericService<UserGuestbookModel, UserGuestbookContext, UserGuestbookRepository> {
     private static UserGuestbookService instance;
@@ -33,6 +34,24 @@ public class UserGuestbookService extends GenericService<UserGuestbookModel, Use
 
     public List<UserGuestbookModel> getAll() {
         return super.getAll();
+    }
+
+    public List<UserGuestbookModel> getByUserId(int userId) {
+        List<UserGuestbookModel> storedValues = context.getAll().values().stream()
+                .filter(model -> model.getPostedOnUsersId() == userId)
+                .collect(Collectors.toList());
+
+        if (!storedValues.isEmpty()) {
+            return storedValues;
+        }
+
+        List<UserGuestbookEntity> entities = repository.getByUserId(userId);
+        List<UserGuestbookModel> models = entities.stream()
+                .map(UserGuestbookMapper::toModel)
+                .collect(Collectors.toList());
+
+        models.forEach(model -> context.add(model.getId(), model));
+        return models;
     }
 
     public UserGuestbookModel getById(int id) {
