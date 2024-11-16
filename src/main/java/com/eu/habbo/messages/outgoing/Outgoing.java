@@ -485,4 +485,5 @@ public class Outgoing {
     public static final int gangMemberQueryListComposer = 9054;
     public static final int mapQueryComposer = 9055;
     public static final int emuSettingsQueryListComposer = 9056;
+    public static final int notificationComposer = 9057;
 }
