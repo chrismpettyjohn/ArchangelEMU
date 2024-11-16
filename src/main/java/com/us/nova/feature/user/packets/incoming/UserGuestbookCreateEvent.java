@@ -23,8 +23,8 @@ public class UserGuestbookCreateEvent extends MessageHandler {
         guestbookEntry.setPostedOnUsersId(recipientHabbo.getId());
         guestbookEntry.setPostedByUsersId(this.client.getHabbo().getHabboInfo().getId());
         guestbookEntry.setMessage(this.packet.readString());
-        guestbookEntry.setCreatedAt((int) System.currentTimeMillis());
-        guestbookEntry.setUpdatedAt((int) System.currentTimeMillis());
+        guestbookEntry.setCreatedAt((int) (System.currentTimeMillis() / 1000));
+        guestbookEntry.setUpdatedAt((int) (System.currentTimeMillis() / 1000));
 
         UserGuestbookModel savedGuestbookEntry = UserGuestbookService.getInstance().create(UserGuestbookMapper.toModel(guestbookEntry));
 
