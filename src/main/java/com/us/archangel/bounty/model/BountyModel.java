@@ -2,8 +2,8 @@ package com.us.archangel.bounty.model;
 
 import com.eu.habbo.Emulator;
 import com.eu.habbo.habbohotel.users.Habbo;
-import com.us.archangel.crime.model.CrimeModel;
-import com.us.archangel.crime.service.CrimeService;
+import com.us.archangel.police.model.PoliceCrimeModel;
+import com.us.archangel.police.service.PoliceCrimeService;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -25,8 +25,8 @@ public class BountyModel {
         return Emulator.getGameEnvironment().getHabboManager().getHabbo(this.userId);
     }
 
-    public CrimeModel getCrime() {
-        return CrimeService.getInstance().getById(this.crimeId);
+    public PoliceCrimeModel getCrime() {
+        return PoliceCrimeService.getInstance().getById(this.crimeId);
     }
 
 }

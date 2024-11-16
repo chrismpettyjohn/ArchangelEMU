@@ -1,4 +1,4 @@
-package com.us.archangel.crime.entity;
+package com.us.archangel.police.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -8,7 +8,7 @@ import lombok.Setter;
 @Setter
 @Entity
 @Table(name = "archangel_crimes")
-public class CrimeEntity {
+public class PoliceCrimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

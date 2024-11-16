@@ -1,16 +1,16 @@
-package com.us.archangel.crime.mapper;
+package com.us.archangel.police.mapper;
 
-import com.us.archangel.crime.entity.CrimeEntity;
-import com.us.archangel.crime.model.CrimeModel;
+import com.us.archangel.police.entity.PoliceCrimeEntity;
+import com.us.archangel.police.model.PoliceCrimeModel;
 import com.us.nova.core.GenericMapper;
 
-public class CrimeMapper extends GenericMapper<CrimeEntity, CrimeModel> {
+public class PoliceCrimeMapper extends GenericMapper<PoliceCrimeEntity, PoliceCrimeModel> {
 
-    public static CrimeModel toModel(CrimeEntity entity) {
+    public static PoliceCrimeModel toModel(PoliceCrimeEntity entity) {
         if (entity == null) {
             return null;
         }
-        return new CrimeModel(
+        return new PoliceCrimeModel(
                 entity.getId(),
                 entity.getDisplayName(),
                 entity.getDescription(),
@@ -18,11 +18,11 @@ public class CrimeMapper extends GenericMapper<CrimeEntity, CrimeModel> {
         );
     }
 
-    public static CrimeEntity toEntity(CrimeModel model) {
+    public static PoliceCrimeEntity toEntity(PoliceCrimeModel model) {
         if (model == null) {
             return null;
         }
-        CrimeEntity entity = new CrimeEntity();
+        PoliceCrimeEntity entity = new PoliceCrimeEntity();
         entity.setId(model.getId());
         entity.setDisplayName(model.getDisplayName());
         entity.setDescription(model.getDescription());

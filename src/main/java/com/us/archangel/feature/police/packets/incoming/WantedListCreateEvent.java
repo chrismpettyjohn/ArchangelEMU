@@ -6,8 +6,8 @@ import com.eu.habbo.messages.incoming.MessageHandler;
 import com.us.archangel.bounty.model.BountyModel;
 import com.us.archangel.bounty.service.BountyService;
 import com.us.archangel.corp.enums.CorpIndustry;
-import com.us.archangel.crime.model.CrimeModel;
-import com.us.archangel.crime.service.CrimeService;
+import com.us.archangel.police.model.PoliceCrimeModel;
+import com.us.archangel.police.service.PoliceCrimeService;
 import com.us.archangel.feature.police.packets.outgoing.WantedListQueryListComposer;
 import com.us.roleplay.users.HabboRoleplayHelper;
 
@@ -24,7 +24,7 @@ public class WantedListCreateEvent extends MessageHandler {
 
         int crimeID = this.packet.readInt();
 
-        CrimeModel crime = CrimeService.getInstance().getById(crimeID);
+        PoliceCrimeModel crime = PoliceCrimeService.getInstance().getById(crimeID);
 
         if (crime == null) {
             return;

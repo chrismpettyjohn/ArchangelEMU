@@ -1,7 +1,7 @@
 package com.us.archangel.police.service;
 
-import com.us.archangel.crime.entity.CrimeEntity;
-import com.us.archangel.crime.mapper.CrimeMapper;
+import com.us.archangel.police.entity.PoliceCrimeEntity;
+import com.us.archangel.police.mapper.PoliceCrimeMapper;
 import com.us.archangel.police.context.PoliceWarrantContext;
 import com.us.archangel.police.model.PoliceWarrantModel;
 import com.us.archangel.police.repository.PoliceWarrantRepository;
@@ -21,7 +21,7 @@ public class PoliceWarrantService extends GenericService<PoliceWarrantModel, Pol
     }
 
     private PoliceWarrantService() {
-        super(PoliceWarrantContext.getInstance(), PoliceWarrantRepository.getInstance(), CrimeMapper.class, CrimeEntity.class);
+        super(PoliceWarrantContext.getInstance(), PoliceWarrantRepository.getInstance(), PoliceCrimeMapper.class, PoliceCrimeEntity.class);
     }
 
     public PoliceWarrantModel create(PoliceWarrantModel model) {

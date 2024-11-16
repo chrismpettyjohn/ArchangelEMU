@@ -1,12 +1,12 @@
 package com.us.archangel.feature.crime.packets.incoming;
 
 import com.eu.habbo.Emulator;
+import com.eu.habbo.habbohotel.permissions.Permission;
 import com.eu.habbo.messages.incoming.MessageHandler;
-import com.us.archangel.crime.entity.CrimeEntity;
-import com.us.archangel.crime.mapper.CrimeMapper;
-import com.us.archangel.crime.model.CrimeModel;
-import com.us.archangel.crime.model.CrimePermissions;
-import com.us.archangel.crime.service.CrimeService;
+import com.us.archangel.police.entity.PoliceCrimeEntity;
+import com.us.archangel.police.mapper.PoliceCrimeMapper;
+import com.us.archangel.police.model.PoliceCrimeModel;
+import com.us.archangel.police.service.PoliceCrimeService;
 import com.us.archangel.feature.crime.packets.outgoing.CrimeDataComposer;
 import com.us.archangel.feature.crime.packets.outgoing.CrimeListComposer;
 
@@ -14,7 +14,7 @@ public class CrimeCreateEvent extends MessageHandler {
 
     @Override
     public void handle() throws Exception {
-        boolean canCreateCrimes = this.client.getHabbo().hasPermissionRight(CrimePermissions.CREATE);
+        boolean canCreateCrimes = this.client.getHabbo().hasPermissionRight(Permission.ACC_CRIMES_EDIT_ALL);
 
         if (!canCreateCrimes) {
             this.client.getHabbo().whisper(Emulator.getTexts().getValue("nova.generic.not_allowed"));
@@ -29,15 +29,15 @@ public class CrimeCreateEvent extends MessageHandler {
             return;
         }
 
-        CrimeEntity crimeEntity = new CrimeEntity();
-        crimeEntity.setDisplayName(displayName);
-        crimeEntity.setDescription(description);
-        crimeEntity.setJailTimeSeconds(jailTime);
+        PoliceCrimeEntity policeCrimeEntity = new PoliceCrimeEntity();
+        policeCrimeEntity.setDisplayName(displayName);
+        policeCrimeEntity.setDescription(description);
+        policeCrimeEntity.setJailTimeSeconds(jailTime);
 
-        CrimeModel crimeModel = CrimeMapper.toModel(crimeEntity);
-        CrimeService.getInstance().create(crimeModel);
+        PoliceCrimeModel policeCrimeModel = PoliceCrimeMapper.toModel(policeCrimeEntity);
+        PoliceCrimeService.getInstance().create(policeCrimeModel);
 
-        this.client.sendResponse(new CrimeDataComposer(crimeModel));
+        this.client.sendResponse(new CrimeDataComposer(policeCrimeModel));
         this.client.sendResponse(new CrimeListComposer());
     }
 

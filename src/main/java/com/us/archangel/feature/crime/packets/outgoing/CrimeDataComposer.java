@@ -3,12 +3,12 @@ package com.us.archangel.feature.crime.packets.outgoing;
 import com.eu.habbo.messages.ServerMessage;
 import com.eu.habbo.messages.outgoing.MessageComposer;
 import com.eu.habbo.messages.outgoing.Outgoing;
-import com.us.archangel.crime.model.CrimeModel;
+import com.us.archangel.police.model.PoliceCrimeModel;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 public class CrimeDataComposer extends MessageComposer {
-    private final CrimeModel crime;
+    private final PoliceCrimeModel crime;
 
     @Override
     public ServerMessage composeInternal() {

@@ -7,8 +7,8 @@ import com.us.archangel.bounty.model.BountyModel;
 import com.us.archangel.bounty.service.BountyService;
 import com.us.archangel.corp.enums.CorpIndustry;
 import com.us.archangel.corp.model.CorpModel;
-import com.us.archangel.crime.model.CrimeModel;
-import com.us.archangel.crime.service.CrimeService;
+import com.us.archangel.police.model.PoliceCrimeModel;
+import com.us.archangel.police.service.PoliceCrimeService;
 import com.us.archangel.feature.police.actions.ServeJailTimeAction;
 import com.us.archangel.feature.police.packets.outgoing.UserArrestedComposer;
 import com.us.archangel.player.enums.PlayerAction;
@@ -72,7 +72,7 @@ public class PoliceArrestEvent extends MessageHandler {
 
         int totalJailTimeSeconds = pendingBounties.stream()
                 .mapToInt(bounty -> {
-                    CrimeModel crimeInst = CrimeService.getInstance().getById(bounty.getCrimeId());
+                    PoliceCrimeModel crimeInst = PoliceCrimeService.getInstance().getById(bounty.getCrimeId());
                     return crimeInst.getJailTimeSeconds();
                 })
                 .sum();
