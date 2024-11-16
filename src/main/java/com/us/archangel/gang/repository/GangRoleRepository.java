@@ -58,4 +58,12 @@ public class GangRoleRepository extends GenericRepository<GangRoleEntity> {
                     .list();
         }
     }
+
+    public List<GangRoleEntity> findManyByGangId(int gangId) {
+        try (Session session = sessionFactory.openSession()) {
+            return session.createQuery("from GangRoleEntity where gangId = :gangId", GangRoleEntity.class)
+                    .setParameter("gangId", gangId)
+                    .list();
+        }
+    }
 }

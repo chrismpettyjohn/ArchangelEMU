@@ -17,18 +17,18 @@ public class CorpDeletePositionEvent extends MessageHandler {
 
     @Override
     public void handle() {
-        int corpID = this.packet.readInt();
         int corpPositionID = this.packet.readInt();
-
-        CorpModel corp = CorpService.getInstance().getById(corpID);
-
-        if (corp == null) {
-            return;
-        }
 
         CorpRoleModel corpPosition = CorpRoleService.getInstance().getById(corpPositionID);
 
+
         if (corpPosition == null) {
+            return;
+        }
+
+        CorpModel corp = CorpService.getInstance().getById(corpPosition.getCorpId());
+
+        if (corp == null) {
             return;
         }
 
@@ -38,7 +38,14 @@ public class CorpDeletePositionEvent extends MessageHandler {
         }
 
         if (corp.getUserId() != this.client.getHabbo().getHabboInfo().getId()) {
-            this.client.getHabbo().whisper(Emulator.getTexts().getValue("roleplay.cor.not_the_owner"));
+            this.client.getHabbo().whisper(Emulator.getTexts().getValue("roleplay.corp.not_the_owner"));
+            return;
+        }
+
+        List<CorpRoleModel> corpRoleModels = CorpRoleService.getInstance().findManyByCorpId(corp.getId());
+
+        if (corpRoleModels.size() == 1) {
+            this.client.getHabbo().whisper(Emulator.getTexts().getValue("roleplay.cant_delete_last_role"));
             return;
         }
 

@@ -29,13 +29,17 @@ public class CorpPositionListComposer extends MessageComposer {
         corpPositions.sort(Comparator.comparingInt(CorpRoleModel::getOrderId));
 
         for (CorpRoleModel corpPosition : corpPositions) {
+            int totalMembersInPosition = (int) playerModels
+                    .stream()
+                    .filter(player -> player.getCorpRoleId() == corpPosition.getId())
+                    .count();
             this.response.appendString(
                     corpPosition.getId() + ";"
                             + corpPosition.getDisplayName() + ";"
                             + corpPosition.getSalary() + ";"
                             + corpPosition.getMaleFigure() + ";"
                             + corpPosition.getFemaleFigure() + ";"
-                            + playerModels.size()
+                            + totalMembersInPosition
             );
         }
 

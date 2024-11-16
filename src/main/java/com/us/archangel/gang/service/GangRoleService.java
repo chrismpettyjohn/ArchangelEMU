@@ -1,10 +1,7 @@
 package com.us.archangel.gang.service;
 
-import com.us.archangel.gang.context.GangInviteContext;
 import com.us.archangel.gang.context.GangRoleContext;
-import com.us.archangel.gang.entity.GangInviteEntity;
 import com.us.archangel.gang.entity.GangRoleEntity;
-import com.us.archangel.gang.mapper.GangInviteMapper;
 import com.us.archangel.gang.mapper.GangRoleMapper;
 import com.us.archangel.gang.model.GangRoleModel;
 import com.us.archangel.gang.repository.GangRoleRepository;
@@ -57,6 +54,26 @@ public class GangRoleService extends GenericService<GangRoleModel, GangRoleConte
 
         List<GangRoleEntity> entities = repository.getByGangId(gangId);
         List<GangRoleModel> models = entities.stream()
+                .map(GangRoleMapper::toModel)
+                .collect(Collectors.toList());
+
+        models.forEach(model -> context.add(model.getId(), model));
+        return models;
+    }
+
+
+
+    public List<GangRoleModel> findManyByGangId(int corpId) {
+        List<GangRoleModel> models = context.getAll().values().stream()
+                .filter(model -> model.getGangId() == corpId)
+                .collect(Collectors.toList());
+
+        if (!models.isEmpty()) {
+            return models;
+        }
+
+        List<GangRoleEntity> entities = repository.findManyByGangId(corpId);
+        models = entities.stream()
                 .map(GangRoleMapper::toModel)
                 .collect(Collectors.toList());
 

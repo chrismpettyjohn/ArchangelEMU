@@ -31,4 +31,8 @@ public class CorpRoleModel {
 
     public CorpRoleModel() {
     }
+
+    public void update() {
+        CorpRoleService.getInstance().update(this.id, this);
+    }
 }

@@ -9,25 +9,15 @@ import com.us.archangel.corp.service.CorpRoleService;
 import com.us.archangel.corp.service.CorpService;
 import com.us.archangel.feature.corp.commands.CorpStartWorkCommand;
 import com.us.archangel.feature.corp.packets.outgoing.CorpEmployeeListComposer;
+import com.us.archangel.feature.corp.packets.outgoing.CorpPositionInfoComposer;
+import com.us.archangel.feature.corp.packets.outgoing.CorpPositionInfoQueryEvent;
 import com.us.archangel.feature.corp.packets.outgoing.CorpPositionListComposer;
 
 public class CorpEditPositionEvent extends MessageHandler {
 
     @Override
     public void handle() {
-        int corpID = this.packet.readInt();
         int corpPositionID = this.packet.readInt();
-
-        CorpModel corp = CorpService.getInstance().getById(corpID);
-
-        if (corp == null) {
-            return;
-        }
-
-        if (corp.getUserId() != this.client.getHabbo().getHabboInfo().getId()) {
-            this.client.getHabbo().whisper(Emulator.getTexts().getValue("roleplay.corp.not_the_owner"));
-            return;
-        }
 
         CorpRoleModel corpPosition = CorpRoleService.getInstance().getById(corpPositionID);
 
@@ -35,6 +25,14 @@ public class CorpEditPositionEvent extends MessageHandler {
             return;
         }
 
+        CorpModel corp = CorpService.getInstance().getById(corpPosition.getCorpId());
+
+        if (corp.getUserId() != this.client.getHabbo().getHabboInfo().getId()) {
+            this.client.getHabbo().whisper(Emulator.getTexts().getValue("roleplay.corp.not_the_owner"));
+            return;
+        }
+
+        corpPosition.setOrderId(this.packet.readInt());
         corpPosition.setDisplayName(this.packet.readString());
         corpPosition.setMotto(this.packet.readString());
         corpPosition.setSalary(this.packet.readInt());
@@ -45,8 +43,7 @@ public class CorpEditPositionEvent extends MessageHandler {
         corpPosition.setCanPromote((this.packet.readBoolean()));
         corpPosition.setCanDemote((this.packet.readBoolean()));
         corpPosition.setCanWorkAnywhere((this.packet.readBoolean()));
-
-        CorpRoleService.getInstance().update(corpPosition.getId(), corpPosition);
+        corpPosition.update();
 
         this.client.getHabbo().whisper(Emulator.getTexts()
                 .getValue("roleplay.corp_position.edit_success")
@@ -54,6 +51,7 @@ public class CorpEditPositionEvent extends MessageHandler {
         );
 
         this.client.sendResponse(new CorpPositionListComposer(corp));
+        this.client.sendResponse(new CorpPositionInfoComposer(corpPosition.getId()));
     }
 
 }

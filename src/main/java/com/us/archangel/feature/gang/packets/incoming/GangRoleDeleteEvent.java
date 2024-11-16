@@ -25,6 +25,13 @@ public class GangRoleDeleteEvent extends MessageHandler {
             return;
         }
 
+        List<GangRoleModel> gangRoleModels = GangRoleService.getInstance().findManyByGangId(gang.getId());
+
+        if (gangRoleModels.size() == 1) {
+            this.client.getHabbo().whisper(Emulator.getTexts().getValue("roleplay.cant_delete_last_role"));
+            return;
+        }
+
         List<PlayerModel> players = PlayerService.getInstance().getByGangRoleId(gangRole.getId());
 
         for (PlayerModel player : players) {
