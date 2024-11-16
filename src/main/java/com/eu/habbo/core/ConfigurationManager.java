@@ -11,6 +11,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
@@ -106,6 +108,17 @@ public class ConfigurationManager {
         }
     }
 
+    public void deleteByKey(String key) {
+        try (Connection connection = Emulator.getDatabase().getDataSource().getConnection();
+             PreparedStatement statement = connection.prepareStatement("DELETE FROM emulator_settings WHERE `key` = ? LIMIT 1")) {
+            statement.setString(1, key);
+            statement.executeUpdate();
+            this.properties.remove(key);
+        } catch (SQLException e) {
+            log.error("Caught SQL exception", e);
+        }
+    }
+
     public String getValue(String key) {
         return this.getValue(key, "");
     }
@@ -163,6 +176,14 @@ public class ConfigurationManager {
         }
 
         return defaultValue;
+    }
+
+    public List<String> getAll() {
+        List<String> result = new ArrayList<>();
+        for (Map.Entry<Object, Object> entry : this.properties.entrySet()) {
+            result.add(entry.getKey() + "=" + entry.getValue());
+        }
+        return result;
     }
 
     public void update(String key, String value) {

@@ -94,6 +94,9 @@ import com.us.nova.feature.betacode.packets.incoming.BetaCodeDeleteEvent;
 import com.us.nova.feature.betacode.packets.incoming.BetaCodeGenerateEvent;
 import com.us.nova.feature.betacode.packets.incoming.BetaCodeQueryListEvent;
 import com.us.nova.feature.bugreport.packets.incoming.*;
+import com.us.nova.feature.emusettings.packages.incoming.EmuSettingsDeleteEvent;
+import com.us.nova.feature.emusettings.packages.incoming.EmuSettingsQueryListEvent;
+import com.us.nova.feature.emusettings.packages.incoming.EmuSettingsUpdateEvent;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
@@ -1152,7 +1155,13 @@ public enum Incoming {
 
     gangQueryOneEvent(8110, GangQueryOneEvent.class),
 
-    gangQueryListEvent(8111, GangQueryListEvent.class);
+    gangQueryListEvent(8111, GangQueryListEvent.class),
+
+    emuSettingsQueryListEvent(8112, EmuSettingsQueryListEvent.class),
+
+    emuSettingsUpdateEvent(8113, EmuSettingsUpdateEvent.class),
+
+    emuSettingsDeleteEvent(8114, EmuSettingsDeleteEvent.class);
 
     private final int messageId;
     private final Class<? extends MessageHandler> messageClass;

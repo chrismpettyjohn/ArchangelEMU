@@ -432,7 +432,6 @@ public class Outgoing {
     // Roleplay
     public static final int userRoleplayStatsChangeComposer = 9001;
     public static final int corpInfoComposer = 9002;
-    public static final int gangInfoComposer = 9003;
     public static final int corpPositionInfoComposer = 9004;
     public static final int userWardrobeOpenComposer = 9005;
     public static final int timeOfDayComposer = 9006;
@@ -479,9 +478,11 @@ public class Outgoing {
     public static final int userQueryListComposer = 9047;
     public static final int playerQuerySkillsListComposer = 9048;
     public static final int roomQueryListComposer = 9049;
-    public static final int gangQueryOneComposer = 9050;
-    public static final int gangQueryListComposer = 9051;
+    public static final int gangQueryListComposer = 9050;
+    public static final int gangQueryOneComposer = 9051;
     public static final int gangRoleQueryListComposer = 9052;
     public static final int gangRoleQueryOneComposer = 9053;
     public static final int gangMemberQueryListComposer = 9054;
+    public static final int mapQueryComposer = 9055;
+    public static final int emuSettingsQueryListComposer = 9056;
 }
