@@ -157,7 +157,7 @@ public abstract class RoomUnit extends RoomEntity {
     private MovementDirection currentDirection;
 
     public synchronized void startMoving(MovementDirection direction) {
-        stopMoving(); // Stop any previous movement
+        stopMoving();
 
         this.currentDirection = direction;
 
@@ -170,7 +170,7 @@ public abstract class RoomUnit extends RoomEntity {
                     stopMoving();
                 }
             }
-        }, 0, 25); // Set to 25 ms for smooth, responsive movement
+        }, 0, 25);
     }
 
     public synchronized void stopMoving() {
@@ -179,7 +179,7 @@ public abstract class RoomUnit extends RoomEntity {
             movementTimer = null;
         }
         this.currentDirection = null;
-        stopWalking(); // Ensure walking stops when movement stops
+        stopWalking();
     }
 
     private synchronized boolean moveInDirection(MovementDirection direction) {

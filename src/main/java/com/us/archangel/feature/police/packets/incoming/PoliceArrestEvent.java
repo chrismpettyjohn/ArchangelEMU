@@ -24,7 +24,6 @@ public class PoliceArrestEvent extends MessageHandler {
             return;
         }
 
-
         CorpModel corp = this.client.getHabbo().getPlayer().getCorp();
 
         if (corp == null) {

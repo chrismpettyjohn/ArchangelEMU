@@ -8,6 +8,10 @@ public class UserMovementEvent extends MessageHandler {
 
     @Override
     public void handle() {
+        if (!this.client.getHabbo().getPlayer().canWalk()) {
+            return;
+        }
+
         String movementDirectionKey = this.packet.readString();
 
         if (movementDirectionKey == null) {
@@ -24,9 +28,9 @@ public class UserMovementEvent extends MessageHandler {
         RoomUnit roomUnit = habbo.getRoomUnit();
 
         if (direction == MovementDirection.STOP) {
-            roomUnit.stopMoving(); // Stop movement
+            roomUnit.stopMoving();
         } else {
-            roomUnit.startMoving(direction); // Start movement in the specified direction
+            roomUnit.startMoving(direction);
         }
     }
 }
