@@ -10,6 +10,7 @@ import com.us.archangel.feature.player.packets.outgoing.UserRoleplayStatsChangeC
 import com.us.archangel.player.model.PlayerWeaponModel;
 import com.us.archangel.room.enums.RoomType;
 import com.us.archangel.weapon.enums.WeaponType;
+import com.us.nova.core.NotificationHelper;
 
 import java.util.Collection;
 
@@ -112,8 +113,8 @@ public class UserAttackEvent extends MessageHandler {
         this.client.getHabbo().getPlayer().depleteEnergy(Emulator.getConfig().getInt("roleplay.attack.energy", 8));
 
         if (target.getPlayer().isDead()) {
-            Collection<Habbo> onlineHabbos = Emulator.getGameEnvironment().getHabboManager().getOnlineHabbos().values();
-            onlineHabbos.forEach(onlineHabbo -> onlineHabbo.getClient().sendResponse(new UserDiedComposer(target, this.client.getHabbo())));
+            target.getClient().sendResponse(new UserDiedComposer(target, this.client.getHabbo()));
+            NotificationHelper.notifyOnline(this.client.getHabbo().getHabboInfo().getUsername() + " killed " + target.getHabboInfo().getUsername());
         }
     }
 }
