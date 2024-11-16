@@ -21,6 +21,7 @@ import com.eu.habbo.core.ConfigurationManager;
 import com.us.nova.betacode.entity.BetaCodeEntity;
 import com.us.nova.bugreport.entity.BugReportEntity;
 import com.us.nova.user.entity.UserEntity;
+import com.us.nova.user.entity.UserGuestbookEntity;
 import com.us.nova.user.entity.UserSSOEntity;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
@@ -52,6 +53,7 @@ public class DatabaseConfig {
                 configuration.addAnnotatedClass(BetaCodeEntity.class);
                 configuration.addAnnotatedClass(BugReportEntity.class);
                 configuration.addAnnotatedClass(UserEntity.class);
+                configuration.addAnnotatedClass(UserGuestbookEntity.class);
                 configuration.addAnnotatedClass(UserSSOEntity.class);
 
                 // Archangel

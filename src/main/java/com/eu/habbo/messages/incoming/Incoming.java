@@ -97,6 +97,7 @@ import com.us.nova.feature.bugreport.packets.incoming.*;
 import com.us.nova.feature.emusettings.packages.incoming.EmuSettingsDeleteEvent;
 import com.us.nova.feature.emusettings.packages.incoming.EmuSettingsQueryListEvent;
 import com.us.nova.feature.emusettings.packages.incoming.EmuSettingsUpdateEvent;
+import com.us.nova.feature.user.packets.incoming.*;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
@@ -1159,7 +1160,17 @@ public enum Incoming {
 
     emuSettingsUpdateEvent(8113, EmuSettingsUpdateEvent.class),
 
-    emuSettingsDeleteEvent(8114, EmuSettingsDeleteEvent.class);
+    emuSettingsDeleteEvent(8114, EmuSettingsDeleteEvent.class),
+
+    userGuestbookCreateEvent(8115, UserGuestbookCreateEvent.class),
+
+    userGuestbookUpdateEvent(8116, UserGuestbookUpdateEvent.class),
+
+    userGuestbookDeleteEvent(8117, UserGuestbookDeleteEvent.class),
+
+    userGuestbookQueryListEvent(8118, UserGuestbookQueryListEvent.class),
+
+    userGuestbookQueryOneEvent(8119, UserGuestbookQueryOneEvent.class);
 
     private final int messageId;
     private final Class<? extends MessageHandler> messageClass;

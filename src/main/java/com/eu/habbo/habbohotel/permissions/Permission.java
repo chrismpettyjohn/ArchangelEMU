@@ -61,4 +61,5 @@ public class Permission {
     public static final String ACC_USERS_EDIT_ALL = "acc_users_edit_all";
     public static final String ACC_CRIMES_EDIT_ALL = "acc_crimes_edit_all";
     public static final String ACC_MANAGE_GAME_SETTINGS = "acc_manage_game_settings";
+    public static final String ACC_MANAGE_GUESTBOOK = "acc_manage_guestbook";
 }

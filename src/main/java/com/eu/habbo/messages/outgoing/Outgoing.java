@@ -486,4 +486,6 @@ public class Outgoing {
     public static final int mapQueryComposer = 9055;
     public static final int emuSettingsQueryListComposer = 9056;
     public static final int notificationComposer = 9057;
+    public static final int userGuestbookQueryListComposer = 9058;
+    public static final int userGuestbookQueryOneComposer = 9059;
 }
