@@ -1,7 +1,10 @@
 package com.us.archangel.police;
 
+import com.us.archangel.government.mapper.GovernmentLawMapper;
 import com.us.archangel.police.context.PoliceReportContext;
 import com.us.archangel.police.context.PoliceWarrantContext;
+import com.us.archangel.police.model.PoliceReportModel;
+import com.us.archangel.police.model.PoliceWarrantModel;
 import com.us.archangel.police.repository.PoliceReportRepository;
 import com.us.archangel.police.repository.PoliceWarrantRepository;
 import com.us.archangel.police.service.PoliceReportService;
@@ -43,5 +46,18 @@ public class PoliceManager {
         this.policeWarrantService = PoliceWarrantService.getInstance();
 
         LOGGER.info("Police manager > loaded");
+    }
+
+    public void dispose() {
+        for (PoliceReportModel reportModel : this.policeReportContext.getAll().values()) {
+            this.policeReportRepository.updateById(reportModel.getId(), GovernmentLawMapper.toEntity(reportModel));
+            this.policeReportContext.delete(reportModel.getId());
+        }
+        for (PoliceWarrantModel warrantModel : this.policeWarrantContext.getAll().values()) {
+            this.policeWarrantRepository.updateById(warrantModel.getId(), GovernmentLawMapper.toEntity(warrantModel));
+            this.policeWarrantContext.delete(warrantModel.getId());
+        }
+
+        LOGGER.info("Government manager > disposed");
     }
 }

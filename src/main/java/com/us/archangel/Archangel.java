@@ -1,6 +1,8 @@
 package com.us.archangel;
 
 import com.us.archangel.bounty.BountyManager;
+import com.us.archangel.government.GovernmentManager;
+import com.us.archangel.police.PoliceManager;
 import com.us.nova.core.DatabaseConfig;
 import com.us.archangel.corp.CorpManager;
 import com.us.archangel.crime.CrimeManager;
@@ -22,10 +24,12 @@ public class Archangel {
 
     private BountyManager bountyManager;
     private GangManager gangManager;
+    private GovernmentManager governmentManager;
     private CorpManager corpManager;
     private CrimeManager crimeManager;
     private SanctionManager sanctionManager;
     private PlayerManager playerManager;
+    private PoliceManager policeManager;
     private RoleplayFeatureManager roleplayFeatureManager;
     private WeaponManager weaponManager;
 
@@ -36,8 +40,10 @@ public class Archangel {
         this.corpManager = CorpManager.getInstance();
         this.crimeManager = CrimeManager.getInstance();
         this.gangManager = GangManager.getInstance();
+        this.governmentManager = GovernmentManager.getInstance();
         this.sanctionManager = SanctionManager.getInstance();
         this.playerManager = PlayerManager.getInstance();
+        this.policeManager = PoliceManager.getInstance();
         this.roleplayFeatureManager = RoleplayFeatureManager.getInstance();
         this.weaponManager = WeaponManager.getInstance();
 
@@ -48,8 +54,11 @@ public class Archangel {
         this.bountyManager.dispose();
         this.corpManager.dispose();;
         this.crimeManager.dispose();
+        this.gangManager.dispose();
+        this.governmentManager.dispose();
         this.sanctionManager.dispose();
         this.playerManager.dispose();
+        this.policeManager.dispose();
         this.roleplayFeatureManager.disposeFeatures();
         this.weaponManager.dispose();;
 
