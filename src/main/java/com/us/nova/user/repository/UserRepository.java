@@ -1,8 +1,10 @@
 package com.us.nova.user.repository;
 
+import com.us.archangel.gang.entity.GangRoleEntity;
 import com.us.nova.core.GenericRepository;
 import com.us.nova.user.entity.UserEntity;
 import com.us.nova.user.model.UserModel;
+import org.hibernate.Session;
 
 import java.util.List;
 

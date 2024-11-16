@@ -30,12 +30,4 @@ public class UserGuestbookEntity {
     @Column(name = "updated_at", nullable = false)
     private int updatedAt;
 
-    @ManyToOne
-    @JoinColumn(name = "posted_on_users_id", nullable = false, insertable=false, updatable=false)
-    private UserEntity postedOnUser;
-
-    @ManyToOne
-    @JoinColumn(name = "posted_by_users_id", nullable = false, insertable=false, updatable=false)
-    private UserEntity postedByUser;
-
 }

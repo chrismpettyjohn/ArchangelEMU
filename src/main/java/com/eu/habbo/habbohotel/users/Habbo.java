@@ -35,6 +35,8 @@ import com.us.archangel.player.model.PlayerSkillModel;
 import com.us.archangel.player.service.PlayerService;
 import com.us.archangel.feature.player.packets.outgoing.UserRoleplayStatsChangeComposer;
 import com.us.archangel.player.service.PlayerSkillService;
+import com.us.nova.user.model.UserModel;
+import com.us.nova.user.service.UserService;
 import gnu.trove.TIntCollection;
 import gnu.trove.map.hash.THashMap;
 import lombok.Getter;

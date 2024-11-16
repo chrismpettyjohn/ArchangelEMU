@@ -30,8 +30,4 @@ public class UserSSOEntity {
     @Column(name = "ip_address")
     private String ipAddress;
 
-    @ManyToOne
-    @JoinColumn(name = "users_id", nullable = false, insertable=false, updatable=false)
-    private UserEntity user;
-
 }
