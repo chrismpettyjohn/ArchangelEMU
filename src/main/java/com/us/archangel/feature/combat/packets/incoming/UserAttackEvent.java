@@ -6,6 +6,8 @@ import com.eu.habbo.habbohotel.users.Habbo;
 import com.eu.habbo.messages.incoming.MessageHandler;
 import com.us.archangel.feature.combat.packets.outgoing.CombatDelayComposer;
 import com.us.archangel.feature.combat.packets.outgoing.UserDiedComposer;
+import com.us.archangel.feature.paramedic.actions.HospitalRecoveryAction;
+import com.us.archangel.feature.paramedic.actions.TeleportHospitalAction;
 import com.us.archangel.feature.player.packets.outgoing.UserRoleplayStatsChangeComposer;
 import com.us.archangel.player.model.PlayerWeaponModel;
 import com.us.archangel.room.enums.RoomType;
@@ -114,6 +116,7 @@ public class UserAttackEvent extends MessageHandler {
         NotificationHelper.sendRoom(this.client.getHabbo().getRoomUnit().getRoom().getRoomInfo().getId(), new UserRoleplayStatsChangeComposer(this.client.getHabbo()));
 
         if (target.getPlayer().isDead()) {
+            Emulator.getThreading().run(new TeleportHospitalAction(target));
             NotificationHelper.sendOnline(new UserDiedComposer(target, this.client.getHabbo()));
             NotificationHelper.announceOnline(this.client.getHabbo().getHabboInfo().getUsername() + " killed " + target.getHabboInfo().getUsername());
         }

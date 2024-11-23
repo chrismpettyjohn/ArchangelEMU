@@ -9,6 +9,7 @@ public class SetHealthCommand extends Command {
     public SetHealthCommand() {
         super("cmd_sethealth");
     }
+
     @Override
     public boolean handle(GameClient gameClient, String[] params) {
         String targetedUsername = params[1];
@@ -25,6 +26,17 @@ public class SetHealthCommand extends Command {
         }
 
         int updatedHealth = Integer.parseInt(params[2]);
+        int maxHealth = targetedHabbo.getPlayer().getHealthMax();
+
+        if (updatedHealth > maxHealth) {
+            targetedHabbo.getPlayer().setHealthNow(updatedHealth);
+            targetedHabbo.getPlayer().setHealthMax(updatedHealth);
+        } else if (updatedHealth < maxHealth) {
+            targetedHabbo.getPlayer().setHealthNow(updatedHealth);
+            targetedHabbo.getPlayer().setHealthMax(updatedHealth);
+        } else {
+            targetedHabbo.getPlayer().setHealthNow(updatedHealth);
+        }
 
         String healthGivenMessage = Emulator.getTexts().getValue("roleplay.set_health_gave")
                 .replace(":username", targetedUsername)
@@ -32,14 +44,13 @@ public class SetHealthCommand extends Command {
 
         gameClient.getHabbo().shout(healthGivenMessage);
 
-        targetedHabbo.getPlayer().addHealth(updatedHealth);
-
-        targetedHabbo.shout(Emulator.getTexts().
-                getValue("commands.roleplay.user_health_remaining")
+        targetedHabbo.shout(Emulator.getTexts()
+                .getValue("commands.roleplay.user_health_remaining")
                 .replace(":currentHealth", Integer.toString(targetedHabbo.getPlayer().getHealthNow()))
                 .replace(":maximumHealth", Integer.toString(targetedHabbo.getPlayer().getHealthMax()))
         );
 
         return true;
     }
+
 }

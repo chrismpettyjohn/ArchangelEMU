@@ -32,13 +32,21 @@ public class PlayerModel {
     private int corpId;
     @Setter
     private int corpRoleId;
+    @Setter
     private int healthNow;
+    @Setter
     private int healthMax;
+    @Setter
     private int energyNow;
+    @Setter
     private int energyMax;
+    @Setter
     private int armorNow;
+    @Setter
     private int armorMax;
+    @Setter
     private int hungerNow;
+    @Setter
     private int hungerMax;
     private short lastPosX;
     private short lastPosY;
