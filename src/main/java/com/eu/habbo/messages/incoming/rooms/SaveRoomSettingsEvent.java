@@ -78,16 +78,6 @@ public class SaveRoomSettingsEvent extends MessageHandler {
                     return;
                 }
 
-
-                if (tags.length() > 0) {
-                    for (String s : Emulator.getConfig().getValue("hotel.room.tags.staff").split(";")) {
-                        if (tags.toString().contains(s)) {
-                            this.client.sendResponse(new RoomSettingsSaveErrorComposer(room.getRoomInfo().getId(), RoomSettingsSaveErrorComposer.RESTRICTED_TAGS, "1"));
-                            return;
-                        }
-                    }
-                }
-
                 room.getRoomInfo().setName(name);
                 room.getRoomInfo().setDescription(description);
                 room.getRoomInfo().setState(state);

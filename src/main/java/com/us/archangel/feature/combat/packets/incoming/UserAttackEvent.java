@@ -12,8 +12,6 @@ import com.us.archangel.room.enums.RoomType;
 import com.us.archangel.weapon.enums.WeaponType;
 import com.us.nova.core.NotificationHelper;
 
-import java.util.Collection;
-
 public class UserAttackEvent extends MessageHandler {
 
     @Override
@@ -112,9 +110,12 @@ public class UserAttackEvent extends MessageHandler {
         target.getPlayer().depleteHealth(damage);
         this.client.getHabbo().getPlayer().depleteEnergy(Emulator.getConfig().getInt("roleplay.attack.energy", 8));
 
+        NotificationHelper.sendRoom(this.client.getHabbo().getRoomUnit().getRoom().getRoomInfo().getId(), new UserRoleplayStatsChangeComposer(target));
+        NotificationHelper.sendRoom(this.client.getHabbo().getRoomUnit().getRoom().getRoomInfo().getId(), new UserRoleplayStatsChangeComposer(this.client.getHabbo()));
+
         if (target.getPlayer().isDead()) {
-            target.getClient().sendResponse(new UserDiedComposer(target, this.client.getHabbo()));
-            NotificationHelper.notifyOnline(this.client.getHabbo().getHabboInfo().getUsername() + " killed " + target.getHabboInfo().getUsername());
+            NotificationHelper.sendOnline(new UserDiedComposer(target, this.client.getHabbo()));
+            NotificationHelper.announceOnline(this.client.getHabbo().getHabboInfo().getUsername() + " killed " + target.getHabboInfo().getUsername());
         }
     }
 }
