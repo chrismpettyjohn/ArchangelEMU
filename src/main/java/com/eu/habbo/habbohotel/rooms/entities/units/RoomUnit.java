@@ -201,41 +201,57 @@ public abstract class RoomUnit extends RoomEntity {
         }
     }
 
+    private boolean isStopping = false;
+    private boolean hasInteractedWithItem = false;
+
     public synchronized void stopWalking() {
-        synchronized (this.statuses) {
-            if (this.path != null) {
-                this.path.clear();
+        if (isStopping) {
+            return;  // Prevent recursive calls
+        }
+        isStopping = true;
+
+        try {
+            synchronized (this.statuses) {
+                if (this.path != null) {
+                    this.path.clear();
+                }
+
+                this.nextPosition = null;
+                this.targetPosition = null;
+
+                this.removeStatus(RoomUnitStatus.MOVE);
+                this.handleSitStatus();
+                this.handleLayStatus();
+
+                this.temporalFastWalkEnabled = false;
+
+                if (!hasInteractedWithItem) { // Ensure interaction happens only once
+                    RoomItemManager roomItemManager = this.room.getRoomItemManager();
+                    RoomUnitManager roomUnitManager = this.room.getRoomUnitManager();
+
+                    roomItemManager.getItemsAt(this.currentPosition)
+                            .stream()
+                            .findFirst()
+                            .ifPresent(item -> {
+                                roomUnitManager.getRoomUnitsAt(this.currentPosition)
+                                        .stream()
+                                        .findFirst()
+                                        .ifPresent(unit -> {
+                                            try {
+                                                item.onWalkOn(unit, this.room, null); // Interaction triggered once
+                                                hasInteractedWithItem = true; // Mark as interacted
+                                            } catch (Exception e) {
+                                                throw new RuntimeException(e);
+                                            }
+                                        });
+                            });
+                }
             }
-
-            this.nextPosition = null;
-            this.targetPosition = null;
-
-            this.removeStatus(RoomUnitStatus.MOVE);
-            this.handleSitStatus();
-            this.handleLayStatus();
-
-            this.temporalFastWalkEnabled = false;
-
-            RoomItemManager roomItemManager = this.room.getRoomItemManager();
-            RoomUnitManager roomUnitManager = this.room.getRoomUnitManager();
-
-            roomItemManager.getItemsAt(this.currentPosition)
-                    .stream()
-                    .findFirst()
-                    .ifPresent(item -> {
-                        roomUnitManager.getRoomUnitsAt(this.currentPosition)
-                                .stream()
-                                .findFirst()
-                                .ifPresent(unit -> {
-                                    try {
-                                        item.onWalkOn(unit, this.room, null);
-                                    } catch (Exception e) {
-                                        throw new RuntimeException(e);
-                                    }
-                                });
-                    });
+        } finally {
+            isStopping = false;
         }
     }
+
     @Override
     public RoomUnit setCurrentZ(double currentZ) {
         super.setCurrentZ(currentZ);
