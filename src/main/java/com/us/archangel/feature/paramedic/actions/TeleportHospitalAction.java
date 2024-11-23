@@ -52,16 +52,17 @@ public class TeleportHospitalAction implements Runnable {
 
         Room room = hospitalRooms.get(0);
 
-        habbo.goToRoom(room.getRoomInfo().getId());
-
-        Collection<RoomItem> hospitalBedItems = room.getRoomItemManager().getItemsOfType(InteractionHospitalBed.class);
-        for (RoomItem hospitalBedItem : hospitalBedItems) {
-            List<RoomTile> hospitalBedRoomTiles = hospitalBedItem.getOccupyingTiles(room.getLayout());
-            RoomTile firstAvailableHospitalBedTile = hospitalBedRoomTiles.get(0);
-            if (firstAvailableHospitalBedTile == null) {
-                return;
+        habbo.goToRoom(room.getRoomInfo().getId(), () -> {
+            Collection<RoomItem> hospitalBedItems = room.getRoomItemManager().getItemsOfType(InteractionHospitalBed.class);
+            for (RoomItem hospitalBedItem : hospitalBedItems) {
+                List<RoomTile> hospitalBedRoomTiles = hospitalBedItem.getOccupyingTiles(room.getLayout());
+                RoomTile firstAvailableHospitalBedTile = hospitalBedRoomTiles.isEmpty() ? null : hospitalBedRoomTiles.get(0);
+                if (firstAvailableHospitalBedTile == null) {
+                    return;
+                }
+                habbo.getRoomUnit().setLocation(firstAvailableHospitalBedTile);
+                break;
             }
-            habbo.getRoomUnit().setLocation(firstAvailableHospitalBedTile);
-        }
+        });
     }
 }

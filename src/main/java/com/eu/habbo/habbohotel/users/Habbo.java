@@ -48,6 +48,7 @@ import java.net.SocketAddress;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
+import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -350,9 +351,27 @@ public class Habbo extends Avatar implements Runnable {
         this.client.sendResponse(new ModeratorMessageComposer(message, url));
     }
 
-
     public void goToRoom(int id) {
+        goToRoom(id, null);
+    }
+
+    public void goToRoom(int id, Runnable onRoomEntered) {
         this.client.sendResponse(new RoomForwardMessageComposer(id));
+
+        CompletableFuture.runAsync(() -> {
+            while (this.client.getHabbo().getRoomUnit().getRoom().getRoomInfo().getId() != id) {
+                try {
+                    Thread.sleep(50); // Prevent busy waiting
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                    return;
+                }
+            }
+
+            if (onRoomEntered != null) {
+                onRoomEntered.run();
+            }
+        });
     }
 
 
