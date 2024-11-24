@@ -5,26 +5,31 @@ import com.eu.habbo.habbohotel.permissions.Permission;
 import com.eu.habbo.habbohotel.rooms.Room;
 import com.eu.habbo.habbohotel.users.Habbo;
 import com.eu.habbo.messages.outgoing.users.CreditBalanceComposer;
-import com.us.archangel.feature.taxi.packets.outgoing.TaxiDispatchedComposer;
 import com.us.archangel.feature.player.packets.outgoing.UserRoleplayStatsChangeComposer;
+import com.us.archangel.feature.taxi.packets.outgoing.TaxiDispatchedComposer;
 import com.us.archangel.room.enums.RoomType;
+import com.us.nova.core.ManagedTask;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 @RequiredArgsConstructor
-public class CallTaxiAction implements Runnable {
+public class CallTaxiAction extends ManagedTask<CallTaxiAction> {
 
     @NonNull
     private final Habbo habbo;
     @NonNull
     private final Room targetRoom;
 
+    private final AtomicBoolean cancelled = new AtomicBoolean(false);
+    private ScheduledExecutorService executor;
+
     @Override
-    public void run() {
+    public void cycle() {
         if (habbo.getRoomUnit().getRoom() != null && habbo.getRoomUnit().getRoom().getRoomInfo().getId() == targetRoom.getRoomInfo().getId()) {
             return;
         }
@@ -59,7 +64,7 @@ public class CallTaxiAction implements Runnable {
 
         habbo.getClient().sendResponse(new TaxiDispatchedComposer(targetRoom.getRoomInfo().getId(), arrivesAt));
 
-        ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
+        executor = Executors.newSingleThreadScheduledExecutor();
         int countdownInterval = 5;
 
         for (int i = 1; i <= 4; i++) {
@@ -67,18 +72,24 @@ public class CallTaxiAction implements Runnable {
             int delaySeconds = taxiDelay - countdownSeconds;
 
             if (countdownSeconds <= taxiDelay) {
-                executor.schedule(() -> habbo.shout(
-                        Emulator.getTexts().getValue("roleplay.taxi.eta").replace(":seconds", String.valueOf(countdownSeconds))
-                ), delaySeconds, TimeUnit.SECONDS);
+                executor.schedule(() -> {
+                    if (!this.cancelled.get()) {
+                        habbo.shout(Emulator.getTexts().getValue("roleplay.taxi.eta").replace(":seconds", String.valueOf(countdownSeconds)));
+                    }
+                }, delaySeconds, TimeUnit.SECONDS);
             }
         }
 
         executor.schedule(() -> {
+            if (this.cancelled.get()) return;
+
             habbo.shout(Emulator.getTexts().getValue("roleplay.taxi.picked_up").replace(":fee", String.valueOf(taxiFee)));
             habbo.goToRoom(targetRoom.getRoomInfo().getId());
 
             executor.schedule(() -> {
-                habbo.shout(Emulator.getTexts().getValue("roleplay.taxi.arrived"));
+                if (!this.cancelled.get()) {
+                    habbo.shout(Emulator.getTexts().getValue("roleplay.taxi.arrived"));
+                }
                 executor.shutdown();
             }, 500, TimeUnit.MILLISECONDS);
         }, taxiDelay, TimeUnit.SECONDS);

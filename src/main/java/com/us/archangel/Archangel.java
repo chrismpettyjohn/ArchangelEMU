@@ -58,8 +58,6 @@ public class Archangel {
         this.roleplayFeatureManager.disposeFeatures();
         this.weaponManager.dispose();;
 
-        DatabaseConfig.shutdown();
-
         log.info("Archangel -> Disposed!");
     }
 }

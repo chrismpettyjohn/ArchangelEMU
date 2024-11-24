@@ -44,7 +44,6 @@ import com.us.archangel.feature.license.commands.LicenseConnectComputerCommand;
 import com.us.archangel.feature.license.commands.LicenseOfferCommand;
 import com.us.archangel.feature.license.commands.LicenseStatusCommand;
 import com.us.archangel.feature.police.commands.*;
-import com.us.archangel.feature.taxi.commands.CallTaxiCommand;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
@@ -351,8 +350,6 @@ public class CommandsManager {
         addCommand(new ReleaseCommand());
         addCommand(new PayBillCommand());
         addCommand(new CallPoliceCommand());
-        // Taxi
-        addCommand(new CallTaxiCommand());
     }
 
     public void dispose() {

@@ -85,6 +85,7 @@ import com.us.archangel.feature.player.packets.incoming.*;
 import com.us.archangel.feature.room.packets.incoming.RoomListUsersEvent;
 import com.us.archangel.feature.room.packets.incoming.RoomQueryListEvent;
 import com.us.archangel.feature.taxi.packets.incoming.CallTaxiEvent;
+import com.us.archangel.feature.taxi.packets.incoming.CancelTaxiEvent;
 import com.us.archangel.feature.taxi.packets.incoming.TaxiFeeQueryEvent;
 import com.us.archangel.feature.time.packets.incoming.TimeOfDayQueryEvent;
 import com.us.archangel.feature.gang.packets.incoming.*;
@@ -1170,7 +1171,9 @@ public enum Incoming {
 
     userGuestbookQueryListEvent(8118, UserGuestbookQueryListEvent.class),
 
-    userGuestbookQueryOneEvent(8119, UserGuestbookQueryOneEvent.class);
+    userGuestbookQueryOneEvent(8119, UserGuestbookQueryOneEvent.class),
+
+    cancelTaxiEvent(8120, CancelTaxiEvent.class);
 
     private final int messageId;
     private final Class<? extends MessageHandler> messageClass;

@@ -70,7 +70,7 @@ public class InteractionDefault extends RoomItem {
 
     @Override
     public void onClick(GameClient client, Room room, Object[] objects) throws Exception {
-        if (room != null && (client == null || this.canToggle(client.getHabbo(), room) || (objects.length >= 2 && objects[1] instanceof WiredEffectType && objects[1] == WiredEffectType.TOGGLE_STATE))) {
+        if (room != null && (client == null || client.getHabbo().getPlayer().canInteract() && this.canToggle(client.getHabbo(), room) || (objects.length >= 2 && objects[1] instanceof WiredEffectType && objects[1] == WiredEffectType.TOGGLE_STATE))) {
             super.onClick(client, room, objects);
 
             if (objects != null && objects.length > 0) {

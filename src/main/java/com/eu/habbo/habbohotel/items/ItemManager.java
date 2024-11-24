@@ -72,6 +72,7 @@ import com.us.archangel.feature.gym.interactions.InteractionWeightBench;
 import com.us.archangel.feature.hospital.interactions.InteractionHospitalBed;
 import com.us.archangel.feature.license.interactions.InteractionLicenseComputer;
 import com.us.archangel.feature.device.interactions.InteractionPhone;
+import com.us.archangel.feature.taxi.interactions.InteractionTaxiStand;
 import com.us.archangel.feature.trash.interactions.InteractionTrash;
 import com.us.archangel.feature.trees.interactions.InteractionToolAxe;
 import com.us.archangel.feature.mining.interactions.InteractionToolPickaxe;
@@ -411,6 +412,7 @@ public class ItemManager {
         this.interactionsList.add(new ItemInteraction(InteractionPhone.INTERACTION_TYPE, InteractionPhone.class));
         this.interactionsList.add(new ItemInteraction(InteractionPoliceLaptop.INTERACTION_TYPE, InteractionPoliceLaptop.class));
         this.interactionsList.add(new ItemInteraction(InteractionTurfBanner.INTERACTION_TYPE, InteractionTurfBanner.class));
+        this.interactionsList.add(new ItemInteraction(InteractionTaxiStand.INTERACTION_TYPE, InteractionTaxiStand.class));
     }
 
     public void addItemInteraction(ItemInteraction itemInteraction) {

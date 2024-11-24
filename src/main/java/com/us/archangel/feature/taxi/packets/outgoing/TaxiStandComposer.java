@@ -7,11 +7,12 @@ import com.eu.habbo.messages.outgoing.Outgoing;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
-public class TaxiFeeComposer extends MessageComposer {
+public class TaxiStandComposer extends MessageComposer {
     @Override
     protected ServerMessage composeInternal() {
-        this.response.init(Outgoing.taxiFeeComposer);
-        this.response.appendInt(Integer.parseInt(Emulator.getConfig().getValue("roleplay.taxi.fee", "20")));
+        this.response.init(Outgoing.taxiStandComposer);
+        this.response.appendInt(Integer.parseInt(Emulator.getConfig().getValue("roleplay.taxi.fee")));
+        this.response.appendInt(Integer.parseInt(Emulator.getConfig().getValue("roleplay.taxi.delay_secs")));
         return this.response;
     }
 }

@@ -33,9 +33,9 @@ public class Nova {
     }
 
     public void dispose() {
+        this.betaCodeManager.dispose();
+        this.bugReportManager.dispose();
         this.userManager.dispose();
-
-        DatabaseConfig.shutdown();
 
         log.info("Nova -> Disposed!");
     }

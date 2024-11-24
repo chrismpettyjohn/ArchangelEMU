@@ -1,5 +1,6 @@
 package com.us.archangel.player.model;
 
+import com.eu.habbo.Emulator;
 import com.us.archangel.corp.model.CorpModel;
 import com.us.archangel.corp.model.CorpRoleModel;
 import com.us.archangel.corp.service.CorpRoleService;
@@ -10,7 +11,7 @@ import com.us.archangel.gang.service.GangRoleService;
 import com.us.archangel.gang.service.GangService;
 import com.us.archangel.player.enums.PlayerAction;
 import com.us.archangel.player.service.PlayerService;
-import com.us.nova.core.NotificationHelper;
+import com.us.nova.core.ManagedTask;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -57,9 +58,11 @@ public class PlayerModel {
     @Setter
     private long jailTimeRemainingSecs;
     @Setter
-    private PlayerAction currentAction;
-    @Setter
     private Integer escortingPlayerId;
+    @Setter
+    private PlayerAction currentAction;
+
+    private ManagedTask<?> currentTask;
 
     public void addHealth(int health) {
         this.healthNow = Math.min(this.healthNow + health, this.healthMax);
@@ -156,6 +159,21 @@ public class PlayerModel {
         }
         return true;
     }
+
+    public void setTask(ManagedTask<?> newTask) {
+        if (this.currentTask != null) {
+            this.currentTask.stop();
+        }
+
+        this.currentTask = newTask;
+
+        if (this.currentTask == null) {
+            return;
+        }
+
+        Emulator.getThreading().run(() -> currentTask.start());
+    }
+
 
     public void save() {
         PlayerService.getInstance().update(this.id, this);

@@ -30,8 +30,9 @@ public class PlayerMapper extends GenericMapper<PlayerEntity, PlayerModel> {
                 entity.getWorkTimeRemainingSecs(),
                 entity.getCombatDelayRemainingSecs(),
                 entity.getJailTimeRemainingSecs(),
+                entity.getEscortingPlayerId(),
                 entity.getCurrentAction(),
-                entity.getEscortingPlayerId()
+                null
         );
     }
 
