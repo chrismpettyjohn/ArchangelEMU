@@ -158,6 +158,9 @@ public class Habbo extends Avatar implements Runnable {
         Emulator.getGameEnvironment().getRoomManager().loadRoomsForHabbo(this);
 
         log.info("{} logged in from IP {}", this.habboInfo.getUsername(), this.habboInfo.getIpLogin());
+
+        this.client.sendResponse(new UserRoleplayStatsChangeComposer(this.client.getHabbo()));
+
         return true;
     }
 
