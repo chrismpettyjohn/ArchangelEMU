@@ -157,8 +157,6 @@ public class Habbo extends Avatar implements Runnable {
 
         log.info("{} logged in from IP {}", this.habboInfo.getUsername(), this.habboInfo.getIpLogin());
 
-        this.client.sendResponse(new UserRoleplayStatsChangeComposer(this.client.getHabbo()));
-
         return true;
     }
 
@@ -226,8 +224,12 @@ public class Habbo extends Avatar implements Runnable {
     public void run() {
         if (this.needsUpdate()) {
             this.habboInfo.run();
-            PlayerService.getInstance().update(this.getHabboInfo().getId(), this.getPlayer());
-            this.client.sendResponse(new UserRoleplayStatsChangeComposer(this.client.getHabbo()));
+
+            if (this.player != null) {
+                PlayerService.getInstance().update(this.getHabboInfo().getId(), this.getPlayer());
+                this.client.sendResponse(new UserRoleplayStatsChangeComposer(this.client.getHabbo()));
+            }
+
             this.needsUpdate(false);
         }
     }

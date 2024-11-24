@@ -18,7 +18,7 @@ public class UserAttackEvent extends MessageHandler {
     @Override
     public void handle() {
 
-        if (this.client.getHabbo().getPlayer().isCombatBlocked()) {
+        if (!this.client.getHabbo().getPlayer().canInteract() || this.client.getHabbo().getPlayer().isCombatBlocked()) {
             this.client.getHabbo().whisper("You need to wait a bit before attacking again.");
             this.client.sendResponse(new CombatDelayComposer(this.client.getHabbo()));
             return;
