@@ -154,10 +154,7 @@ public class PlayerModel {
             return false;
         }
 
-        if (PlayerModel.blockedStates.contains(this.getCurrentAction())) {
-            return false;
-        }
-        return true;
+        return !PlayerModel.blockedStates.contains(this.getCurrentAction());
     }
 
     public void setTask(ManagedTask<?> newTask) {

@@ -24,6 +24,8 @@ public class CallTaxiAction extends ManagedTask<CallTaxiAction> {
     public void cycle() {
         if (!isRunning()) return;
 
+        if (habbo.getPlayer().canInteract()) return;
+
         if (habbo.getRoomUnit().getRoom() != null &&
                 habbo.getRoomUnit().getRoom().getRoomInfo().getId() == targetRoom.getRoomInfo().getId()) {
             stop();
