@@ -55,7 +55,6 @@ public class CallTaxiAction extends ManagedTask<CallTaxiAction> {
         if (!hasFreeTaxiPermission) {
             habbo.getHabboInfo().setCredits(habbo.getHabboInfo().getCredits() - taxiFee);
             habbo.getClient().sendResponse(new CreditBalanceComposer(habbo));
-            habbo.getClient().sendResponse(new UserRoleplayStatsChangeComposer(habbo));
         }
 
         habbo.getClient().sendResponse(new TaxiDispatchedComposer(targetRoom.getRoomInfo().getId(), arrivesAt));

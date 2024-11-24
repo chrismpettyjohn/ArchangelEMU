@@ -29,14 +29,12 @@ import com.eu.habbo.plugin.events.users.UserCreditsEvent;
 import com.eu.habbo.plugin.events.users.UserDisconnectEvent;
 import com.eu.habbo.plugin.events.users.UserGetIPAddressEvent;
 import com.eu.habbo.plugin.events.users.UserPointsEvent;
-import com.us.archangel.player.mapper.PlayerMapper;
 import com.us.archangel.player.model.PlayerModel;
 import com.us.archangel.player.model.PlayerSkillModel;
 import com.us.archangel.player.service.PlayerService;
 import com.us.archangel.feature.player.packets.outgoing.UserRoleplayStatsChangeComposer;
 import com.us.archangel.player.service.PlayerSkillService;
-import com.us.nova.user.model.UserModel;
-import com.us.nova.user.service.UserService;
+import com.us.nova.core.NotificationHelper;
 import gnu.trove.TIntCollection;
 import gnu.trove.map.hash.THashMap;
 import lombok.Getter;
@@ -229,6 +227,7 @@ public class Habbo extends Avatar implements Runnable {
         if (this.needsUpdate()) {
             this.habboInfo.run();
             PlayerService.getInstance().update(this.getHabboInfo().getId(), this.getPlayer());
+            this.client.sendResponse(new UserRoleplayStatsChangeComposer(this.client.getHabbo()));
             this.needsUpdate(false);
         }
     }
@@ -262,7 +261,6 @@ public class Habbo extends Avatar implements Runnable {
 
         if (this.client != null) {
             this.client.sendResponse(new CreditBalanceComposer(this.client.getHabbo()));
-            this.client.sendResponse(new UserRoleplayStatsChangeComposer(this.client.getHabbo()));
         }
     }
 

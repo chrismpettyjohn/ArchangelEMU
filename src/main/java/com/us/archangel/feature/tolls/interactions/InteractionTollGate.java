@@ -33,7 +33,6 @@ public class InteractionTollGate extends InteractionOneWayGate {
 
         client.getHabbo().getHabboInfo().setCredits(client.getHabbo().getHabboInfo().getCredits() - tollFee);
         client.sendResponse(new CreditBalanceComposer((client.getHabbo())));
-        client.sendResponse(new UserRoleplayStatsChangeComposer(client.getHabbo()));
         client.getHabbo().shout(Emulator.getTexts()
                 .getValue("roleplay.toll_gate.enter")
                 .replace(":fee", String.valueOf(tollFee))
