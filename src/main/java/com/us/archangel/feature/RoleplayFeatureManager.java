@@ -3,7 +3,7 @@ package com.us.archangel.feature;
 import com.us.archangel.feature.bank.BankFeature;
 import com.us.archangel.feature.combat.CombatFeature;
 import com.us.archangel.feature.gang.GangFeature;
-import com.us.archangel.feature.paramedic.ParamedicFeature;
+import com.us.archangel.feature.hospital.ParamedicFeature;
 import com.us.archangel.feature.police.PoliceFeature;
 import com.us.archangel.feature.weapon.WeaponFeature;
 

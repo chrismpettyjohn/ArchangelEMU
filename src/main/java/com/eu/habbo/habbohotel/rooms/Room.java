@@ -821,18 +821,6 @@ public class Room implements Comparable<Room>, ISerialize, Runnable {
         return this.canSitAt(items) || this.canLayAt(items);
     }
 
-    public boolean canSitAt(int x, int y) {
-        RoomTile tile = this.layout.getTile((short) x, (short) y);
-
-        if (tile == null) {
-            return false;
-        }
-
-        if (this.roomUnitManager.hasHabbosAt(tile)) return false;
-
-        return this.canSitAt(this.roomItemManager.getItemsAt(tile));
-    }
-
     boolean canSitAt(THashSet<RoomItem> items) {
         if (items == null) return false;
         RoomItem tallestItem = null;
