@@ -225,11 +225,6 @@ public class Habbo extends Avatar implements Runnable {
         if (this.needsUpdate()) {
             this.habboInfo.run();
 
-            if (this.player != null) {
-                PlayerService.getInstance().update(this.getHabboInfo().getId(), this.getPlayer());
-                this.client.sendResponse(new UserRoleplayStatsChangeComposer(this.client.getHabbo()));
-            }
-
             this.needsUpdate(false);
         }
     }

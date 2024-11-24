@@ -10,6 +10,8 @@ import com.eu.habbo.habbohotel.navigation.NavigatorSavedSearch;
 import com.eu.habbo.habbohotel.permissions.PermissionGroup;
 import com.eu.habbo.messages.outgoing.rooms.users.UserChangeMessageComposer;
 import com.eu.habbo.messages.outgoing.users.NavigatorSettingsComposer;
+import com.us.archangel.feature.player.packets.outgoing.UserRoleplayStatsChangeComposer;
+import com.us.archangel.player.service.PlayerService;
 import gnu.trove.map.hash.TIntIntHashMap;
 import lombok.Getter;
 import lombok.Setter;
@@ -299,6 +301,12 @@ public class HabboInfo implements Runnable {
     @Override
     public void run() {
         this.saveCurrencies();
+
+        Habbo habbo = Emulator.getGameEnvironment().getHabboManager().getHabbo(this.id);
+
+        if (habbo != null && habbo.getPlayer() != null) {
+            habbo.getClient().sendResponse(new UserRoleplayStatsChangeComposer(habbo));
+        }
 
         try (Connection connection = Emulator.getDatabase().getDataSource().getConnection(); PreparedStatement statement = connection.prepareStatement("UPDATE users SET motto = ?, online = ?, look = ?, gender = ?, credits = ?, last_login = ?, last_online = ?, home_room = ?, ip_current = ?, `rank` = ?, machine_id = ?, username = ? WHERE id = ?")) {
             statement.setString(1, this.motto);
