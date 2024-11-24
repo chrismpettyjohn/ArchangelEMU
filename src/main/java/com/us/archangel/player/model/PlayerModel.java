@@ -163,17 +163,14 @@ public class PlayerModel {
     public void setTask(ManagedTask<?> newTask) {
         if (this.currentTask != null) {
             this.currentTask.stop();
+            this.currentTask = null;
         }
 
-        this.currentTask = newTask;
-
-        if (this.currentTask == null) {
-            return;
+        if (newTask != null) {
+            this.currentTask = newTask;
+            Emulator.getThreading().run(() -> this.currentTask.start());
         }
-
-        Emulator.getThreading().run(() -> currentTask.start());
     }
-
 
     public void save() {
         PlayerService.getInstance().update(this.id, this);
