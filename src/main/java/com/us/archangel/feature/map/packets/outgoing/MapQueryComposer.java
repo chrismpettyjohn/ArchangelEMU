@@ -15,90 +15,93 @@ public class MapQueryComposer extends MessageComposer {
 
     private final Room startingRoom;
 
-    // This method is called to compose the map.
     @Override
     protected ServerMessage composeInternal() {
-        // Create a new map.
-        Map<Room, List<Room>> map = new HashMap<>();
-        map.put(startingRoom, new ArrayList<>());
-
-        // Recursively traverse the rooms starting from the starting room.
-        traverseRooms(startingRoom, map);
-
-        // Create a new ServerMessage.
         ServerMessage message = new ServerMessage();
-
         message.init(Outgoing.mapQueryComposer);
 
-        // Append the map data to the message.
-        appendMapData(message, map);
+        Map<Room, List<Room>> roomMap = new HashMap<>();
+        roomMap.put(startingRoom, new ArrayList<>());
+        traverseRooms(startingRoom, roomMap);
 
-        // Return the message.
+        appendMapData(message, roomMap);
         return message;
     }
 
-    // This method recursively traverses the rooms starting from the given room.
-    private void traverseRooms(Room room, Map<Room, List<Room>> map) {
-        HashSet<RoomItem> teleports = room.getRoomItemManager().getItemsOfType(InteractionTeleport.class);
-
-        for (RoomItem teleport : teleports) {
+    private void traverseRooms(Room room, Map<Room, List<Room>> roomMap) {
+        for (RoomItem teleport : room.getRoomItemManager().getItemsOfType(InteractionTeleport.class)) {
             Room targetRoom = teleport.getRoom();
-
-            if (targetRoom != null && !map.containsKey(targetRoom)) {
-                map.put(targetRoom, new ArrayList<>());
-                map.get(room).add(targetRoom);
-                traverseRooms(targetRoom, map);
+            if (targetRoom != null && !roomMap.containsKey(targetRoom)) {
+                roomMap.put(targetRoom, new ArrayList<>());
+                roomMap.get(room).add(targetRoom);
+                traverseRooms(targetRoom, roomMap);
             }
         }
     }
 
-    // This method appends the map data to the message.
-    private void appendMapData(ServerMessage message, Map<Room, List<Room>> map) {
-        message.appendString(this.startingRoom.getRoomInfo().getName()); // Added this line
+    private void appendMapData(ServerMessage message, Map<Room, List<Room>> roomMap) {
+        message.appendInt(roomMap.size()); // Total rooms count
 
-        message.appendInt(map.size());
+        for (Room room : roomMap.keySet()) {
+            int[] coords = calculateRoomCoordinates(room);
+            String roomData = String.join(";",
+                    String.valueOf(room.getRoomInfo().getId()),
+                    room.getRoomInfo().getName(),
+                    String.valueOf(coords[0]),
+                    String.valueOf(coords[1]),
+                    String.valueOf(calculateRoomSize(room))); // Calculate size separately
 
-        for (Map.Entry<Room, List<Room>> entry : map.entrySet()) {
-            Room room = entry.getKey();
-            List<Room> connectedRooms = entry.getValue();
-
-            message.appendString(room.getRoomInfo().getName());
-
-            // Calculate the room's XY based on the teleporter positions.
-            int[] xy = calculateRoomXY(room);
-            message.appendInt(xy[0]);
-            message.appendInt(xy[1]);
-
-            message.appendInt(connectedRooms.size());
-
-            for (Room connectedRoom : connectedRooms) {
-                message.appendString(connectedRoom.getRoomInfo().getName());
-
-                // Calculate the connected room's XY based on the teleporter positions.
-                int[] connectedRoomXY = calculateRoomXY(connectedRoom);
-                message.appendInt(connectedRoomXY[0]);
-                message.appendInt(connectedRoomXY[1]);
-            }
+            message.appendString(roomData);
         }
     }
 
-    // This method calculates the room's XY based on the teleporter positions.
-    private int[] calculateRoomXY(Room room) {
-        HashSet<RoomItem> teleports = room.getRoomItemManager().getItemsOfType(InteractionTeleport.class);
-
+    private int[] calculateRoomCoordinates(Room room) {
+        Set<RoomItem> teleports = room.getRoomItemManager().getItemsOfType(InteractionTeleport.class);
         if (teleports.isEmpty()) {
-            return new int[] { 0, 0 };
+            return new int[]{0, 0};
         }
 
-        int totalX = 0;
-        int totalY = 0;
+        int minX = Integer.MAX_VALUE, minY = Integer.MAX_VALUE;
+        int maxX = Integer.MIN_VALUE, maxY = Integer.MIN_VALUE;
+
         for (RoomItem teleport : teleports) {
-            totalX += teleport.getCurrentPosition().getX();
-            totalY += teleport.getCurrentPosition().getY();
-        }
-        int averageX = totalX / teleports.size();
-        int averageY = totalY / teleports.size();
+            int x = teleport.getCurrentPosition().getX();
+            int y = teleport.getCurrentPosition().getY();
 
-        return new int[] { averageX, averageY };
+            minX = Math.min(minX, x);
+            minY = Math.min(minY, y);
+            maxX = Math.max(maxX, x);
+            maxY = Math.max(maxY, y);
+        }
+
+        int centerX = (minX + maxX) / 2;
+        int centerY = (minY + maxY) / 2;
+
+        return new int[]{centerX, centerY};
+    }
+
+    private int calculateRoomSize(Room room) {
+        Set<RoomItem> teleports = room.getRoomItemManager().getItemsOfType(InteractionTeleport.class);
+        if (teleports.isEmpty()) {
+            return 0; // Or some default size
+        }
+
+        int minX = Integer.MAX_VALUE, minY = Integer.MAX_VALUE;
+        int maxX = Integer.MIN_VALUE, maxY = Integer.MIN_VALUE;
+
+        for (RoomItem teleport : teleports) {
+            int x = teleport.getCurrentPosition().getX();
+            int y = teleport.getCurrentPosition().getY();
+
+            minX = Math.min(minX, x);
+            minY = Math.min(minY, y);
+            maxX = Math.max(maxX, x);
+            maxY = Math.max(maxY, y);
+        }
+
+        int width = maxX - minX + 1; // +1 to include both min and max
+        int height = maxY - minY + 1;
+
+        return width * height; // Area of the room
     }
 }
