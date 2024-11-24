@@ -17,28 +17,25 @@ public class HospitalRecoveryAction implements Runnable {
     @Override
     public void run() {
 
-        if (!isHealing) {
-            return;
-        }
-
         if (this.habbo.getRoomUnit().getRoom() == null) {
-            isHealing = false;
+            this.isHealing = false;
             return;
         }
 
         if (!this.habbo.getRoomUnit().getRoom().getRoomInfo().getTags().contains(RoomType.HOSPITAL)) {
             this.habbo.shout(Emulator.getTexts().getValue("roleplay.hospital.cancel_recovery"));
-            isHealing = false;
+            this.isHealing = false;
             return;
         }
 
-        if (this.habbo.getRoomUnit().getCurrentItem().getBaseItem().getInteractionType().getType() == InteractionHospitalBed.class) {            this.habbo.shout(Emulator.getTexts().getValue("roleplay.hospital.cancel_recovery"));
-            isHealing = false;
+        if (this.habbo.getRoomUnit().getCurrentItem().getBaseItem().getInteractionType().getType() != InteractionHospitalBed.class) {            this.habbo.shout(Emulator.getTexts().getValue("roleplay.hospital.cancel_recovery"));
+            this.isHealing = false;
             return;
         }
 
-        if (this.habbo.getPlayer().getHealthNow() >= this.habbo.getPlayer().getHealthMax()) {
-            onHealingComplete();
+        if (this.habbo.getPlayer().getHealthNow() == this.habbo.getPlayer().getHealthMax()) {
+            this.isHealing = false;
+            this.habbo.shout(Emulator.getTexts().getValue("roleplay.hospital.finish_recovery"));
             return;
         }
 
@@ -51,10 +48,5 @@ public class HospitalRecoveryAction implements Runnable {
         );
 
         Emulator.getThreading().run(this, 2500);
-    }
-
-    private void onHealingComplete() {
-        this.habbo.shout(Emulator.getTexts().getValue("roleplay.hospital.finish_recovery"));
-        isHealing = false;
     }
 }

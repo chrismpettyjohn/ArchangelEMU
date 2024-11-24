@@ -90,6 +90,10 @@ public abstract class RoomUnit extends RoomEntity {
     protected RoomRightLevels rightsLevel = RoomRightLevels.NONE;
     protected final THashSet<Integer> overridableTiles;
 
+
+    protected boolean isStopping = false;
+    protected boolean hasInteractedWithItem = false;
+
     public RoomUnit() {
         this.virtualId = 0;
         this.bodyRotation = RoomRotation.NORTH;
@@ -193,6 +197,8 @@ public abstract class RoomUnit extends RoomEntity {
             default -> null;
         };
 
+        boolean isWalkable = targetTile.isWalkable();
+
         if (targetTile != null && targetTile.isWalkable()) {
             this.walkTo(targetTile);
             return true;
@@ -201,8 +207,6 @@ public abstract class RoomUnit extends RoomEntity {
         }
     }
 
-    private boolean isStopping = false;
-    private boolean hasInteractedWithItem = false;
 
     public synchronized void stopWalking() {
         if (isStopping) {

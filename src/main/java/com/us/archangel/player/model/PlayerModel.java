@@ -62,11 +62,11 @@ public class PlayerModel {
     private Integer escortingPlayerId;
 
     public void addHealth(int health) {
-        this.healthNow += Math.max(health, this.healthMax);
+        this.healthNow = Math.min(this.healthNow + health, this.healthMax);
     }
 
     public void depleteHealth(int health) {
-        this.healthNow -= Math.max(health, 0);
+        this.healthNow = Math.max(this.healthNow - health, 0);
     }
 
     public void addEnergy(int energy) {

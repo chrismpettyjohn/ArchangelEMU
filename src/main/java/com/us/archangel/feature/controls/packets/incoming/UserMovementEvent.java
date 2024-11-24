@@ -1,5 +1,6 @@
 package com.us.archangel.feature.controls.packets.incoming;
 
+import com.eu.habbo.Emulator;
 import com.eu.habbo.habbohotel.rooms.entities.units.RoomUnit;
 import com.eu.habbo.habbohotel.users.Habbo;
 import com.eu.habbo.messages.incoming.MessageHandler;
@@ -9,6 +10,7 @@ public class UserMovementEvent extends MessageHandler {
     @Override
     public void handle() {
         if (!this.client.getHabbo().getPlayer().canWalk()) {
+            this.client.getHabbo().whisper(Emulator.getTexts().getValue("roleplay.cant_walk"));
             return;
         }
 
