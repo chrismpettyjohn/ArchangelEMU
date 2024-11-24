@@ -197,6 +197,10 @@ public abstract class RoomUnit extends RoomEntity {
             default -> null;
         };
 
+        if (targetTile == null) {
+            return false;
+        }
+
         boolean isWalkable = targetTile.isWalkable();
 
         if (targetTile != null && targetTile.isWalkable()) {

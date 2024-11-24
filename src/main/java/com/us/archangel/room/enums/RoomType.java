@@ -7,4 +7,5 @@ public class RoomType {
     public static String HOSPITAL = "hospital";
     public static String TAXI = "taxi";
     public static String TURF = "turf";
+    public static String MAP_START = "map_start";
 }

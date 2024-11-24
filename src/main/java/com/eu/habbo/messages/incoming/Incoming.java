@@ -81,6 +81,7 @@ import com.us.archangel.feature.license.packets.incoming.LicenseAgencyListEvent;
 import com.us.archangel.feature.license.packets.incoming.LicenseConnectComputerEvent;
 import com.us.archangel.feature.license.packets.incoming.LicenseOfferEvent;
 import com.us.archangel.feature.license.packets.incoming.LicenseStatusQueryEvent;
+import com.us.archangel.feature.map.packets.incoming.MapQueryEvent;
 import com.us.archangel.feature.player.packets.incoming.*;
 import com.us.archangel.feature.room.packets.incoming.RoomListUsersEvent;
 import com.us.archangel.feature.room.packets.incoming.RoomQueryListEvent;
@@ -1173,7 +1174,9 @@ public enum Incoming {
 
     userGuestbookQueryOneEvent(8119, UserGuestbookQueryOneEvent.class),
 
-    cancelTaxiEvent(8120, CancelTaxiEvent.class);
+    cancelTaxiEvent(8120, CancelTaxiEvent.class),
+
+    mapQueryEvent(8121, MapQueryEvent.class);
 
     private final int messageId;
     private final Class<? extends MessageHandler> messageClass;
