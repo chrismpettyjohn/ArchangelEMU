@@ -63,6 +63,7 @@ import com.us.archangel.feature.corp.actions.InteractionCashRegister;
 import com.us.archangel.feature.corp.actions.InteractionCorpComputer;
 import com.us.archangel.feature.corp.actions.InteractionCorpInventory;
 import com.us.archangel.feature.corp.actions.InteractionEmployeeGate;
+import com.us.archangel.feature.device.interactions.InteractionCamera;
 import com.us.archangel.feature.device.interactions.InteractionUsable;
 import com.us.archangel.feature.fish.interactions.InteractionFish;
 import com.us.archangel.feature.fish.interactions.InteractionFishingPole;
@@ -413,6 +414,7 @@ public class ItemManager {
         this.interactionsList.add(new ItemInteraction(InteractionPoliceLaptop.INTERACTION_TYPE, InteractionPoliceLaptop.class));
         this.interactionsList.add(new ItemInteraction(InteractionTurfBanner.INTERACTION_TYPE, InteractionTurfBanner.class));
         this.interactionsList.add(new ItemInteraction(InteractionTaxiStand.INTERACTION_TYPE, InteractionTaxiStand.class));
+        this.interactionsList.add(new ItemInteraction(InteractionCamera.INTERACTION_TYPE, InteractionCamera.class));
     }
 
     public void addItemInteraction(ItemInteraction itemInteraction) {
