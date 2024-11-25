@@ -33,13 +33,11 @@ public class TeleportAction implements Runnable {
         synchronized (this.room) {
             if (this.client.getHabbo().getRoomUnit().getRoom() != this.room) return;
 
-            // Remove the MOVE status
             this.client.getHabbo().getRoomUnit().removeStatus(RoomUnitStatus.MOVE);
             this.room.sendComposer(new UserUpdateComposer(this.client.getHabbo().getRoomUnit()).compose());
         }
 
-        // Resolve teleport target asynchronously
-        CompletableFuture<Void> teleportSetupFuture = CompletableFuture.supplyAsync(this::resolveTeleportTarget)
+        CompletableFuture<Void> teleportSetupFuture = CompletableFuture.supplyAsync(() -> resolveTeleportTarget((InteractionTeleport) this.currentTeleport))
                 .thenAcceptAsync(teleport -> {
                     synchronized (this.room) {
                         if (teleport.getTargetRoomId() == 0) {
@@ -54,41 +52,35 @@ public class TeleportAction implements Runnable {
                     return null;
                 });
 
-        // Wait for completion of teleport setup
         teleportSetupFuture.join();
     }
 
-    private InteractionTeleport resolveTeleportTarget() {
-        synchronized (this.room) {
-            InteractionTeleport teleport = (InteractionTeleport) this.currentTeleport;
+    public static InteractionTeleport resolveTeleportTarget(InteractionTeleport teleport) {
+        try (Connection connection = Emulator.getDatabase().getDataSource().getConnection();
+             PreparedStatement statement = connection.prepareStatement(
+                     "SELECT items_teleports.*, A.room_id as a_room_id, A.id as a_id, B.room_id as b_room_id, B.id as b_id " +
+                             "FROM items_teleports " +
+                             "INNER JOIN items AS A ON items_teleports.teleport_one_id = A.id " +
+                             "INNER JOIN items AS B ON items_teleports.teleport_two_id = B.id " +
+                             "WHERE (teleport_one_id = ? OR teleport_two_id = ?)")) {
+            statement.setInt(1, teleport.getId());
+            statement.setInt(2, teleport.getId());
 
-            try (Connection connection = Emulator.getDatabase().getDataSource().getConnection();
-                 PreparedStatement statement = connection.prepareStatement(
-                         "SELECT items_teleports.*, A.room_id as a_room_id, A.id as a_id, B.room_id as b_room_id, B.id as b_id " +
-                                 "FROM items_teleports " +
-                                 "INNER JOIN items AS A ON items_teleports.teleport_one_id = A.id " +
-                                 "INNER JOIN items AS B ON items_teleports.teleport_two_id = B.id " +
-                                 "WHERE (teleport_one_id = ? OR teleport_two_id = ?)")) {
-                statement.setInt(1, this.currentTeleport.getId());
-                statement.setInt(2, this.currentTeleport.getId());
-
-                try (ResultSet set = statement.executeQuery()) {
-                    if (set.next()) {
-                        if (set.getInt("a_id") != this.currentTeleport.getId()) {
-                            teleport.setTargetId(set.getInt("a_id"));
-                            teleport.setTargetRoomId(set.getInt("a_room_id"));
-                        } else {
-                            teleport.setTargetId(set.getInt("b_id"));
-                            teleport.setTargetRoomId(set.getInt("b_room_id"));
-                        }
+            try (ResultSet set = statement.executeQuery()) {
+                if (set.next()) {
+                    if (set.getInt("a_id") != teleport.getId()) {
+                        teleport.setTargetId(set.getInt("a_id"));
+                        teleport.setTargetRoomId(set.getInt("a_room_id"));
+                    } else {
+                        teleport.setTargetId(set.getInt("b_id"));
+                        teleport.setTargetRoomId(set.getInt("b_room_id"));
                     }
                 }
-            } catch (SQLException e) {
-                TeleportAction.LOGGER.error("Caught SQL exception while resolving teleport target", e);
             }
-
-            return teleport;
+        } catch (SQLException e) {
+            TeleportAction.LOGGER.error("Caught SQL exception while resolving teleport target", e);
         }
+        return teleport;
     }
 
     private void proceedToTargetRoom(InteractionTeleport teleport) {
