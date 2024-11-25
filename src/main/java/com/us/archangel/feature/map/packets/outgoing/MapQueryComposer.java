@@ -57,7 +57,7 @@ public class MapQueryComposer extends MessageComposer {
     }
 
     private int[] calculateRoomCoordinates(Room room) {
-        Set<RoomItem> teleports = room.getRoomItemManager().getItemsOfType(InteractionTeleport.class);
+        Set<RoomItem> teleports = room.getRoomItemManager().getItemsOfType(InteractionInstantTeleport.class);
         if (teleports.isEmpty()) {
             return new int[]{0, 0};
         }
