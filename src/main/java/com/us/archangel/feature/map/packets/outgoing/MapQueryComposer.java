@@ -1,7 +1,6 @@
 package com.us.archangel.feature.map.packets.outgoing;
 
 import com.eu.habbo.Emulator;
-import com.eu.habbo.habbohotel.items.interactions.InteractionTeleport;
 import com.eu.habbo.habbohotel.rooms.Room;
 import com.eu.habbo.habbohotel.rooms.RoomLayout;
 import com.eu.habbo.habbohotel.rooms.RoomTile;
@@ -26,23 +25,22 @@ public class MapQueryComposer extends MessageComposer {
         ServerMessage message = new ServerMessage();
         message.init(Outgoing.mapQueryComposer);
 
-        Map<Room, List<Room>> roomMap = new HashMap<>();
+        Map<Room, List<Room>> roomMap = new LinkedHashMap<>();
         roomMap.put(startingRoom, new ArrayList<>());
-        traverseRooms(startingRoom, roomMap, 1); // Start with depth 0
+        traverseRooms(startingRoom, roomMap, 1);
 
         appendMapData(message, roomMap);
         return message;
     }
 
     private void traverseRooms(Room room, Map<Room, List<Room>> roomMap, int depth) {
-        if (depth >= 4) {
+        if (depth >= 2) {
             return;
         }
 
         for (RoomItem item : room.getRoomItemManager().getItemsOfType(InteractionInstantTeleport.class)) {
             InteractionInstantTeleport teleport = (InteractionInstantTeleport) item;
 
-            // Resolve the target teleport
             teleport = (InteractionInstantTeleport) TeleportAction.resolveTeleportTarget(teleport);
 
             int targetRoomId = teleport.getTargetRoomId();
@@ -56,44 +54,90 @@ public class MapQueryComposer extends MessageComposer {
     }
 
     private void appendMapData(ServerMessage message, Map<Room, List<Room>> roomMap) {
-        message.appendInt(roomMap.size()); // Total rooms count
+        List<Room> rooms = new ArrayList<>(roomMap.keySet());
+        message.appendInt(rooms.size());
 
-        for (Room room : roomMap.keySet()) {
-            int[] coords = calculateRoomCoordinates(room);
+        // Ensure starting room is at index 0
+        if (rooms.size() > 1 && !rooms.get(0).equals(this.startingRoom)) {
+            Collections.swap(rooms, 0, rooms.indexOf(this.startingRoom));
+        }
+
+        // Calculate coordinates for all rooms relative to the starting room
+        Map<Room, int[]> roomCoordinates = calculateRoomCoordinates(roomMap);
+
+        for (Room room : rooms) {
+            int[] coords = roomCoordinates.get(room);
             String roomData = String.join(";",
                     String.valueOf(room.getRoomInfo().getId()),
                     room.getRoomInfo().getName(),
                     String.valueOf(coords[0]),
                     String.valueOf(coords[1]),
-                    String.valueOf(calculateRoomSize(room))); // Calculate size separately
+                    String.valueOf(calculateRoomSize(room)));
 
             message.appendString(roomData);
         }
     }
 
-    private int[] calculateRoomCoordinates(Room room) {
-        Set<RoomItem> teleports = room.getRoomItemManager().getItemsOfType(InteractionInstantTeleport.class);
-        if (teleports.isEmpty()) {
-            return new int[]{0, 0};
+    private Map<Room, int[]> calculateRoomCoordinates(Map<Room, List<Room>> roomMap) {
+        Map<Room, int[]> coordinates = new HashMap<>();
+        coordinates.put(startingRoom, new int[]{0, 0}); // Starting room at center
+
+        Queue<Room> queue = new LinkedList<>();
+        queue.offer(startingRoom);
+
+        while (!queue.isEmpty()) {
+            Room currentRoom = queue.poll();
+            int[] currentCoords = coordinates.get(currentRoom);
+
+            for (Room connectedRoom : roomMap.get(currentRoom)) {
+                if (!coordinates.containsKey(connectedRoom)) {
+                    int[] newCoords = calculateRelativeCoordinates(currentRoom, connectedRoom);
+                    coordinates.put(connectedRoom, new int[]{
+                            currentCoords[0] + newCoords[0],
+                            currentCoords[1] + newCoords[1]
+                    });
+                    queue.offer(connectedRoom);
+                }
+            }
         }
 
-        int minX = Integer.MAX_VALUE, minY = Integer.MAX_VALUE;
-        int maxX = Integer.MIN_VALUE, maxY = Integer.MIN_VALUE;
+        return coordinates;
+    }
 
-        for (RoomItem teleport : teleports) {
-            int x = teleport.getCurrentPosition().getX();
-            int y = teleport.getCurrentPosition().getY();
+    private int[] calculateRelativeCoordinates(Room fromRoom, Room toRoom) {
+        RoomItem teleport = fromRoom.getRoomItemManager().getItemsOfType(InteractionInstantTeleport.class)
+                .stream()
+                .filter(item -> ((InteractionInstantTeleport) item).getTargetRoomId() == toRoom.getRoomInfo().getId())
+                .findFirst()
+                .orElse(null);
 
-            minX = Math.min(minX, x);
-            minY = Math.min(minY, y);
-            maxX = Math.max(maxX, x);
-            maxY = Math.max(maxY, y);
+        if (teleport == null) {
+            return new int[]{0, 0}; // Default to center if no teleport found
         }
 
-        int centerX = (minX + maxX) / 2;
-        int centerY = (minY + maxY) / 2;
+        int x = teleport.getCurrentPosition().getX();
+        int y = teleport.getCurrentPosition().getY();
 
-        return new int[]{centerX, centerY};
+        // Get the dimensions of the room
+        int maxX = fromRoom.getLayout().getMapSizeX();
+        int maxY = fromRoom.getLayout().getMapSizeY();
+
+        // Calculate the center point of the room
+        int centerX = maxX / 2;
+        int centerY = maxY / 2;
+
+        // Calculate relative position using centerX and centerY
+        if (y < centerY) {
+            return new int[]{0, -1}; // Top
+        } else if (y > centerY) {
+            return new int[]{0, 1}; // Bottom
+        } else if (x < centerX) {
+            return new int[]{-1, 0}; // Left
+        } else if (x > centerX) {
+            return new int[]{1, 0}; // Right
+        } else {
+            return new int[]{0, 0}; // Default to center if teleport is at the center
+        }
     }
 
     private int calculateRoomSize(Room room) {
