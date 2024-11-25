@@ -8,13 +8,8 @@ import com.us.archangel.feature.player.packets.outgoing.UserRoleplayStatsChangeC
 public class UserRoleplayStatsEvent extends MessageHandler {
     @Override
     public void handle() {
-        Integer userID = this.packet.readInt();
-
-        if (userID == null) {
-            return;
-        }
-
-        Habbo targetedUser = Emulator.getGameEnvironment().getHabboManager().getHabbo(userID);
+        int roomId = this.packet.readInt();
+        Habbo targetedUser = Emulator.getGameEnvironment().getHabboManager().getHabbo(roomId);
 
         if (targetedUser == null) {
             return;
