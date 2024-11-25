@@ -166,7 +166,7 @@ public class RoomItemManager {
 
     public HashSet<RoomItem> getItemsOfType(Class<? extends RoomItem> type) {
         return this.currentItems.values().stream()
-                .filter(item -> type.equals(item.getClass()))
+                .filter(item -> type.isAssignableFrom(item.getBaseItem().getInteractionType().getClass()))
                 .collect(Collectors.toCollection(HashSet::new));
     }
 

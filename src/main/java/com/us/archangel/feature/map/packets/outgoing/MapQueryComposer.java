@@ -6,6 +6,7 @@ import com.eu.habbo.habbohotel.rooms.items.entities.RoomItem;
 import com.eu.habbo.messages.ServerMessage;
 import com.eu.habbo.messages.outgoing.MessageComposer;
 import com.eu.habbo.messages.outgoing.Outgoing;
+import com.us.archangel.feature.wardrobe.interactions.InteractionInstantTeleport;
 import lombok.RequiredArgsConstructor;
 
 import java.util.*;
@@ -81,7 +82,7 @@ public class MapQueryComposer extends MessageComposer {
     }
 
     private int calculateRoomSize(Room room) {
-        Set<RoomItem> teleports = room.getRoomItemManager().getItemsOfType(InteractionTeleport.class);
+        Set<RoomItem> teleports = room.getRoomItemManager().getItemsOfType(InteractionInstantTeleport.class);
         if (teleports.isEmpty()) {
             return 0; // Or some default size
         }
