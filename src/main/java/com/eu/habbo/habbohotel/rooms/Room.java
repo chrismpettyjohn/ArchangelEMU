@@ -151,7 +151,7 @@ public class Room implements Comparable<Room>, ISerialize, Runnable {
         this.roomTradeManager = new RoomTradeManager(this);
         this.roomChatManager = new RoomChatManager(this);
 
-        this.roomTurfManager = new RoomTurfManager();
+        this.roomTurfManager = new RoomTurfManager(this.roomInfo.getId());
 
         this.layoutName = set.getString("model");
 

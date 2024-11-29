@@ -1,58 +1,68 @@
 package com.us.archangel.room;
 
-import com.eu.habbo.habbohotel.users.Habbo;
+import com.eu.habbo.Emulator;
+import com.eu.habbo.habbohotel.rooms.Room;
+import com.us.archangel.feature.gang.packets.outgoing.TurfCaptureTimeLeftComposer;
+import com.us.nova.core.NotificationHelper;
 import lombok.Getter;
-import lombok.Setter;
 
 @Getter
 public class RoomTurfManager {
 
-    public static int TWO_MINUTES_IN_SECONDS = 120;
+    private static final int CAPTURE_TIME_SECONDS = Emulator.getConfig().getInt("roleplay.gang.turf_capture_seconds");
 
-    private Habbo capturingHabbo;
+    private final int roomId;
 
-    @Setter
-    private int secondsLeft;
+    private int capturingUserId;
+    private boolean isCapturing;
+    private long captureFinishesAt;
+    private long capturePausedAt;
 
-    @Setter
-    private int captureProgress;
 
-    private boolean capturing;
-
-    public void startCapturing(Habbo capturingHabbo) {
-        this.capturingHabbo = capturingHabbo;
-        this.secondsLeft = TWO_MINUTES_IN_SECONDS - this.captureProgress;
-        this.capturing = true;
+    public RoomTurfManager(int roomId) {
+        this.roomId = roomId;
     }
 
-    public void stopCapturing() {
-        this.capturingHabbo = null;
-        this.captureProgress = TWO_MINUTES_IN_SECONDS - this.secondsLeft;
-        this.secondsLeft = -1;
-        this.capturing = false;
+    public void startCapturing(int capturingUserId) {
+        this.capturingUserId = capturingUserId;
+        this.isCapturing = true;
+        this.captureFinishesAt = System.currentTimeMillis() + (CAPTURE_TIME_SECONDS * 1000L);
+        this.capturePausedAt = 0;
+        notifyRoom();
     }
 
     public void pauseCapturing() {
-        this.capturing = false;
+        if (isCapturing) {
+            this.isCapturing = false;
+            this.capturePausedAt = System.currentTimeMillis();
+            notifyRoom();
+        }
     }
 
     public void resumeCapturing() {
-        this.capturing = true;
-    }
-
-    public void decrementSecondsLeft() {
-        if (this.capturing && this.secondsLeft > 0) {
-            this.secondsLeft--;
-            this.captureProgress = TWO_MINUTES_IN_SECONDS - this.secondsLeft;
+        if (!isCapturing && capturingUserId != 0 && capturePausedAt > 0) {
+            this.isCapturing = true;
+            long captureTimeLeft = captureFinishesAt - capturePausedAt;
+            this.captureFinishesAt = System.currentTimeMillis() + captureTimeLeft;
+            this.capturePausedAt = 0;
+            notifyRoom();
         }
     }
 
-    public void regainTime() {
-        if (this.captureProgress > 0) {
-            this.captureProgress--;
-            if (this.secondsLeft < TWO_MINUTES_IN_SECONDS) {
-                this.secondsLeft++;
-            }
-        }
+    public void stopCapturing() {
+        this.capturingUserId = 0;
+        this.isCapturing = false;
+        this.captureFinishesAt = 0;
+        this.capturePausedAt = 0;
+        notifyRoom();
+    }
+
+    public long getCaptureFinishesAt() {
+        return this.captureFinishesAt;
+    }
+
+    private void notifyRoom() {
+        Room room = Emulator.getGameEnvironment().getRoomManager().getRoom(this.roomId);
+        NotificationHelper.sendRoom(this.roomId, new TurfCaptureTimeLeftComposer(room));
     }
 }

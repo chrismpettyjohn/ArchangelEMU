@@ -1,5 +1,6 @@
 package com.us.archangel.feature.gang.packets.outgoing;
 
+import com.eu.habbo.Emulator;
 import com.eu.habbo.habbohotel.rooms.Room;
 import com.eu.habbo.habbohotel.users.Habbo;
 import com.eu.habbo.messages.ServerMessage;
@@ -20,8 +21,12 @@ public class TurfCaptureTimeLeftComposer extends MessageComposer {
 
         HashMap<Integer, Integer> gangsInRoom = getGangsInRoom();
 
-        this.response.appendInt(this.room.getRoomTurfManager().getSecondsLeft());
-        this.response.appendBoolean(this.room.getRoomTurfManager().isCapturing());
+        Habbo capturingHabbo = Emulator.getGameEnvironment().getHabboManager().getHabbo(this.room.getRoomTurfManager().getCapturingUserId());
+
+        this.response.appendString(String.valueOf(this.room.getRoomTurfManager().getCaptureFinishesAt()));
+        this.response.appendBoolean(this.room.getRoomTurfManager().getCapturePausedAt() == 0);
+        this.response.appendInt(this.room.getRoomTurfManager().getCapturingUserId());
+        this.response.appendInt(capturingHabbo.getPlayer().getGangId());
         this.response.appendInt(gangsInRoom.size());
         gangsInRoom.forEach((gangId, userCount) -> {
             this.response.appendString(gangId + ";" + userCount);
