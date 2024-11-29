@@ -63,6 +63,8 @@ public class RoomInfo {
     private boolean modelOverridden;
     private HashMap<Integer, RoomMoodlightData> moodLightData;
     private final HashMap<Integer, RoomMoodlightData> defaultMoodData;
+    private Integer corpId;
+    private Integer gangId;
 
     public RoomInfo(ResultSet set) throws SQLException {
         this.id = set.getInt("id");
@@ -112,6 +114,9 @@ public class RoomInfo {
         this.promoted = set.getBoolean("promoted");
         this.publicRoom = set.getBoolean("is_public");
 
+        this.corpId = set.getInt("corp_id");
+        this.gangId = set.getInt("gang_id");
+
         this.modelOverridden = set.getBoolean("override_model");
 
         defaultMoodData = new HashMap<>();
@@ -133,7 +138,7 @@ public class RoomInfo {
     }
 
     public void update(Connection connection) {
-        try (PreparedStatement statement = connection.prepareStatement("UPDATE rooms SET name = ?, description = ?, password = ?, state = ?, users_max = ?, category = ?, score = ?, paper_floor = ?, paper_wall = ?, paper_landscape = ?, thickness_wall = ?, wall_height = ?, thickness_floor = ?, moodlight_data = ?, tags = ?, allow_other_pets = ?, allow_other_pets_eat = ?, allow_walkthrough = ?, allow_hidewall = ?, chat_mode = ?, chat_weight = ?, chat_speed = ?, chat_hearing_distance = ?, chat_protection =?, who_can_mute = ?, who_can_kick = ?, who_can_ban = ?, poll_id = ?, guild_id = ?, roller_speed = ?, override_model = ?, is_staff_picked = ?, promoted = ?, trade_mode = ?, move_diagonally = ?, owner_id = ?, owner_name = ?, jukebox_active = ?, hidewired = ? WHERE id = ?")) {
+        try (PreparedStatement statement = connection.prepareStatement("UPDATE rooms SET name = ?, description = ?, password = ?, state = ?, users_max = ?, category = ?, score = ?, paper_floor = ?, paper_wall = ?, paper_landscape = ?, thickness_wall = ?, wall_height = ?, thickness_floor = ?, moodlight_data = ?, tags = ?, allow_other_pets = ?, allow_other_pets_eat = ?, allow_walkthrough = ?, allow_hidewall = ?, chat_mode = ?, chat_weight = ?, chat_speed = ?, chat_hearing_distance = ?, chat_protection =?, who_can_mute = ?, who_can_kick = ?, who_can_ban = ?, poll_id = ?, guild_id = ?, roller_speed = ?, override_model = ?, is_staff_picked = ?, promoted = ?, trade_mode = ?, move_diagonally = ?, owner_id = ?, owner_name = ?, jukebox_active = ?, hidewired = ?, corp_id = ?, gang_id = ? WHERE id = ?")) {
             statement.setString(1, this.name);
             statement.setString(2, this.description);
             statement.setString(3, this.password);
@@ -182,7 +187,9 @@ public class RoomInfo {
             statement.setString(37, this.ownerInfo.getUsername());
             statement.setString(38, this.jukeboxEnabled ? "1" : "0");
             statement.setString(39, this.hiddenWiredEnabled ? "1" : "0");
-            statement.setInt(40, this.id);
+            statement.setInt(40, this.gangId);
+            statement.setInt(41, this.corpId);
+            statement.setInt(42, this.id);
             statement.executeUpdate();
         } catch (SQLException e) {
             log.error(CAUGHT_SQL_EXCEPTION, e);

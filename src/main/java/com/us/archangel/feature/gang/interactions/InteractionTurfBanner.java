@@ -1,14 +1,11 @@
 package com.us.archangel.feature.gang.interactions;
 
-import com.eu.habbo.Emulator;
 import com.eu.habbo.habbohotel.gameclients.GameClient;
 import com.eu.habbo.habbohotel.items.Item;
 import com.eu.habbo.habbohotel.items.interactions.InteractionGuildFurni;
 import com.eu.habbo.habbohotel.rooms.Room;
-import com.eu.habbo.habbohotel.users.Habbo;
 import com.eu.habbo.habbohotel.users.HabboInfo;
 import com.us.archangel.feature.gang.action.CaptureTurfAction;
-import com.us.archangel.feature.taxi.packets.outgoing.TaxiStandComposer;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -28,7 +25,7 @@ public class InteractionTurfBanner extends InteractionGuildFurni {
     @Override
     public void onClick(GameClient client, Room room, Object[] objects) throws Exception {
         super.onClick(client, room, objects);
-        Emulator.getThreading().run(new CaptureTurfAction(client.getHabbo().getRoomUnit().getRoom(), client.getHabbo().getRoomUnit().getCurrentPosition(), client.getHabbo()));
+        new CaptureTurfAction(client.getHabbo().getRoomUnit().getRoom(), client.getHabbo().getRoomUnit().getCurrentPosition(), client.getHabbo());
     }
 
 }
