@@ -6,7 +6,6 @@ import com.eu.habbo.habbohotel.items.interactions.InteractionGuildFurni;
 import com.eu.habbo.habbohotel.users.HabboInfo;
 import com.eu.habbo.messages.ServerMessage;
 import com.us.archangel.gang.model.GangModel;
-import com.us.archangel.gang.service.GangService;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -19,21 +18,17 @@ public class InteractionGangFurni extends InteractionGuildFurni {
 
     public static final String INTERACTION_TYPE =  "rp_gang";
 
-    private int gangId;
-
     public InteractionGangFurni(ResultSet set, Item baseItem) throws SQLException {
         super(set, baseItem);
-        this.gangId = set.getInt("gang_id");
     }
 
     public InteractionGangFurni(int id, HabboInfo ownerInfo, Item item, String extradata, int limitedStack, int limitedSells) {
         super(id, ownerInfo, item, extradata, limitedStack, limitedSells);
-        this.gangId = 0;
     }
 
     @Override
     public void serializeExtradata(ServerMessage serverMessage) {
-        GangModel gang = GangService.getInstance().getById(this.gangId);
+        GangModel gang = this.room.getRoomInfo().getGang();
 
         if (gang != null) {
             serverMessage.appendInt(2 + (this.isLimited() ? 256 : 0));
