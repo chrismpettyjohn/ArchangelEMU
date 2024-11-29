@@ -449,6 +449,13 @@ public class Room implements Comparable<Room>, ISerialize, Runnable {
             base = base | 16;
         }
 
+        if (this.roomInfo.hasCorp()) {
+            base = base | 64;
+        }
+        if (this.roomInfo.hasGang()) {
+            base = base | 128;
+        }
+
         message.appendInt(base);
 
 
@@ -462,6 +469,18 @@ public class Room implements Comparable<Room>, ISerialize, Runnable {
             message.appendString(roomPromotionManager.getPromotion().getTitle());
             message.appendString(roomPromotionManager.getPromotion().getDescription());
             message.appendInt((roomPromotionManager.getPromotion().getEndTimestamp() - Emulator.getIntUnixTimestamp()) / 60);
+        }
+
+        if (this.roomInfo.hasCorp()) {
+            message.appendInt(this.roomInfo.getCorp().getId());
+            message.appendString(this.roomInfo.getCorp().getDisplayName());
+            message.appendString(this.roomInfo.getCorp().getBadge());
+        }
+
+        if (this.roomInfo.hasGang()) {
+            message.appendInt(this.roomInfo.getGang().getId());
+            message.appendString(this.roomInfo.getGang().getDisplayName());
+            message.appendString(this.roomInfo.getGang().getBadge());
         }
     }
 
@@ -891,20 +910,8 @@ public class Room implements Comparable<Room>, ISerialize, Runnable {
     }
 
 
+    // DEPRECATED
     public RoomRightLevels getGuildRightLevel(Habbo habbo) {
-        if (!this.roomInfo.hasGuild()) {
-            return RoomRightLevels.NONE;
-        }
-
-        if (habbo.getHabboStats().hasGuild(this.roomInfo.getGuild().getId())) {
-            if (Emulator.getGameEnvironment().getGuildManager().getOnlyAdmins(this.roomInfo.getGuild()).get(habbo.getHabboInfo().getId()) != null)
-                return RoomRightLevels.GUILD_ADMIN;
-
-            if (this.roomInfo.getGuild().isRights()) {
-                return RoomRightLevels.GUILD_RIGHTS;
-            }
-        }
-
         return RoomRightLevels.NONE;
     }
 

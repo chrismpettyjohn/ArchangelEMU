@@ -6,6 +6,10 @@ import com.eu.habbo.habbohotel.permissions.Permission;
 import com.eu.habbo.habbohotel.rooms.constants.RoomState;
 import com.eu.habbo.habbohotel.users.Habbo;
 import com.eu.habbo.habbohotel.users.HabboInfo;
+import com.us.archangel.corp.model.CorpModel;
+import com.us.archangel.corp.service.CorpService;
+import com.us.archangel.gang.model.GangModel;
+import com.us.archangel.gang.service.GangService;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -65,6 +69,14 @@ public class RoomInfo {
     private final HashMap<Integer, RoomMoodlightData> defaultMoodData;
     private Integer corpId;
     private Integer gangId;
+
+    public CorpModel getCorp() {
+        return CorpService.getInstance().getById(this.corpId);
+    }
+
+    public GangModel getGang() {
+        return GangService.getInstance().getById(this.gangId);
+    }
 
     public RoomInfo(ResultSet set) throws SQLException {
         this.id = set.getInt("id");
@@ -199,7 +211,12 @@ public class RoomInfo {
     public boolean hasGuild() {
         return this.guild != null;
     }
-
+    public boolean hasCorp() {
+        return this.corpId > 0;
+    }
+    public boolean hasGang() {
+        return this.gangId > 0;
+    }
 
     public boolean isRoomOwner(Habbo owner) {
         return this.ownerInfo.getId() == owner.getHabboInfo().getId() || owner.hasPermissionRight(Permission.ACC_ANYROOMOWNER);
