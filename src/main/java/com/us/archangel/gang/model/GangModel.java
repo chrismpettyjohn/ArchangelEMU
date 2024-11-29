@@ -14,6 +14,8 @@ public class GangModel {
     private String displayName;
     private String description;
     private String badge;
+    private int colorPrimary;
+    private int colorSecondary;
     private int userId;
     private int roomId;
 

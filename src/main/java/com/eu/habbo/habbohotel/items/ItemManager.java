@@ -68,6 +68,7 @@ import com.us.archangel.feature.device.interactions.InteractionUsable;
 import com.us.archangel.feature.fish.interactions.InteractionFish;
 import com.us.archangel.feature.fish.interactions.InteractionFishingPole;
 import com.us.archangel.feature.fish.interactions.InteractionFishingSource;
+import com.us.archangel.feature.gang.interactions.InteractionGangFurni;
 import com.us.archangel.feature.gang.interactions.InteractionTurfBanner;
 import com.us.archangel.feature.gym.interactions.InteractionWeightBench;
 import com.us.archangel.feature.hospital.interactions.InteractionHospitalBed;
@@ -415,6 +416,7 @@ public class ItemManager {
         this.interactionsList.add(new ItemInteraction(InteractionTurfBanner.INTERACTION_TYPE, InteractionTurfBanner.class));
         this.interactionsList.add(new ItemInteraction(InteractionTaxiStand.INTERACTION_TYPE, InteractionTaxiStand.class));
         this.interactionsList.add(new ItemInteraction(InteractionCamera.INTERACTION_TYPE, InteractionCamera.class));
+        this.interactionsList.add(new ItemInteraction(InteractionGangFurni.INTERACTION_TYPE, InteractionGangFurni.class));
     }
 
     public void addItemInteraction(ItemInteraction itemInteraction) {

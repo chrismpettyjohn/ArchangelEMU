@@ -27,6 +27,12 @@ public class GangEntity {
     @Column(name = "badge", nullable = false)
     private String badge;
 
+    @Column(name = "color_primary", nullable = false)
+    private int colorPrimary;
+
+    @Column(name = "color_secondary", nullable = false)
+    private int colorSecondary;
+
     @Column(name = "user_id", nullable = false)
     private int userId;
 

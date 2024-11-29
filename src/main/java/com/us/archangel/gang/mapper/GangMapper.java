@@ -15,6 +15,8 @@ public class GangMapper extends GenericMapper<GangEntity, GangModel> {
                 entity.getDisplayName(),
                 entity.getDescription(),
                 entity.getBadge(),
+                entity.getColorPrimary(),
+                entity.getColorSecondary(),
                 entity.getUserId(),
                 entity.getRoomId()
         );

@@ -2,7 +2,6 @@ package com.us.archangel.feature.gang.interactions;
 
 import com.eu.habbo.habbohotel.gameclients.GameClient;
 import com.eu.habbo.habbohotel.items.Item;
-import com.eu.habbo.habbohotel.items.interactions.InteractionGuildFurni;
 import com.eu.habbo.habbohotel.rooms.Room;
 import com.eu.habbo.habbohotel.users.HabboInfo;
 import com.us.archangel.feature.gang.action.CaptureTurfAction;
@@ -10,7 +9,7 @@ import com.us.archangel.feature.gang.action.CaptureTurfAction;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class InteractionTurfBanner extends InteractionGuildFurni {
+public class InteractionTurfBanner extends InteractionGangFurni {
 
     public static String INTERACTION_TYPE = "rp_turf_banner";
 

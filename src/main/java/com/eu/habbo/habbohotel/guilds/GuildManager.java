@@ -8,7 +8,6 @@ import com.eu.habbo.habbohotel.items.interactions.InteractionGuildFurni;
 import com.eu.habbo.habbohotel.rooms.Room;
 import com.eu.habbo.habbohotel.users.Habbo;
 import com.eu.habbo.messages.outgoing.guild.HabboGroupJoinFailedMessageComposer;
-import com.us.archangel.corp.CorpManager;
 import gnu.trove.TCollections;
 import gnu.trove.iterator.TIntObjectIterator;
 import gnu.trove.map.TIntObjectMap;
@@ -534,43 +533,6 @@ public class GuildManager {
         return guilds;
     }
 
-    public List<Guild> getAllGuilds() {
-        List<Guild> guilds = new ArrayList<>();
-
-        try (Connection connection = Emulator.getDatabase().getDataSource().getConnection(); PreparedStatement statement = connection.prepareStatement("SELECT id FROM guilds ORDER BY id DESC LIMIT 20")) {
-            try (ResultSet set = statement.executeQuery()) {
-                while (set.next()) {
-                    Guild guild = getGuild(set.getInt("id"));
-
-                    if (guild != null) {
-                        guilds.add(guild);
-                    }
-                }
-            }
-        } catch (SQLException e) {
-            log.error("Caught SQL exception", e);
-        }
-
-        return guilds;
-    }
-
-    public boolean symbolColor(int colorId) {
-        for (GuildPart part : this.getSymbolColors()) {
-            if (part.getId() == colorId)
-                return true;
-        }
-
-        return false;
-    }
-
-    public boolean backgroundColor(int colorId) {
-        for (GuildPart part : this.getBackgroundColors()) {
-            if (part.getId() == colorId)
-                return true;
-        }
-        return false;
-    }
-
     public THashMap<GuildPartType, THashMap<Integer, GuildPart>> getGuildParts() {
         return this.guildParts;
     }
@@ -579,24 +541,12 @@ public class GuildManager {
         return this.guildParts.get(GuildPartType.BASE).values();
     }
 
-    public GuildPart getBase(int id) {
-        return this.guildParts.get(GuildPartType.BASE).get(id);
-    }
-
     public Collection<GuildPart> getSymbols() {
         return this.guildParts.get(GuildPartType.SYMBOL).values();
     }
 
-    public GuildPart getSymbol(int id) {
-        return this.guildParts.get(GuildPartType.SYMBOL).get(id);
-    }
-
     public Collection<GuildPart> getBaseColors() {
         return this.guildParts.get(GuildPartType.BASE_COLOR).values();
-    }
-
-    public GuildPart getBaseColor(int id) {
-        return this.guildParts.get(GuildPartType.BASE_COLOR).get(id);
     }
 
     public Collection<GuildPart> getSymbolColors() {
