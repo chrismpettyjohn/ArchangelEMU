@@ -3,9 +3,7 @@ package com.us.archangel;
 import com.us.archangel.bounty.BountyManager;
 import com.us.archangel.government.GovernmentManager;
 import com.us.archangel.police.PoliceManager;
-import com.us.nova.core.DatabaseConfig;
 import com.us.archangel.corp.CorpManager;
-import com.us.archangel.feature.RoleplayFeatureManager;
 import com.us.archangel.gang.GangManager;
 import com.us.archangel.sanction.SanctionManager;
 import com.us.archangel.player.PlayerManager;
@@ -28,7 +26,6 @@ public class Archangel {
     private SanctionManager sanctionManager;
     private PlayerManager playerManager;
     private PoliceManager policeManager;
-    private RoleplayFeatureManager roleplayFeatureManager;
     private WeaponManager weaponManager;
 
     public void load() {
@@ -41,7 +38,6 @@ public class Archangel {
         this.sanctionManager = SanctionManager.getInstance();
         this.playerManager = PlayerManager.getInstance();
         this.policeManager = PoliceManager.getInstance();
-        this.roleplayFeatureManager = RoleplayFeatureManager.getInstance();
         this.weaponManager = WeaponManager.getInstance();
 
         LOGGER.info("Archangel -> Loaded! (" + (System.currentTimeMillis() - millis) + " MS)");
@@ -55,7 +51,6 @@ public class Archangel {
         this.sanctionManager.dispose();
         this.playerManager.dispose();
         this.policeManager.dispose();
-        this.roleplayFeatureManager.disposeFeatures();
         this.weaponManager.dispose();;
 
         log.info("Archangel -> Disposed!");
