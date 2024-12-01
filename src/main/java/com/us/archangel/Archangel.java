@@ -1,5 +1,6 @@
 package com.us.archangel;
 
+import com.us.archangel.ammo.AmmoManager;
 import com.us.archangel.bounty.BountyManager;
 import com.us.archangel.government.GovernmentManager;
 import com.us.archangel.police.PoliceManager;
@@ -19,6 +20,7 @@ public class Archangel {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(Archangel.class);
 
+    private AmmoManager ammoManager;
     private BountyManager bountyManager;
     private GangManager gangManager;
     private GovernmentManager governmentManager;
@@ -31,6 +33,7 @@ public class Archangel {
     public void load() {
         long millis = System.currentTimeMillis();
 
+        this.ammoManager = AmmoManager.getInstance();
         this.bountyManager = BountyManager.getInstance();
         this.corpManager = CorpManager.getInstance();
         this.gangManager = GangManager.getInstance();
@@ -44,6 +47,7 @@ public class Archangel {
     }
 
     public void dispose() {
+        this.ammoManager.dispose();
         this.bountyManager.dispose();
         this.corpManager.dispose();;
         this.gangManager.dispose();

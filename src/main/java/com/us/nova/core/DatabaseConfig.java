@@ -1,5 +1,6 @@
 package com.us.nova.core;
 
+import com.us.archangel.ammo.entity.AmmoEntity;
 import com.us.archangel.bounty.entity.BountyEntity;
 import com.us.archangel.corp.entity.CorpEntity;
 import com.us.archangel.corp.entity.CorpInviteEntity;
@@ -57,6 +58,7 @@ public class DatabaseConfig {
                 configuration.addAnnotatedClass(UserSSOEntity.class);
 
                 // Archangel
+                configuration.addAnnotatedClass(AmmoEntity.class);
                 configuration.addAnnotatedClass(BountyEntity.class);
                 configuration.addAnnotatedClass(CorpEntity.class);
                 configuration.addAnnotatedClass(CorpRoleEntity.class);
