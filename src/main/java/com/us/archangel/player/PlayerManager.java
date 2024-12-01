@@ -1,26 +1,11 @@
 package com.us.archangel.player;
 
-import com.us.archangel.player.context.PlayerBankAccountContext;
-import com.us.archangel.player.context.PlayerContext;
-import com.us.archangel.player.context.PlayerSkillContext;
-import com.us.archangel.player.context.PlayerWeaponContext;
+import com.us.archangel.player.context.*;
 import com.us.archangel.player.entity.PlayerEntity;
-import com.us.archangel.player.mapper.PlayerBankAccountMapper;
-import com.us.archangel.player.mapper.PlayerMapper;
-import com.us.archangel.player.mapper.PlayerSkillMapper;
-import com.us.archangel.player.mapper.PlayerWeaponMapper;
-import com.us.archangel.player.model.PlayerBankAccountModel;
-import com.us.archangel.player.model.PlayerModel;
-import com.us.archangel.player.model.PlayerSkillModel;
-import com.us.archangel.player.model.PlayerWeaponModel;
-import com.us.archangel.player.repository.PlayerBankAccountRepository;
-import com.us.archangel.player.repository.PlayerRepository;
-import com.us.archangel.player.repository.PlayerSkillRepository;
-import com.us.archangel.player.repository.PlayerWeaponRepository;
-import com.us.archangel.player.service.PlayerBankAccountService;
-import com.us.archangel.player.service.PlayerService;
-import com.us.archangel.player.service.PlayerSkillService;
-import com.us.archangel.player.service.PlayerWeaponService;
+import com.us.archangel.player.mapper.*;
+import com.us.archangel.player.model.*;
+import com.us.archangel.player.repository.*;
+import com.us.archangel.player.service.*;
 import lombok.Getter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -44,6 +29,10 @@ public class PlayerManager {
     private final PlayerRepository playerRepository;
     private final PlayerService playerService;
 
+    private final PlayerAmmoContext playerAmmoContext;
+    private final PlayerAmmoRepository playerAmmoRepository;
+    private final PlayerAmmoService playerAmmoService;
+
     private final PlayerSkillContext playerSkillContext;
     private final PlayerSkillRepository playerSkillRepository;
     private final PlayerSkillService playerSkillService;
@@ -60,6 +49,11 @@ public class PlayerManager {
         this.playerContext = PlayerContext.getInstance();
         this.playerRepository = PlayerRepository.getInstance();
         this.playerService = PlayerService.getInstance();
+
+
+        this.playerAmmoContext = PlayerAmmoContext.getInstance();
+        this.playerAmmoRepository = PlayerAmmoRepository.getInstance();
+        this.playerAmmoService = PlayerAmmoService.getInstance();
 
         this.playerSkillContext = PlayerSkillContext.getInstance();
         this.playerSkillRepository = PlayerSkillRepository.getInstance();
@@ -92,6 +86,10 @@ public class PlayerManager {
         for (PlayerModel playerModel : this.playerContext.getAll().values()) {
             this.playerRepository.updateById(playerModel.getId(), PlayerMapper.toEntity(playerModel));
             this.playerContext.delete(playerModel.getId());
+        }
+        for (PlayerAmmoModel playerAmmoModel : this.playerAmmoContext.getAll().values()) {
+            this.playerAmmoRepository.updateById(playerAmmoModel.getId(), PlayerAmmoMapper.toEntity(playerAmmoModel));
+            this.playerAmmoContext.delete(playerAmmoModel.getId());
         }
 
         for (PlayerSkillModel playerSkillModel : this.playerSkillContext.getAll().values()) {
