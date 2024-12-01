@@ -1,5 +1,6 @@
 package com.us.archangel.weapon.model;
 
+import com.us.archangel.weapon.enums.WeaponEffect;
 import com.us.archangel.weapon.enums.WeaponType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -13,6 +14,7 @@ public class WeaponModel {
     private String displayName;
     private String uniqueName;
     private WeaponType type;
+    private WeaponEffect effect;
     private int minDamage;
     private int maxDamage;
     private int rangeInTiles;

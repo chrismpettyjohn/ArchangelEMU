@@ -15,6 +15,7 @@ public class WeaponMapper extends GenericMapper<WeaponEntity, WeaponModel> {
                 entity.getDisplayName(),
                 entity.getUniqueName(),
                 entity.getType(),
+                entity.getEffect(),
                 entity.getMinDamage(),
                 entity.getMaxDamage(),
                 entity.getRangeInTiles(),
@@ -41,6 +42,7 @@ public class WeaponMapper extends GenericMapper<WeaponEntity, WeaponModel> {
         entity.setDisplayName(model.getDisplayName());
         entity.setUniqueName(model.getUniqueName());
         entity.setType(model.getType());
+        entity.setEffect(model.getEffect());
         entity.setMinDamage(model.getMinDamage());
         entity.setMaxDamage(model.getMaxDamage());
         entity.setRangeInTiles(model.getRangeInTiles());

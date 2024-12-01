@@ -1,6 +1,8 @@
 package com.us.archangel.weapon.entity;
 
+import com.us.archangel.weapon.enums.WeaponEffect;
 import com.us.archangel.weapon.enums.WeaponType;
+import com.us.archangel.weapon.enums.converter.WeaponEffectConverter;
 import com.us.archangel.weapon.enums.converter.WeaponTypeConverter;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -26,6 +28,10 @@ public class WeaponEntity {
     @Column(name = "type")
     @Convert(converter = WeaponTypeConverter.class)
     private WeaponType type;
+
+    @Column(name = "effect")
+    @Convert(converter = WeaponEffectConverter.class)
+    private WeaponEffect effect;
 
     @Column(name = "min_damage", nullable = false)
     private int minDamage;
