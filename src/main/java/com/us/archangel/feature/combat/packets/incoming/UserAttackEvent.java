@@ -125,10 +125,9 @@ public class UserAttackEvent extends MessageHandler {
                 case BLEED:
                     int bleedDmgPerSec = Math.max(totalDamage / 5, 1);
                     for (int i = 1; i <= 5; i++) {
-                        int delay = i;
                         Emulator.getThreading().run(() ->
                                         targetedHabbo.getPlayer().depleteHealth(bleedDmgPerSec),
-                                TimeUnit.SECONDS.toMillis(delay));
+                                TimeUnit.SECONDS.toMillis(i));
                     }
                     break;
             }

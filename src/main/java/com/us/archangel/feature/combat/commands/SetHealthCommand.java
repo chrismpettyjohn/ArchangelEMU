@@ -4,6 +4,8 @@ import com.eu.habbo.Emulator;
 import com.eu.habbo.habbohotel.commands.Command;
 import com.eu.habbo.habbohotel.gameclients.GameClient;
 import com.eu.habbo.habbohotel.users.Habbo;
+import com.us.archangel.feature.player.packets.outgoing.UserRoleplayStatsChangeComposer;
+import com.us.nova.core.NotificationHelper;
 
 public class SetHealthCommand extends Command {
     public SetHealthCommand() {
@@ -18,7 +20,7 @@ public class SetHealthCommand extends Command {
             return true;
         }
 
-        Habbo targetedHabbo = gameClient.getHabbo().getRoomUnit().getRoom().getRoomUnitManager().getRoomHabboByUsername(params[1]);
+        Habbo targetedHabbo =Emulator.getGameEnvironment().getHabboManager().getHabbo(targetedUsername);
 
         if (targetedHabbo == null) {
             gameClient.getHabbo().whisper(Emulator.getTexts().getValue("generic.user_not_found").replace(":username", targetedUsername));
@@ -49,6 +51,8 @@ public class SetHealthCommand extends Command {
                 .replace(":currentHealth", Integer.toString(targetedHabbo.getPlayer().getHealthNow()))
                 .replace(":maximumHealth", Integer.toString(targetedHabbo.getPlayer().getHealthMax()))
         );
+
+        NotificationHelper.sendRoom(targetedHabbo.getRoomUnit().getRoom().getRoomInfo().getId(), new UserRoleplayStatsChangeComposer(targetedHabbo));
 
         return true;
     }
