@@ -14,6 +14,7 @@ public class PlayerWeaponMapper extends GenericMapper<PlayerWeaponEntity, Player
                 entity.getId(),
                 entity.getUserId(),
                 entity.getWeaponId(),
+                entity.getAmmoId(),
                 entity.getAmmoRemaining()
         );
     }
