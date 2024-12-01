@@ -10,23 +10,26 @@ public class WeaponReloadEvent extends MessageHandler {
     public void handle() {
         PlayerWeaponModel weapon = this.client.getHabbo().getInventory().getWeaponsComponent().getEquippedWeapon();
 
-        if (weapon == null) {
+        if (weapon == null || weapon.getAmmoRemaining() >= weapon.getWeapon().getAmmoCapacity()) {
             return;
         }
 
-        if (weapon.getAmmoRemaining() >= weapon.getWeapon().getAmmoCapacity()) {
+        if (weapon.getPlayerAmmo().getAmmoRemaining() <= 0) {
+            this.client.getHabbo().whisper(Emulator.getTexts().getValue("roleplay.reload.out_of_ammo"));
             return;
         }
 
-        weapon.setAmmoRemaining(0);
+        int ammoToReload = Math.min(weapon.getWeapon().getAmmoCapacity() - weapon.getAmmoRemaining(), weapon.getPlayerAmmo().getAmmoRemaining());
+
+        weapon.getPlayerAmmo().depleteAmmo(ammoToReload);
+        weapon.setAmmoRemaining(weapon.getAmmoRemaining() + ammoToReload);
         this.client.sendResponse(new UserRoleplayStatsChangeComposer(this.client.getHabbo()));
 
         Emulator.getThreading().run(() -> {
             this.client.getHabbo().shout(weapon.getWeapon().getReloadMessage());
-            weapon.setAmmoRemaining(weapon.getWeapon().getAmmoCapacity());
+            weapon.setAmmoRemaining(ammoToReload);
             this.client.sendResponse(new UserRoleplayStatsChangeComposer(this.client.getHabbo()));
-        }, (int) weapon.getWeapon().getReloadTime());
-
-
+        }, weapon.getWeapon().getReloadTime());
     }
+
 }

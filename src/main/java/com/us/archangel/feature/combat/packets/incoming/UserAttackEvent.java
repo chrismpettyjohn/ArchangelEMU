@@ -4,6 +4,7 @@ import com.eu.habbo.Emulator;
 import com.eu.habbo.habbohotel.rooms.RoomTile;
 import com.eu.habbo.habbohotel.users.Habbo;
 import com.eu.habbo.messages.incoming.MessageHandler;
+import com.us.archangel.ammo.enums.AmmoType;
 import com.us.archangel.feature.combat.packets.outgoing.CombatDelayComposer;
 import com.us.archangel.feature.combat.packets.outgoing.UserDiedComposer;
 import com.us.archangel.feature.hospital.actions.TeleportHospitalAction;
@@ -65,7 +66,6 @@ public class UserAttackEvent extends MessageHandler {
         }
     }
 
-
     private Habbo getTargetedHabbo(int x, int y) {
         return this.client.getHabbo().getRoomUnit().getRoom().getRoomUnitManager()
                 .getHabbosAt(this.client.getHabbo().getRoomUnit().getRoom().getLayout().getTile((short) x, (short) y))
@@ -90,21 +90,14 @@ public class UserAttackEvent extends MessageHandler {
     }
 
     private int calculateDamage(PlayerWeaponModel equippedWeapon) {
-        if (equippedWeapon != null && equippedWeapon.getWeapon().getEffect() == WeaponEffect.STUN) {
+        if (equippedWeapon != null && equippedWeapon.getPlayerAmmo().getAmmo().getType() == AmmoType.STUN) {
             return 0;
         }
         return this.client.getHabbo().getPlayerSkills().getDamageModifier(equippedWeapon != null ? equippedWeapon.getWeapon() : null);
     }
 
-    private void performAttack(Habbo targetedHabbo, int totalDamage, PlayerWeaponModel equippedWeapon) {
-        String attackMessage = equippedWeapon != null
-                ? equippedWeapon.getWeapon().getAttackMessage()
-                : Emulator.getTexts().getValue("commands.roleplay.cmd_hit_success");
-
-        this.client.getHabbo().shout(attackMessage
-                .replace(":username", targetedHabbo.getHabboInfo().getUsername())
-                .replace(":damage", Integer.toString(totalDamage))
-                .replace(":displayName", equippedWeapon != null ? equippedWeapon.getWeapon().getDisplayName() : ""));
+    private void performAttack(Habbo targetedHabbo, int baseDamage, PlayerWeaponModel equippedWeapon) {
+        int totalDamage = baseDamage;
 
         if (equippedWeapon == null) {
             this.client.getHabbo().getPlayerSkills().addMeleeXp(totalDamage);
@@ -117,27 +110,51 @@ public class UserAttackEvent extends MessageHandler {
                 equippedWeapon.depleteAmmo(1);
             }
 
-            switch (equippedWeapon.getWeapon().getEffect()) {
+            if (equippedWeapon.getWeapon().getEffect() == WeaponEffect.BLEED) {
+                int bleedDmgPerSec = Math.max(totalDamage / 5, 1);
+                for (int i = 1; i <= 5; i++) {
+                    Emulator.getThreading().run(() -> {
+                        targetedHabbo.getPlayer().depleteHealth(bleedDmgPerSec);
+                        targetedHabbo.whisper(Emulator.getTexts().getValue("roleplay.attack.bleed").replace(":damage", String.valueOf(bleedDmgPerSec)));
+                        }, TimeUnit.SECONDS.toMillis(i)
+                    );
+                }
+            }
+
+            switch (equippedWeapon.getPlayerAmmo().getAmmo().getType()) {
+                case STANDARD:
+                    totalDamage += 1;
+                    break;
+
+                case FMJ:
+                    totalDamage += 2;
+                    break;
+
+                case ARMOR_PIERCING:
+                    totalDamage += 5;
+                    break;
+
                 case STUN:
                     targetedHabbo.getPlayer().setCurrentAction(PlayerAction.Stunned);
                     Emulator.getThreading().run(() ->
                                     targetedHabbo.getPlayer().setCurrentAction(PlayerAction.None),
                             TimeUnit.SECONDS.toMillis(10));
                     break;
-
-                case BLEED:
-                    int bleedDmgPerSec = Math.max(totalDamage / 5, 1);
-                    for (int i = 1; i <= 5; i++) {
-                        Emulator.getThreading().run(() ->
-                                        targetedHabbo.getPlayer().depleteHealth(bleedDmgPerSec),
-                                TimeUnit.SECONDS.toMillis(i));
-                    }
-                    break;
             }
         }
 
         targetedHabbo.getPlayer().depleteHealth(totalDamage);
         this.client.getHabbo().getPlayer().depleteEnergy(Emulator.getConfig().getInt("roleplay.attack.energy", 8));
+
+        String attackMessage = equippedWeapon != null
+                ? equippedWeapon.getWeapon().getAttackMessage()
+                : Emulator.getTexts().getValue("commands.roleplay.cmd_hit_success");
+
+        this.client.getHabbo().shout(attackMessage
+                .replace(":username", targetedHabbo.getHabboInfo().getUsername())
+                .replace(":damage", Integer.toString(totalDamage))
+                .replace(":displayName", equippedWeapon != null ? equippedWeapon.getWeapon().getDisplayName() : ""));
+
 
         NotificationHelper.sendRoom(this.client.getHabbo().getRoomUnit().getRoom().getRoomInfo().getId(), new UserRoleplayStatsChangeComposer(targetedHabbo));
         NotificationHelper.sendRoom(this.client.getHabbo().getRoomUnit().getRoom().getRoomInfo().getId(), new UserRoleplayStatsChangeComposer(this.client.getHabbo()));

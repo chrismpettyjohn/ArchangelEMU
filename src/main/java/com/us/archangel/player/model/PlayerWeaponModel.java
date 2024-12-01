@@ -1,5 +1,6 @@
 package com.us.archangel.player.model;
 
+import com.us.archangel.player.service.PlayerAmmoService;
 import com.us.archangel.weapon.model.WeaponModel;
 import com.us.archangel.weapon.service.WeaponService;
 import lombok.AllArgsConstructor;
@@ -20,13 +21,16 @@ public class PlayerWeaponModel {
     public PlayerWeaponModel() {
     }
 
-    public void depleteAmmo(int ammo) {
-            this.ammoRemaining = Math.max(this.ammoRemaining - ammo, 0);
-        }
-
     public WeaponModel getWeapon() {
         return WeaponService.getInstance().getById(this.weaponId);
     }
 
+    public PlayerAmmoModel getPlayerAmmo() {
+        return PlayerAmmoService.getInstance().getById(this.ammoId);
+    }
+
+    public void depleteAmmo(int ammoUsed) {
+       this.ammoRemaining = Math.min(this.ammoRemaining - ammoUsed, 0);
+    }
 }
 

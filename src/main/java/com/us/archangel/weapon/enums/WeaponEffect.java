@@ -4,7 +4,6 @@ import lombok.Getter;
 
 @Getter
 public enum WeaponEffect {
-    STUN("stun"),
     BLEED("bleed"),
     NONE("none");
 
