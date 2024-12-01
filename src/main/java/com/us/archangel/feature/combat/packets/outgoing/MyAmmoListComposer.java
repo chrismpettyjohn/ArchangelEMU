@@ -20,7 +20,8 @@ public class MyAmmoListComposer extends MessageComposer {
         this.response.init(Outgoing.myAmmoListComposer);
         for (PlayerAmmoModel ammo : habboAmmo) {
             this.response.appendString(
-                    ammo.getAmmo().getId()
+                    ammo.getId()
+                            + ";" +  ammo.getAmmo().getId()
                             + ";" +  ammo.getAmmo().getUniqueName()
                             + ";" + ammo.getAmmo().getDisplayName()
                             + ";" + ammo.getAmmo().getSize()

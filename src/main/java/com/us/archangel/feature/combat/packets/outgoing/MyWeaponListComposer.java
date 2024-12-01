@@ -20,7 +20,8 @@ public class MyWeaponListComposer extends MessageComposer {
         this.response.init(Outgoing.myWeaponListComposer);
         for (PlayerWeaponModel weapon : habboWeapons) {
             this.response.appendString(
-                    weapon.getWeapon().getId()
+                    weapon.getId()
+                            + ";" +  weapon.getWeapon().getId()
                             + ";" +  weapon.getWeapon().getUniqueName()
                             + ";" + weapon.getWeapon().getDisplayName()
                             + ";" + weapon.getWeapon().getEquipEffect()
