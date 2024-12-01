@@ -21,16 +21,27 @@ public class UserAttackEvent extends MessageHandler {
 
     @Override
     public void handle() {
-        if (!canAttack()) {
+        if (!this.client.getHabbo().getPlayer().canInteract() || this.client.getHabbo().getPlayer().isCombatBlocked()) {
+            this.client.getHabbo().whisper("You need to wait a bit before attacking again.");
+            this.client.sendResponse(new CombatDelayComposer(this.client.getHabbo()));
             return;
+        }
+
+        PlayerWeaponModel playerWeapon = this.client.getHabbo().getInventory().getWeaponsComponent().getEquippedWeapon();
+
+        if (playerWeapon.getWeapon() != null && playerWeapon.getWeapon().getType() == WeaponType.GUN) {
+            this.client.getHabbo().whisper("You are out of ammo");
+            if (playerWeapon.getAmmoRemaining() <= 0) {
+                return;
+            }
         }
 
         int x = this.packet.readInt();
         int y = this.packet.readInt();
-        PlayerWeaponModel equippedWeapon = getEquippedWeapon();
+        PlayerWeaponModel equippedWeapon = this.client.getHabbo().getInventory().getWeaponsComponent().getEquippedWeapon();
 
-        RoomTile roomTile = getRoomTile(x, y);
-        if (roomTile == null || isPassiveRoom()) {
+        RoomTile roomTile = this.client.getHabbo().getRoomUnit().getRoom().getLayout().getTile((short) x, (short) y);
+        if (roomTile == null || this.client.getHabbo().getRoomUnit().getRoom().getRoomInfo().getTags().contains(RoomType.PASSIVE)) {
             return;
         }
 
@@ -48,34 +59,16 @@ public class UserAttackEvent extends MessageHandler {
         performAttack(targetedHabbo, totalDamage, equippedWeapon);
 
         if (targetedHabbo.getPlayer().isDead()) {
-            handleTargetDeath(targetedHabbo);
+            Emulator.getThreading().run(new TeleportHospitalAction(targetedHabbo));
+            NotificationHelper.sendOnline(new UserDiedComposer(targetedHabbo, this.client.getHabbo()));
+            NotificationHelper.announceOnline(this.client.getHabbo().getHabboInfo().getUsername() + " killed " + targetedHabbo.getHabboInfo().getUsername());
         }
     }
 
-    private boolean canAttack() {
-        if (!this.client.getHabbo().getPlayer().canInteract() || this.client.getHabbo().getPlayer().isCombatBlocked()) {
-            this.client.getHabbo().whisper("You need to wait a bit before attacking again.");
-            this.client.sendResponse(new CombatDelayComposer(this.client.getHabbo()));
-            return false;
-        }
-        return true;
-    }
-
-    private PlayerWeaponModel getEquippedWeapon() {
-        return this.client.getHabbo().getInventory().getWeaponsComponent().getEquippedWeapon();
-    }
-
-    private RoomTile getRoomTile(int x, int y) {
-        return this.client.getHabbo().getRoomUnit().getRoom().getLayout().getTile((short) x, (short) y);
-    }
-
-    private boolean isPassiveRoom() {
-        return this.client.getHabbo().getRoomUnit().getRoom().getRoomInfo().getTags().contains(RoomType.PASSIVE);
-    }
 
     private Habbo getTargetedHabbo(int x, int y) {
         return this.client.getHabbo().getRoomUnit().getRoom().getRoomUnitManager()
-                .getHabbosAt(getRoomTile(x, y))
+                .getHabbosAt(this.client.getHabbo().getRoomUnit().getRoom().getLayout().getTile((short) x, (short) y))
                 .stream().findFirst().orElse(null);
     }
 
@@ -113,7 +106,17 @@ public class UserAttackEvent extends MessageHandler {
                 .replace(":damage", Integer.toString(totalDamage))
                 .replace(":displayName", equippedWeapon != null ? equippedWeapon.getWeapon().getDisplayName() : ""));
 
+        if (equippedWeapon == null) {
+            this.client.getHabbo().getPlayerSkills().addMeleeXp(totalDamage);
+        }
+
         if (equippedWeapon != null) {
+            this.client.getHabbo().getPlayerSkills().addWeaponXp(totalDamage);
+
+            if (equippedWeapon.getWeapon().getType() == WeaponType.GUN) {
+                equippedWeapon.depleteAmmo(1);
+            }
+
             switch (equippedWeapon.getWeapon().getEffect()) {
                 case STUN:
                     targetedHabbo.getPlayer().setCurrentAction(PlayerAction.Stunned);
@@ -133,31 +136,10 @@ public class UserAttackEvent extends MessageHandler {
             }
         }
 
-        updateStats(equippedWeapon, totalDamage);
         targetedHabbo.getPlayer().depleteHealth(totalDamage);
         this.client.getHabbo().getPlayer().depleteEnergy(Emulator.getConfig().getInt("roleplay.attack.energy", 8));
 
-        sendRoomNotifications(targetedHabbo);
-    }
-
-    private void updateStats(PlayerWeaponModel equippedWeapon, int totalDamage) {
-        if (equippedWeapon != null) {
-            this.client.getHabbo().getPlayerSkills().addWeaponXp(totalDamage);
-        } else {
-            this.client.getHabbo().getPlayerSkills().addMeleeXp(totalDamage);
-        }
-    }
-
-    private void sendRoomNotifications(Habbo targetedHabbo) {
-        NotificationHelper.sendRoom(this.client.getHabbo().getRoomUnit().getRoom().getRoomInfo().getId(),
-                new UserRoleplayStatsChangeComposer(targetedHabbo));
-        NotificationHelper.sendRoom(this.client.getHabbo().getRoomUnit().getRoom().getRoomInfo().getId(),
-                new UserRoleplayStatsChangeComposer(this.client.getHabbo()));
-    }
-
-    private void handleTargetDeath(Habbo targetedHabbo) {
-        Emulator.getThreading().run(new TeleportHospitalAction(targetedHabbo));
-        NotificationHelper.sendOnline(new UserDiedComposer(targetedHabbo, this.client.getHabbo()));
-        NotificationHelper.announceOnline(this.client.getHabbo().getHabboInfo().getUsername() + " killed " + targetedHabbo.getHabboInfo().getUsername());
+        NotificationHelper.sendRoom(this.client.getHabbo().getRoomUnit().getRoom().getRoomInfo().getId(), new UserRoleplayStatsChangeComposer(targetedHabbo));
+        NotificationHelper.sendRoom(this.client.getHabbo().getRoomUnit().getRoom().getRoomInfo().getId(), new UserRoleplayStatsChangeComposer(this.client.getHabbo()));
     }
 }
