@@ -346,7 +346,6 @@ public class CommandsManager {
         // Police
         addCommand(new CuffCommand());
         addCommand(new EscortCommand());
-        addCommand(new StunCommand());
         addCommand(new ReleaseCommand());
         addCommand(new PayBillCommand());
         addCommand(new CallPoliceCommand());

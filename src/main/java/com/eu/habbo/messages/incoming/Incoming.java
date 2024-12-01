@@ -982,8 +982,6 @@ public enum Incoming {
 
     policeCuffEvent(8021, PoliceCuffEvent.class),
 
-    policeStunEvent(8022, PoliceStunEvent.class),
-
     policeEscortEvent(8024, PoliceEscortEvent.class),
 
     equipWeaponEvent(8025, EquipWeaponEvent.class),
