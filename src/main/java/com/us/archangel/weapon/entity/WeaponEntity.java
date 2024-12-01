@@ -1,5 +1,8 @@
 package com.us.archangel.weapon.entity;
 
+import com.us.archangel.ammo.enums.AmmoType;
+import com.us.archangel.ammo.enums.converter.AmmoSizeConverter;
+import com.us.archangel.ammo.enums.converter.AmmoTypeConverter;
 import com.us.archangel.weapon.enums.WeaponEffect;
 import com.us.archangel.weapon.enums.WeaponType;
 import com.us.archangel.weapon.enums.converter.WeaponEffectConverter;
@@ -50,6 +53,10 @@ public class WeaponEntity {
 
     @Column(name = "reload_message")
     private String reloadMessage;
+
+    @Column(name = "ammo_type")
+    @Convert(converter = AmmoTypeConverter.class)
+    private AmmoType ammoType;
 
     @Column(name = "ammo_capacity")
     private int ammoCapacity;
