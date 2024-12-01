@@ -26,16 +26,6 @@ public class WeaponsComponent {
             this.createWeapon(habbo.getHabboInfo().getPermissionGroup().getRoomEffect());
     }
 
-    public PlayerWeaponModel getWeaponByUniqueName(String uniqueName) {
-        List<PlayerWeaponModel> playerWeapons = PlayerWeaponService.getInstance().getByUserID(this.habbo.getHabboInfo().getId());
-        for (PlayerWeaponModel playerWeapon : playerWeapons) {
-            if (playerWeapon.getWeapon().getUniqueName().equals(uniqueName)) {
-                return playerWeapon;
-            }
-        }
-        return null;
-    }
-
     public void createWeapon(int weaponID) {
         WeaponModel weapon = WeaponService.getInstance().getById(weaponID);
         PlayerWeaponEntity playerWeapon = new PlayerWeaponEntity();

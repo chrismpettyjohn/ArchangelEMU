@@ -1,5 +1,6 @@
 package com.us.archangel.player.service;
 
+import com.us.archangel.ammo.enums.AmmoSize;
 import com.us.archangel.player.context.PlayerAmmoContext;
 import com.us.archangel.player.entity.PlayerAmmoEntity;
 import com.us.archangel.player.mapper.PlayerAmmoMapper;
@@ -65,4 +66,24 @@ public class PlayerAmmoService extends GenericService<PlayerAmmoModel, PlayerAmm
         modelList.forEach(model -> context.add(model.getId(), model));
         return modelList;
     }
+
+    public List<PlayerAmmoModel> getByAmmoSize(AmmoSize ammoSize) {
+        Map<Integer, PlayerAmmoModel> allAmmos = context.getAll();
+        List<PlayerAmmoModel> models = allAmmos.values().stream()
+                .filter(ammo -> ammo.getAmmo().getSize() == ammoSize)
+                .collect(Collectors.toList());
+
+        if (!models.isEmpty()) {
+            return models;
+        }
+
+        List<PlayerAmmoEntity> entities = repository.getByAmmoSize(ammoSize);
+        List<PlayerAmmoModel> modelList = entities.stream()
+                .map(PlayerAmmoMapper::toModel)
+                .collect(Collectors.toList());
+
+        modelList.forEach(model -> context.add(model.getId(), model));
+        return modelList;
+    }
+
 }

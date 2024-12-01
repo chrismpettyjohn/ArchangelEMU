@@ -1,12 +1,10 @@
 package com.us.archangel.feature.combat.packets.incoming;
 
 import com.eu.habbo.messages.incoming.MessageHandler;
-import com.us.archangel.feature.combat.commands.EquipCommand;
 import com.us.archangel.feature.player.packets.outgoing.UserRoleplayStatsChangeComposer;
 import com.us.archangel.player.model.PlayerAmmoModel;
 import com.us.archangel.player.model.PlayerWeaponModel;
 import com.us.archangel.player.service.PlayerAmmoService;
-import com.us.archangel.weapon.model.WeaponModel;
 
 public class EquipAmmoEvent extends MessageHandler {
     @Override

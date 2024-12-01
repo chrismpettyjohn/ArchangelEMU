@@ -1173,7 +1173,9 @@ public enum Incoming {
 
     mapQueryEvent(8121, MapQueryEvent.class),
 
-    equipAmmoEvent(8122, EquipAmmoEvent.class);
+    equipAmmoEvent(8122, EquipAmmoEvent.class),
+
+    listMyAmmoEvent(8123, ListMyAmmoEvent.class);
 
     private final int messageId;
     private final Class<? extends MessageHandler> messageClass;

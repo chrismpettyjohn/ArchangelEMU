@@ -22,6 +22,7 @@ public class WeaponMapper extends GenericMapper<WeaponEntity, WeaponModel> {
                 entity.getAccuracy(),
                 entity.getReloadTime(),
                 entity.getReloadMessage(),
+                entity.getAmmoSize(),
                 entity.getAmmoCapacity(),
                 entity.getWeight(),
                 entity.getCooldownSeconds(),

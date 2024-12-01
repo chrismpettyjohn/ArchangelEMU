@@ -9,6 +9,7 @@ public enum AmmoSize {
     _762_51("762x51"),
     _9mm("9mm"),
     _45ACP("45acp"),
+    _12g("12g"),
     STUN_CARTRIDGE("stun_cartridge");
 
     // Getter to retrieve the string value of the enum

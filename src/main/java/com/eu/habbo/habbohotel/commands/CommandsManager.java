@@ -36,7 +36,6 @@ import com.eu.habbo.plugin.events.users.UserCommandEvent;
 import com.eu.habbo.plugin.events.users.UserExecuteCommandEvent;
 import com.us.archangel.feature.bank.commands.*;
 import com.us.archangel.feature.bill.commands.PayBillCommand;
-import com.us.archangel.feature.combat.commands.EquipCommand;
 import com.us.archangel.feature.combat.commands.SetHealthCommand;
 import com.us.archangel.feature.corp.commands.*;
 import com.us.archangel.feature.gang.commands.*;
@@ -319,7 +318,6 @@ public class CommandsManager {
         addCommand(new BankConnectATMCommand());
         addCommand(new BankConnectComputerCommand());
         // Combat
-        addCommand(new EquipCommand());
         addCommand(new SetHealthCommand());
         // Corp
         addCommand(new CorpAcceptJobCommand());
