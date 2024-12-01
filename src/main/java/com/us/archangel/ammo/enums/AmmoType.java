@@ -7,7 +7,7 @@ public enum AmmoType {
     STANDARD("standard"),
     FMJ("fmj"),
     STUN("stun"),
-    ARMOR_PIERCING("armor_piercing");
+    ARMOR_PIERCING("ap");
 
     // Getter to retrieve the string value of the enum
     private final String typeName;

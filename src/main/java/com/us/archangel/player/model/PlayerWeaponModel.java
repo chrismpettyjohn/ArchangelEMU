@@ -12,6 +12,7 @@ public class PlayerWeaponModel {
     private int id;
     private int userId;
     private int weaponId;
+    @Setter
     private int ammoId;
     @Setter
     private int ammoRemaining;

@@ -60,13 +60,10 @@ import com.eu.habbo.messages.incoming.wired.ApplySnapshotEvent;
 import com.eu.habbo.messages.incoming.wired.UpdateActionEvent;
 import com.eu.habbo.messages.incoming.wired.UpdateConditionEvent;
 import com.eu.habbo.messages.incoming.wired.UpdateTriggerEvent;
+import com.us.archangel.feature.combat.packets.incoming.*;
 import com.us.archangel.feature.corp.packets.incoming.*;
 import com.us.archangel.feature.bank.packets.incoming.*;
 import com.us.archangel.feature.bill.packets.incoming.PayBillEvent;
-import com.us.archangel.feature.combat.packets.incoming.EquipWeaponEvent;
-import com.us.archangel.feature.combat.packets.incoming.ListMyWeaponsEvent;
-import com.us.archangel.feature.combat.packets.incoming.UserAttackEvent;
-import com.us.archangel.feature.combat.packets.incoming.WeaponReloadEvent;
 import com.us.archangel.feature.controls.packets.incoming.UserMovementEvent;
 import com.us.archangel.feature.corp.packets.outgoing.CorpFireUserEvent;
 import com.us.archangel.feature.corp.packets.outgoing.CorpPositionInfoQueryEvent;
@@ -1174,7 +1171,9 @@ public enum Incoming {
 
     cancelTaxiEvent(8120, CancelTaxiEvent.class),
 
-    mapQueryEvent(8121, MapQueryEvent.class);
+    mapQueryEvent(8121, MapQueryEvent.class),
+
+    equipAmmoEvent(8122, EquipAmmoEvent.class);
 
     private final int messageId;
     private final Class<? extends MessageHandler> messageClass;
