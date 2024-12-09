@@ -6,8 +6,8 @@ import com.eu.habbo.habbohotel.rooms.Room;
 import com.eu.habbo.messages.incoming.MessageHandler;
 import com.eu.habbo.messages.outgoing.users.CreditBalanceComposer;
 import com.us.archangel.feature.taxi.actions.CallTaxiAction;
+import com.us.archangel.feature.taxi.interactions.InteractionTaxiStand;
 import com.us.archangel.feature.taxi.packets.outgoing.TaxiDispatchedComposer;
-import com.us.archangel.room.enums.RoomType;
 
 public class CallTaxiEvent extends MessageHandler {
     @Override
@@ -40,7 +40,18 @@ public class CallTaxiEvent extends MessageHandler {
             return;
         }
 
-        if (!targetedRoom.getRoomInfo().getTags().contains(RoomType.TAXI)) {
+        // Check if the room has a taxi stand, bypass for staff with navigator perms
+        boolean hasTaxiStand = hasFreeTaxiPermission;
+        if (!hasTaxiStand) {
+            for (var item : targetedRoom.getRoomItemManager().getCurrentItems().values()) {
+                if (item.getBaseItem().getInteractionType().getType().isAssignableFrom(InteractionTaxiStand.class)) {
+                    hasTaxiStand = true;
+                    break;
+                }
+            }
+        }
+
+        if (!hasTaxiStand) {
             this.client.getHabbo().whisper(Emulator.getTexts().getValue("roleplay.taxi.not_available")
                     .replace(":roomname", targetedRoom.getRoomInfo().getName()));
             return;
@@ -55,7 +66,6 @@ public class CallTaxiEvent extends MessageHandler {
         }
 
         this.client.getHabbo().getClient().sendResponse(new TaxiDispatchedComposer(targetedRoom.getRoomInfo().getId(), arrivesAt));
-
 
         CallTaxiAction callTaxiAction = new CallTaxiAction(this.client.getHabbo(), targetedRoom.getRoomInfo().getId(), taxiDelay, taxiFee);
         this.client.getHabbo().getPlayer().setTask(callTaxiAction);

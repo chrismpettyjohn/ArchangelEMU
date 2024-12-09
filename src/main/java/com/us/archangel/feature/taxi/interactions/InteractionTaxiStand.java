@@ -12,7 +12,7 @@ import java.sql.SQLException;
 
 public class InteractionTaxiStand extends InteractionDefault {
 
-    public static String INTERACTION_TYPE = "rp_taxi_stand";
+    public static final String INTERACTION_TYPE = "rp_taxi_stand";
 
     public InteractionTaxiStand(ResultSet set, Item baseItem) throws SQLException {
         super(set, baseItem);

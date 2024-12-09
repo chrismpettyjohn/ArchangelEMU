@@ -14,6 +14,11 @@ public class WeaponReloadEvent extends MessageHandler {
             return;
         }
 
+        if (weapon.getPlayerAmmo() == null) {
+            this.client.getHabbo().whisper(Emulator.getTexts().getValue("roleplay.reload.out_of_ammo"));
+            return;
+        }
+
         if (weapon.getPlayerAmmo().getAmmoRemaining() <= 0) {
             this.client.getHabbo().whisper(Emulator.getTexts().getValue("roleplay.reload.out_of_ammo"));
             return;
