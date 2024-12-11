@@ -148,6 +148,7 @@ public class RoomManager {
                     Room room = new Room(set);
                     room.preventUncaching = true;
                     this.activeRooms.put(set.getInt("id"), room);
+                    room.loadData();
                 }
             }
         } catch (SQLException e) {
