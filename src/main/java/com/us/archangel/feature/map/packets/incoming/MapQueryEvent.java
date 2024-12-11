@@ -9,8 +9,11 @@ public class MapQueryEvent extends MessageHandler {
     @Override
     public void handle() {
         int roomId = this.packet.readInt();
+        boolean includeConnections = this.packet.readBoolean();
+        
         Room room = Emulator.getGameEnvironment().getRoomManager().getRoom(roomId);
         if (room == null) return;
+        
         this.client.sendResponse(new MapQueryComposer(room));
     }
 }
