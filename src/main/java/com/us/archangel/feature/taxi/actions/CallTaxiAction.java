@@ -110,7 +110,7 @@ public class CallTaxiAction extends ManagedTask<CallTaxiAction> {
 
         // Get closest unoccupied adjacent tile
         // true parameter enables diagonal tiles for more possible positions
-        RoomTile nearbyTile = habbo.getRoomUnit().getClosestAdjacentTile(targetX, targetY, true);
+        RoomTile nearbyTile = habbo.getRoomUnit().getClosestAdjacentTile(targetX, targetY, false);
 
         // Only teleport if we found a valid tile
         if (nearbyTile != null) {
