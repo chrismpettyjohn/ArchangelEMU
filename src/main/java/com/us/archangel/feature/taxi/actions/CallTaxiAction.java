@@ -1,10 +1,21 @@
 package com.us.archangel.feature.taxi.actions;
 
 import com.eu.habbo.Emulator;
+import com.eu.habbo.habbohotel.items.interactions.InteractionTeleport;
+import com.eu.habbo.habbohotel.rooms.RoomTile;
+import com.eu.habbo.habbohotel.rooms.entities.units.RoomUnit;
+import com.eu.habbo.habbohotel.rooms.items.entities.RoomItem;
 import com.eu.habbo.habbohotel.users.Habbo;
+import com.us.archangel.feature.hospital.interactions.InteractionHospitalBed;
+import com.us.archangel.feature.taxi.packets.incoming.CallTaxiEvent;
 import com.us.nova.core.ManagedTask;
+import com.us.archangel.feature.taxi.interactions.InteractionTaxiStand;
+import com.eu.habbo.habbohotel.rooms.Room;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+
+import java.util.Collection;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 public class CallTaxiAction extends ManagedTask<CallTaxiAction> {
@@ -69,6 +80,7 @@ public class CallTaxiAction extends ManagedTask<CallTaxiAction> {
                         .replace(":fee", String.valueOf(this.taxiFee)));
                         
                 habbo.goToRoom(this.roomId, () -> {
+                    CallTaxiAction.teleportToNearbyTaxiStand(habbo);
                     habbo.shout(Emulator.getTexts().getValue("roleplay.taxi.arrived"));
                 });
                 
@@ -80,5 +92,29 @@ public class CallTaxiAction extends ManagedTask<CallTaxiAction> {
     private boolean hasUserMoved() {
         return habbo.getRoomUnit().getCurrentPosition().getX() != startX || 
                habbo.getRoomUnit().getCurrentPosition().getY() != startY;
+    }
+
+    public static void teleportToNearbyTaxiStand(Habbo habbo) {
+        Optional<RoomItem> taxiStand = habbo.getRoomUnit().getRoom().getRoomItemManager().getCurrentItems()
+                .values().stream()
+                .filter(item -> item.getClass().isAssignableFrom(InteractionTaxiStand.class))
+                .findFirst();
+
+        if (taxiStand.isEmpty()) {
+            return;
+        }
+
+        // Get position from taxi stand
+        short targetX = taxiStand.get().getCurrentPosition().getX();
+        short targetY = taxiStand.get().getCurrentPosition().getY();
+
+        // Get closest unoccupied adjacent tile
+        // true parameter enables diagonal tiles for more possible positions
+        RoomTile nearbyTile = habbo.getRoomUnit().getClosestAdjacentTile(targetX, targetY, true);
+
+        // Only teleport if we found a valid tile
+        if (nearbyTile != null) {
+            habbo.getRoomUnit().setLocation(nearbyTile);
+        }
     }
 }

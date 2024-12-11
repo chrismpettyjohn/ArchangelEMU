@@ -3,11 +3,14 @@ package com.us.archangel.feature.taxi.packets.incoming;
 import com.eu.habbo.Emulator;
 import com.eu.habbo.habbohotel.permissions.Permission;
 import com.eu.habbo.habbohotel.rooms.Room;
+import com.eu.habbo.habbohotel.rooms.items.entities.RoomItem;
 import com.eu.habbo.messages.incoming.MessageHandler;
 import com.eu.habbo.messages.outgoing.users.CreditBalanceComposer;
 import com.us.archangel.feature.taxi.actions.CallTaxiAction;
 import com.us.archangel.feature.taxi.interactions.InteractionTaxiStand;
 import com.us.archangel.feature.taxi.packets.outgoing.TaxiDispatchedComposer;
+
+import java.util.Optional;
 
 public class CallTaxiEvent extends MessageHandler {
     @Override
@@ -63,9 +66,9 @@ public class CallTaxiEvent extends MessageHandler {
 
         // For staff, teleport immediately
         if (hasFreeTaxiPermission) {
-            this.client.getHabbo().shout(Emulator.getTexts().getValue("roleplay.taxi.picked_up")
-                    .replace(":fee", "0"));
+            this.client.getHabbo().shout(Emulator.getTexts().getValue("roleplay.taxi.picked_up").replace(":fee", "0"));
             this.client.getHabbo().goToRoom(roomID, () -> {
+                CallTaxiAction.teleportToNearbyTaxiStand(this.client.getHabbo());
                 this.client.getHabbo().shout(Emulator.getTexts().getValue("roleplay.taxi.arrived"));
             });
             return;
