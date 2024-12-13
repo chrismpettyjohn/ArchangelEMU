@@ -63,13 +63,17 @@ public class UserAttackEvent extends MessageHandler {
 
 
         if (targetedHabbo.getPlayer().isDead()) {
+            // Record kill
             PlayerKillHistoryModel playerDeathRecord = new PlayerKillHistoryModel();
             playerDeathRecord.setAttackerUserId(this.client.getHabbo().getHabboInfo().getId());
             playerDeathRecord.setVictimUserId(targetedHabbo.getHabboInfo().getId());
             playerDeathRecord.setAttackerWeaponId(playerWeapon != null ? playerWeapon.getWeaponId() : 0);
             PlayerKillHistoryService.getInstance().create(playerDeathRecord);
 
+            // Teleport victim to hospital
             Emulator.getThreading().run(new TeleportHospitalAction(targetedHabbo));
+
+            // Notify online users
             NotificationHelper.sendOnline(new UserDiedComposer(targetedHabbo, this.client.getHabbo()));
             NotificationHelper.announceOnline(this.client.getHabbo().getHabboInfo().getUsername() + " killed " + targetedHabbo.getHabboInfo().getUsername());
         }

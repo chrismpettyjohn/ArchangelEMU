@@ -41,6 +41,19 @@ public class PlayerKillHistoryRepository extends GenericRepository<PlayerKillHis
         super.deleteById(id);
     }
 
+    public List<PlayerKillHistoryEntity> getKillsBetweenTwoPeople(int userId1, int userId2) {
+        try (Session session = sessionFactory.openSession()) {
+            return session.createQuery(
+                            "from PlayerKillHistoryEntity where " +
+                                    "(attackerUserId = :userId1 and victimUserId = :userId2) or " +
+                                    "(attackerUserId = :userId2 and victimUserId = :userId1)",
+                            PlayerKillHistoryEntity.class)
+                    .setParameter("userId1", userId1)
+                    .setParameter("userId2", userId2)
+                    .list();
+        }
+    }
+
     public List<PlayerKillHistoryEntity> getByAttackerUserId(int attackerUserId) {
         try (Session session = sessionFactory.openSession()) {
             return session.createQuery("from PlayerKillHistoryEntity where attackerUserId = :attackerUserId", PlayerKillHistoryEntity.class)

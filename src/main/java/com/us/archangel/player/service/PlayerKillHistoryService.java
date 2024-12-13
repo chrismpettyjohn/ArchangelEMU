@@ -47,6 +47,28 @@ public class PlayerKillHistoryService extends GenericService<PlayerKillHistoryMo
         super.deleteById(id);
     }
 
+    public List<PlayerKillHistoryModel> getKillsBetweenTwoPeople(int userId1, int userId2) {
+        Map<Integer, PlayerKillHistoryModel> allKillHistories = context.getAll();
+        List<PlayerKillHistoryModel> models = allKillHistories.values().stream()
+                .filter(kill ->
+                        (kill.getAttackerUserId() == userId1 && kill.getVictimUserId() == userId2) ||
+                                (kill.getAttackerUserId() == userId2 && kill.getVictimUserId() == userId1))
+                .collect(Collectors.toList());
+
+        if (!models.isEmpty()) {
+            return models;
+        }
+
+        List<PlayerKillHistoryEntity> entities = repository.getKillsBetweenTwoPeople(userId1, userId2);
+        List<PlayerKillHistoryModel> modelList = entities.stream()
+                .map(PlayerKillHistoryMapper::toModel)
+                .collect(Collectors.toList());
+
+        modelList.forEach(model -> context.add(model.getId(), model));
+        return modelList;
+    }
+
+
     public List<PlayerKillHistoryModel> getByAttackerUserId(int attackerUserId) {
         Map<Integer, PlayerKillHistoryModel> allKillHistories = context.getAll();
         List<PlayerKillHistoryModel> models = allKillHistories.values().stream()
