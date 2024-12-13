@@ -42,6 +42,13 @@ public class TeleportAction implements Runnable {
                     synchronized (this.room) {
                         if (teleport.getTargetRoomId() == 0) {
                             this.client.getHabbo().whisper(Emulator.getTexts().getValue("roleplay.teleport.no_connect"));
+                            // Reset the user's state
+                            this.client.getHabbo().getRoomUnit().setCanWalk(true);
+                            this.client.getHabbo().getRoomUnit().setTeleporting(false);
+                            this.client.getHabbo().getRoomUnit().setLeavingTeleporter(false);
+                            // Reset the teleport's state
+                            ((InteractionTeleport)this.currentTeleport).setExtraData("0");
+                            this.room.updateItemState(this.currentTeleport);
                         } else {
                             proceedToTargetRoom(teleport);
                         }
@@ -116,8 +123,18 @@ public class TeleportAction implements Runnable {
                 }
 
                 if (targetRoom != this.room) {
-                    this.room.getRoomUnitManager().removeHabbo(this.client.getHabbo(), false);
-                    Emulator.getGameEnvironment().getRoomManager().enterRoom(this.client.getHabbo(), targetRoom.getRoomInfo().getId(), "", Emulator.getConfig().getBoolean("hotel.teleport.locked.allowed"), teleportLocation);
+                    Room oldRoom = this.room;
+                    oldRoom.getRoomUnitManager().removeHabbo(this.client.getHabbo(), true);
+                    
+                    Emulator.getThreading().run(() -> {
+                        Emulator.getGameEnvironment().getRoomManager().enterRoom(
+                            this.client.getHabbo(), 
+                            targetRoom.getRoomInfo().getId(), 
+                            "", 
+                            Emulator.getConfig().getBoolean("hotel.teleport.locked.allowed"), 
+                            teleportLocation
+                        );
+                    }, 100);
                 }
 
                 this.client.getHabbo().getRoomUnit().setRotation(RoomRotation.values()[targetTeleport.getRotation() % 8]);
@@ -139,7 +156,9 @@ public class TeleportAction implements Runnable {
             this.client.getHabbo().getRoomUnit().setTeleporting(false);
             this.client.getHabbo().getRoomUnit().setCanWalk(true);
 
-            targetTeleport.setExtraData("0");
+            if (targetTeleport != null) {
+                targetTeleport.setExtraData("0");
+            }
         }
     }
 }
