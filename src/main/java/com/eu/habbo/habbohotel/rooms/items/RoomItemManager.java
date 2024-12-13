@@ -98,22 +98,23 @@ public class RoomItemManager {
         this.currentItems.clear();
         this.wiredManager.clear();
 
-        try (PreparedStatement statement = connection.prepareStatement("SELECT i.*, t.* FROM items i LEFT JOIN items_teleports t ON (t.teleport_one_id = i.id OR t.teleport_two_id = i.id) WHERE i.room_id = ?")) {
+        try (PreparedStatement statement = connection.prepareStatement("SELECT i.*, t.*, target.room_id as target_room_id FROM items i LEFT JOIN items_teleports t ON (t.teleport_one_id = i.id OR t.teleport_two_id = i.id) LEFT JOIN items target ON (CASE WHEN t.teleport_one_id = i.id THEN target.id = t.teleport_two_id ELSE target.id = t.teleport_one_id END) WHERE i.room_id = ?")) {
             statement.setInt(1, this.room.getRoomInfo().getId());
             try (ResultSet set = statement.executeQuery()) {
                 while (set.next()) {
                     RoomItem item = Emulator.getGameEnvironment().getItemManager().loadHabboItem(set);
 
                     if (item != null) {
-                        // Load any linked item data (like teleport pairs) here
-                        if (item instanceof InteractionTeleport) {
+                        if (item instanceof InteractionTeleport teleport) {
                             if (set.getObject("teleport_one_id") != null) {
-                                ((InteractionTeleport)item).setTargetId(
-                                        set.getInt("teleport_one_id") == item.getId() ?
-                                                set.getInt("teleport_two_id") :
-                                                set.getInt("teleport_one_id")
-                                );
-                                ((InteractionTeleport)item).setTargetRoomId(set.getInt("room_id"));
+                                int teleportOneId = set.getInt("teleport_one_id");
+                                int teleportTwoId = set.getInt("teleport_two_id");
+                                if (teleportOneId == item.getId()) {
+                                    teleport.setTargetId(teleportTwoId);
+                                } else {
+                                    teleport.setTargetId(teleportOneId);
+                                }
+                                teleport.setTargetRoomId(set.getInt("target_room_id")); // Now we set the actual target room ID
                             }
                         }
                         this.addRoomItem(item);

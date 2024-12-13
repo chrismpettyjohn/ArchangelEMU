@@ -37,57 +37,20 @@ public class TeleportAction implements Runnable {
             this.room.sendComposer(new UserUpdateComposer(this.client.getHabbo().getRoomUnit()).compose());
         }
 
-        CompletableFuture<Void> teleportSetupFuture = CompletableFuture.supplyAsync(() -> resolveTeleportTarget((InteractionTeleport) this.currentTeleport))
-                .thenAcceptAsync(teleport -> {
-                    synchronized (this.room) {
-                        if (teleport.getTargetRoomId() == 0) {
-                            this.client.getHabbo().whisper(Emulator.getTexts().getValue("roleplay.teleport.no_connect"));
-                            // Reset the user's state
-                            this.client.getHabbo().getRoomUnit().setCanWalk(true);
-                            this.client.getHabbo().getRoomUnit().setTeleporting(false);
-                            this.client.getHabbo().getRoomUnit().setLeavingTeleporter(false);
-                            // Reset the teleport's state
-                            ((InteractionTeleport)this.currentTeleport).setExtraData("0");
-                            this.room.updateItemState(this.currentTeleport);
-                        } else {
-                            proceedToTargetRoom(teleport);
-                        }
-                    }
-                })
-                .exceptionally(throwable -> {
-                    TeleportAction.LOGGER.error("Error resolving teleport target", throwable);
-                    return null;
-                });
+        InteractionTeleport resolvedTeleport = (InteractionTeleport) this.currentTeleport;
 
-        teleportSetupFuture.join();
-    }
-
-    public static InteractionTeleport resolveTeleportTarget(InteractionTeleport teleport) {
-        try (Connection connection = Emulator.getDatabase().getDataSource().getConnection();
-             PreparedStatement statement = connection.prepareStatement(
-                     "SELECT items_teleports.*, A.room_id as a_room_id, A.id as a_id, B.room_id as b_room_id, B.id as b_id " +
-                             "FROM items_teleports " +
-                             "INNER JOIN items AS A ON items_teleports.teleport_one_id = A.id " +
-                             "INNER JOIN items AS B ON items_teleports.teleport_two_id = B.id " +
-                             "WHERE (teleport_one_id = ? OR teleport_two_id = ?)")) {
-            statement.setInt(1, teleport.getId());
-            statement.setInt(2, teleport.getId());
-
-            try (ResultSet set = statement.executeQuery()) {
-                if (set.next()) {
-                    if (set.getInt("a_id") != teleport.getId()) {
-                        teleport.setTargetId(set.getInt("a_id"));
-                        teleport.setTargetRoomId(set.getInt("a_room_id"));
-                    } else {
-                        teleport.setTargetId(set.getInt("b_id"));
-                        teleport.setTargetRoomId(set.getInt("b_room_id"));
-                    }
-                }
-            }
-        } catch (SQLException e) {
-            TeleportAction.LOGGER.error("Caught SQL exception while resolving teleport target", e);
+        if (resolvedTeleport.getTargetRoomId() == 0) {
+            this.client.getHabbo().whisper(Emulator.getTexts().getValue("roleplay.teleport.no_connect"));
+            this.client.getHabbo().getRoomUnit().setCanWalk(true);
+            this.client.getHabbo().getRoomUnit().setTeleporting(false);
+            this.client.getHabbo().getRoomUnit().setLeavingTeleporter(false);
+            resolvedTeleport.setExtraData("0");
+            this.room.updateItemState(this.currentTeleport);
+            return;
         }
-        return teleport;
+
+
+        proceedToTargetRoom(resolvedTeleport);
     }
 
     private void proceedToTargetRoom(InteractionTeleport teleport) {

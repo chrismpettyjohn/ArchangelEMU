@@ -31,8 +31,7 @@ public class MapQueryComposer extends MessageComposer {
             // Map immediate connections only
             for (RoomItem item : startingRoom.getRoomItemManager().getItemsOfType(InteractionInstantTeleport.class)) {
                 InteractionInstantTeleport teleport = (InteractionInstantTeleport) item;
-                teleport = (InteractionInstantTeleport) TeleportAction.resolveTeleportTarget(teleport);
-                
+
                 int targetRoomId = teleport.getTargetRoomId();
                 Room targetRoom = Emulator.getGameEnvironment().getRoomManager().getRoom(targetRoomId);
                 
@@ -75,7 +74,6 @@ public class MapQueryComposer extends MessageComposer {
             if (room.getRoomInfo().getId() == startingRoom.getRoomInfo().getId()) {
                 for (RoomItem item : room.getRoomItemManager().getItemsOfType(InteractionInstantTeleport.class)) {
                     InteractionInstantTeleport teleport = (InteractionInstantTeleport) item;
-                    teleport = (InteractionInstantTeleport) TeleportAction.resolveTeleportTarget(teleport);
                     int targetRoomId = teleport.getTargetRoomId();
 
                     if (mappedRooms.containsKey(targetRoomId)) {
