@@ -27,7 +27,6 @@ public class WeaponDataComposer extends MessageComposer {
         this.response.appendInt(this.weapon.getAmmoCapacity());
         this.response.appendInt(this.weapon.getWeight());
         this.response.appendInt(this.weapon.getCooldownSeconds());
-        this.response.appendString(this.weapon.getSpecialAbilities());
         this.response.appendInt(this.weapon.getEquipEffect());
         this.response.appendString(this.weapon.getEquipMessage());
         this.response.appendString(this.weapon.getUnequipMessage());

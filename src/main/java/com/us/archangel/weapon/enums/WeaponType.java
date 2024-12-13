@@ -6,6 +6,7 @@ import lombok.Getter;
 public enum WeaponType {
     GUN("gun"),
     MELEE("melee"),
+    TOOL("tool"),
     CONSUMABLE("consumable");
 
     // Getter to retrieve the string value of the enum

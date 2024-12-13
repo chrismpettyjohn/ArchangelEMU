@@ -26,7 +26,6 @@ public class WeaponModel {
     private int ammoCapacity;
     private int weight;
     private int cooldownSeconds;
-    private String specialAbilities;
     private int equipEffect;
     private String equipMessage;
     private String unequipMessage;

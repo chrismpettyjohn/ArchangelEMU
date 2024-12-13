@@ -106,6 +106,7 @@ public class UserAttackEvent extends MessageHandler {
         if (equippedWeapon != null) {
             this.client.getHabbo().getPlayerSkills().addWeaponXp(totalDamage);
 
+
             if (equippedWeapon.getWeapon().getType() == WeaponType.GUN) {
                 equippedWeapon.depleteAmmo(1);
             }
@@ -143,7 +144,14 @@ public class UserAttackEvent extends MessageHandler {
             }
         }
 
-        targetedHabbo.getPlayer().depleteHealth(totalDamage);
+        if (equippedWeapon.getWeapon().getType() != WeaponType.TOOL) {
+            targetedHabbo.getPlayer().depleteHealth(totalDamage);
+        }
+
+        if (equippedWeapon.getWeapon().getEffect() == WeaponEffect.HEAL) {
+            targetedHabbo.getPlayer().addHealth(totalDamage);
+        }
+
         this.client.getHabbo().getPlayer().depleteEnergy(Emulator.getConfig().getInt("roleplay.attack.energy", 8));
 
         String attackMessage = equippedWeapon != null

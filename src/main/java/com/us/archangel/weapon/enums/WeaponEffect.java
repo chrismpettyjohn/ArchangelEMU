@@ -5,6 +5,7 @@ import lombok.Getter;
 @Getter
 public enum WeaponEffect {
     BLEED("bleed"),
+    HEAL("heal"),
     NONE("none");
 
     // Getter to retrieve the string value of the enum
