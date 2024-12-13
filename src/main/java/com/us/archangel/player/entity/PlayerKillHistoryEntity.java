@@ -11,7 +11,8 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "archangel_players_kills", indexes = {
         @Index(name = "idx_attacker_users_id", columnList = "attacker_users_id"),
-        @Index(name = "idx_victim_users_id", columnList = "victim_users_id")
+        @Index(name = "idx_victim_users_id", columnList = "victim_users_id"),
+        @Index(name = "idx_attacker_weapons_id", columnList = "attacker_weapons_id"),
 })
 public class PlayerKillHistoryEntity {
 
@@ -24,6 +25,9 @@ public class PlayerKillHistoryEntity {
 
     @Column(name = "victim_users_id", nullable = false)
     private int victimUserId;
+
+    @Column(name = "attacker_weapons_id", nullable = false)
+    private int attackerWeaponId;
 
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;

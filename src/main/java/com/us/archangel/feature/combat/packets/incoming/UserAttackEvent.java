@@ -61,10 +61,12 @@ public class UserAttackEvent extends MessageHandler {
         int totalDamage = calculateDamage(equippedWeapon);
         performAttack(targetedHabbo, totalDamage, equippedWeapon);
 
+
         if (targetedHabbo.getPlayer().isDead()) {
             PlayerKillHistoryModel playerDeathRecord = new PlayerKillHistoryModel();
             playerDeathRecord.setAttackerUserId(this.client.getHabbo().getHabboInfo().getId());
             playerDeathRecord.setVictimUserId(targetedHabbo.getHabboInfo().getId());
+            playerDeathRecord.setAttackerWeaponId(playerWeapon != null ? playerWeapon.getWeaponId() : 0);
             PlayerKillHistoryService.getInstance().create(playerDeathRecord);
 
             Emulator.getThreading().run(new TeleportHospitalAction(targetedHabbo));

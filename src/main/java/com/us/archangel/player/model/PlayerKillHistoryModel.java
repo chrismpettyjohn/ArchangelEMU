@@ -13,6 +13,7 @@ public class PlayerKillHistoryModel {
     private int id;
     private int attackerUserId;
     private int victimUserId;
+    private int attackerWeaponId;
     private LocalDateTime createdAt;
 
     public PlayerKillHistoryModel() {

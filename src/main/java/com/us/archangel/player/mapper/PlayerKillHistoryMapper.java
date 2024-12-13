@@ -14,6 +14,7 @@ public class PlayerKillHistoryMapper extends GenericMapper<PlayerKillHistoryEnti
                 entity.getId(),
                 entity.getAttackerUserId(),
                 entity.getVictimUserId(),
+                entity.getAttackerWeaponId(),
                 entity.getCreatedAt()
         );
     }
@@ -26,6 +27,7 @@ public class PlayerKillHistoryMapper extends GenericMapper<PlayerKillHistoryEnti
         entity.setId(model.getId());
         entity.setAttackerUserId(model.getAttackerUserId());
         entity.setVictimUserId(model.getVictimUserId());
+        entity.setAttackerWeaponId(model.getAttackerWeaponId());
         entity.setCreatedAt(model.getCreatedAt());
         return entity;
     }
