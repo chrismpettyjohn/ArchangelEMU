@@ -144,11 +144,11 @@ public class UserAttackEvent extends MessageHandler {
             }
         }
 
-        if (equippedWeapon.getWeapon().getType() != WeaponType.TOOL) {
+        if (equippedWeapon != null && equippedWeapon.getWeapon().getType() != WeaponType.TOOL) {
             targetedHabbo.getPlayer().depleteHealth(totalDamage);
         }
 
-        if (equippedWeapon.getWeapon().getEffect() == WeaponEffect.HEAL) {
+        if (equippedWeapon != null && equippedWeapon.getWeapon().getEffect() == WeaponEffect.HEAL) {
             targetedHabbo.getPlayer().addHealth(totalDamage);
         }
 
