@@ -45,6 +45,10 @@ public class PlayerManager {
     private final PlayerBankAccountRepository playerBankAccountRepository;
     private final PlayerBankAccountService playerBankAccountService;
 
+    private final PlayerKillHistoryContext playerKillHistoryContext;
+    private final PlayerKillHistoryRepository playerKillHistoryRepository;
+    private final PlayerKillHistoryService playerKillHistoryService;
+
     private PlayerManager() {
         this.playerContext = PlayerContext.getInstance();
         this.playerRepository = PlayerRepository.getInstance();
@@ -66,6 +70,10 @@ public class PlayerManager {
         this.playerBankAccountContext = PlayerBankAccountContext.getInstance();
         this.playerBankAccountRepository = PlayerBankAccountRepository.getInstance();
         this.playerBankAccountService = PlayerBankAccountService.getInstance();
+
+        this.playerKillHistoryContext = PlayerKillHistoryContext.getInstance();
+        this.playerKillHistoryRepository = PlayerKillHistoryRepository.getInstance();
+        this.playerKillHistoryService = PlayerKillHistoryService.getInstance();
 
         this.load();
     }
@@ -106,6 +114,12 @@ public class PlayerManager {
             this.playerBankAccountRepository.updateById(playerBankAccountModel.getId(), PlayerBankAccountMapper.toEntity(playerBankAccountModel));
             this.playerBankAccountContext.delete(playerBankAccountModel.getId());
         }
+
+        for (PlayerKillHistoryModel playerKillHistoryModel : this.playerKillHistoryContext.getAll().values()) {
+            this.playerBankAccountRepository.updateById(playerKillHistoryModel.getId(), PlayerBankAccountMapper.toEntity(playerKillHistoryModel));
+            this.playerBankAccountContext.delete(playerKillHistoryModel.getId());
+        }
+
         LOGGER.info("Player manager > disposed");
     }
 }

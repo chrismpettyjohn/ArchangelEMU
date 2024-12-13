@@ -68,6 +68,7 @@ public class DatabaseConfig {
                 configuration.addAnnotatedClass(PlayerAmmoEntity.class);
                 configuration.addAnnotatedClass(PlayerBankAccountEntity.class);
                 configuration.addAnnotatedClass(PlayerSkillEntity.class);
+                configuration.addAnnotatedClass(PlayerKillHistoryEntity.class);
                 configuration.addAnnotatedClass(PlayerWeaponEntity.class);
                 configuration.addAnnotatedClass(PoliceCrimeEntity.class);
                 configuration.addAnnotatedClass(PoliceReportEntity.class);
