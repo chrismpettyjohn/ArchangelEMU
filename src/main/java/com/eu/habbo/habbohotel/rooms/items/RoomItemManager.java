@@ -98,21 +98,30 @@ public class RoomItemManager {
         this.currentItems.clear();
         this.wiredManager.clear();
 
-        try (PreparedStatement statement = connection.prepareStatement("SELECT * FROM items WHERE room_id = ?")) {
+        try (PreparedStatement statement = connection.prepareStatement("SELECT i.*, t.* FROM items i LEFT JOIN items_teleports t ON (t.teleport_one_id = i.id OR t.teleport_two_id = i.id) WHERE i.room_id = ?")) {
             statement.setInt(1, this.room.getRoomInfo().getId());
             try (ResultSet set = statement.executeQuery()) {
                 while (set.next()) {
                     RoomItem item = Emulator.getGameEnvironment().getItemManager().loadHabboItem(set);
 
                     if (item != null) {
+                        // Load any linked item data (like teleport pairs) here
+                        if (item instanceof InteractionTeleport) {
+                            if (set.getObject("teleport_one_id") != null) {
+                                ((InteractionTeleport)item).setTargetId(
+                                        set.getInt("teleport_one_id") == item.getId() ?
+                                                set.getInt("teleport_two_id") :
+                                                set.getInt("teleport_one_id")
+                                );
+                                ((InteractionTeleport)item).setTargetRoomId(set.getInt("room_id"));
+                            }
+                        }
                         this.addRoomItem(item);
                     }
                 }
             }
         } catch (SQLException e) {
-            log.error(CAUGHT_SQL_EXCEPTION, e);
-        } catch (Exception e) {
-            log.error("Caught Exception", e);
+            log.error("Caught SQL exception", e);
         }
     }
 
@@ -873,16 +882,24 @@ public class RoomItemManager {
     }
 
     public void dispose() {
-        this.currentItems.values().parallelStream()
-                .filter(RoomItem::isSqlUpdateNeeded)
-                .forEach(roomItem -> {
-                    roomItem.run();
-                    this.currentItems.remove(roomItem.getId());
-                });
+        // Create a copy to avoid concurrent modification
+        List<RoomItem> itemsToUpdate = new ArrayList<>(this.currentItems.values());
 
+        // Handle updates sequentially
+        for (RoomItem item : itemsToUpdate) {
+            if (item.isSqlUpdateNeeded()) {
+                try {
+                    item.run();
+                } catch (Exception e) {
+                    log.error("Error saving item " + item.getId(), e);
+                }
+            }
+        }
+
+        // Clear collections safely
+        this.currentItems.clear();
         this.floorItems.clear();
         this.wallItems.clear();
-
-        this.currentItems.clear();
+        this.wiredManager.clear();
     }
 }

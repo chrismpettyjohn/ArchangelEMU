@@ -184,38 +184,78 @@ public abstract class RoomItem extends RoomEntity implements Runnable, IEventTri
 
     @Override
     public void run() {
-        try (Connection connection = Emulator.getDatabase().getDataSource().getConnection()) {
-            if (this.sqlDeleteNeeded) {
-                this.sqlUpdateNeeded = false;
-                this.sqlDeleteNeeded = false;
+        Connection connection = null;
+        PreparedStatement statement = null;
+        boolean success = false;
 
-                try (PreparedStatement statement = connection.prepareStatement("DELETE FROM items WHERE id = ?")) {
-                    statement.setInt(1, this.getId());
-                    statement.execute();
+        try {
+            connection = Emulator.getDatabase().getDataSource().getConnection();
+            connection.setAutoCommit(false);  // Start transaction
+
+            if (this.sqlDeleteNeeded) {
+                statement = connection.prepareStatement("DELETE FROM items WHERE id = ?");
+                statement.setInt(1, this.getId());
+                success = statement.executeUpdate() > 0;
+
+                if (success) {
+                    this.sqlDeleteNeeded = false;
+                    this.sqlUpdateNeeded = false;
                 }
             } else if (this.sqlUpdateNeeded) {
-                try (PreparedStatement statement = connection.prepareStatement("UPDATE items SET user_id = ?, room_id = ?, wall_pos = ?, x = ?, y = ?, z = ?, rot = ?, extra_data = ?, limited_data = ? WHERE id = ?")) {
-                    statement.setInt(1, this.ownerInfo.getId());
-                    statement.setInt(2, (this.getRoom() != null) ? this.getRoom().getRoomInfo().getId() : this.getRoomId() );
-                    statement.setString(3, this.wallPosition);
-                    statement.setInt(4, this.getCurrentPosition()  == null ? 0 : this.getCurrentPosition().getX());
-                    statement.setInt(5, this.getCurrentPosition()  == null ? 0 : this.getCurrentPosition().getY());
-                    statement.setDouble(6, Math.max(-9999, Math.min(9999, Math.round(this.getCurrentZ() * Math.pow(10, 6)) / Math.pow(10, 6))));
-                    statement.setInt(7, this.rotation);
-                    statement.setString(8, this instanceof InteractionGuildGate ? "" : this.extraData);
-                    statement.setString(9, this.limitedStack + ":" + this.limitedSells);
-                    statement.setInt(10, this.id);
-                    statement.execute();
-                } catch (SQLException e) {
-                    log.error("Caught SQL exception", e);
-                    log.error("SQLException trying to save HabboItem: " + this);
-                }
+                statement = connection.prepareStatement(
+                        "UPDATE items SET user_id = ?, room_id = ?, wall_pos = ?, " +
+                                "x = ?, y = ?, z = ?, rot = ?, extra_data = ?, limited_data = ? " +
+                                "WHERE id = ?");
 
-                this.sqlUpdateNeeded = false;
+                statement.setInt(1, this.ownerInfo.getId());
+                statement.setInt(2, (this.getRoom() != null) ? this.getRoom().getRoomInfo().getId() : this.getRoomId());
+                statement.setString(3, this.wallPosition);
+                statement.setInt(4, this.getCurrentPosition() == null ? 0 : this.getCurrentPosition().getX());
+                statement.setInt(5, this.getCurrentPosition() == null ? 0 : this.getCurrentPosition().getY());
+                statement.setDouble(6, Math.max(-9999, Math.min(9999, Math.round(this.getCurrentZ() * Math.pow(10, 6)) / Math.pow(10, 6))));
+                statement.setInt(7, this.rotation);
+                statement.setString(8, this instanceof InteractionGuildGate ? "" : this.extraData);
+                statement.setString(9, this.limitedStack + ":" + this.limitedSells);
+                statement.setInt(10, this.id);
+
+                success = statement.executeUpdate() > 0;
+
+                if (success) {
+                    this.sqlUpdateNeeded = false;  // Only reset flag if update succeeded
+                }
+            }
+
+            if (success) {
+                connection.commit();  // Commit transaction
+            } else {
+                connection.rollback();  // Rollback if update failed
             }
 
         } catch (SQLException e) {
-            log.error("Caught SQL exception", e);
+            if (connection != null) {
+                try {
+                    connection.rollback();  // Rollback on error
+                } catch (SQLException e2) {
+                    log.error("Failed to rollback transaction", e2);
+                }
+            }
+            log.error("SQL error updating item " + this.id, e);
+        } finally {
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException e) {
+                    log.error("Failed to close statement", e);
+                }
+            }
+            if (connection != null) {
+                try {
+                    connection.setAutoCommit(true);
+                    connection.close();
+                } catch (SQLException e) {
+                    log.error("Failed to close connection", e);
+                }
+            }
         }
     }
 
