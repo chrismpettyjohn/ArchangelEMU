@@ -28,17 +28,9 @@ public class SetHealthCommand extends Command {
         }
 
         int updatedHealth = Integer.parseInt(params[2]);
-        int maxHealth = targetedHabbo.getPlayer().getHealthMax();
 
-        if (updatedHealth > maxHealth) {
-            targetedHabbo.getPlayer().setHealthNow(updatedHealth);
-            targetedHabbo.getPlayer().setHealthMax(updatedHealth);
-        } else if (updatedHealth < maxHealth) {
-            targetedHabbo.getPlayer().setHealthNow(updatedHealth);
-            targetedHabbo.getPlayer().setHealthMax(updatedHealth);
-        } else {
-            targetedHabbo.getPlayer().setHealthNow(updatedHealth);
-        }
+        targetedHabbo.getPlayer().setHealthNow(updatedHealth);
+        targetedHabbo.getPlayer().setHealthMax(updatedHealth);
 
         String healthGivenMessage = Emulator.getTexts().getValue("roleplay.set_health_gave")
                 .replace(":username", targetedUsername)

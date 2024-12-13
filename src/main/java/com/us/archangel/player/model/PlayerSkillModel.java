@@ -91,7 +91,7 @@ public class PlayerSkillModel {
 
     public int getDamageModifier(WeaponModel weapon) {
         if (weapon == null) {
-            return this.getMelee().getCurrentLevel();
+            return Math.min(this.getMelee().getCurrentLevel(), 1);
         }
         return weapon.getType() == WeaponType.MELEE ? this.getMelee().getCurrentLevel() : this.getWeapon().getCurrentLevel();
     }

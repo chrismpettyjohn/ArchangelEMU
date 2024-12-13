@@ -10,7 +10,9 @@ import com.us.archangel.feature.combat.packets.outgoing.UserDiedComposer;
 import com.us.archangel.feature.hospital.actions.TeleportHospitalAction;
 import com.us.archangel.feature.player.packets.outgoing.UserRoleplayStatsChangeComposer;
 import com.us.archangel.player.enums.PlayerAction;
+import com.us.archangel.player.model.PlayerKillHistoryModel;
 import com.us.archangel.player.model.PlayerWeaponModel;
+import com.us.archangel.player.service.PlayerKillHistoryService;
 import com.us.archangel.room.enums.RoomType;
 import com.us.archangel.weapon.enums.WeaponEffect;
 import com.us.archangel.weapon.enums.WeaponType;
@@ -30,7 +32,7 @@ public class UserAttackEvent extends MessageHandler {
 
         PlayerWeaponModel playerWeapon = this.client.getHabbo().getInventory().getWeaponsComponent().getEquippedWeapon();
 
-        if (playerWeapon.getWeapon() != null && playerWeapon.getWeapon().getType() == WeaponType.GUN) {
+        if (playerWeapon != null && playerWeapon.getWeapon() != null && playerWeapon.getWeapon().getType() == WeaponType.GUN) {
             this.client.getHabbo().whisper("You are out of ammo");
             if (playerWeapon.getAmmoRemaining() <= 0) {
                 return;
@@ -60,6 +62,11 @@ public class UserAttackEvent extends MessageHandler {
         performAttack(targetedHabbo, totalDamage, equippedWeapon);
 
         if (targetedHabbo.getPlayer().isDead()) {
+            PlayerKillHistoryModel playerDeathRecord = new PlayerKillHistoryModel();
+            playerDeathRecord.setAttackerUserId(this.client.getHabbo().getHabboInfo().getId());
+            playerDeathRecord.setVictimUserId(targetedHabbo.getHabboInfo().getId());
+            PlayerKillHistoryService.getInstance().create(playerDeathRecord);
+
             Emulator.getThreading().run(new TeleportHospitalAction(targetedHabbo));
             NotificationHelper.sendOnline(new UserDiedComposer(targetedHabbo, this.client.getHabbo()));
             NotificationHelper.announceOnline(this.client.getHabbo().getHabboInfo().getUsername() + " killed " + targetedHabbo.getHabboInfo().getUsername());
@@ -144,7 +151,7 @@ public class UserAttackEvent extends MessageHandler {
             }
         }
 
-        if (equippedWeapon != null && equippedWeapon.getWeapon().getType() != WeaponType.TOOL) {
+        if (equippedWeapon == null || equippedWeapon.getWeapon().getType() != WeaponType.TOOL) {
             targetedHabbo.getPlayer().depleteHealth(totalDamage);
         }
 
