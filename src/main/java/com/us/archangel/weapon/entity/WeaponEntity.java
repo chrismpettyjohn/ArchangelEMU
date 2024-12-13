@@ -68,6 +68,9 @@ public class WeaponEntity {
     @Column(name = "cooldown_seconds")
     private int cooldownSeconds;
 
+    @Column(name = "equip_handitem")
+    private int equipHandItem;
+
     @Column(name = "equip_effect")
     private int equipEffect;
 

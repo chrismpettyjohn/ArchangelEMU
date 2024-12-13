@@ -2,6 +2,7 @@ package com.us.archangel.feature.combat.packets.incoming;
 
 import com.eu.habbo.Emulator;
 import com.eu.habbo.messages.incoming.MessageHandler;
+import com.eu.habbo.threading.runnables.RoomUnitGiveHanditem;
 import com.us.archangel.feature.player.packets.outgoing.UserRoleplayStatsChangeComposer;
 import com.us.archangel.player.model.PlayerAmmoModel;
 import com.us.archangel.player.model.PlayerWeaponModel;
@@ -9,6 +10,7 @@ import com.us.archangel.player.service.PlayerAmmoService;
 import com.us.archangel.player.service.PlayerWeaponService;
 import com.us.archangel.weapon.context.WeaponContext;
 import com.us.archangel.weapon.enums.WeaponType;
+import com.us.archangel.weapon.model.WeaponModel;
 
 public class EquipWeaponEvent extends MessageHandler {
     @Override
@@ -19,6 +21,9 @@ public class EquipWeaponEvent extends MessageHandler {
             PlayerWeaponModel prevEquippedWeapon = this.client.getHabbo().getInventory().getWeaponsComponent().getEquippedWeapon();
             this.client.getHabbo().getInventory().getWeaponsComponent().setEquippedWeapon(null);
             this.client.getHabbo().getRoomUnit().giveEffect(0, -1);
+            if (this.client.getHabbo().getRoomUnit().getHandItem() > 0) {
+                Emulator.getThreading().run(new RoomUnitGiveHanditem(this.client.getHabbo().getRoomUnit(), this.client.getHabbo().getRoomUnit().getRoom(), 0));
+            }
             this.client.getHabbo().getRoomUnit().getRoom().sendComposer(new UserRoleplayStatsChangeComposer(this.client.getHabbo()).compose());
             this.client.getHabbo().shout(prevEquippedWeapon.getWeapon().getUnequipMessage().replace(":displayName", prevEquippedWeapon.getWeapon().getDisplayName()));
             return;
@@ -43,7 +48,16 @@ public class EquipWeaponEvent extends MessageHandler {
         }
 
         this.client.getHabbo().getInventory().getWeaponsComponent().setEquippedWeapon(playerWeapon);
-        this.client.getHabbo().getRoomUnit().giveEffect(WeaponContext.getInstance().get(playerWeapon.getId()).getEquipEffect(), -1);
+;
+
+        if (playerWeapon.getWeapon().getEquipEffect() > 0) {
+            this.client.getHabbo().getRoomUnit().giveEffect(WeaponContext.getInstance().get(playerWeapon.getId()).getEquipEffect(), -1);
+        }
+
+        if (playerWeapon.getWeapon().getEquipHandItem() > 0) {
+            Emulator.getThreading().run(new RoomUnitGiveHanditem(this.client.getHabbo().getRoomUnit(), this.client.getHabbo().getRoomUnit().getRoom(), playerWeapon.getWeapon().getEquipHandItem()));
+        }
+
         this.client.getHabbo().getRoomUnit().getRoom().sendComposer(new UserRoleplayStatsChangeComposer(this.client.getHabbo()).compose());
         this.client.getHabbo().shout(playerWeapon.getWeapon().getEquipMessage().replace(":displayName", playerWeapon.getWeapon().getDisplayName()));
         this.client.sendResponse(new UserRoleplayStatsChangeComposer(this.client.getHabbo()).compose());
