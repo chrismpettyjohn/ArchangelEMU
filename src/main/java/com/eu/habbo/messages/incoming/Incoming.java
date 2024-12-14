@@ -71,8 +71,8 @@ import com.us.archangel.feature.crime.packets.incoming.*;
 import com.us.archangel.feature.device.interactions.packets.incoming.DeviceCloseEvent;
 import com.us.archangel.feature.device.interactions.packets.incoming.DeviceOpenEvent;
 import com.us.archangel.feature.device.interactions.packets.incoming.InfoScreenSaveEvent;
-import com.us.archangel.feature.gunstore.packets.incoming.AmmoCrateTakeOneEvent;
-import com.us.archangel.feature.gunstore.packets.incoming.WeaponVendingMachineTakeOneEvent;
+import com.us.archangel.feature.gunstore.packets.incoming.AmmoCrateTakeEvent;
+import com.us.archangel.feature.gunstore.packets.incoming.WeaponVendingMachineTakeEvent;
 import com.us.archangel.feature.hotbar.packets.incoming.HotBarAddItemEvent;
 import com.us.archangel.feature.hotbar.packets.incoming.HotBarListItemsEvent;
 import com.us.archangel.feature.hotbar.packets.incoming.HotBarPickupItemEvent;
@@ -1182,15 +1182,15 @@ public enum Incoming {
 
     listMyAmmoEvent(8123, ListMyAmmoEvent.class),
 
-    ammoCrateTakeOneEvent(8124, AmmoCrateTakeOneEvent.class),
+    ammoCrateTakeEvent(8124, AmmoCrateTakeEvent.class),
 
-    weaponVendingMachineTakeOneEvent(8125, WeaponVendingMachineTakeOneEvent.class),
+    weaponVendingMachineTakeEvent(8125, WeaponVendingMachineTakeEvent.class),
 
-    sellStoreProductEvent(8126, CreateStoreProductOfferEvent.class),
+    createStoreProductOfferEvent(8126, CreateStoreProductOfferEvent.class),
 
-    acceptStoreProductEvent(8127, AcceptStoreProductOfferEvent.class),
+    acceptStoreProductOfferEvent(8127, AcceptStoreProductOfferEvent.class),
 
-    rejectStoreProductEvent(8128, RejectStoreProductOfferEvent.class);
+    rejectStoreProductOfferEvent(8128, RejectStoreProductOfferEvent.class);
 
     private final int messageId;
     private final Class<? extends MessageHandler> messageClass;

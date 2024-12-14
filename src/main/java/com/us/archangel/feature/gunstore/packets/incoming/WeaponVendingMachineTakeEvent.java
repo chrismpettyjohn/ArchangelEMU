@@ -8,7 +8,7 @@ import com.us.archangel.weapon.service.WeaponService;
 import com.us.archangel.store.enums.StoreProductType;
 import com.us.archangel.store.models.StoreProductModel;
 
-public class WeaponVendingMachineTakeOneEvent  extends MessageHandler {
+public class WeaponVendingMachineTakeEvent extends MessageHandler {
     @Override
     public void handle () {
         if (!this.client.getHabbo().getPlayer().isWorking()) {

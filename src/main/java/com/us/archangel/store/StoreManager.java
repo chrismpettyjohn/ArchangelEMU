@@ -2,6 +2,7 @@ package com.us.archangel.store;
 
 import com.us.archangel.ammo.repository.AmmoRepository;
 import com.us.archangel.store.context.StoreProductOfferContext;
+import com.us.archangel.store.mapper.StoreProductOfferMapper;
 import com.us.archangel.store.models.StoreProductOfferModel;
 import com.us.archangel.store.repository.StoreProductOfferRepository;
 import com.us.archangel.store.service.StoreProductOfferService;
@@ -46,7 +47,7 @@ public class StoreManager {
 
     public void dispose() {
         for (StoreProductOfferModel storeProductOfferModel : this.storeProductOfferContext.getAll().values()) {
-            this.storeProductOfferContext.updateById(storeProductOfferModel.getId(), AmmoMapper.toEntity(storeProductOfferModel));
+            this.storeProductOfferRepository.updateById(storeProductOfferModel.getId(), StoreProductOfferMapper.toEntity(storeProductOfferModel));
             this.storeProductOfferContext.delete(storeProductOfferModel.getId());
         }
         LOGGER.info("Ammo manager > disposed");

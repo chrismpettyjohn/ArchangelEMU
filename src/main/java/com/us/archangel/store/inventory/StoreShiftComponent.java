@@ -22,7 +22,7 @@ public class StoreShiftComponent {
 
     public StoreProductModel getProductById(int id) {
         for (StoreProductModel product : storeProductModels) {
-            if (product.id() == id) {
+            if (product.getId() == id) {
                 return product;
             }
         }
@@ -31,7 +31,7 @@ public class StoreShiftComponent {
     }
 
     public void removeProductById(int id) {
-        storeProductModels.removeIf(product -> product.id() == id);
+        storeProductModels.removeIf(product -> product.getId() == id);
     }
 
     public void clearProducts() {

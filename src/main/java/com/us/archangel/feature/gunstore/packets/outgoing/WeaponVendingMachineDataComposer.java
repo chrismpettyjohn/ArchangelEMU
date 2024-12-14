@@ -14,7 +14,7 @@ public class WeaponVendingMachineDataComposer extends MessageComposer {
     protected ServerMessage composeInternal() {
         List<WeaponModel> weaponModels = WeaponService.getInstance().getAll();
 
-        this.response.init(Outgoing.weaponVendingMachineComposer);
+        this.response.init(Outgoing.weaponVendingMachineDataComposer);
 
         for (WeaponModel weaponModel : weaponModels) {
             this.response.appendString(

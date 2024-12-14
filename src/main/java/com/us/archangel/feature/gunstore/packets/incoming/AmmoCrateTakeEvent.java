@@ -8,7 +8,7 @@ import com.us.archangel.corp.enums.CorpIndustry;
 import com.us.archangel.store.enums.StoreProductType;
 import com.us.archangel.store.models.StoreProductModel;
 
-public class AmmoCrateTakeOneEvent extends MessageHandler {
+public class AmmoCrateTakeEvent extends MessageHandler {
     @Override
     public void handle () {
         if (!this.client.getHabbo().getPlayer().isWorking()) {
