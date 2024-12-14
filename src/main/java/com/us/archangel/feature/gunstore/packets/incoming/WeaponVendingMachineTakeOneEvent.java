@@ -5,8 +5,8 @@ import com.eu.habbo.messages.incoming.MessageHandler;
 import com.us.archangel.corp.enums.CorpIndustry;
 import com.us.archangel.weapon.model.WeaponModel;
 import com.us.archangel.weapon.service.WeaponService;
-import com.us.roleplay.users.enums.StoreProductEnum;
-import com.us.roleplay.users.models.StoreProduct;
+import com.us.archangel.store.enums.StoreProductType;
+import com.us.archangel.store.models.StoreProductModel;
 
 public class WeaponVendingMachineTakeOneEvent  extends MessageHandler {
     @Override
@@ -28,7 +28,7 @@ public class WeaponVendingMachineTakeOneEvent  extends MessageHandler {
             return;
         }
 
-        StoreProduct weaponProduct = new StoreProduct(weapon.getId(), StoreProductEnum.WEAPON);
+        StoreProductModel weaponProduct = new StoreProductModel(weapon.getId(), StoreProductType.WEAPON);
         this.client.getHabbo().getInventory().getStoreShiftComponent().addProduct(weaponProduct);
 
         this.client.getHabbo().shout(Emulator.getTexts().getValue("roleplay.weapon_vending_machine.product_added").replace(":item", weapon.getDisplayName()));

@@ -10,7 +10,9 @@ import lombok.Setter;
 @AllArgsConstructor
 public class PlayerAmmoModel {
     private int id;
+    @Setter
     private int userId;
+    @Setter
     private int ammoId;
     @Setter
     private int ammoRemaining;

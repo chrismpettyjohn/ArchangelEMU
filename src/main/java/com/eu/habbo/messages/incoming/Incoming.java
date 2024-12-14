@@ -84,6 +84,9 @@ import com.us.archangel.feature.map.packets.incoming.MapQueryEvent;
 import com.us.archangel.feature.player.packets.incoming.*;
 import com.us.archangel.feature.room.packets.incoming.RoomListUsersEvent;
 import com.us.archangel.feature.room.packets.incoming.RoomQueryListEvent;
+import com.us.archangel.feature.store.packets.incoming.AcceptStoreProductOfferEvent;
+import com.us.archangel.feature.store.packets.incoming.CreateStoreProductOfferEvent;
+import com.us.archangel.feature.store.packets.incoming.RejectStoreProductOfferEvent;
 import com.us.archangel.feature.taxi.packets.incoming.CallTaxiEvent;
 import com.us.archangel.feature.taxi.packets.incoming.CancelTaxiEvent;
 import com.us.archangel.feature.taxi.packets.incoming.TaxiFeeQueryEvent;
@@ -1181,7 +1184,13 @@ public enum Incoming {
 
     ammoCrateTakeOneEvent(8124, AmmoCrateTakeOneEvent.class),
 
-    weaponVendingMachineTakeOneEvent(8125, WeaponVendingMachineTakeOneEvent.class);
+    weaponVendingMachineTakeOneEvent(8125, WeaponVendingMachineTakeOneEvent.class),
+
+    sellStoreProductEvent(8126, CreateStoreProductOfferEvent.class),
+
+    acceptStoreProductEvent(8127, AcceptStoreProductOfferEvent.class),
+
+    rejectStoreProductEvent(8128, RejectStoreProductOfferEvent.class);
 
     private final int messageId;
     private final Class<? extends MessageHandler> messageClass;

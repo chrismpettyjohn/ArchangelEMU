@@ -5,8 +5,8 @@ import com.eu.habbo.messages.incoming.MessageHandler;
 import com.us.archangel.ammo.model.AmmoModel;
 import com.us.archangel.ammo.service.AmmoService;
 import com.us.archangel.corp.enums.CorpIndustry;
-import com.us.roleplay.users.enums.StoreProductEnum;
-import com.us.roleplay.users.models.StoreProduct;
+import com.us.archangel.store.enums.StoreProductType;
+import com.us.archangel.store.models.StoreProductModel;
 
 public class AmmoCrateTakeOneEvent extends MessageHandler {
     @Override
@@ -28,7 +28,7 @@ public class AmmoCrateTakeOneEvent extends MessageHandler {
             return;
         }
 
-        StoreProduct ammoProduct = new StoreProduct(ammo.getId(), StoreProductEnum.AMMO);
+        StoreProductModel ammoProduct = new StoreProductModel(ammo.getId(), StoreProductType.AMMO);
         this.client.getHabbo().getInventory().getStoreShiftComponent().addProduct(ammoProduct);
 
         this.client.getHabbo().shout(Emulator.getTexts().getValue("roleplay.ammo_crate.product_added").replace(":item", ammo.getDisplayName()));

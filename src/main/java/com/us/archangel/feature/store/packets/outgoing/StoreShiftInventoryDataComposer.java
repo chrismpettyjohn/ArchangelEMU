@@ -4,7 +4,7 @@ import com.eu.habbo.habbohotel.users.Habbo;
 import com.eu.habbo.messages.ServerMessage;
 import com.eu.habbo.messages.outgoing.MessageComposer;
 import com.eu.habbo.messages.outgoing.Outgoing;
-import com.us.roleplay.users.models.StoreProduct;
+import com.us.archangel.store.models.StoreProductModel;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
@@ -16,11 +16,11 @@ public class StoreShiftInventoryDataComposer extends MessageComposer {
 
     @Override
     protected ServerMessage composeInternal() {
-        List<StoreProduct> storeProductModels = this.habbo.getInventory().getStoreShiftComponent().getStoreProducts();
+        List<StoreProductModel> storeProductModelModels = this.habbo.getInventory().getStoreShiftComponent().getStoreProductModels();
 
         this.response.init(Outgoing.playerWeaponListComposer);
 
-        for (StoreProduct productModel : storeProductModels) {
+        for (StoreProductModel productModel : storeProductModelModels) {
             this.response.appendString(productModel.getId() + ";" + productModel.getType());
         }
 

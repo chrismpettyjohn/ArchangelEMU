@@ -14,6 +14,7 @@ import com.us.archangel.gang.entity.GangRoleEntity;
 import com.us.archangel.police.entity.PoliceReportEntity;
 import com.us.archangel.police.entity.PoliceWarrantEntity;
 import com.us.archangel.sanction.entity.SanctionEntity;
+import com.us.archangel.store.entity.StoreProductOfferEntity;
 import com.us.archangel.weapon.entity.WeaponEntity;
 import com.eu.habbo.core.ConfigurationManager;
 import com.us.nova.betacode.entity.BetaCodeEntity;
@@ -74,6 +75,7 @@ public class DatabaseConfig {
                 configuration.addAnnotatedClass(PoliceReportEntity.class);
                 configuration.addAnnotatedClass(PoliceWarrantEntity.class);
                 configuration.addAnnotatedClass(SanctionEntity.class);
+                configuration.addAnnotatedClass(StoreProductOfferEntity.class);
                 configuration.addAnnotatedClass(WeaponEntity.class);
 
                 sessionFactory = configuration.buildSessionFactory();

@@ -6,7 +6,7 @@ import com.eu.habbo.habbohotel.catalog.marketplace.MarketPlaceState;
 import com.eu.habbo.habbohotel.users.inventory.*;
 import com.us.roleplay.users.inventory.HotBarComponent;
 import com.us.roleplay.users.inventory.LicensesComponent;
-import com.us.roleplay.users.inventory.StoreShiftComponent;
+import com.us.archangel.store.inventory.StoreShiftComponent;
 import com.us.roleplay.users.inventory.WeaponsComponent;
 import gnu.trove.set.hash.THashSet;
 import lombok.Getter;

@@ -8,6 +8,7 @@ import com.us.archangel.corp.CorpManager;
 import com.us.archangel.gang.GangManager;
 import com.us.archangel.sanction.SanctionManager;
 import com.us.archangel.player.PlayerManager;
+import com.us.archangel.store.StoreManager;
 import com.us.archangel.weapon.WeaponManager;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
@@ -26,6 +27,7 @@ public class Archangel {
     private GovernmentManager governmentManager;
     private CorpManager corpManager;
     private SanctionManager sanctionManager;
+    private StoreManager storeManager;
     private PlayerManager playerManager;
     private PoliceManager policeManager;
     private WeaponManager weaponManager;
@@ -39,6 +41,7 @@ public class Archangel {
         this.gangManager = GangManager.getInstance();
         this.governmentManager = GovernmentManager.getInstance();
         this.sanctionManager = SanctionManager.getInstance();
+        this.storeManager = StoreManager.getInstance();
         this.playerManager = PlayerManager.getInstance();
         this.policeManager = PoliceManager.getInstance();
         this.weaponManager = WeaponManager.getInstance();
@@ -53,6 +56,7 @@ public class Archangel {
         this.gangManager.dispose();
         this.governmentManager.dispose();
         this.sanctionManager.dispose();
+        this.storeManager.dispose();
         this.playerManager.dispose();
         this.policeManager.dispose();
         this.weaponManager.dispose();;
