@@ -39,7 +39,6 @@ public class CorpStartWorkCommand extends Command {
             gameClient.getHabbo().whisper(Emulator.getTexts().getValue("commands.roleplay.cmd_start_work_not_in_boundaries"));
             return true;
         }
-
         Emulator.getThreading().run(new WorkShiftAction(gameClient.getHabbo()));
 
         return true;

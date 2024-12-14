@@ -18,6 +18,8 @@ public class AmmoCrateDataComposer extends MessageComposer {
 
         this.response.init(Outgoing.ammoCrateDataComposer);
 
+        this.response.appendInt(ammoModels.size());
+
         for (AmmoModel ammoModel : ammoModels) {
             this.response.appendString(
                     ammoModel.getId() + ";" +

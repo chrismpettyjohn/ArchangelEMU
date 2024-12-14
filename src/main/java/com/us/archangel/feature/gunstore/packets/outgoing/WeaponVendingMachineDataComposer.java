@@ -16,6 +16,8 @@ public class WeaponVendingMachineDataComposer extends MessageComposer {
 
         this.response.init(Outgoing.weaponVendingMachineDataComposer);
 
+        this.response.appendInt(weaponModels.size());
+
         for (WeaponModel weaponModel : weaponModels) {
             this.response.appendString(
                     weaponModel.getId() + ";" +

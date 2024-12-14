@@ -81,11 +81,11 @@ public class PlayerManager {
     public void load() {
         LOGGER.info("Player manager > starting");
 
-        List<PlayerEntity> playerEntities = PlayerRepository.getInstance().getAll();
-
-        for (PlayerEntity playerEntity : playerEntities) {
-            this.playerContext.add(playerEntity.getId(), PlayerMapper.toModel(playerEntity));
-        }
+        this.playerService.getAll();
+        this.playerAmmoService.getAll();
+        this.playerWeaponService.getAll();
+        this.playerBankAccountService.getAll();
+        this.playerKillHistoryService.getAll();
 
         LOGGER.info("Player manager > loaded");
     }

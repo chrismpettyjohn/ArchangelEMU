@@ -49,9 +49,10 @@ public class WorkShiftAction implements Runnable {
     private void checkWorkingState(Habbo habbo) {
         if (!habbo.getPlayer().isWorking()) {
             habbo.shout(Emulator.getTexts().getValue("roleplay.shift.cancel"));
-            cycleUserShift.cancel(true);
-            checkWorkingState.cancel(true);
+            if (cycleUserShift != null) cycleUserShift.cancel(true);
+            if (checkWorkingState != null) checkWorkingState.cancel(true);
         }
+
     }
 
     private void cycleUserShift(Habbo habbo, CorpRoleModel corpRole, long endsAt) {
