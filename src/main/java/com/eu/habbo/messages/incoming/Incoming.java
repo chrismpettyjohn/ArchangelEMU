@@ -87,6 +87,7 @@ import com.us.archangel.feature.room.packets.incoming.RoomQueryListEvent;
 import com.us.archangel.feature.store.packets.incoming.AcceptStoreProductOfferEvent;
 import com.us.archangel.feature.store.packets.incoming.CreateStoreProductOfferEvent;
 import com.us.archangel.feature.store.packets.incoming.RejectStoreProductOfferEvent;
+import com.us.archangel.feature.store.packets.incoming.StoreShiftInventoryQueryEvent;
 import com.us.archangel.feature.taxi.packets.incoming.CallTaxiEvent;
 import com.us.archangel.feature.taxi.packets.incoming.CancelTaxiEvent;
 import com.us.archangel.feature.taxi.packets.incoming.TaxiFeeQueryEvent;
@@ -1190,7 +1191,9 @@ public enum Incoming {
 
     acceptStoreProductOfferEvent(8127, AcceptStoreProductOfferEvent.class),
 
-    rejectStoreProductOfferEvent(8128, RejectStoreProductOfferEvent.class);
+    rejectStoreProductOfferEvent(8128, RejectStoreProductOfferEvent.class),
+
+    storeShiftInventoryQueryEvent(8129, StoreShiftInventoryQueryEvent.class);
 
     private final int messageId;
     private final Class<? extends MessageHandler> messageClass;
