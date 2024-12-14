@@ -52,6 +52,7 @@ public class UserRoleplayStatsChangeComposer extends MessageComposer {
         this.response.appendInt(this.habbo.getInventory().getWeaponsComponent().getEquippedWeapon() != null ? this.habbo.getInventory().getWeaponsComponent().getEquippedWeapon().getAmmoRemaining() : 0);
         this.response.appendInt(this.habbo.getPlayer().getCorpId());
         this.response.appendString(corp.getDisplayName());
+        this.response.appendString(corp.getIndustry().toString());
         this.response.appendInt(this.habbo.getPlayer().getCorpRoleId());
         this.response.appendString(corpRole.getDisplayName());
         this.response.appendInt(this.habbo.getPlayer().getGangId() != null ? this.habbo.getPlayer().getGangId() : -1);

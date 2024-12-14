@@ -492,4 +492,5 @@ public class Outgoing {
     public static final int ammoCrateDataComposer = 9061;
     public static final int weaponVendingMachineDataComposer = 9062;
     public static final int offerStoreProductComposer = 9063;
+    public static final int storeShiftInventoryDataComposer = 9064;
 }

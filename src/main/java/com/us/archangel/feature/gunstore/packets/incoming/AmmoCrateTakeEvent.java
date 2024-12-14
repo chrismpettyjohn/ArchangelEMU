@@ -6,6 +6,7 @@ import com.eu.habbo.threading.runnables.RoomUnitGiveHanditem;
 import com.us.archangel.ammo.model.AmmoModel;
 import com.us.archangel.ammo.service.AmmoService;
 import com.us.archangel.corp.enums.CorpIndustry;
+import com.us.archangel.feature.store.packets.outgoing.StoreShiftInventoryDataComposer;
 import com.us.archangel.store.enums.StoreProductType;
 import com.us.archangel.store.models.StoreProductModel;
 
@@ -36,5 +37,6 @@ public class AmmoCrateTakeEvent extends MessageHandler {
         Emulator.getThreading().run(new RoomUnitGiveHanditem(this.client.getHabbo().getRoomUnit(), this.client.getHabbo().getRoomUnit().getRoom(), AmmoCrateTakeEvent.AMMO_HANDITEM_ID));
 
         this.client.getHabbo().shout(Emulator.getTexts().getValue("roleplay.ammo_crate.product_added").replace(":item", ammo.getDisplayName()));
+        this.client.sendResponse(new StoreShiftInventoryDataComposer(this.client.getHabbo()));
     }
 }

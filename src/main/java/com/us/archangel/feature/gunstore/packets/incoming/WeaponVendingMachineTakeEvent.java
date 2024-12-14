@@ -4,6 +4,7 @@ import com.eu.habbo.Emulator;
 import com.eu.habbo.messages.incoming.MessageHandler;
 import com.eu.habbo.threading.runnables.RoomUnitGiveHanditem;
 import com.us.archangel.corp.enums.CorpIndustry;
+import com.us.archangel.feature.store.packets.outgoing.StoreShiftInventoryDataComposer;
 import com.us.archangel.weapon.context.WeaponContext;
 import com.us.archangel.weapon.model.WeaponModel;
 import com.us.archangel.weapon.service.WeaponService;
@@ -42,5 +43,7 @@ public class WeaponVendingMachineTakeEvent extends MessageHandler {
         }
 
         this.client.getHabbo().shout(Emulator.getTexts().getValue("roleplay.weapon_vending_machine.product_added").replace(":item", weapon.getDisplayName()));
+
+        this.client.sendResponse(new StoreShiftInventoryDataComposer(this.client.getHabbo()));
     }
 }

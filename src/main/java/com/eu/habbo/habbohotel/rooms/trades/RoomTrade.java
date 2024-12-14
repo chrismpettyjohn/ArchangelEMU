@@ -55,7 +55,7 @@ public class RoomTrade {
     }
 
     protected void openTrade() {
-        this.sendMessageToUsers(new TradingOpenComposer(this));
+//        this.sendMessageToUsers(new TradingOpenComposer(this));
     }
 
     public void offerItem(Habbo habbo, RoomItem item) {
