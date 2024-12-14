@@ -61,7 +61,9 @@ public class AcceptStoreProductOfferEvent extends MessageHandler {
                         throw new RuntimeException("ammo not found");
                     }
 
-                    // Give player ammo
+                    // TODO: change quantity
+                    PlayerAmmoService.getInstance().addAmmo(this.client.getHabbo().getHabboInfo().getId(), ammoModel.getId(), 30);
+
                     break;
                 case WEAPON:
                     WeaponModel weaponModel = WeaponService.getInstance().getById(offerModel.getProductId());
@@ -78,7 +80,7 @@ public class AcceptStoreProductOfferEvent extends MessageHandler {
                         throw new RuntimeException("weapon has no matching ammo");
                     }
 
-                    // Give player ammo
+                    PlayerAmmoService.getInstance().addAmmo(this.client.getHabbo().getHabboInfo().getId(), weaponAmmoModel.getId(), weaponModel.getAmmoCapacity() * 2);
 
                     // Give player weapon
                     PlayerWeaponModel playerWeaponModel = new PlayerWeaponModel();
