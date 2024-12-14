@@ -14,7 +14,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class InteractionWeaponVendingMachine extends InteractionDefault {
-    public static String INTERACTION_TYPE = "rp_weapon_vending_machine";
+    public static String INTERACTION_TYPE = "rp_weapon_vendingmachine";
 
     public InteractionWeaponVendingMachine(ResultSet set, Item baseItem) throws SQLException {
         super(set, baseItem);
