@@ -6,6 +6,7 @@ import com.eu.habbo.habbohotel.catalog.marketplace.MarketPlaceState;
 import com.eu.habbo.habbohotel.users.inventory.*;
 import com.us.roleplay.users.inventory.HotBarComponent;
 import com.us.roleplay.users.inventory.LicensesComponent;
+import com.us.roleplay.users.inventory.StoreShiftComponent;
 import com.us.roleplay.users.inventory.WeaponsComponent;
 import gnu.trove.set.hash.THashSet;
 import lombok.Getter;
@@ -38,6 +39,10 @@ public class HabboInventory {
     @Getter
     @Setter
     private HotBarComponent hotBarComponent;
+
+    @Setter
+    @Getter
+    private StoreShiftComponent storeShiftComponent;
 
     public HabboInventory(Habbo habbo) {
         this.habbo = habbo;
@@ -94,6 +99,13 @@ public class HabboInventory {
         } catch (Exception e) {
             log.error("Caught exception", e);
         }
+
+        try {
+            this.storeShiftComponent = new StoreShiftComponent(this.habbo);
+        } catch (Exception e) {
+            log.error("Caught exception", e);
+        }
+
 
         this.items = MarketPlace.getOwnOffers(this.habbo);
     }

@@ -71,6 +71,8 @@ import com.us.archangel.feature.crime.packets.incoming.*;
 import com.us.archangel.feature.device.interactions.packets.incoming.DeviceCloseEvent;
 import com.us.archangel.feature.device.interactions.packets.incoming.DeviceOpenEvent;
 import com.us.archangel.feature.device.interactions.packets.incoming.InfoScreenSaveEvent;
+import com.us.archangel.feature.gunstore.packets.incoming.AmmoCrateTakeOneEvent;
+import com.us.archangel.feature.gunstore.packets.incoming.WeaponVendingMachineTakeOneEvent;
 import com.us.archangel.feature.hotbar.packets.incoming.HotBarAddItemEvent;
 import com.us.archangel.feature.hotbar.packets.incoming.HotBarListItemsEvent;
 import com.us.archangel.feature.hotbar.packets.incoming.HotBarPickupItemEvent;
@@ -1175,7 +1177,11 @@ public enum Incoming {
 
     equipAmmoEvent(8122, EquipAmmoEvent.class),
 
-    listMyAmmoEvent(8123, ListMyAmmoEvent.class);
+    listMyAmmoEvent(8123, ListMyAmmoEvent.class),
+
+    ammoCrateTakeOneEvent(8124, AmmoCrateTakeOneEvent.class),
+
+    weaponVendingMachineTakeOneEvent(8125, WeaponVendingMachineTakeOneEvent.class);
 
     private final int messageId;
     private final Class<? extends MessageHandler> messageClass;

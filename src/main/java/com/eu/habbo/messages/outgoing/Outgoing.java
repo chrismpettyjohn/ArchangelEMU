@@ -489,4 +489,6 @@ public class Outgoing {
     public static final int userGuestbookQueryListComposer = 9058;
     public static final int userGuestbookQueryOneComposer = 9059;
     public static final int myAmmoListComposer = 9060;
+    public static final int ammoCrateDataComposer = 9061;
+    public static final int weaponVendingMachineComposer = 9062;
 }

@@ -19,6 +19,7 @@ public class CorpStopWorkCommand extends Command {
 
 
         gameClient.getHabbo().getPlayer().setWorkTimeRemainingSecs(0);
+        gameClient.getHabbo().getInventory().getStoreShiftComponent().clearProducts();
         gameClient.getHabbo().getRoomUnit().getRoom().sendComposer(new UserRoleplayStatsChangeComposer(gameClient.getHabbo()).compose());
         return true;
     }
