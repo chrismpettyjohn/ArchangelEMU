@@ -4,8 +4,10 @@ import com.eu.habbo.Emulator;
 import com.eu.habbo.habbohotel.users.Habbo;
 import com.eu.habbo.messages.incoming.MessageHandler;
 import com.eu.habbo.messages.outgoing.users.CreditBalanceComposer;
+import com.eu.habbo.threading.runnables.RoomUnitGiveHanditem;
 import com.us.archangel.ammo.model.AmmoModel;
 import com.us.archangel.ammo.service.AmmoService;
+import com.us.archangel.feature.gunstore.packets.incoming.AmmoCrateTakeEvent;
 import com.us.archangel.player.model.PlayerWeaponModel;
 import com.us.archangel.player.service.PlayerAmmoService;
 import com.us.archangel.player.service.PlayerWeaponService;
@@ -99,6 +101,14 @@ public class AcceptStoreProductOfferEvent extends MessageHandler {
                             .replace(":fee", String.valueOf(offerModel.getProductCost()))
                             .replace(":item", offerModel.getProductType().toString())
             );
+
+            Habbo employeeHabbo = Emulator.getGameEnvironment().getHabboManager().getHabbo(offerModel.getEmployeeUserId());
+
+            if (employeeHabbo != null) {
+                Emulator.getThreading().run(new RoomUnitGiveHanditem(employeeHabbo.getRoomUnit(), employeeHabbo.getRoomUnit().getRoom(), 0));
+                employeeHabbo.getRoomUnit().setEffectId(0);
+                employeeHabbo.getRoomUnit().instantUpdate();
+            }
         }
 
         offerModel.setOfferStatus(canAfford ? StoreProductOfferStatus.ACCEPTED : StoreProductOfferStatus.REJECTED);

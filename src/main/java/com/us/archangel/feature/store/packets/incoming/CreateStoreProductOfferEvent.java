@@ -50,6 +50,11 @@ public class CreateStoreProductOfferEvent extends MessageHandler {
         productOfferModel.setProductCost(productModel.getCost());
         StoreProductOfferModel savedProductOffer = StoreProductOfferService.getInstance().create(productOfferModel);
 
+        this.client.getHabbo().shout(Emulator.getTexts()
+                .getValue("roleplay.sell_store_product.offer_success")
+                .replace(":username", targetUser.getHabboInfo().getUsername())
+                .replace(":fee", String.valueOf(productModel.getCost()))
+        );
         targetUser.getClient().sendResponse(new OfferStoreProductComposer(savedProductOffer));
     }
 }
