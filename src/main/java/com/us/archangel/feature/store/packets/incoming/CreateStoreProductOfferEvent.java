@@ -50,7 +50,6 @@ public class CreateStoreProductOfferEvent extends MessageHandler {
         productOfferModel.setProductCost(productModel.getCost());
         StoreProductOfferModel savedProductOffer = StoreProductOfferService.getInstance().create(productOfferModel);
 
-        StoreProductOfferService.getInstance().create(savedProductOffer);
         targetUser.getClient().sendResponse(new OfferStoreProductComposer(savedProductOffer));
     }
 }

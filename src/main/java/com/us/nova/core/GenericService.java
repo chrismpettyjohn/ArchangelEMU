@@ -89,11 +89,6 @@ public class GenericService<Model, Context extends GenericContext<Model>, Reposi
                         argTypes[i] = args[i].getClass(); // Fallback to actual class
                     }
                 }
-
-                // Debugging output to verify argument types
-                System.out.println("Invoking method: " + methodName);
-                System.out.println("Argument types: " + java.util.Arrays.toString(argTypes));
-
                 // Get and invoke the method
                 Method method = repository.getClass().getMethod(methodName, argTypes);
                 return method.invoke(repository, args);
