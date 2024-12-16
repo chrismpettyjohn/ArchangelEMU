@@ -7,15 +7,14 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
+@Setter
 @Getter
 @AllArgsConstructor
 public class PlayerWeaponModel {
     private int id;
     private int userId;
     private int weaponId;
-    @Setter
     private int ammoId;
-    @Setter
     private int ammoRemaining;
 
     public PlayerWeaponModel() {
@@ -26,7 +25,7 @@ public class PlayerWeaponModel {
     }
 
     public PlayerAmmoModel getPlayerAmmo() {
-        return PlayerAmmoService.getInstance().getById(this.ammoId);
+        return PlayerAmmoService.getInstance().getByUserAndAmmoId(this.userId, this.ammoId);
     }
 
     public void depleteAmmo(int ammoUsed) {

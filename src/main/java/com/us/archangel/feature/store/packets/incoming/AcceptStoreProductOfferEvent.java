@@ -82,6 +82,8 @@ public class AcceptStoreProductOfferEvent extends MessageHandler {
 
                     // Give player weapon
                     PlayerWeaponModel playerWeaponModel = new PlayerWeaponModel();
+                    playerWeaponModel.setWeaponId(offerModel.getProductId());
+                    playerWeaponModel.setUserId(this.client.getHabbo().getHabboInfo().getId());
                     playerWeaponModel.setAmmoId(weaponAmmoModel.getId());
                     playerWeaponModel.setAmmoRemaining(weaponModel.getAmmoCapacity());
                     PlayerWeaponService.getInstance().create(playerWeaponModel);

@@ -86,41 +86,28 @@ public class PlayerAmmoService extends GenericService<PlayerAmmoModel, PlayerAmm
         return modelList;
     }
 
-    private PlayerAmmoModel getByUserAndAmmoId(int userId, int ammoId) {
+    public PlayerAmmoModel getByUserAndAmmoId(int userId, int ammoId) {
         return getByUserID(userId).stream()
                 .filter(ammo -> ammo.getAmmoId() == ammoId)
                 .findFirst()
                 .orElse(null);
     }
 
-    public PlayerAmmoModel addAmmo(int userId, int ammoId, int quantity) {
+    public void addAmmo(int userId, int ammoId, int quantity) {
         PlayerAmmoModel playerAmmo = this.getByUserAndAmmoId(userId, ammoId);
-        if (playerAmmo != null) {
-            playerAmmo.setAmmoId(playerAmmo.getAmmoRemaining() + quantity);
-            update(playerAmmo.getId(), playerAmmo);
-        } else {
-            playerAmmo = new PlayerAmmoModel();
-            playerAmmo.setUserId(userId);
-            playerAmmo.setAmmoId(ammoId);
-            playerAmmo.setAmmoRemaining(quantity);
-            create(playerAmmo);
-        }
-        return playerAmmo;
-    }
 
-    public void removeAmmo(int userId, int ammoId, int quantity) {
-        PlayerAmmoModel playerAmmo = this.getByUserAndAmmoId(userId, ammoId);
         if (playerAmmo != null) {
-            int newQuantity = playerAmmo.getAmmoRemaining() - quantity;
-            if (newQuantity <= 0) {
-                deleteById(playerAmmo.getId());
-            } else {
-                playerAmmo.setAmmoRemaining(newQuantity);
-                update(playerAmmo.getId(), playerAmmo);
-            }
-        } else {
-            throw new IllegalArgumentException("Player does not have ammo with ID " + ammoId);
+            playerAmmo.setAmmoRemaining(playerAmmo.getAmmoRemaining() + quantity);
+            update(playerAmmo.getId(), playerAmmo);
+            return;
         }
+
+
+        playerAmmo = new PlayerAmmoModel();
+        playerAmmo.setUserId(userId);
+        playerAmmo.setAmmoId(ammoId);
+        playerAmmo.setAmmoRemaining(quantity);
+        create(playerAmmo);
     }
 
 

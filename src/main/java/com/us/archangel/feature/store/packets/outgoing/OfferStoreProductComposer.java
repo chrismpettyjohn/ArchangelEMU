@@ -22,15 +22,18 @@ public class OfferStoreProductComposer extends MessageComposer {
 
 
         String productName = String.valueOf(this.offer.getProductId());
+        String productKey = String.valueOf(this.offer.getProductId());
 
         if (this.offer.getProductType() == StoreProductType.AMMO) {
             AmmoModel ammoModel = AmmoService.getInstance().getById(this.offer.getProductId());
             productName = ammoModel.getDisplayName();
+            productKey = ammoModel.getUniqueName();
         }
 
         if (this.offer.getProductType() == StoreProductType.WEAPON) {
             WeaponModel weaponModel = WeaponService.getInstance().getById(this.offer.getProductId());
             productName = weaponModel.getDisplayName();
+            productKey = weaponModel.getUniqueName();
         }
 
         this.response.appendInt(this.offer.getId());
@@ -38,6 +41,7 @@ public class OfferStoreProductComposer extends MessageComposer {
         this.response.appendString(this.offer.getProductType().toString());
         this.response.appendInt(this.offer.getProductCost());
         this.response.appendString(productName);
+        this.response.appendString(productKey);
 
         return this.response;
     }

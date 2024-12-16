@@ -19,47 +19,31 @@ import lombok.Setter;
 
 import java.util.List;
 
+@Setter
 @Getter
 @AllArgsConstructor
 public class PlayerModel {
 
     private int id;
     private int userId;
-    @Setter
     private Integer gangId;;
-    @Setter
     private Integer gangRoleId;
-    @Setter
     private int corpId;
-    @Setter
     private int corpRoleId;
-    @Setter
     private int healthNow;
-    @Setter
     private int healthMax;
-    @Setter
     private int energyNow;
-    @Setter
     private int energyMax;
-    @Setter
     private int armorNow;
-    @Setter
     private int armorMax;
-    @Setter
     private int hungerNow;
-    @Setter
     private int hungerMax;
     private short lastPosX;
     private short lastPosY;
-    @Setter
     private long workTimeRemainingSecs;
-    @Setter
     private long combatDelayExpiresAt;
-    @Setter
     private long jailTimeRemainingSecs;
-    @Setter
     private Integer escortingPlayerId;
-    @Setter
     private PlayerAction currentAction;
 
     private ManagedTask<?> currentTask;
