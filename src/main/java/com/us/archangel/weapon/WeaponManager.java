@@ -1,7 +1,6 @@
 package com.us.archangel.weapon;
 
 import com.us.archangel.weapon.context.WeaponContext;
-import com.us.archangel.weapon.entity.WeaponEntity;
 import com.us.archangel.weapon.mapper.WeaponMapper;
 import com.us.archangel.weapon.model.WeaponModel;
 import com.us.archangel.weapon.repository.WeaponRepository;
@@ -9,8 +8,6 @@ import com.us.archangel.weapon.service.WeaponService;
 import lombok.Getter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.List;
 
 @Getter
 public class WeaponManager {

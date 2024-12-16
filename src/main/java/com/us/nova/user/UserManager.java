@@ -32,30 +32,43 @@ public class UserManager {
         return instance;
     }
 
+    private final UserRepository userRepository;
+    private final UserContext userContext;
+    private final UserService userService;
+
     private final UserGuestbookRepository userGuestbookRepository;
     private final UserGuestbookContext userGuestbookContext;
     private final UserGuestbookService userGuestbookService;
 
-    private final UserRepository userRepository;
-    private final UserContext userContext;
-    private final UserService userService;
 
     private final UserSSORepository userSSORepository;
     private final UserSSOContext userSSOContext;
     private final UserSSOService userSSOService;
 
     private UserManager() {
-        this.userGuestbookContext = UserGuestbookContext.getInstance();
-        this.userGuestbookRepository = UserGuestbookRepository.getInstance();
-        this.userGuestbookService = UserGuestbookService.getInstance();
 
         this.userContext = UserContext.getInstance();
         this.userRepository = UserRepository.getInstance();
         this.userService = UserService.getInstance();
 
+        this.userGuestbookContext = UserGuestbookContext.getInstance();
+        this.userGuestbookRepository = UserGuestbookRepository.getInstance();
+        this.userGuestbookService = UserGuestbookService.getInstance();
+
         this.userSSOContext = UserSSOContext.getInstance();
         this.userSSORepository = UserSSORepository.getInstance();
         this.userSSOService = UserSSOService.getInstance();
+        this.load();
+    }
+
+    public void load() {
+        LOGGER.info("User manager > starting");
+
+        this.userService.getAll();
+        this.userGuestbookService.getAll();
+        this.userSSOService.getAll();
+
+        LOGGER.info("User manager > loaded");
     }
 
     public void dispose() {

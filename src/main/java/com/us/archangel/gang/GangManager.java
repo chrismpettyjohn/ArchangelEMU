@@ -3,7 +3,6 @@ package com.us.archangel.gang;
 import com.us.archangel.gang.context.GangContext;
 import com.us.archangel.gang.context.GangInviteContext;
 import com.us.archangel.gang.context.GangRoleContext;
-import com.us.archangel.gang.entity.GangEntity;
 import com.us.archangel.gang.mapper.GangInviteMapper;
 import com.us.archangel.gang.mapper.GangMapper;
 import com.us.archangel.gang.mapper.GangRoleMapper;
@@ -19,8 +18,6 @@ import com.us.archangel.gang.service.GangService;
 import lombok.Getter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.List;
 
 @Getter
 public class GangManager {

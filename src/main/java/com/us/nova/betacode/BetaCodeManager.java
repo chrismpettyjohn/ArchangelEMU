@@ -31,6 +31,15 @@ public class BetaCodeManager {
         this.betaCodeContext = BetaCodeContext.getInstance();
         this.betaCodeRepository = BetaCodeRepository.getInstance();
         this.betaCodeService = BetaCodeService.getInstance();
+        this.load();
+    }
+
+    public void load() {
+        LOGGER.info("Beta Code manager > starting");
+
+        this.betaCodeService.getAll();
+
+        LOGGER.info("Beta Code manager > loaded");
     }
 
     public void dispose() {

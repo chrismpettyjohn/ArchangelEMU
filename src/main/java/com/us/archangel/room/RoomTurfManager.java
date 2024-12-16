@@ -15,6 +15,7 @@ public class RoomTurfManager {
 
     private int capturingUserId;
     private boolean isCapturing;
+    @Getter
     private long captureFinishesAt;
     private long capturePausedAt;
 
@@ -55,10 +56,6 @@ public class RoomTurfManager {
         this.captureFinishesAt = 0;
         this.capturePausedAt = 0;
         notifyRoom();
-    }
-
-    public long getCaptureFinishesAt() {
-        return this.captureFinishesAt;
     }
 
     private void notifyRoom() {

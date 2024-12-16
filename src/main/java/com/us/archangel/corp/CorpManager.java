@@ -3,7 +3,6 @@ package com.us.archangel.corp;
 import com.us.archangel.corp.context.CorpContext;
 import com.us.archangel.corp.context.CorpInviteContext;
 import com.us.archangel.corp.context.CorpRoleContext;
-import com.us.archangel.corp.entity.CorpEntity;
 import com.us.archangel.corp.mapper.CorpInviteMapper;
 import com.us.archangel.corp.mapper.CorpMapper;
 import com.us.archangel.corp.mapper.CorpRoleMapper;
@@ -19,8 +18,6 @@ import com.us.archangel.corp.service.CorpService;
 import lombok.Getter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.List;
 
 @Getter
 public class CorpManager {

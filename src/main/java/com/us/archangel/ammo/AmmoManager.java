@@ -1,7 +1,6 @@
 package com.us.archangel.ammo;
 
 import com.us.archangel.ammo.context.AmmoContext;
-import com.us.archangel.ammo.entity.AmmoEntity;
 import com.us.archangel.ammo.mapper.AmmoMapper;
 import com.us.archangel.ammo.model.AmmoModel;
 import com.us.archangel.ammo.repository.AmmoRepository;
@@ -9,8 +8,6 @@ import com.us.archangel.ammo.service.AmmoService;
 import lombok.Getter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.List;
 
 @Getter
 public class AmmoManager {

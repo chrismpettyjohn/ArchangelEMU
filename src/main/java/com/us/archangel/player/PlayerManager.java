@@ -1,7 +1,6 @@
 package com.us.archangel.player;
 
 import com.us.archangel.player.context.*;
-import com.us.archangel.player.entity.PlayerEntity;
 import com.us.archangel.player.mapper.*;
 import com.us.archangel.player.model.*;
 import com.us.archangel.player.repository.*;
@@ -9,8 +8,6 @@ import com.us.archangel.player.service.*;
 import lombok.Getter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.List;
 
 @Getter
 public class PlayerManager {

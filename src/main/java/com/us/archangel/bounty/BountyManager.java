@@ -1,7 +1,6 @@
 package com.us.archangel.bounty;
 
 import com.us.archangel.bounty.context.BountyContext;
-import com.us.archangel.bounty.entity.BountyEntity;
 import com.us.archangel.bounty.mapper.BountyMapper;
 import com.us.archangel.bounty.model.BountyModel;
 import com.us.archangel.bounty.repository.BountyRepository;
@@ -9,8 +8,6 @@ import com.us.archangel.bounty.service.BountyService;
 import lombok.Getter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.List;
 
 @Getter
 public class BountyManager {

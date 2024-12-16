@@ -1,9 +1,5 @@
 package com.us.archangel.store;
 
-import com.us.archangel.ammo.repository.AmmoRepository;
-import com.us.archangel.government.context.GovernmentLawContext;
-import com.us.archangel.government.repository.GovernmentLawRepository;
-import com.us.archangel.government.service.GovernmentLawService;
 import com.us.archangel.store.context.StoreProductOfferContext;
 import com.us.archangel.store.mapper.StoreProductOfferMapper;
 import com.us.archangel.store.models.StoreProductOfferModel;
@@ -12,9 +8,6 @@ import com.us.archangel.store.service.StoreProductOfferService;
 import lombok.Getter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.List;
-
 
 @Getter
 public class StoreManager {

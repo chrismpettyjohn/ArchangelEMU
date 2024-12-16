@@ -31,6 +31,15 @@ public class BugReportManager {
         this.bugReportContext = BugReportContext.getInstance();
         this.bugReportRepository = BugReportRepository.getInstance();
         this.bugReportService = BugReportService.getInstance();
+        this.load();
+    }
+
+    public void load() {
+        LOGGER.info("Bug Report manager > starting");
+
+        this.bugReportService.getAll();
+
+        LOGGER.info("Bug Report manager > loaded");
     }
 
     public void dispose() {

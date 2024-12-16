@@ -1,7 +1,6 @@
 package com.us.archangel.sanction;
 
 import com.us.archangel.sanction.context.SanctionContext;
-import com.us.archangel.sanction.entity.SanctionEntity;
 import com.us.archangel.sanction.mapper.SanctionMapper;
 import com.us.archangel.sanction.model.SanctionModel;
 import com.us.archangel.sanction.repository.SanctionRepository;
@@ -9,8 +8,6 @@ import com.us.archangel.sanction.service.SanctionService;
 import lombok.Getter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.List;
 
 @Getter
 public class SanctionManager {
