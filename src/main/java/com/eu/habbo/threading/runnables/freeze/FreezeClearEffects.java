@@ -15,7 +15,6 @@ public class FreezeClearEffects implements Runnable {
         this.habbo.getRoomUnit().setEffectEndTimestamp(0);
         this.habbo.getRoomUnit().setCanWalk(true);
         if (this.habbo.getRoomUnit().getRoom() != null) {
-            this.habbo.getRoomUnit().getRoom().sendComposer(new AvatarEffectMessageComposer(this.habbo.getRoomUnit()).compose());
         }
     }
 }

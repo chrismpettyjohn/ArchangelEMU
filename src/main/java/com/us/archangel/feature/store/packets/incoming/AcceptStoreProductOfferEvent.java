@@ -3,6 +3,8 @@ package com.us.archangel.feature.store.packets.incoming;
 import com.eu.habbo.Emulator;
 import com.eu.habbo.habbohotel.users.Habbo;
 import com.eu.habbo.messages.incoming.MessageHandler;
+import com.eu.habbo.messages.outgoing.rooms.users.AvatarEffectMessageComposer;
+import com.eu.habbo.messages.outgoing.rooms.users.CarryObjectMessageComposer;
 import com.eu.habbo.messages.outgoing.users.CreditBalanceComposer;
 import com.us.archangel.ammo.model.AmmoModel;
 import com.us.archangel.ammo.service.AmmoService;
@@ -99,6 +101,17 @@ public class AcceptStoreProductOfferEvent extends MessageHandler {
                             .replace(":fee", String.valueOf(offerModel.getProductCost()))
                             .replace(":item", offerModel.getProductType().toString())
             );
+
+
+            Habbo employeeHabbo = this.client.getHabbo().getRoomUnit().getRoom().getRoomUnitManager().getRoomHabboById(offerModel.getEmployeeUserId());
+
+            if (employeeHabbo != null) {
+                employeeHabbo.getRoomUnit().setHandItem(0);
+                employeeHabbo.getRoomUnit().setEffectId(0);
+                employeeHabbo.getRoomUnit().instantUpdate();
+                employeeHabbo.getRoomUnit().getRoom().sendComposer(new CarryObjectMessageComposer(employeeHabbo.getRoomUnit()).compose());
+                employeeHabbo.getRoomUnit().getRoom().sendComposer(new AvatarEffectMessageComposer(employeeHabbo.getRoomUnit()).compose());
+            }
         }
 
         offerModel.setOfferStatus(canAfford ? StoreProductOfferStatus.ACCEPTED : StoreProductOfferStatus.REJECTED);
