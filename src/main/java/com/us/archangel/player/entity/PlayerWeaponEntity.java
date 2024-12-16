@@ -9,11 +9,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "archangel_players_weapons", indexes = {
-        @Index(name = "idx_users_id", columnList = "users_id"),
-        @Index(name = "idx_weapon_id", columnList = "weapons_id"),
-        @Index(name = "idx_ammo_id", columnList = "ammo_id")
-})
+@Table(name = "archangel_players_weapons")
 public class PlayerWeaponEntity {
 
     @Id
@@ -26,17 +22,22 @@ public class PlayerWeaponEntity {
     @Column(name = "weapons_id", nullable = false)
     private int weaponId;
 
-    @Column(name = "ammo_id", nullable = false)
-    private int ammoId;
-
     @Column(name = "ammo_remaining", nullable = false)
     private int ammoRemaining;
 
-    @ManyToOne
-    @JoinColumn(name = "weapons_id", nullable = false, insertable=false, updatable=false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "ammo_id")
+    private AmmoEntity ammo;
+
+    @Column(name = "ammo_id", insertable = false, updatable = false)
+    private int ammoId;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "weapons_id", insertable = false, updatable = false)
     private WeaponEntity weapon;
 
-    @ManyToOne
-    @JoinColumn(name = "ammo_id", nullable = false, insertable=false, updatable=false)
-    private AmmoEntity ammo;
+    public void setAmmo(AmmoEntity ammo) {
+        this.ammo = ammo;
+        this.ammoId = ammo != null ? ammo.getId() : 0;
+    }
 }

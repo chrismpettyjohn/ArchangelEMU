@@ -1,10 +1,14 @@
 package com.us.archangel.player.service;
 
+import com.us.archangel.ammo.entity.AmmoEntity;
+import com.us.archangel.ammo.model.AmmoModel;
+import com.us.archangel.ammo.repository.AmmoRepository;
 import com.us.archangel.player.context.PlayerWeaponContext;
 import com.us.archangel.player.entity.PlayerWeaponEntity;
 import com.us.archangel.player.mapper.PlayerWeaponMapper;
 import com.us.archangel.player.model.PlayerWeaponModel;
 import com.us.archangel.player.repository.PlayerWeaponRepository;
+import com.us.archangel.weapon.model.WeaponModel;
 import com.us.nova.core.GenericService;
 
 import java.util.List;
@@ -29,6 +33,24 @@ public class PlayerWeaponService extends GenericService<PlayerWeaponModel, Playe
 
     public PlayerWeaponModel create(PlayerWeaponModel model) {
         return super.create(model);
+    }
+
+    public PlayerWeaponModel createWithAmmo(WeaponModel weaponModel, int userId, AmmoModel ammoModel) {
+        // Add ammo first
+        PlayerAmmoService.getInstance().addAmmo(userId, ammoModel.getId(), weaponModel.getAmmoCapacity() * 2);
+        
+        // Get the proper AmmoEntity
+        AmmoEntity ammoEntity = AmmoRepository.getInstance().getById(ammoModel.getId());
+        
+        // Create weapon with the entity relationship
+        PlayerWeaponEntity entity = new PlayerWeaponEntity();
+        entity.setUserId(userId);
+        entity.setWeaponId(weaponModel.getId());
+        entity.setAmmo(ammoEntity);  // This will set both the entity and ID
+        entity.setAmmoRemaining(weaponModel.getAmmoCapacity());
+        
+        PlayerWeaponEntity saved = repository.create(entity);
+        return PlayerWeaponMapper.toModel(saved);
     }
 
     public void update(int id, PlayerWeaponModel model) {

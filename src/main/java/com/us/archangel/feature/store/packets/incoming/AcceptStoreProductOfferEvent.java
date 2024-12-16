@@ -4,11 +4,8 @@ import com.eu.habbo.Emulator;
 import com.eu.habbo.habbohotel.users.Habbo;
 import com.eu.habbo.messages.incoming.MessageHandler;
 import com.eu.habbo.messages.outgoing.users.CreditBalanceComposer;
-import com.eu.habbo.threading.runnables.RoomUnitGiveHanditem;
 import com.us.archangel.ammo.model.AmmoModel;
 import com.us.archangel.ammo.service.AmmoService;
-import com.us.archangel.feature.gunstore.packets.incoming.AmmoCrateTakeEvent;
-import com.us.archangel.player.model.PlayerWeaponModel;
 import com.us.archangel.player.service.PlayerAmmoService;
 import com.us.archangel.player.service.PlayerWeaponService;
 import com.us.archangel.store.enums.StoreProductOfferStatus;
@@ -63,8 +60,8 @@ public class AcceptStoreProductOfferEvent extends MessageHandler {
 
                     // TODO: change quantity
                     PlayerAmmoService.getInstance().addAmmo(this.client.getHabbo().getHabboInfo().getId(), ammoModel.getId(), 30);
-
                     break;
+
                 case WEAPON:
                     WeaponModel weaponModel = WeaponService.getInstance().getById(offerModel.getProductId());
 
@@ -73,23 +70,24 @@ public class AcceptStoreProductOfferEvent extends MessageHandler {
                         throw new RuntimeException("weapon not found");
                     }
 
-                    AmmoModel weaponAmmoModel = AmmoService.getInstance().getAll().stream().filter(ammo -> ammo.getSize() == weaponModel.getAmmoSize()).findFirst().orElse(null);
+                    AmmoModel weaponAmmoModel = AmmoService.getInstance().getAll().stream()
+                            .filter(ammo -> ammo.getSize() == weaponModel.getAmmoSize())
+                            .findFirst()
+                            .orElse(null);
 
                     if (weaponAmmoModel == null) {
                         this.client.getHabbo().whisper(Emulator.getTexts().getValue("roleplay.store_offer.transaction_failed"));
                         throw new RuntimeException("weapon has no matching ammo");
                     }
 
-                    PlayerAmmoService.getInstance().addAmmo(this.client.getHabbo().getHabboInfo().getId(), weaponAmmoModel.getId(), weaponModel.getAmmoCapacity() * 2);
-
-                    // Give player weapon
-                    PlayerWeaponModel playerWeaponModel = new PlayerWeaponModel();
-                    playerWeaponModel.setWeaponId(offerModel.getProductId());
-                    playerWeaponModel.setUserId(this.client.getHabbo().getHabboInfo().getId());
-                    playerWeaponModel.setAmmoId(weaponAmmoModel.getId());
-                    playerWeaponModel.setAmmoRemaining(weaponModel.getAmmoCapacity());
-                    PlayerWeaponService.getInstance().create(playerWeaponModel);
+                    // Use new createWithAmmo method
+                    PlayerWeaponService.getInstance().createWithAmmo(
+                        weaponModel,
+                        this.client.getHabbo().getHabboInfo().getId(),
+                        weaponAmmoModel
+                    );
                     break;
+
                 case ITEM:
                     throw new RuntimeException("not supported yet");
             }
@@ -101,14 +99,6 @@ public class AcceptStoreProductOfferEvent extends MessageHandler {
                             .replace(":fee", String.valueOf(offerModel.getProductCost()))
                             .replace(":item", offerModel.getProductType().toString())
             );
-
-            Habbo employeeHabbo = Emulator.getGameEnvironment().getHabboManager().getHabbo(offerModel.getEmployeeUserId());
-
-            if (employeeHabbo != null) {
-                Emulator.getThreading().run(new RoomUnitGiveHanditem(employeeHabbo.getRoomUnit(), employeeHabbo.getRoomUnit().getRoom(), 0));
-                employeeHabbo.getRoomUnit().setEffectId(0);
-                employeeHabbo.getRoomUnit().instantUpdate();
-            }
         }
 
         offerModel.setOfferStatus(canAfford ? StoreProductOfferStatus.ACCEPTED : StoreProductOfferStatus.REJECTED);
