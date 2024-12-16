@@ -15,6 +15,7 @@ public class AmmoModel {
     private String uniqueName;
     private AmmoSize size;
     private AmmoType type;
+    private int value;
 
     public AmmoModel() {
     }

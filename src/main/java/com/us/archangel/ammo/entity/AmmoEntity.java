@@ -33,4 +33,7 @@ public class AmmoEntity {
     @Convert(converter = AmmoTypeConverter.class)
     private AmmoType type;
 
+    @Column(name = "value")
+    private int value;
+
 }

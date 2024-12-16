@@ -15,7 +15,8 @@ public class AmmoMapper extends GenericMapper<AmmoEntity, AmmoModel> {
                 entity.getDisplayName(),
                 entity.getUniqueName(),
                 entity.getSize(),
-                entity.getType()
+                entity.getType(),
+                entity.getValue()
         );
     }
 
@@ -29,6 +30,7 @@ public class AmmoMapper extends GenericMapper<AmmoEntity, AmmoModel> {
         entity.setUniqueName(model.getUniqueName());
         entity.setSize(model.getSize());
         entity.setType(model.getType());
+        entity.setValue(model.getValue());
         return entity;
     }
 }

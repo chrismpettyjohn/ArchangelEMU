@@ -59,6 +59,17 @@ public class PoliceManager {
         this.policeWarrantService = PoliceWarrantService.getInstance();
 
         LOGGER.info("Police manager > loaded");
+        this.load();
+    }
+
+    public void load() {
+        LOGGER.info("Police manager > starting");
+
+        this.policeCrimeService.getAll();
+        this.policeReportService.getAll();
+        this.policeWarrantService.getAll();
+
+        LOGGER.info("Police manager > loaded");
     }
 
     public void dispose() {

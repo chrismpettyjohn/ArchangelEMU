@@ -25,6 +25,7 @@ public class WeaponModel {
     private AmmoSize ammoSize;
     private int ammoCapacity;
     private int weight;
+    private int value;
     private int cooldownSeconds;
     private int equipHandItem;
     private int equipEffect;

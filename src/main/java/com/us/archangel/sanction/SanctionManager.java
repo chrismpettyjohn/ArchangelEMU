@@ -40,11 +40,7 @@ public class SanctionManager {
     public void load() {
         LOGGER.info("Sanction manager > starting");
 
-        List<SanctionEntity> entities = SanctionRepository.getInstance().getAll();
-
-        for (SanctionEntity entity : entities) {
-            this.sanctionContext.add(entity.getId(), SanctionMapper.toModel(entity));
-        }
+        this.sanctionService.getAll();
 
         LOGGER.info("Sanction manager > loaded");
     }

@@ -39,11 +39,7 @@ public class AmmoManager {
     public void load() {
         LOGGER.info("Ammo manager > starting");
 
-        List<AmmoEntity> entities = AmmoRepository.getInstance().getAll();
-
-        for (AmmoEntity entity : entities) {
-            this.ammoContext.add(entity.getId(), AmmoMapper.toModel(entity));
-        }
+        this.ammoService.getAll();
 
         LOGGER.info("Ammo manager > loaded");
     }

@@ -1,6 +1,9 @@
 package com.us.archangel.store;
 
 import com.us.archangel.ammo.repository.AmmoRepository;
+import com.us.archangel.government.context.GovernmentLawContext;
+import com.us.archangel.government.repository.GovernmentLawRepository;
+import com.us.archangel.government.service.GovernmentLawService;
 import com.us.archangel.store.context.StoreProductOfferContext;
 import com.us.archangel.store.mapper.StoreProductOfferMapper;
 import com.us.archangel.store.models.StoreProductOfferModel;
@@ -40,7 +43,7 @@ public class StoreManager {
     public void load() {
         LOGGER.info("Store manager > starting");
 
-        this.storeProductOfferService.getInstance().getAll();
+        this.storeProductOfferService.getAll();
 
         LOGGER.info("Store manager > loaded");
     }

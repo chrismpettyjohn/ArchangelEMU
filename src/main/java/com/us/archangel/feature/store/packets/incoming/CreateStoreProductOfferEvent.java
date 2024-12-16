@@ -5,8 +5,7 @@ import com.eu.habbo.habbohotel.users.Habbo;
 import com.eu.habbo.messages.incoming.MessageHandler;
 import com.us.archangel.corp.enums.CorpIndustry;
 import com.us.archangel.feature.store.packets.outgoing.OfferStoreProductComposer;
-import com.us.archangel.store.entity.StoreProductOfferEntity;
-import com.us.archangel.store.mapper.StoreProductOfferMapper;
+import com.us.archangel.store.enums.StoreProductOfferStatus;
 import com.us.archangel.store.models.StoreProductModel;
 import com.us.archangel.store.models.StoreProductOfferModel;
 import com.us.archangel.store.service.StoreProductOfferService;
@@ -42,14 +41,16 @@ public class CreateStoreProductOfferEvent extends MessageHandler {
             return;
         }
 
-        StoreProductOfferEntity productOfferEntity = new StoreProductOfferEntity();
-        productOfferEntity.setEmployeePlayerId(this.client.getHabbo().getHabboInfo().getId());
-        productOfferEntity.setRecipientPlayerId(targetUserId);
-        productOfferEntity.setStoreProductId(productId);
-        productOfferEntity.setStoreProductType(productModel.getType());
-        StoreProductOfferModel productOfferModel = StoreProductOfferMapper.toModel(productOfferEntity);
+        StoreProductOfferModel productOfferModel = new StoreProductOfferModel();
+        productOfferModel.setOfferStatus(StoreProductOfferStatus.PENDING);
+        productOfferModel.setEmployeeUserId(this.client.getHabbo().getHabboInfo().getId());
+        productOfferModel.setRecipientUserId(targetUserId);
+        productOfferModel.setProductId(productId);
+        productOfferModel.setProductType(productModel.getType());
+        productOfferModel.setProductCost(productModel.getCost());
+        StoreProductOfferModel savedProductOffer = StoreProductOfferService.getInstance().create(productOfferModel);
 
-        StoreProductOfferService.getInstance().create(productOfferModel);
-        targetUser.getClient().sendResponse(new OfferStoreProductComposer(productOfferModel));
+        StoreProductOfferService.getInstance().create(savedProductOffer);
+        targetUser.getClient().sendResponse(new OfferStoreProductComposer(savedProductOffer));
     }
 }

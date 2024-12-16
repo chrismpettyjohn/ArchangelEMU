@@ -26,6 +26,7 @@ public class MyWeaponListComposer extends MessageComposer {
                             + ";" + weapon.getWeapon().getDisplayName()
                             + ";" + weapon.getWeapon().getEquipEffect()
                             + ";" + weapon.getWeapon().getAmmoCapacity()
+                            + ";" + weapon.getWeapon().getAmmoSize().toString()
             );
         }
         return this.response;

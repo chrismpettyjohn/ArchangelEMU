@@ -31,7 +31,7 @@ public class WeaponVendingMachineTakeEvent extends MessageHandler {
             return;
         }
 
-        StoreProductModel weaponProduct = new StoreProductModel(weapon.getId(), StoreProductType.WEAPON);
+        StoreProductModel weaponProduct = new StoreProductModel(weapon.getId(), weapon.getValue(), StoreProductType.WEAPON);
         this.client.getHabbo().getInventory().getStoreShiftComponent().addProduct(weaponProduct);
 
         if (weapon.getEquipHandItem() > 0) {

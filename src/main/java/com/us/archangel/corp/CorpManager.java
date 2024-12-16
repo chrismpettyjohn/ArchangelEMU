@@ -66,11 +66,9 @@ public class CorpManager {
     public void load() {
         LOGGER.info("Corp manager > starting");
 
-        List<CorpEntity> entities = CorpRepository.getInstance().getAll();
-
-        for (CorpEntity entity : entities) {
-            this.corpContext.add(entity.getId(), CorpMapper.toModel(entity));
-        }
+        this.corpService.getAll();
+        this.corpRoleService.getAll();
+        this.corpInviteService.getAll();
 
         LOGGER.info("Corp manager > loaded");
     }

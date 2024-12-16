@@ -10,6 +10,7 @@ import lombok.Setter;
 @AllArgsConstructor
 public class StoreProductModel {
     private int id;
+    private int cost;
     private StoreProductType type;
 
     public StoreProductModel() { }

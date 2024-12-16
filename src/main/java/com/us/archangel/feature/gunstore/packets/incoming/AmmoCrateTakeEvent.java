@@ -31,7 +31,7 @@ public class AmmoCrateTakeEvent extends MessageHandler {
             return;
         }
 
-        StoreProductModel ammoProduct = new StoreProductModel(ammo.getId(), StoreProductType.AMMO);
+        StoreProductModel ammoProduct = new StoreProductModel(ammo.getId(), ammo.getValue(), StoreProductType.AMMO);
         this.client.getHabbo().getInventory().getStoreShiftComponent().addProduct(ammoProduct);
 
         Emulator.getThreading().run(new RoomUnitGiveHanditem(this.client.getHabbo().getRoomUnit(), this.client.getHabbo().getRoomUnit().getRoom(), AmmoCrateTakeEvent.AMMO_HANDITEM_ID));

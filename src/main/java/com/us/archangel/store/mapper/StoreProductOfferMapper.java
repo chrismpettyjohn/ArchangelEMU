@@ -11,11 +11,11 @@ public class StoreProductOfferMapper {
         }
         return new StoreProductOfferModel(
                 entity.getId(),
-                entity.getEmployeePlayerId(),
-                entity.getRecipientPlayerId(),
-                entity.getStoreProductId(),
-                entity.getStoreProductCost(),
-                entity.getStoreProductType(),
+                entity.getEmployeeUserId(),
+                entity.getRecipientUserId(),
+                entity.getProductId(),
+                entity.getProductCost(),
+                entity.getProductType(),
                 entity.getOfferStatus()
         );
     }
@@ -26,11 +26,11 @@ public class StoreProductOfferMapper {
         }
         StoreProductOfferEntity entity = new StoreProductOfferEntity();
         entity.setId(model.getId());
-        entity.setEmployeePlayerId(model.getEmployeeUserId());
-        entity.setRecipientPlayerId(model.getRecipientUserId());
-        entity.setStoreProductId(model.getProductId());
-        entity.setStoreProductCost(model.getProductCost());
-        entity.setStoreProductType(model.getProductType());
+        entity.setEmployeeUserId(model.getEmployeeUserId());
+        entity.setRecipientUserId(model.getRecipientUserId());
+        entity.setProductId(model.getProductId());
+        entity.setProductCost(model.getProductCost());
+        entity.setProductType(model.getProductType());
         entity.setOfferStatus(model.getOfferStatus());
         return entity;
     }

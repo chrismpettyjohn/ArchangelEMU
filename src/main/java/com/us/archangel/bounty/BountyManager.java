@@ -38,11 +38,7 @@ public class BountyManager {
     public void load() {
         LOGGER.info("Bounty manager > starting");
 
-        List<BountyEntity> entities = BountyRepository.getInstance().getAll();
-
-        for (BountyEntity entity : entities) {
-            this.bountyContext.add(entity.getId(), BountyMapper.toModel(entity));
-        }
+        this.bountyService.getAll();
 
         LOGGER.info("Bounty manager > loaded");
     }

@@ -24,30 +24,22 @@ public class StoreProductOfferEntity {
     private int id;
 
     @Column(name = "recipient_players_id", nullable = false)
-    private int recipientPlayerId;
+    private int recipientUserId;
 
     @Column(name = "employee_players_id", nullable = false)
-    private int employeePlayerId;
+    private int employeeUserId;
 
     @Column(name = "store_product_id", nullable = false)
-    private int storeProductId;
+    private int productId;
 
     @Column(name = "store_product_cost", nullable = false)
-    private int storeProductCost;
+    private int productCost;
 
     @Convert(converter = StoreProductTypeConverter.class)
     @Column(name = "store_product_type", nullable = false)
-    private StoreProductType storeProductType;
+    private StoreProductType productType;
 
     @Convert(converter = StoreProductOfferStatusConverter.class)
     @Column(name = "offer_status", nullable = false)
     private StoreProductOfferStatus offerStatus;
-
-    @ManyToOne
-    @JoinColumn(name = "recipient_players_id", nullable = false, insertable = false, updatable = false)
-    private PlayerEntity recipientPlayer;
-
-    @ManyToOne
-    @JoinColumn(name = "employee_players_id", nullable = false, insertable = false, updatable = false)
-    private PlayerEntity employeePlayer;
 }

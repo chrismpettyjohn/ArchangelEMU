@@ -65,6 +65,9 @@ public class WeaponEntity {
     @Column(name = "weight")
     private int weight;
 
+    @Column(name = "value")
+    private int value;
+
     @Column(name = "cooldown_seconds")
     private int cooldownSeconds;
 

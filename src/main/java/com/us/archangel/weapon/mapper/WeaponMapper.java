@@ -25,6 +25,7 @@ public class WeaponMapper extends GenericMapper<WeaponEntity, WeaponModel> {
                 entity.getAmmoSize(),
                 entity.getAmmoCapacity(),
                 entity.getWeight(),
+                entity.getValue(),
                 entity.getCooldownSeconds(),
                 entity.getEquipHandItem(),
                 entity.getEquipEffect(),
@@ -52,6 +53,7 @@ public class WeaponMapper extends GenericMapper<WeaponEntity, WeaponModel> {
         entity.setReloadMessage(model.getReloadMessage());
         entity.setAmmoCapacity(model.getAmmoCapacity());
         entity.setWeight(model.getWeight());
+        entity.setValue((model.getValue()));
         entity.setCooldownSeconds(model.getCooldownSeconds());
         entity.setEquipHandItem(model.getEquipHandItem());
         entity.setEquipEffect(model.getEquipEffect());

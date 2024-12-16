@@ -39,11 +39,7 @@ public class WeaponManager {
     public void load() {
         LOGGER.info("Weapon manager > starting");
 
-        List<WeaponEntity> entities = WeaponRepository.getInstance().getAll();
-
-        for (WeaponEntity entity : entities) {
-            this.weaponContext.add(entity.getId(), WeaponMapper.toModel(entity));
-        }
+        this.weaponService.getAll();
 
         LOGGER.info("Weapon manager > loaded");
     }

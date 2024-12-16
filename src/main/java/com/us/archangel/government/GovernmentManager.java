@@ -34,6 +34,15 @@ public class GovernmentManager {
         this.lawService = GovernmentLawService.getInstance();
 
         LOGGER.info("Government manager > loaded");
+        this.load();
+    }
+
+    public void load() {
+        LOGGER.info("Government manager > starting");
+
+        this.lawService.getAll();
+
+        LOGGER.info("Government manager > loaded");
     }
 
     public void dispose() {

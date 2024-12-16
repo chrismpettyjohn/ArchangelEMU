@@ -65,11 +65,9 @@ public class GangManager {
     public void load() {
         LOGGER.info("Gang manager > starting");
 
-        List<GangEntity> entities = GangRepository.getInstance().getAll();
-
-        for (GangEntity entity : entities) {
-            this.gangContext.add(entity.getId(), GangMapper.toModel(entity));
-        }
+        this.gangService.getAll();
+        this.gangRoleService.getAll();
+        this.gangInviteService.getAll();
 
         LOGGER.info("Gang manager > loaded");
     }
