@@ -13,6 +13,9 @@ import com.us.archangel.gang.model.GangRoleModel;
 import com.us.archangel.gang.service.GangRoleService;
 import com.us.archangel.gang.service.GangService;
 import com.us.archangel.player.enums.PlayerAction;
+import com.us.archangel.player.model.PlayerAmmoModel;
+import com.us.archangel.player.model.PlayerWeaponModel;
+import com.us.archangel.player.service.PlayerAmmoService;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
@@ -26,6 +29,10 @@ public class UserRoleplayStatsChangeComposer extends MessageComposer {
 
         GangModel gang = this.habbo.getPlayer().getGangRoleId() != null ?  GangService.getInstance().getById(this.habbo.getPlayer().getGangId()) : null;
         GangRoleModel gangRole = this.habbo.getPlayer().getGangRoleId() != null ? GangRoleService.getInstance().getByGangIdAndOrderId(gang.getId(), corpRole.getId()) : null;
+
+        PlayerWeaponModel playerWeapon = this.habbo.getInventory().getWeaponsComponent().getEquippedWeapon();
+
+        PlayerAmmoModel playerAmmo = playerWeapon != null ? PlayerAmmoService.getInstance().getByUserAndAmmoId(this.habbo.getPlayer().getId(), playerWeapon.getAmmoId()) : null;
 
         this.response.init(Outgoing.userRoleplayStatsChangeComposer);
         this.response.appendInt(this.habbo.getHabboInfo().getId());
@@ -48,8 +55,12 @@ public class UserRoleplayStatsChangeComposer extends MessageComposer {
         this.response.appendInt(this.habbo.getPlayer().getEnergyMax());
         this.response.appendInt(this.habbo.getPlayer().getHungerNow());
         this.response.appendInt(this.habbo.getPlayer().getHungerMax());
-        this.response.appendInt(this.habbo.getInventory().getWeaponsComponent().getEquippedWeapon() != null ? this.habbo.getInventory().getWeaponsComponent().getEquippedWeapon().getWeaponId() : -1);
-        this.response.appendInt(this.habbo.getInventory().getWeaponsComponent().getEquippedWeapon() != null ? this.habbo.getInventory().getWeaponsComponent().getEquippedWeapon().getAmmoRemaining() : 0);
+        this.response.appendInt(playerWeapon != null ? playerWeapon.getWeaponId() : -1);
+        this.response.appendString(playerWeapon != null ? playerWeapon.getWeapon().getDisplayName() : "");
+        this.response.appendString(playerWeapon != null ? playerWeapon.getWeapon().getUniqueName() : "");
+        this.response.appendInt(playerWeapon != null ? playerWeapon.getAmmoId() : 0);
+        this.response.appendInt(playerWeapon != null ? playerWeapon.getAmmoRemaining() : 0);
+        this.response.appendInt(playerAmmo != null ? playerAmmo.getAmmoRemaining() : 0);
         this.response.appendInt(this.habbo.getPlayer().getCorpId());
         this.response.appendString(corp.getDisplayName());
         this.response.appendString(corp.getIndustry().toString());
