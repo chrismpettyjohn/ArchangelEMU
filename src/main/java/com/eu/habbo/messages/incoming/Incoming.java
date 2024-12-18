@@ -1200,7 +1200,11 @@ public enum Incoming {
 
     changeEmailEvent(8131, ChangeEmailEvent.class),
 
-    queryEmailEvent(8132, QueryEmailEvent.class);
+    queryEmailEvent(8132, QueryEmailEvent.class),
+
+    userQueryProfileBannerEvent(8133, UserQueryProfileBannerEvent.class),
+
+    userChangeProfileBannerEvent(8134, UserChangeProfileBannerEvent.class);
 
     private final int messageId;
     private final Class<? extends MessageHandler> messageClass;

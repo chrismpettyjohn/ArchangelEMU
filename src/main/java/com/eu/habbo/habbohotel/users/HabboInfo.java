@@ -46,6 +46,7 @@ public class HabboInfo implements Runnable {
     private PermissionGroup permissionGroup;
     private int credits;
     private int lastOnline;
+    private String bannerUrl;
     @Setter
     private int homeRoom;
     private boolean online;
@@ -85,6 +86,7 @@ public class HabboInfo implements Runnable {
         this.credits = set.getInt("credits");
         this.homeRoom = set.getInt("home_room");
         this.lastOnline = set.getInt("last_online");
+        this.bannerUrl = set.getString("banner_url");
         this.machineID = set.getString("machine_id");
         this.online = false;
 
@@ -308,7 +310,7 @@ public class HabboInfo implements Runnable {
             habbo.getClient().sendResponse(new UserRoleplayStatsChangeComposer(habbo));
         }
 
-        try (Connection connection = Emulator.getDatabase().getDataSource().getConnection(); PreparedStatement statement = connection.prepareStatement("UPDATE users SET mail = ?, motto = ?, online = ?, look = ?, gender = ?, credits = ?, last_login = ?, last_online = ?, home_room = ?, ip_current = ?, `rank` = ?, machine_id = ?, username = ? WHERE id = ?")) {
+        try (Connection connection = Emulator.getDatabase().getDataSource().getConnection(); PreparedStatement statement = connection.prepareStatement("UPDATE users SET mail = ?, motto = ?, online = ?, look = ?, gender = ?, credits = ?, last_login = ?, last_online = ?, home_room = ?, ip_current = ?, `rank` = ?, machine_id = ?, username = ?, banner_url = ? WHERE id = ?")) {
             statement.setString(1, this.mail);
             statement.setString(2, this.motto);
             statement.setString(3, this.online ? "1" : "0");
@@ -322,7 +324,8 @@ public class HabboInfo implements Runnable {
             statement.setInt(11, this.permissionGroup != null ? this.permissionGroup.getId() : 1);
             statement.setString(12, this.machineID);
             statement.setString(13, this.username);
-            statement.setInt(14, this.id);
+            statement.setString(14, this.bannerUrl);
+            statement.setInt(15, this.id);
             statement.executeUpdate();
         } catch (SQLException e) {
             log.error("Caught SQL exception", e);
