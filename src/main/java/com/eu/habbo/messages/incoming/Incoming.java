@@ -99,6 +99,7 @@ import com.us.nova.feature.betacode.packets.incoming.BetaCodeDeleteEvent;
 import com.us.nova.feature.betacode.packets.incoming.BetaCodeGenerateEvent;
 import com.us.nova.feature.betacode.packets.incoming.BetaCodeQueryListEvent;
 import com.us.nova.feature.bugreport.packets.incoming.*;
+import com.us.nova.feature.changepassword.packets.incoming.ChangePasswordEvent;
 import com.us.nova.feature.emusettings.packages.incoming.EmuSettingsDeleteEvent;
 import com.us.nova.feature.emusettings.packages.incoming.EmuSettingsQueryListEvent;
 import com.us.nova.feature.emusettings.packages.incoming.EmuSettingsUpdateEvent;
@@ -1193,7 +1194,9 @@ public enum Incoming {
 
     rejectStoreProductOfferEvent(8128, RejectStoreProductOfferEvent.class),
 
-    storeShiftInventoryQueryEvent(8129, StoreShiftInventoryQueryEvent.class);
+    storeShiftInventoryQueryEvent(8129, StoreShiftInventoryQueryEvent.class),
+
+    changePasswordEvent(8130, ChangePasswordEvent.class);
 
     private final int messageId;
     private final Class<? extends MessageHandler> messageClass;
