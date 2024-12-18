@@ -1,7 +1,10 @@
 package com.us.archangel.weapon.repository;
 
+import com.us.archangel.ammo.enums.AmmoSize;
+import com.us.archangel.player.entity.PlayerAmmoEntity;
 import com.us.archangel.weapon.entity.WeaponEntity;
 import com.us.nova.core.GenericRepository;
+import org.hibernate.Session;
 
 import java.util.List;
 
@@ -37,6 +40,14 @@ public class WeaponRepository extends GenericRepository<WeaponEntity> {
 
     public void deleteById(int id) {
         super.deleteById(id);
+    }
+
+    public WeaponEntity getByUniqueName(String uniqueName) {
+        try (Session session = sessionFactory.openSession()) {
+            return session.createQuery("from WeaponEntity where uniqueName = :uniqueName", WeaponEntity.class)
+                    .setParameter("uniqueName", uniqueName)
+                    .getSingleResultOrNull();
+        }
     }
 
 }

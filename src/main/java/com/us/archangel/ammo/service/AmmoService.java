@@ -2,6 +2,8 @@ package com.us.archangel.ammo.service;
 
 import com.us.archangel.ammo.context.AmmoContext;
 import com.us.archangel.ammo.entity.AmmoEntity;
+import com.us.archangel.ammo.enums.AmmoSize;
+import com.us.archangel.ammo.enums.AmmoType;
 import com.us.archangel.ammo.mapper.AmmoMapper;
 import com.us.archangel.ammo.model.AmmoModel;
 import com.us.archangel.ammo.repository.AmmoRepository;
@@ -43,6 +45,21 @@ public class AmmoService extends GenericService<AmmoModel, AmmoContext, AmmoRepo
 
     public void deleteById(int id) {
         super.deleteById(id);
+    }
+
+    public AmmoModel getBySizeAndType(AmmoSize size, AmmoType type) {
+        AmmoModel match = this.getAll().stream().filter(ammo -> ammo.getSize() == size && ammo.getType() == type).findFirst().orElse(null);
+        if (match != null) {
+            return match;
+        }
+
+        AmmoEntity ammoEntity = this.repository.getBySizeAndType(size, type);
+
+        if (ammoEntity != null) {
+            return AmmoMapper.toModel(ammoEntity);
+        }
+
+        return null;
     }
 
 }

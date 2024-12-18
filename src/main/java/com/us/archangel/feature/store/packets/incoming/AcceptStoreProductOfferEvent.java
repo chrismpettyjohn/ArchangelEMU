@@ -6,6 +6,7 @@ import com.eu.habbo.messages.incoming.MessageHandler;
 import com.eu.habbo.messages.outgoing.rooms.users.AvatarEffectMessageComposer;
 import com.eu.habbo.messages.outgoing.rooms.users.CarryObjectMessageComposer;
 import com.eu.habbo.messages.outgoing.users.CreditBalanceComposer;
+import com.us.archangel.ammo.enums.AmmoType;
 import com.us.archangel.ammo.model.AmmoModel;
 import com.us.archangel.ammo.service.AmmoService;
 import com.us.archangel.player.service.PlayerAmmoService;
@@ -72,10 +73,7 @@ public class AcceptStoreProductOfferEvent extends MessageHandler {
                         throw new RuntimeException("weapon not found");
                     }
 
-                    AmmoModel weaponAmmoModel = AmmoService.getInstance().getAll().stream()
-                            .filter(ammo -> ammo.getSize() == weaponModel.getAmmoSize())
-                            .findFirst()
-                            .orElse(null);
+                    AmmoModel weaponAmmoModel = AmmoService.getInstance().getBySizeAndType(weaponModel.getAmmoSize(), AmmoType.STANDARD);
 
                     if (weaponAmmoModel == null) {
                         this.client.getHabbo().whisper(Emulator.getTexts().getValue("roleplay.store_offer.transaction_failed"));

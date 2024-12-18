@@ -1,5 +1,6 @@
 package com.us.archangel.weapon.service;
 
+import com.us.archangel.player.model.PlayerAmmoModel;
 import com.us.archangel.weapon.context.WeaponContext;
 import com.us.archangel.weapon.entity.WeaponEntity;
 import com.us.archangel.weapon.mapper.WeaponMapper;
@@ -43,6 +44,25 @@ public class WeaponService extends GenericService<WeaponModel, WeaponContext, We
 
     public void deleteById(int id) {
         super.deleteById(id);
+    }
+
+    public WeaponModel getByUniqueName(String uniqueName) {
+        WeaponModel matchingWeapon = this.getAll().stream()
+                .filter(weapon -> weapon.getUniqueName() == uniqueName)
+                .findFirst()
+                .orElse(null);
+
+        if (matchingWeapon != null) {
+            return matchingWeapon;
+        }
+
+        WeaponEntity matchingEntity = this.repository.getByUniqueName(uniqueName);
+
+        if (matchingEntity != null) {
+            return WeaponMapper.toModel(matchingEntity);
+        }
+
+        return null;
     }
 
 }
