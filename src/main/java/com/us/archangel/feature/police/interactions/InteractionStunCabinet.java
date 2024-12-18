@@ -11,6 +11,7 @@ import com.us.archangel.ammo.model.AmmoModel;
 import com.us.archangel.ammo.service.AmmoService;
 import com.us.archangel.corp.enums.CorpIndustry;
 import com.us.archangel.player.model.PlayerAmmoModel;
+import com.us.archangel.player.model.PlayerWeaponModel;
 import com.us.archangel.player.service.PlayerAmmoService;
 import com.us.archangel.player.service.PlayerWeaponService;
 import com.us.archangel.weapon.model.WeaponModel;
@@ -56,6 +57,8 @@ public class InteractionStunCabinet extends InteractionVendingMachine {
             throw new RuntimeException("stun ammo not found in archangel_ammo");
         }
 
+        PlayerWeaponModel existingStunGun = PlayerWeaponService.getInstance().getByUserID(client.getHabbo().getHabboInfo().getId()).stream().filter(gun -> gun.getWeaponId() == stunGun.getId()).findFirst().orElse(null);
+
         PlayerAmmoModel currentStunCarts = PlayerAmmoService.getInstance().getByUserAndAmmoId(client.getHabbo().getHabboInfo().getId(), stunAmmo.getId());
         int currentStunCartCount = currentStunCarts != null ? currentStunCarts.getAmmoRemaining() : 0;
 
@@ -64,7 +67,13 @@ public class InteractionStunCabinet extends InteractionVendingMachine {
             return;
         }
 
-        PlayerWeaponService.getInstance().createWithAmmo(stunGun, client.getHabbo().getHabboInfo().getId(), stunAmmo);
+        if (existingStunGun == null) {
+            PlayerWeaponService.getInstance().createWithAmmo(stunGun, client.getHabbo().getHabboInfo().getId(), stunAmmo);
+        }
+
+        if (existingStunGun != null) {
+            PlayerAmmoService.getInstance().addAmmo(client.getHabbo().getHabboInfo().getId(), stunAmmo.getId(), 1);
+        }
 
         client.getHabbo().shout(Emulator.getTexts().getValue("roleplay.stun_cabinet.success"));
 

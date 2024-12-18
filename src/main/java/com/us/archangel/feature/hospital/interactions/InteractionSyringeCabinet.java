@@ -11,6 +11,7 @@ import com.us.archangel.ammo.model.AmmoModel;
 import com.us.archangel.ammo.service.AmmoService;
 import com.us.archangel.corp.enums.CorpIndustry;
 import com.us.archangel.player.model.PlayerAmmoModel;
+import com.us.archangel.player.model.PlayerWeaponModel;
 import com.us.archangel.player.service.PlayerAmmoService;
 import com.us.archangel.player.service.PlayerWeaponService;
 import com.us.archangel.weapon.model.WeaponModel;
@@ -56,6 +57,8 @@ public class InteractionSyringeCabinet extends InteractionVendingMachine {
             throw new RuntimeException("syringe ammo not found in archangel_ammo");
         }
 
+        PlayerWeaponModel existingSyringe = PlayerWeaponService.getInstance().getByUserID(client.getHabbo().getHabboInfo().getId()).stream().filter(gun -> gun.getWeaponId() == healingSyringe.getId()).findFirst().orElse(null);
+
         PlayerAmmoModel currentSyringes = PlayerAmmoService.getInstance().getByUserAndAmmoId(client.getHabbo().getHabboInfo().getId(), syringeAmmo.getId());
         int currentSyringeCount = currentSyringes != null ? currentSyringes.getAmmoRemaining() : 0;
 
@@ -64,7 +67,13 @@ public class InteractionSyringeCabinet extends InteractionVendingMachine {
             return;
         }
 
-        PlayerWeaponService.getInstance().createWithAmmo(healingSyringe, client.getHabbo().getHabboInfo().getId(), syringeAmmo);
+        if (existingSyringe == null) {
+            PlayerWeaponService.getInstance().createWithAmmo(healingSyringe, client.getHabbo().getHabboInfo().getId(), syringeAmmo);
+        }
+
+        if (existingSyringe != null) {
+            PlayerAmmoService.getInstance().addAmmo(client.getHabbo().getHabboInfo().getId(), syringeAmmo.getId(), 1);
+        }
 
         client.getHabbo().shout(Emulator.getTexts().getValue("roleplay.syringe_cabinet.success"));
 
