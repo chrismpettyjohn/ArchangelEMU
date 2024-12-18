@@ -14,6 +14,7 @@ public class UserProfileBannerComposer extends MessageComposer {
     protected ServerMessage composeInternal() {
         this.response.init(Outgoing.userProfileBannerComposer);
         this.response.appendString(this.habbo.getHabboInfo().getBannerUrl());
+        this.response.appendInt(this.habbo.getHabboInfo().getId());
         return this.response;
     }
 }
