@@ -77,6 +77,7 @@ import com.us.archangel.feature.hospital.interactions.InteractionHospitalBed;
 import com.us.archangel.feature.hospital.interactions.InteractionSyringeCabinet;
 import com.us.archangel.feature.license.interactions.InteractionLicenseComputer;
 import com.us.archangel.feature.device.interactions.InteractionPhone;
+import com.us.archangel.feature.police.interactions.InteractionStunCabinet;
 import com.us.archangel.feature.taxi.interactions.InteractionTaxiStand;
 import com.us.archangel.feature.trash.interactions.InteractionTrash;
 import com.us.archangel.feature.trees.interactions.InteractionToolAxe;
@@ -423,6 +424,7 @@ public class ItemManager {
         this.interactionsList.add(new ItemInteraction(InteractionAmmoCrate.INTERACTION_TYPE, InteractionAmmoCrate.class));
         this.interactionsList.add(new ItemInteraction(InteractionWeaponVendingMachine.INTERACTION_TYPE, InteractionWeaponVendingMachine.class));
         this.interactionsList.add(new ItemInteraction(InteractionSyringeCabinet.INTERACTION_TYPE, InteractionSyringeCabinet.class));
+        this.interactionsList.add(new ItemInteraction(InteractionStunCabinet.INTERACTION_TYPE, InteractionStunCabinet.class));
     }
 
     public void addItemInteraction(ItemInteraction itemInteraction) {
