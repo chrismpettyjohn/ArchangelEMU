@@ -1,8 +1,8 @@
-package com.us.nova.feature.changepassword.packets.incoming;
+package com.us.nova.feature.security.packets.incoming;
 
 import com.eu.habbo.Emulator;
 import com.eu.habbo.messages.incoming.MessageHandler;
-import com.us.nova.feature.changepassword.packets.outgoing.ChangePasswordSuccessComposer;
+import com.us.nova.feature.security.packets.outgoing.ChangePasswordSuccessComposer;
 import org.mindrot.jbcrypt.BCrypt;
 
 import java.sql.Connection;
@@ -26,7 +26,7 @@ public class ChangePasswordEvent extends MessageHandler {
         }
 
         // Validate current password
-        if (!doesPasswordMatch(currentPassword)) {
+        if (!doesPasswordMatch(this.client.getHabbo().getHabboInfo().getId(), currentPassword)) {
             this.client.getHabbo().whisper(Emulator.getTexts().getValue("nova.change_password.invalid"));
             this.client.sendResponse(new ChangePasswordSuccessComposer(false));
             return;
@@ -43,10 +43,10 @@ public class ChangePasswordEvent extends MessageHandler {
         }
     }
 
-    private Boolean doesPasswordMatch(String rawPassword) {
+    public static Boolean doesPasswordMatch(int userId, String rawPassword) {
         try (Connection connection = Emulator.getDatabase().getDataSource().getConnection();
              PreparedStatement statement = connection.prepareStatement("SELECT password FROM users WHERE id = ?")) {
-            statement.setInt(1, this.client.getHabbo().getHabboInfo().getId());
+            statement.setInt(1, userId);
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {
                     String storedPassword = resultSet.getString("password");

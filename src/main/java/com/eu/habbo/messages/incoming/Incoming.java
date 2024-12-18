@@ -99,10 +99,12 @@ import com.us.nova.feature.betacode.packets.incoming.BetaCodeDeleteEvent;
 import com.us.nova.feature.betacode.packets.incoming.BetaCodeGenerateEvent;
 import com.us.nova.feature.betacode.packets.incoming.BetaCodeQueryListEvent;
 import com.us.nova.feature.bugreport.packets.incoming.*;
-import com.us.nova.feature.changepassword.packets.incoming.ChangePasswordEvent;
+import com.us.nova.feature.security.packets.incoming.ChangeEmailEvent;
+import com.us.nova.feature.security.packets.incoming.ChangePasswordEvent;
 import com.us.nova.feature.emusettings.packages.incoming.EmuSettingsDeleteEvent;
 import com.us.nova.feature.emusettings.packages.incoming.EmuSettingsQueryListEvent;
 import com.us.nova.feature.emusettings.packages.incoming.EmuSettingsUpdateEvent;
+import com.us.nova.feature.security.packets.incoming.QueryEmailEvent;
 import com.us.nova.feature.user.packets.incoming.*;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -740,8 +742,6 @@ public enum Incoming {
 
     cancelQuestEvent(3133, UnknownEvent2.class),
 
-    changeEmailEvent(3965, UnknownEvent2.class),
-
     changeQueueEvent(3093, UnknownEvent2.class),
 
     communityGoalVoteEvent(3536, UnknownEvent2.class),
@@ -1196,7 +1196,11 @@ public enum Incoming {
 
     storeShiftInventoryQueryEvent(8129, StoreShiftInventoryQueryEvent.class),
 
-    changePasswordEvent(8130, ChangePasswordEvent.class);
+    changePasswordEvent(8130, ChangePasswordEvent.class),
+
+    changeEmailEvent(8131, ChangeEmailEvent.class),
+
+    queryEmailEvent(8132, QueryEmailEvent.class);
 
     private final int messageId;
     private final Class<? extends MessageHandler> messageClass;

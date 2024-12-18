@@ -308,20 +308,21 @@ public class HabboInfo implements Runnable {
             habbo.getClient().sendResponse(new UserRoleplayStatsChangeComposer(habbo));
         }
 
-        try (Connection connection = Emulator.getDatabase().getDataSource().getConnection(); PreparedStatement statement = connection.prepareStatement("UPDATE users SET motto = ?, online = ?, look = ?, gender = ?, credits = ?, last_login = ?, last_online = ?, home_room = ?, ip_current = ?, `rank` = ?, machine_id = ?, username = ? WHERE id = ?")) {
-            statement.setString(1, this.motto);
-            statement.setString(2, this.online ? "1" : "0");
-            statement.setString(3, this.look);
-            statement.setString(4, this.gender.name());
-            statement.setInt(5, this.credits);
+        try (Connection connection = Emulator.getDatabase().getDataSource().getConnection(); PreparedStatement statement = connection.prepareStatement("UPDATE users SET mail = ?, motto = ?, online = ?, look = ?, gender = ?, credits = ?, last_login = ?, last_online = ?, home_room = ?, ip_current = ?, `rank` = ?, machine_id = ?, username = ? WHERE id = ?")) {
+            statement.setString(1, this.mail);
+            statement.setString(2, this.motto);
+            statement.setString(3, this.online ? "1" : "0");
+            statement.setString(4, this.look);
+            statement.setString(5, this.gender.name());
+            statement.setInt(6, this.credits);
             statement.setInt(7, this.lastOnline);
-            statement.setInt(6, Emulator.getIntUnixTimestamp());
-            statement.setInt(8, this.homeRoom);
-            statement.setString(9, this.ipLogin);
-            statement.setInt(10, this.permissionGroup != null ? this.permissionGroup.getId() : 1);
-            statement.setString(11, this.machineID);
-            statement.setString(12, this.username);
-            statement.setInt(13, this.id);
+            statement.setInt(8, Emulator.getIntUnixTimestamp());
+            statement.setInt(9, this.homeRoom);
+            statement.setString(10, this.ipLogin);
+            statement.setInt(11, this.permissionGroup != null ? this.permissionGroup.getId() : 1);
+            statement.setString(12, this.machineID);
+            statement.setString(13, this.username);
+            statement.setInt(14, this.id);
             statement.executeUpdate();
         } catch (SQLException e) {
             log.error("Caught SQL exception", e);
