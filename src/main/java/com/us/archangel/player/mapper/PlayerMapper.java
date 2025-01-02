@@ -32,6 +32,7 @@ public class PlayerMapper extends GenericMapper<PlayerEntity, PlayerModel> {
                 entity.getJailTimeRemainingSecs(),
                 entity.getEscortingPlayerId(),
                 entity.getCurrentAction(),
+                entity.getPassiveMode() == 1,
                 null
         );
     }

@@ -1204,7 +1204,9 @@ public enum Incoming {
 
     userQueryProfileBannerEvent(8133, UserQueryProfileBannerEvent.class),
 
-    userChangeProfileBannerEvent(8134, UserChangeProfileBannerEvent.class);
+    userChangeProfileBannerEvent(8134, UserChangeProfileBannerEvent.class),
+
+    togglePassiveModeEvent(8135, TogglePassiveModeEvent.class);
 
     private final int messageId;
     private final Class<? extends MessageHandler> messageClass;

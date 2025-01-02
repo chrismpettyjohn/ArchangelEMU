@@ -24,6 +24,12 @@ public class UserAttackEvent extends MessageHandler {
 
     @Override
     public void handle() {
+
+        if (this.client.getHabbo().getPlayer().isPassiveMode()) {
+            this.client.getHabbo().whisper("You can't attack in passive mode!");
+            return;
+        }
+
         if (!this.client.getHabbo().getPlayer().canInteract() || this.client.getHabbo().getPlayer().isCombatBlocked()) {
             this.client.getHabbo().whisper("You need to wait a bit before attacking again.");
             this.client.sendResponse(new CombatDelayComposer(this.client.getHabbo()));
@@ -51,6 +57,11 @@ public class UserAttackEvent extends MessageHandler {
         Habbo targetedHabbo = getTargetedHabbo(x, y);
         if (targetedHabbo == null || !isInRange(x, y, equippedWeapon)) {
             this.client.getHabbo().whisper(Emulator.getTexts().getValue("roleplay.attack.target_missed"));
+            return;
+        }
+
+        if (targetedHabbo.getPlayer().isPassiveMode()) {
+            this.client.getHabbo().whisper("You can't attack a passive player!");
             return;
         }
 

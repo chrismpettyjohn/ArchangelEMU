@@ -45,6 +45,7 @@ public class PlayerModel {
     private long jailTimeRemainingSecs;
     private Integer escortingPlayerId;
     private PlayerAction currentAction;
+    private boolean passiveMode;
 
     private ManagedTask<?> currentTask;
 

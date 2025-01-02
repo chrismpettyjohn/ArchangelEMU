@@ -61,6 +61,7 @@ public class PlayerEntity {
 
     @Column(name = "last_pos_y", nullable = false)
     private short lastPosY;
+
     @Column(name = "work_time_remaining_secs", nullable = false)
     private long workTimeRemainingSecs;
 
@@ -76,4 +77,7 @@ public class PlayerEntity {
 
     @Column(name = "escorting_player_id")
     private Integer escortingPlayerId;
+
+    @Column(name = "passive_mode", nullable = false)
+    private int passiveMode;
 }

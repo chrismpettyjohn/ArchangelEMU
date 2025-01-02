@@ -15,6 +15,11 @@ import com.us.archangel.weapon.model.WeaponModel;
 public class EquipWeaponEvent extends MessageHandler {
     @Override
     public void handle() {
+        if (this.client.getHabbo().getPlayer().isPassiveMode()) {
+            this.client.getHabbo().whisper("You can't equip in passive mode!");
+            return;
+        }
+        
         int playerWeaponId = this.packet.readInt();
         
         this.client.getHabbo().getRoomUnit().giveEffect(0, -1);
