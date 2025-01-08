@@ -19,6 +19,11 @@ public class GangQueryOneComposer extends MessageComposer {
     protected ServerMessage composeInternal() {
         List<PlayerModel> players = PlayerService.getInstance().getByGangId(this.gangID);
         GangModel matchingGang = GangService.getInstance().getById(this.gangID);
+
+        if (matchingGang == null) {
+            return null;
+        }
+
         this.response.init(Outgoing.gangQueryOneComposer);
         this.response.appendInt(matchingGang.getId());
         this.response.appendString(matchingGang.getDisplayName());

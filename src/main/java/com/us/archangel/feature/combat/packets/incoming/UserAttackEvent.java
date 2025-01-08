@@ -117,6 +117,7 @@ public class UserAttackEvent extends MessageHandler {
         if (equippedWeapon != null && equippedWeapon.getPlayerAmmo().getAmmo().getType() == AmmoType.STUN) {
             return 0;
         }
+
         return this.client.getHabbo().getPlayerSkills().getDamageModifier(equippedWeapon != null ? equippedWeapon.getWeapon() : null);
     }
 
