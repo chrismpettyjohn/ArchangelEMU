@@ -36,6 +36,7 @@ public class InteractionTrash extends InteractionGymEquipment {
         boolean isWithinOneTile = Math.abs(this.getCurrentPosition().getX() - client.getHabbo().getRoomUnit().getCurrentPosition().getX()) <= 1 && Math.abs(this.getCurrentPosition().getY() - client.getHabbo().getRoomUnit().getCurrentPosition().getY()) <= 1;
 
         if (!isWithinOneTile) {
+            client.getHabbo().whisper("You're too far away!");
             return;
         }
 

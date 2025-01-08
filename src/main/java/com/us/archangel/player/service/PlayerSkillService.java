@@ -37,10 +37,6 @@ public class PlayerSkillService extends GenericService<PlayerSkillModel, PlayerS
             return model;
         }
 
-        PlayerSkillEntity newEntity = new PlayerSkillEntity();
-        newEntity.setUserId(userID);
-        PlayerSkillRepository.getInstance().create(newEntity);
-
-        return this.getByUserID(userID);
+        return null;
     }
 }

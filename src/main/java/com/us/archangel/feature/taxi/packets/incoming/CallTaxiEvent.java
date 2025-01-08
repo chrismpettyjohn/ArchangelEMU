@@ -80,8 +80,12 @@ public class CallTaxiEvent extends MessageHandler {
                 .replace(":seconds", String.valueOf(delaySeconds)));
 
         // Store initial position for movement check
-        int startX = this.client.getHabbo().getRoomUnit().getCurrentPosition().getX();
-        int startY = this.client.getHabbo().getRoomUnit().getCurrentPosition().getY();
+        int startX = this.client.getHabbo().getRoomUnit().getCurrentPosition() != null
+                ? this.client.getHabbo().getRoomUnit().getCurrentPosition().getX()
+                : 0;
+        int startY = this.client.getHabbo().getRoomUnit().getCurrentPosition() != null
+                ? this.client.getHabbo().getRoomUnit().getCurrentPosition().getY()
+                : 0;
 
         CallTaxiAction callTaxiAction = new CallTaxiAction(
             this.client.getHabbo(), 

@@ -32,7 +32,7 @@ public class OpenFlatConnectionEvent extends MessageHandler {
 
             Room futureRoom = Emulator.getGameEnvironment().getRoomManager().getRoom(roomId, true);
 
-            RoomTile spawnTile = this.client.getHabbo().getHabboInfo().getHomeRoom() == roomId
+            RoomTile spawnTile = this.client.getHabbo().getHabboInfo().getHomeRoom() == roomId && futureRoom.getLayout() != null
                     ? futureRoom.getLayout().getTile(this.client.getHabbo().getPlayer().getLastPosX(), this.client.getHabbo().getPlayer().getLastPosY())
                     : null;
 
