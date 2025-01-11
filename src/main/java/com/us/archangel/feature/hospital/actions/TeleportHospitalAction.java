@@ -27,6 +27,10 @@ public class TeleportHospitalAction implements Runnable {
             return;
         }
 
+        if (this.hospitalRoom == null) {
+            throw new RuntimeException("no hospitals found");
+        }
+
         if (this.habbo.getPlayer().getEscortingPlayerId() != null) {
             this.habbo.getPlayer().setCurrentAction(PlayerAction.None);
             this.habbo.getPlayer().setEscortingPlayerId(null);
@@ -39,17 +43,15 @@ public class TeleportHospitalAction implements Runnable {
 
         this.habbo.shout(Emulator.getTexts().getValue("roleplay.dead.teleporting_to_hospital_delay").replace(":seconds", String.valueOf(deadTeleportDelay / 1000)));
 
-        if (this.hospitalRoom == null) {
-            throw new RuntimeException("no hospitals found");
-        }
+        Emulator.getThreading().run(() -> {
+            if (this.habbo.getRoomUnit().getRoom().isHospital()) {
+                this.hospitalRoom = this.habbo.getRoomUnit().getRoom();
+                this.teleportAndLayOnHospitalBed();
+                return;
+            }
 
-        if (this.habbo.getRoomUnit().getRoom().isHospital()) {
-            this.hospitalRoom = this.habbo.getRoomUnit().getRoom();
-            this.teleportAndLayOnHospitalBed();
-            return;
-        }
-
-        habbo.goToRoom(this.hospitalRoom.getRoomInfo().getId(), this::teleportAndLayOnHospitalBed);
+            habbo.goToRoom(this.hospitalRoom.getRoomInfo().getId(), this::teleportAndLayOnHospitalBed);
+        }, deadTeleportDelay);
     }
 
     private void teleportAndLayOnHospitalBed() {
