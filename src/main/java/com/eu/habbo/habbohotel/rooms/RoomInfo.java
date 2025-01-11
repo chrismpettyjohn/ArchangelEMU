@@ -4,10 +4,12 @@ import com.eu.habbo.Emulator;
 import com.eu.habbo.habbohotel.guilds.Guild;
 import com.eu.habbo.habbohotel.permissions.Permission;
 import com.eu.habbo.habbohotel.rooms.constants.RoomState;
+import com.eu.habbo.habbohotel.rooms.items.entities.RoomItem;
 import com.eu.habbo.habbohotel.users.Habbo;
 import com.eu.habbo.habbohotel.users.HabboInfo;
 import com.us.archangel.corp.model.CorpModel;
 import com.us.archangel.corp.service.CorpService;
+import com.us.archangel.feature.taxi.interactions.InteractionTaxiStand;
 import com.us.archangel.gang.model.GangModel;
 import com.us.archangel.gang.service.GangService;
 import lombok.Getter;
@@ -19,6 +21,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.Optional;
 
 import static com.eu.habbo.database.DatabaseConstants.CAUGHT_SQL_EXCEPTION;
 

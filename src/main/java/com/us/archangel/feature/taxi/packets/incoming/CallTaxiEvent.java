@@ -35,15 +35,7 @@ public class CallTaxiEvent extends MessageHandler {
         boolean hasFreeTaxiPermission = this.client.getHabbo().hasPermissionRight(Permission.ACC_NAVIGATOR_SHOW_ALL);
 
         // Check if the room has a taxi stand, bypass for staff with navigator perms
-        boolean hasTaxiStand = hasFreeTaxiPermission;
-        if (!hasTaxiStand) {
-            for (var item : targetedRoom.getRoomItemManager().getCurrentItems().values()) {
-                if (item.getBaseItem().getInteractionType().getType().isAssignableFrom(InteractionTaxiStand.class)) {
-                    hasTaxiStand = true;
-                    break;
-                }
-            }
-        }
+        boolean hasTaxiStand = targetedRoom.canTaxi() || hasFreeTaxiPermission;
 
         if (!hasTaxiStand) {
             this.client.getHabbo().whisper(Emulator.getTexts().getValue("roleplay.taxi.not_available")

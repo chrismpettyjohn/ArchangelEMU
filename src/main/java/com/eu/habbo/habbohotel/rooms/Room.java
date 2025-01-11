@@ -40,6 +40,7 @@ import com.eu.habbo.plugin.events.furniture.FurnitureStackHeightEvent;
 import com.eu.habbo.plugin.events.rooms.RoomLoadedEvent;
 import com.eu.habbo.plugin.events.rooms.RoomUnloadedEvent;
 import com.eu.habbo.plugin.events.rooms.RoomUnloadingEvent;
+import com.us.archangel.feature.taxi.interactions.InteractionTaxiStand;
 import com.us.archangel.room.RoomTurfManager;
 import gnu.trove.TCollections;
 import gnu.trove.map.TIntIntMap;
@@ -420,6 +421,7 @@ public class Room implements Comparable<Room>, ISerialize, Runnable {
         message.appendInt(this.roomUnitManager.getRoomHabbosCount());
         message.appendInt(this.roomInfo.getMaxUsers());
         message.appendString(this.roomInfo.getDescription());
+        message.appendBoolean(this.canTaxi());
         message.appendInt(this.roomInfo.getTradeMode());
         message.appendInt(this.roomInfo.getScore());
         message.appendInt(0);
@@ -1001,5 +1003,14 @@ public class Room implements Comparable<Room>, ISerialize, Runnable {
             if ((habbo.getRoomUnit().getRoom() == this && habbo.getHabboInfo().getId() != this.roomInfo.getOwnerInfo().getId()) && (!(habbo.hasPermissionRight(Permission.ACC_ANYROOMOWNER) || habbo.hasPermissionRight(Permission.ACC_MOVEROTATE))))
                 this.getRoomRightsManager().refreshRightsForHabbo(habbo);
         }
+    }
+
+    public boolean canTaxi() {
+        Optional<RoomItem> taxiStand = this.getRoomItemManager().getCurrentItems()
+                .values().stream()
+                .filter(item -> item.getClass().isAssignableFrom(InteractionTaxiStand.class))
+                .findFirst();
+
+        return taxiStand.isPresent();
     }
 }
