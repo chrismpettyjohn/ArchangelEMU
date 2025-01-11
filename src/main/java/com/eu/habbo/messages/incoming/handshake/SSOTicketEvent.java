@@ -140,9 +140,9 @@ public class SSOTicketEvent extends MessageHandler {
                     roomIdToEnter = RoomManager.HOME_ROOM_ID;
 
                 if (this.client.getHabbo().getPlayer().isDead()) {
-                    List<Room> hospitalRooms = Emulator.getGameEnvironment().getRoomManager().getRoomsByTag(RoomType.HOSPITAL);
-                    if (!hospitalRooms.isEmpty()) {
-                        roomIdToEnter = hospitalRooms.get(0).getRoomInfo().getId();
+                    Room hospitalRoom = Emulator.getGameEnvironment().getRoomManager().getActiveRooms().stream().filter(Room::isHospital).findFirst().orElse(null);
+                    if (hospitalRoom != null) {
+                        roomIdToEnter = hospitalRoom.getRoomInfo().getId();
                     }
                 }
 

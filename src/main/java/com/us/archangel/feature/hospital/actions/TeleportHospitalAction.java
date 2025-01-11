@@ -25,9 +25,9 @@ public class TeleportHospitalAction implements Runnable {
             return;
         }
 
-        if (this.habbo.getRoomUnit().getRoom().getRoomInfo().getTags().contains(RoomType.HOSPITAL)) {
-            return;
-        }
+//        if (this.habbo.getRoomUnit().getRoom().isHospital()) {
+//            return;
+//        }
 
         if (this.habbo.getPlayer().getEscortingPlayerId() != null) {
             this.habbo.getPlayer().setCurrentAction(PlayerAction.None);
@@ -44,18 +44,16 @@ public class TeleportHospitalAction implements Runnable {
         this.habbo.shout(Emulator.getTexts().getValue("roleplay.dead.teleporting_to_hospital_delay").replace(":seconds", String.valueOf(deadTeleportDelay / 1000)));
 
 
-        List<Room> hospitalRooms = Emulator.getGameEnvironment().getRoomManager().getRoomsByTag(RoomType.HOSPITAL);
+        Room hospitalRoom = Emulator.getGameEnvironment().getRoomManager().getActiveRooms().stream().filter(room -> room.isHospital()).findFirst().orElse(null);
 
-        if (hospitalRooms.isEmpty()) {
+        if (hospitalRoom == null) {
             throw new RuntimeException("no hospitals found");
         }
 
-        Room room = hospitalRooms.get(0);
-
-        habbo.goToRoom(room.getRoomInfo().getId(), () -> {
-            Collection<RoomItem> hospitalBedItems = room.getRoomItemManager().getItemsOfType(InteractionHospitalBed.class);
+        habbo.goToRoom(hospitalRoom.getRoomInfo().getId(), () -> {
+            Collection<RoomItem> hospitalBedItems = hospitalRoom.getRoomItemManager().getItemsOfType(InteractionHospitalBed.class);
             for (RoomItem hospitalBedItem : hospitalBedItems) {
-                List<RoomTile> hospitalBedRoomTiles = hospitalBedItem.getOccupyingTiles(room.getLayout());
+                List<RoomTile> hospitalBedRoomTiles = hospitalBedItem.getOccupyingTiles(hospitalRoom.getLayout());
                 RoomTile firstAvailableHospitalBedTile = hospitalBedRoomTiles.isEmpty() ? null : hospitalBedRoomTiles.get(0);
                 if (firstAvailableHospitalBedTile == null) {
                     return;

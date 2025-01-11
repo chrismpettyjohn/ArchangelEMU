@@ -23,7 +23,7 @@ public class HospitalRecoveryAction implements Runnable {
             return;
         }
 
-        if (!this.habbo.getRoomUnit().getRoom().getRoomInfo().getTags().contains(RoomType.HOSPITAL)) {
+        if (!this.habbo.getRoomUnit().getRoom().isHospital()) {
             this.habbo.shout(Emulator.getTexts().getValue("roleplay.hospital.cancel_recovery"));
             return;
         }

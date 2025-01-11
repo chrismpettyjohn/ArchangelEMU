@@ -40,6 +40,7 @@ import com.eu.habbo.plugin.events.furniture.FurnitureStackHeightEvent;
 import com.eu.habbo.plugin.events.rooms.RoomLoadedEvent;
 import com.eu.habbo.plugin.events.rooms.RoomUnloadedEvent;
 import com.eu.habbo.plugin.events.rooms.RoomUnloadingEvent;
+import com.us.archangel.feature.hospital.interactions.InteractionHospitalBed;
 import com.us.archangel.feature.taxi.interactions.InteractionTaxiStand;
 import com.us.archangel.room.RoomTurfManager;
 import gnu.trove.TCollections;
@@ -1012,5 +1013,14 @@ public class Room implements Comparable<Room>, ISerialize, Runnable {
                 .findFirst();
 
         return taxiStand.isPresent();
+    }
+
+    public boolean isHospital() {
+        Optional<RoomItem> hospitalBed = this.getRoomItemManager().getCurrentItems()
+                .values().stream()
+                .filter(item -> item.getClass().isAssignableFrom(InteractionHospitalBed.class))
+                .findFirst();
+
+        return hospitalBed.isPresent();
     }
 }
