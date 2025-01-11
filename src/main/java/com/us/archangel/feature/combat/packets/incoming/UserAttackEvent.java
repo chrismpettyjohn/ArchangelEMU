@@ -86,7 +86,10 @@ public class UserAttackEvent extends MessageHandler {
 
             // Notify online users
             NotificationHelper.sendOnline(new UserDiedComposer(targetedHabbo, this.client.getHabbo()));
-            NotificationHelper.announceOnline(this.client.getHabbo().getHabboInfo().getUsername() + " killed " + targetedHabbo.getHabboInfo().getUsername());
+            NotificationHelper.announceOnline(this.client.getHabbo().getHabboInfo().getId() == targetedHabbo.getHabboInfo().getId()
+                    ? this.client.getHabbo().getHabboInfo().getUsername() + " committed suicide"
+                    : this.client.getHabbo().getHabboInfo().getUsername() + " killed " + targetedHabbo.getHabboInfo().getUsername()
+            );
         }
     }
 
