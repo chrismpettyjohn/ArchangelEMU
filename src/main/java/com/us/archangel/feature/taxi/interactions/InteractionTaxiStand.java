@@ -23,7 +23,6 @@ public class InteractionTaxiStand extends InteractionDefault {
 
     @Override
     public void onClick(GameClient client, Room room, Object[] objects) throws Exception {
-        super.onClick(client, room, objects);
         client.sendResponse(new TaxiStandComposer());
     }
 }
