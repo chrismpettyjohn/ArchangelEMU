@@ -41,10 +41,10 @@ public class PlayerWeaponRepository extends GenericRepository<PlayerWeaponEntity
         super.deleteById(id);
     }
 
-    public List<PlayerWeaponEntity> getByPlayerId(int playerId) {
+    public List<PlayerWeaponEntity> getByUserId(int userId) {
         try (Session session = sessionFactory.openSession()) {
             return session.createQuery("from PlayerWeaponEntity where userId = :playerId", PlayerWeaponEntity.class)
-                    .setParameter("playerId", playerId)
+                    .setParameter("userId", userId)
                     .list();
         }
     }

@@ -20,13 +20,9 @@ public class PlayerWeaponQueryListEvent extends MessageHandler {
             return;
         }
 
-        int playerID = this.packet.readInt();
+        int userId = this.packet.readInt();
 
-        if (PlayerService.getInstance().getByUserID(playerID) == null) {
-            return;
-        }
-
-        List<PlayerWeaponModel> playerWeaponModels = PlayerWeaponService.getInstance().getByUserID(playerID);
+        List<PlayerWeaponModel> playerWeaponModels = PlayerWeaponService.getInstance().getByUserID(userId);
         this.client.sendResponse(new PlayerWeaponListComposer(playerWeaponModels));
     }
 }

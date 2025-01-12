@@ -180,6 +180,15 @@ public class UserAttackEvent extends MessageHandler {
             targetedHabbo.getPlayer().addHealth(totalDamage);
         }
 
+        if (equippedWeapon != null && equippedWeapon.getWeapon().getEffect() == WeaponEffect.LOCKPICK) {
+            if (targetedHabbo.getPlayer().getCurrentAction() != PlayerAction.Cuffed) {
+                this.client.getHabbo().whisper(":username is not cuffed!");
+                return;
+            }
+
+            targetedHabbo.getPlayer().setCurrentAction(PlayerAction.None);
+        }
+
         this.client.getHabbo().getPlayer().depleteEnergy(Emulator.getConfig().getInt("roleplay.attack.energy", 8));
 
         String attackMessage = equippedWeapon != null

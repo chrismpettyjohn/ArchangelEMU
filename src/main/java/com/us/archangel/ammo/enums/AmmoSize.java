@@ -12,7 +12,8 @@ public enum AmmoSize {
     _45ACP("45acp"),
     _12g("12g"),
     HEALTH_SYRINGE("health_syringe"),
-    STUN_CARTRIDGE("stun_cartridge");
+    STUN_CARTRIDGE("stun_cartridge"),
+    LOCKPICK("lockpick");
 
     // Getter to retrieve the string value of the enum
     private final String typeName;

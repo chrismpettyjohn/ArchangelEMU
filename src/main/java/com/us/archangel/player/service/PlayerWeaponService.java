@@ -79,7 +79,7 @@ public class PlayerWeaponService extends GenericService<PlayerWeaponModel, Playe
             return models;
         }
 
-        List<PlayerWeaponEntity> entities = repository.getByPlayerId(userID);
+        List<PlayerWeaponEntity> entities = repository.getByUserId(userID);
         List<PlayerWeaponModel> modelList = entities.stream()
                 .map(PlayerWeaponMapper::toModel)
                 .collect(Collectors.toList());
