@@ -24,6 +24,7 @@ public class InteractionHospitalBed extends InteractionDefault {
         super(id, ownerInfo, item, extradata, limitedStack, limitedSells);
     }
 
+
     @Override
     public void onWalkOn(RoomUnit roomUnit, Room room, Object[] objects) throws Exception {
         super.onWalkOn(roomUnit, room, objects);

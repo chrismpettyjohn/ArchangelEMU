@@ -28,30 +28,25 @@ public class HospitalRecoveryAction implements Runnable {
             return;
         }
 
-        if (this.habbo.getRoomUnit().getCurrentItem().getBaseItem().getInteractionType().getType() != InteractionHospitalBed.class) {            this.habbo.shout(Emulator.getTexts().getValue("roleplay.hospital.cancel_recovery"));
+        if (this.habbo.getRoomUnit().getCurrentItem().getBaseItem().getInteractionType().getType() != InteractionHospitalBed.class) {            
+            this.habbo.shout(Emulator.getTexts().getValue("roleplay.hospital.cancel_recovery"));
             return;
         }
 
         if (this.habbo.getPlayer().getHealthNow() == this.habbo.getPlayer().getHealthMax()) {
-
             RoomItem firstAvailableSeat = this.habbo.getRoomUnit().getRoom().getRoomItemManager().getCurrentItems().values().stream()
                     .filter(item -> item.getBaseItem().allowSit() && item.getRoom().canSitOrLayAt(item.getCurrentPosition()) && !item.getClass().equals(InteractionHospitalBed.class))
                     .findFirst()
                     .orElse(null);
 
-            if (firstAvailableSeat == null) {
-                throw new RuntimeException("hospital is missing bench");
+            if (firstAvailableSeat != null) {
+                RoomTile targetTile = firstAvailableSeat.getCurrentPosition();
+                habbo.getRoomUnit().setCanWalk(true);
+                habbo.getRoomUnit().setLocation(targetTile);
+                this.habbo.shout(Emulator.getTexts().getValue("roleplay.hospital.finish_recovery"));
+            } else {
+                throw new RuntimeException("no available seat for recovery");
             }
-
-            RoomTile bench = switch (firstAvailableSeat.getRotation()) {
-                case 0, 4 -> this.habbo.getRoomUnit().getRoom().getLayout().getTile(firstAvailableSeat.getCurrentPosition().getX(), firstAvailableSeat.getCurrentPosition().getY());
-                case 2, 8 -> this.habbo.getRoomUnit().getRoom().getLayout().getTile(firstAvailableSeat.getCurrentPosition().getX(), firstAvailableSeat.getCurrentPosition().getY());
-                default -> firstAvailableSeat.getCurrentPosition();
-            };
-
-
-            habbo.getRoomUnit().setLocation(bench);
-            this.habbo.shout(Emulator.getTexts().getValue("roleplay.hospital.finish_recovery"));
 
             return;
         }
