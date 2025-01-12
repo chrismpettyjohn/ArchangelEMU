@@ -40,7 +40,7 @@ public class EquipWeaponEvent extends MessageHandler {
             return;
         }
 
-        if (playerWeapon.getWeapon().getType() == WeaponType.GUN && playerWeapon.getAmmoId() == 0) {
+        if (playerWeapon.getWeapon().getType() == WeaponType.GUN && playerWeapon.getAmmoId() == null) {
             PlayerAmmoModel playerAmmo = PlayerAmmoService.getInstance().getByAmmoSize(playerWeapon.getWeapon().getAmmoSize()).get(0);
 
             if (playerAmmo == null) {

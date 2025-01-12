@@ -43,7 +43,7 @@ public class PlayerWeaponRepository extends GenericRepository<PlayerWeaponEntity
 
     public List<PlayerWeaponEntity> getByUserId(int userId) {
         try (Session session = sessionFactory.openSession()) {
-            return session.createQuery("from PlayerWeaponEntity where userId = :playerId", PlayerWeaponEntity.class)
+            return session.createQuery("from PlayerWeaponEntity where userId = :userId", PlayerWeaponEntity.class)
                     .setParameter("userId", userId)
                     .list();
         }

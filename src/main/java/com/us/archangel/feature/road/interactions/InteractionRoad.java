@@ -25,18 +25,20 @@ public class InteractionRoad extends InteractionDefault {
     @Override
     public void onWalkOn(RoomUnit roomUnit, Room room, Object[] objects) throws Exception {
         super.onWalkOn(roomUnit, room, objects);
-        if (roomUnit.isCmdFastWalkEnabled()) {
+        if (roomUnit.isCmdFastWalkEnabled() && roomUnit.isTemporalFastWalkEnabled()) {
             return;
         }
+        roomUnit.setTemporalFastWalkEnabled(true);
         roomUnit.setCmdFastWalkEnabled(true);
     }
 
     @Override
     public void onWalkOff(RoomUnit roomUnit, Room room, Object[] objects) throws Exception {
         super.onWalkOff(roomUnit, room, objects);
-        if (!roomUnit.isCmdFastWalkEnabled()) {
+        if (!roomUnit.isCmdFastWalkEnabled() && !roomUnit.isTemporalFastWalkEnabled()) {
             return;
         }
+        roomUnit.setTemporalFastWalkEnabled(false);
         roomUnit.setCmdFastWalkEnabled(false);
     }
 }

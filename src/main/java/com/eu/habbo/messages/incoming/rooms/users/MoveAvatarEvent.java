@@ -67,7 +67,6 @@ public class MoveAvatarEvent extends MessageHandler {
             }
 
             //STANKMAN EASTER EGG
-            roomHabbo.setTemporalFastWalkEnabled(roomHabbo.getTargetPosition() != null && roomHabbo.getTargetPosition().equals(tile));
 
             roomHabbo.walkTo(tile);
         }

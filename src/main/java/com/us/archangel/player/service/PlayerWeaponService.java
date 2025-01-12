@@ -46,6 +46,7 @@ public class PlayerWeaponService extends GenericService<PlayerWeaponModel, Playe
         PlayerWeaponEntity entity = new PlayerWeaponEntity();
         entity.setUserId(userId);
         entity.setWeaponId(weaponModel.getId());
+        entity.setAmmoId(ammoModel.getId());
         entity.setAmmo(ammoEntity);  // This will set both the entity and ID
         entity.setAmmoRemaining(weaponModel.getAmmoCapacity());
         

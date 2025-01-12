@@ -14,7 +14,7 @@ public class PlayerWeaponModel {
     private int id;
     private int userId;
     private int weaponId;
-    private int ammoId;
+    private Integer ammoId;
     private int ammoRemaining;
 
     public PlayerWeaponModel() {

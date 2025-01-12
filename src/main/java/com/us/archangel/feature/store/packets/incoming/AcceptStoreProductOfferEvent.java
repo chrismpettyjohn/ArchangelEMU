@@ -6,14 +6,18 @@ import com.eu.habbo.messages.incoming.MessageHandler;
 import com.eu.habbo.messages.outgoing.rooms.users.AvatarEffectMessageComposer;
 import com.eu.habbo.messages.outgoing.rooms.users.CarryObjectMessageComposer;
 import com.eu.habbo.messages.outgoing.users.CreditBalanceComposer;
+import com.us.archangel.ammo.enums.AmmoSize;
 import com.us.archangel.ammo.enums.AmmoType;
 import com.us.archangel.ammo.model.AmmoModel;
 import com.us.archangel.ammo.service.AmmoService;
+import com.us.archangel.player.entity.PlayerWeaponEntity;
+import com.us.archangel.player.mapper.PlayerWeaponMapper;
 import com.us.archangel.player.service.PlayerAmmoService;
 import com.us.archangel.player.service.PlayerWeaponService;
 import com.us.archangel.store.enums.StoreProductOfferStatus;
 import com.us.archangel.store.models.StoreProductOfferModel;
 import com.us.archangel.store.service.StoreProductOfferService;
+import com.us.archangel.weapon.enums.WeaponType;
 import com.us.archangel.weapon.model.WeaponModel;
 import com.us.archangel.weapon.service.WeaponService;
 
@@ -73,19 +77,26 @@ public class AcceptStoreProductOfferEvent extends MessageHandler {
                         throw new RuntimeException("weapon not found");
                     }
 
-                    AmmoModel weaponAmmoModel = AmmoService.getInstance().getBySizeAndType(weaponModel.getAmmoSize(), AmmoType.STANDARD);
+                    if (weaponModel.getAmmoSize() != AmmoSize.NONE) {
+                        AmmoModel weaponAmmoModel = AmmoService.getInstance().getBySizeAndType(weaponModel.getAmmoSize(), AmmoType.STANDARD);
 
-                    if (weaponAmmoModel == null) {
-                        this.client.getHabbo().whisper(Emulator.getTexts().getValue("roleplay.store_offer.transaction_failed"));
-                        throw new RuntimeException("weapon has no matching ammo");
+                        if (weaponAmmoModel == null) {
+                            this.client.getHabbo().whisper(Emulator.getTexts().getValue("roleplay.store_offer.transaction_failed"));
+                            throw new RuntimeException("weapon has no matching ammo");
+                        }
+                        PlayerWeaponService.getInstance().createWithAmmo(
+                                weaponModel,
+                                this.client.getHabbo().getHabboInfo().getId(),
+                                weaponAmmoModel
+                        );
+                    }
+                    if (weaponModel.getAmmoSize() == AmmoSize.NONE) {
+                        PlayerWeaponEntity playerWeaponEntity = new PlayerWeaponEntity();
+                        playerWeaponEntity.setUserId(this.client.getHabbo().getHabboInfo().getId());
+                        playerWeaponEntity.setWeaponId(weaponModel.getId());
+                        PlayerWeaponService.getInstance().create(PlayerWeaponMapper.toModel(playerWeaponEntity));
                     }
 
-                    // Use new createWithAmmo method
-                    PlayerWeaponService.getInstance().createWithAmmo(
-                        weaponModel,
-                        this.client.getHabbo().getHabboInfo().getId(),
-                        weaponAmmoModel
-                    );
                     break;
 
                 case ITEM:

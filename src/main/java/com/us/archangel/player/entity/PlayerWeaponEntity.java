@@ -30,7 +30,7 @@ public class PlayerWeaponEntity {
     private AmmoEntity ammo;
 
     @Column(name = "ammo_id", insertable = false, updatable = false)
-    private int ammoId;
+    private Integer ammoId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "weapons_id", insertable = false, updatable = false)
